@@ -48,7 +48,11 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
     ws.post[Transaction](s"$endPoint/$id", timeout, Json.toJson(transaction_edition))
   }
 
-  def search(criteria: TransactionSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[TransactionData]]] = {
+  def search(
+    criteria:       TransactionSearch,
+    table_criteria: TableSearch,
+    timeout:        Long              = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[TransactionData]]] = {
     ws.get[PaginatedSequence[TransactionData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
