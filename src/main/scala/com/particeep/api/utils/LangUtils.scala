@@ -1,0 +1,23 @@
+package com.particeep.api.utils
+
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
+object LangUtils {
+
+  def productToQueryString(product: Product): List[(String, String)] = {
+    val result = product.getClass.getDeclaredFields.map(_.getName) // all field names
+      .zip(product.productIterator.to).toMap
+
+    val date_time_formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
+
+    result.mapValues {
+      case Some(x) => x
+      case None    => ""
+      case x: Any  => x
+    }.mapValues {
+      case d: ZonedDateTime => d.format(date_time_formatter)
+      case v: Any           => v.toString
+    }.filter { case (k, v) => v != "" }.map { case (k, v) => (k, v) }.toList
+  }
+}
