@@ -1,15 +1,15 @@
 package com.particeep.api.core
 
+import java.io.File
+
 import com.ning.http.client.multipart.{ FilePart, Part }
 import com.ning.http.client.AsyncHttpClient
 import com.particeep.api.models.{ Error, ErrorResult, Errors }
-import play.api.libs.Files.TemporaryFile
 import play.api.libs.ws._
 import play.api.libs.ws.ning._
 import play.api.Play.current
 import play.api.libs.iteratee.Enumerator
 import play.api.libs.json.{ Format, JsValue, Json }
-import play.api.mvc.MultipartFormData
 
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
@@ -62,10 +62,11 @@ trait WSClient {
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
 
   def postFile[T](
-    path:      String,
-    timeOut:   Long,
-    file:      MultipartFormData[TemporaryFile],
-    bodyParts: List[Part]
+    path:         String,
+    timeOut:      Long,
+    file:         File,
+    content_type: String,
+    bodyParts:    List[Part]
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
 
   def getStream(
@@ -161,16 +162,16 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
   }
 
   def postFile[T](
-    path:      String,
-    timeout:   Long,
-    file:      MultipartFormData[TemporaryFile],
-    bodyParts: List[Part]
+    path:        String,
+    timeout:     Long,
+    file:        File,
+    contentType: String,
+    bodyParts:   List[Part]
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    val documentFilePart = file.files.head
     val client = WS.client.underlying[AsyncHttpClient]
     val postBuilder = urlFileUpload(path, client, timeout)
     val builder = postBuilder.addBodyPart(
-      new FilePart("document", documentFilePart.ref.file, documentFilePart.contentType.getOrElse("application/octet-stream"))
+      new FilePart("document", file, contentType)
     )
     bodyParts.map(builder.addBodyPart(_))
     Future { client.executeRequest(builder.build()).get }.map(parse[T](_)).recover {

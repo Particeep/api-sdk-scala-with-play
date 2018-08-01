@@ -24,6 +24,7 @@ object SignatureClient {
   private implicit val creation_format = SignatureCreation.format
   private implicit val multiple_creation_format = SignatureMultipleCreation.format
   private implicit val signature_data_format = SignatureData.format
+  private implicit val signature_multiple_data_format = SignatureDataMultiple.format
 
 }
 
@@ -57,6 +58,14 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     timeout:        Long            = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[SignatureData]]] = {
     ws.get[PaginatedSequence[SignatureData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+  }
+
+  def searchMultiple(
+    criteria:       SignatureSearch,
+    table_criteria: TableSearch,
+    timeout:        Long            = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[SignatureDataMultiple]]] = {
+    ws.get[PaginatedSequence[SignatureDataMultiple]](s"$endPoint/search/multiple", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
   def getFile(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
