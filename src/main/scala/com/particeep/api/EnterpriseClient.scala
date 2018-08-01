@@ -79,7 +79,7 @@ class EnterpriseClient(val ws: WSClient, val credentials: Option[ApiCredential] 
     ws.get[Seq[NbEnterprisesByActivityDomain]](s"$endPoint/info/activity/domain", timeout)
   }
 
-  def importFromCsv(file: File, content_type: String, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Enterprise]]] = {
-    ws.postFile[ImportResult[Enterprise]](s"$endPoint_import/enterprise/csv", timeout, file, content_type, List())
+  def importFromCsv(file: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Enterprise]]] = {
+    ws.postFile[ImportResult[Enterprise]](s"$endPoint_import/enterprise/csv", timeout, file, "text/csv", List())
   }
 }

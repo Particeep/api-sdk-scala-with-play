@@ -155,7 +155,7 @@ class FundraiseRewardClient(val ws: WSClient, val credentials: Option[ApiCredent
     ws.put[Transaction](s"$endPoint/fundraise/$fundraise_id/reward/$reward_id/buy/$user_id", timeout, Json.toJson(transaction_info))
   }
 
-  def importFromCsv(csv: File, content_type: String, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseReward]]] = {
-    ws.postFile[ImportResult[FundraiseReward]](s"$endPoint_import/fundraise-reward/csv", timeout, csv, content_type, List())
+  def importFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseReward]]] = {
+    ws.postFile[ImportResult[FundraiseReward]](s"$endPoint_import/fundraise-reward/csv", timeout, csv, "text/csv", List())
   }
 }

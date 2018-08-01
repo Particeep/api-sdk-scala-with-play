@@ -100,7 +100,7 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredent
     ws.post[Transaction](s"$endPoint/fundraise/$id/invest", timeout, Json.toJson(investment_creation))
   }
 
-  def importFromCsv(csv: File, content_type: String, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseEquity]]] = {
-    ws.postFile[ImportResult[FundraiseEquity]](s"$endPoint_import/fundraise-equity/csv", timeout, csv, content_type, List())
+  def importFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseEquity]]] = {
+    ws.postFile[ImportResult[FundraiseEquity]](s"$endPoint_import/fundraise-equity/csv", timeout, csv, "text/csv", List())
   }
 }

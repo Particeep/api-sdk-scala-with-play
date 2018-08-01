@@ -132,8 +132,8 @@ class FormClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.put[Seq[Answer]](s"$endPoint/tagged-answer/$user_id", timeout, Json.toJson(tagged_answer_creation))
   }
 
-  def importAnswersFromCsv(csv: File, content_type: String, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Seq[Answer]]]] = {
-    ws.postFile[ImportResult[Seq[Answer]]](s"$endPoint_import/form/answer", timeout, csv, content_type, List())
+  def importAnswersFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Seq[Answer]]]] = {
+    ws.postFile[ImportResult[Seq[Answer]]](s"$endPoint_import/form/answer", timeout, csv, "text/csv", List())
   }
 
   def search(
