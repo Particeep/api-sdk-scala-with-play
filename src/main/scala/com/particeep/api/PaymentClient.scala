@@ -3,7 +3,7 @@ package com.particeep.api
 import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.fundraise.loan.{ ScheduledPayment, ScheduledPaymentSearch }
-import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation, ScheduledPaymentCreation }
+import com.particeep.api.models.payment.{ PayCancelledSchedulePaymentForParentAndDate, PayResult, PaymentCbCreation, ScheduledPaymentCreation }
 import com.particeep.api.models.transaction.Transaction
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
@@ -25,7 +25,7 @@ object PaymentClient {
   private implicit lazy val transaction_format = Transaction.format
   private implicit lazy val scheduled_payment_creation_format = ScheduledPaymentCreation.format
   private implicit lazy val scheduled_payment_format = ScheduledPayment.format
-
+  private implicit lazy val pay_cancelled_scheduled_payments_format = PayCancelledSchedulePaymentForParentAndDate.format
 }
 
 class PaymentClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -81,5 +81,9 @@ class PaymentClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
 
   def cancelScheduledPayment(ids: List[String], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[ScheduledPayment]]] = {
     ws.get[List[ScheduledPayment]](s"$endPoint/schedule/cancel", timeout, List("ids" -> ids.mkString(",")))
+  }
+
+  def payCancelledScheduledPayments(body: PayCancelledSchedulePaymentForParentAndDate, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, String]] = {
+    ws.post[String](s"$endPoint/schedule/pay", timeout, Json.toJson(body))
   }
 }
