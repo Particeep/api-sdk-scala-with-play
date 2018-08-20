@@ -1,9 +1,9 @@
-package com.particeep.api.models.financial_product
+package com.particeep.api.models.stock
 
 import com.particeep.api.models.enums.Currency.Currency
 import play.api.libs.json.{ JsObject, Json }
 
-case class FinancialProductCreation(
+case class StockCreation(
   name:              String,
   description:       Option[String]   = None,
   picture_url:       Option[String]   = None,
@@ -22,6 +22,6 @@ case class FinancialProductCreation(
   custom:            Option[JsObject] = None
 )
 
-object FinancialProductCreation {
-  val format = Json.format[FinancialProductCreation]
+object StockCreation {
+  val format = Json.format[StockCreation]
 }
