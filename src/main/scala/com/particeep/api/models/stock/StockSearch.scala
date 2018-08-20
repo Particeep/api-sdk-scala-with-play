@@ -1,6 +1,6 @@
-package com.particeep.api.models.financial_product
+package com.particeep.api.models.stock
 
-case class FinancialProductSearch(
+case class StockSearch(
   name:             Option[String],
   description:      Option[String],
   code_isin:        Option[String],

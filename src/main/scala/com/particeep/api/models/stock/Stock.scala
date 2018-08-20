@@ -1,4 +1,4 @@
-package com.particeep.api.models.financial_product
+package com.particeep.api.models.stock
 
 import java.time.ZonedDateTime
 
@@ -6,7 +6,7 @@ import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
 import play.api.libs.json.{ JsObject, Json }
 
-case class FinancialProduct(
+case class Stock(
   id:                String                = "",
   created_at:        Option[ZonedDateTime] = None,
   last_updated_at:   Option[ZonedDateTime] = None,
@@ -28,7 +28,7 @@ case class FinancialProduct(
   custom:            Option[JsObject]      = None
 )
 
-object FinancialProduct {
+object Stock {
   implicit val date_format = Formatter.ZonedDateTimeWrites
-  val format = Json.format[FinancialProduct]
+  val format = Json.format[Stock]
 }
