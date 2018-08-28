@@ -2,9 +2,6 @@ package com.particeep.api.models.signature
 
 import java.time.ZonedDateTime
 
-/**
- * Created by Noe on 20/03/2017.
- */
 case class SignatureSearch(
   created_after:  Option[ZonedDateTime] = None,
   created_before: Option[ZonedDateTime] = None,
@@ -19,11 +16,17 @@ case class SignatureSearch(
   lastName:       Option[String]        = None,
   email:          Option[String]        = None,
   phone:          Option[String]        = None,
-  target_id:      Option[String]        = None,
-  target_type:    Option[String]        = None,
   signer_order:   Option[Int]           = None,
   total_signer:   Option[Int]           = None,
-  group_id:       Option[String]        = None,
-  partner_ids:    Option[String]        = None,
   ids:            Option[String]        = None
+)
+
+case class SignatureSearchForEntities(
+  target_id:      Option[String] = None,
+  target_type:    Option[String] = None,
+  group_id:       Option[String] = None,
+  partner_ids:    Option[String] = None,
+  fundraise_id:   Option[String] = None,
+  fundraise_type: Option[String] = None,
+  fundraise_name: Option[String] = None
 )
