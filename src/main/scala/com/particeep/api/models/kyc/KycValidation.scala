@@ -1,6 +1,6 @@
 package com.particeep.api.models.kyc
 
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 
 case class KycValidation(
   is_valid:         Boolean = false,

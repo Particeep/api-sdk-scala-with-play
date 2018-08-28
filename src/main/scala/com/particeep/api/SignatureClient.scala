@@ -53,11 +53,18 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
   }
 
   def search(
-    criteria:       SignatureSearch,
-    table_criteria: TableSearch,
-    timeout:        Long            = defaultTimeOut
+    criteria:        SignatureSearch,
+    entity_criteria: SignatureSearchForEntities,
+    table_criteria:  TableSearch,
+    timeout:         Long                       = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[SignatureData]]] = {
-    ws.get[PaginatedSequence[SignatureData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+    ws.get[PaginatedSequence[SignatureData]](
+      s"$endPoint/search",
+      timeout,
+      LangUtils.productToQueryString(criteria) ++
+        LangUtils.productToQueryString(entity_criteria) ++
+        LangUtils.productToQueryString(table_criteria)
+    )
   }
 
   def searchMultiple(
