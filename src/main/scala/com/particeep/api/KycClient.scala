@@ -5,7 +5,7 @@ import com.particeep.api.models.ErrorResult
 import com.particeep.api.models.kyc._
 import play.api.libs.json.Json
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 trait KycCapability {
   self: WSClient =>
@@ -64,7 +64,7 @@ class KycClient(val ws: WSClient, val credentials: Option[ApiCredential] = None)
       ws.delete[List[KycGroup]](s"$endPoint/cancel/owner/$owner_id/$owner_type", timeout, Json.toJson(""))
     )
   }
-  
+
   def validate(kyc_ask_validation: KycAskValidation, timeout: Long = 50000)(implicit exec: ExecutionContext): Future[Either[ErrorResult, KycValidation]] = {
     ws.post[KycValidation](s"$endPoint/document/validate", timeout, Json.toJson(kyc_ask_validation))
   }
