@@ -7,8 +7,9 @@ object BankAccountStatus {
   case object PENDING extends BankAccountStatus { val name: String = "PENDING" }
   case object VALIDATED extends BankAccountStatus { val name: String = "VALIDATED" }
   case object REFUSED extends BankAccountStatus { val name: String = "REFUSED" }
+  case object DEACTIVATED extends BankAccountStatus { val name: String = "DEACTIVATED" }
 
   object BankAccountStatus extends EnumHelper[BankAccountStatus] {
-    def values: Set[BankAccountStatus] = Set(PENDING, VALIDATED, REFUSED)
+    def values: Set[BankAccountStatus] = Set(PENDING, VALIDATED, REFUSED, DEACTIVATED)
   }
 }
