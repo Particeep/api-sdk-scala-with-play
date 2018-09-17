@@ -95,6 +95,6 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
   }
 
   def deleteMultiple(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, SignatureMultiple]] = {
-    ws.delete[SignatureMultiple](s"$endPoint/$id", timeout)
+    ws.delete[SignatureMultiple](s"$endPoint/$id/multiple", timeout)
   }
 }
