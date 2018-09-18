@@ -81,16 +81,16 @@ class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = No
     ws.put[BankAccount](s"$endPoint/$id/bankaccount", timeout, Json.toJson(bank_account_creation))
   }
 
-  def createBankAccountForOffline(id: String, bankAccountCreation: BankAccountCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
-    ws.put[BankAccount](s"$endPoint/$id/bankaccountoffline", timeout, Json.toJson(bankAccountCreation))
+  def addBankAccountOffline(target_id: String, bankAccountCreation: BankAccountCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
+    ws.put[BankAccount](s"$endPoint/bankaccount/target_id", timeout, Json.toJson(bankAccountCreation))
   }
 
-  def updateBankAccountOffline(id: String, bank_account_creation: BankAccountCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
-    ws.post[BankAccount](s"$endPoint/$id/bankaccountoffline", timeout, Json.toJson(bank_account_creation))
+  def updateBankAccountOffline(bankaccount_id: String, bank_account_creation: BankAccountCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
+    ws.post[BankAccount](s"$endPoint/bankaccount/$bankaccount_id", timeout, Json.toJson(bank_account_creation))
   }
 
-  def getBankAccountsByTargetId(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Seq[BankAccount]]] = {
-    ws.get[Seq[BankAccount]](s"$endPoint/$id/bankaccountsoffline", timeout)
+  def searchBankAccounts(criteria: BankAccountSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[BankAccount]]] = {
+    ws.get[PaginatedSequence[BankAccount]](s"$endPoint/bankaccount/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
   def getBankAccountsByWalletId(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Seq[BankAccount]]] = {
