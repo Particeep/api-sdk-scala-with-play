@@ -2,6 +2,7 @@ package com.particeep.api.models.payment
 
 import java.time.ZonedDateTime
 
+import com.particeep.api.core.Formatter
 import play.api.libs.json.Json
 
 case class PayCancelledSchedulePaymentForParentAndDate(
@@ -10,5 +11,6 @@ case class PayCancelledSchedulePaymentForParentAndDate(
 )
 
 object PayCancelledSchedulePaymentForParentAndDate {
+  implicit val date_format = Formatter.ZonedDateTimeWrites
   val format = Json.format[PayCancelledSchedulePaymentForParentAndDate]
 }
