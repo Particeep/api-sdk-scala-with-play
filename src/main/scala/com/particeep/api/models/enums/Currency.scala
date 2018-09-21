@@ -34,6 +34,7 @@ object Currency {
   case object BYR extends Currency { val name: String = "BYR" }
   case object BYN extends Currency { val name: String = "BYN" }
   case object BZD extends Currency { val name: String = "BZD" }
+  case object BTC extends Currency { val name: String = "BTC" }
   case object CAD extends Currency { val name: String = "CAD" }
   case object CDF extends Currency { val name: String = "CDF" }
   case object CHF extends Currency { val name: String = "CHF" }
@@ -58,6 +59,7 @@ object Currency {
   case object ERN extends Currency { val name: String = "ERN" }
   case object ETB extends Currency { val name: String = "ETB" }
   case object EUR extends Currency { val name: String = "EUR" }
+  case object ETH extends Currency { val name: String = "ETH" }
   case object FJD extends Currency { val name: String = "FJD" }
   case object FKP extends Currency { val name: String = "FKP" }
   case object GBP extends Currency { val name: String = "GBP" }
@@ -188,7 +190,7 @@ object Currency {
   case object ZWL extends Currency { val name: String = "ZWL" }
 
   object Currency extends EnumHelper[Currency] {
-    def values: Set[Currency] = Set(AED, AFN, ALL, AMD, ANG, AOA, ARP, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BOV, BRL, BSD, BTN, BWP, BYR, BYN, BZD, CAD, CDF, CHF, CLF, CLP, CNY, COP, COU, CRC, CUC, CUP, CVE, CYP, CZK, DJF, DKK, DOP, DZD, ECS, ECV, EGP, ERN, ETB, EUR, FJD, FKP, GBP, GEL, GHS, GIP, GMD, GNF, GTQ, GWP, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KGS, KHR, KMF, KPW, KRW, KZT, KWD, KYD, KYD, LAK, LBP, LKR, LRD, LSL, LTL, LVL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRO, MUR, MVR, MWK, MXN, MXV, MYR, MZN, NAD, NGN, NHF, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SEK, SGD, SHP, SLL, SOS, SRD, SSP, STD, SVC, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, USD, USN, USS, UYU, UZS, VEB, VEF, VND, VUV, WST, XAF, XAG, XAU, XCD, XDR, XFO, XFU, XOF, XPD, XPF, XPT, YER, ZAR, ZMK, ZWL)
+    def values: Set[Currency] = Set(AED, AFN, ALL, AMD, ANG, AOA, ARP, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BOV, BRL, BSD, BTN, BWP, BYR, BYN, BZD, BTC, CAD, CDF, CHF, CLF, CLP, CNY, COP, COU, CRC, CUC, CUP, CVE, CYP, CZK, DJF, DKK, DOP, DZD, ECS, ECV, EGP, ERN, ETB, EUR, ETH, FJD, FKP, GBP, GEL, GHS, GIP, GMD, GNF, GTQ, GWP, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KGS, KHR, KMF, KPW, KRW, KZT, KWD, KYD, KYD, LAK, LBP, LKR, LRD, LSL, LTL, LVL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRO, MUR, MVR, MWK, MXN, MXV, MYR, MZN, NAD, NGN, NHF, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SEK, SGD, SHP, SLL, SOS, SRD, SSP, STD, SVC, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, USD, USN, USS, UYU, UZS, VEB, VEF, VND, VUV, WST, XAF, XAG, XAU, XCD, XDR, XFO, XFU, XOF, XPD, XPF, XPT, YER, ZAR, ZMK, ZWL)
 
     implicit def stringToCurrency(value: String): Currency = get(value).getOrElse(EUR)
   }
