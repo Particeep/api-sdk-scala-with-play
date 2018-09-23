@@ -1,7 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.data.Form
-import play.api.data.Forms.{mapping, optional, text}
+import play.api.libs.json.Json
 
 case class BankAccountSearch (
   id:          Option[String]   = None,
@@ -18,19 +17,5 @@ case class BankAccountSearch (
 )
 
 object BankAccountSearch {
-  val bank_account_search_form = Form(
-    mapping(
-      "id" -> optional(text),
-      "target_id" -> optional(text),
-      "target_type" -> optional(text),
-      "wallet_id" -> optional(text),
-      "status" -> optional(text),
-      "bank_name" -> optional(text),
-      "iban" -> optional(text),
-      "bic" -> optional(text),
-      "acct_num" -> optional(text),
-      "aba_num" -> optional(text),
-      "transit_num" -> optional(text)
-    )(BankAccountSearch.apply)(BankAccountSearch.unapply)
-  )
+  val format = Json.format[BankAccountSearch]
 }
