@@ -2,7 +2,6 @@ package com.particeep.api.models.wallet
 
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
-import play.api.libs.json.Json
 
 case class BankAccountSearch (
   id:          Option[String]   = None,
