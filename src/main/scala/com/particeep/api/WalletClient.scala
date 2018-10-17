@@ -82,7 +82,7 @@ class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = No
   }
 
   def addBankAccountOffline(target_id: String, bankAccountCreation: BankAccountCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
-    ws.put[BankAccount](s"$endPoint/bankaccount/target_id", timeout, Json.toJson(bankAccountCreation))
+    ws.put[BankAccount](s"$endPoint/bankaccount/$target_id", timeout, Json.toJson(bankAccountCreation))
   }
 
   def updateBankAccountOffline(bankaccount_id: String, bank_account_creation: BankAccountCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
