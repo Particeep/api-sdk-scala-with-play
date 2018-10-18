@@ -8,6 +8,7 @@ import play.api.libs.json.Json
 case class InvestmentCreation(
   user_id:    String,
   amount:     Int,
+  rib:        Option[String],
   created_at: Option[ZonedDateTime]
 )
 
