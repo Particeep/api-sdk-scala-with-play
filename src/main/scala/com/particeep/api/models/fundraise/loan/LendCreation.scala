@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 case class LendCreation(
   user_id:    String,
   amount:     Int,
-  rib:        Option[String],
+  rib:        Option[String] = None,
   created_at: Option[ZonedDateTime]
 )
 
