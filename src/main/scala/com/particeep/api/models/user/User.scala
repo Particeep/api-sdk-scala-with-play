@@ -6,7 +6,8 @@ import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.InvestorType.InvestorType
-import play.api.libs.json.{ JsObject, Json }
+import org.cvogt.play.json.Jsonx
+import play.api.libs.json.JsObject
 
 case class User(
   id:                       String                = "",
@@ -30,10 +31,12 @@ case class User(
   has_been_claimed:         Option[Boolean]       = None,
   address:                  Option[Address]       = None,
   tag:                      Option[String]        = None,
+  tax_system:               Option[String]        = None,
+  tax_rate:                 Option[String]        = None,
   custom:                   Option[JsObject]      = None
 )
 
 object User {
   implicit val date_format = Formatter.ZonedDateTimeWrites
-  val format = Json.format[User]
+  val format = Jsonx.formatCaseClass[User]
 }
