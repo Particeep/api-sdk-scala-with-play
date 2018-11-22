@@ -32,7 +32,7 @@ case class User(
   address:                  Option[Address]       = None,
   tag:                      Option[String]        = None,
   tax_system:               Option[String]        = None,
-  tax_rate:                 Option[String]        = None,
+  tax_rate:                 Option[Double]        = None,
   custom:                   Option[JsObject]      = None
 )
 
