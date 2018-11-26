@@ -93,8 +93,8 @@ class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = No
     ws.get[PaginatedSequence[BankAccount]](s"$endPoint/bankaccount/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
-  def deleteBankAccountOffline(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
-    ws.delete[BankAccount](s"$endPoint/bankaccount/$id", timeout)
+  def deleteBankAccountOffline(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Int]] = {
+    ws.delete[Int](s"$endPoint/bankaccount/$id", timeout)
   }
 
   def getBankAccountsByWalletId(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Seq[BankAccount]]] = {
