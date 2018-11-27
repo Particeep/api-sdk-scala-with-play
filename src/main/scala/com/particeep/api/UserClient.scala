@@ -27,6 +27,8 @@ object UserClient {
   private implicit val edition_format = UserEdition.format
   private implicit val data_format = UserData.format
   private implicit val importResultReads = ImportResult.format[User]
+  private implicit val RelativeCreation_format = RelativeCreation.format
+  private implicit val relative_format = Relative.format
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
   private implicit val change_password_format = Json.format[ChangePassword]
@@ -86,6 +88,14 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def importFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[User]]] = {
     ws.postFile[ImportResult[User]](s"$endPoint_import/user/csv", timeout, csv, "text/csv", List())
+  }
+
+  def addRelative(id: String, relative_option: RelativeCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Relative]] = {
+    ws.put[Relative](s"$endPoint/$id/relative", timeout, Json.toJson(relative_option))
+  }
+
+  def deleteRelative(id: String, relative_id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Relative]] = {
+    ws.delete[Relative](s"$endPoint/$id/relative/$relative_id", timeout)
   }
 
 }
