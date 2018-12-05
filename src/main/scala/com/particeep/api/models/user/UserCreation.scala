@@ -6,7 +6,7 @@ import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.InvestorType.InvestorType
-import play.api.libs.json.{ JsObject, Json, Format }
+import play.api.libs.json.{ JsObject, Json }
 
 case class UserCreation(
   email:                    String,

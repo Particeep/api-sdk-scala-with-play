@@ -4,7 +4,7 @@ import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
 import org.cvogt.play.json.Jsonx
-import play.api.libs.json.{ JsObject, Json, Format }
+import play.api.libs.json.{ JsObject, Json }
 
 /**
  * Created by Noe on 18/05/2017.
