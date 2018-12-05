@@ -7,7 +7,6 @@ import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.InvestorType.InvestorType
 import play.api.libs.json.{ JsObject, Json, Format }
-import org.cvogt.play.json.Jsonx
 
 case class UserEdition(
   first_name:               Option[String]        = None,
