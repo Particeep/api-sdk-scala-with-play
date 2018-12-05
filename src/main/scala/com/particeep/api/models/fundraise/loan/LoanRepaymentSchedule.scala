@@ -31,6 +31,8 @@ object LoanRepaymentSchedule {
   implicit val date_format = Formatter.ZonedDateTimeWrites
   implicit val format = Json.format[LoanRepaymentSchedule]
 
+  private[this] implicit val user_format = User.format
+
   val loan_repayment_schedule_and_user_format: Format[(LoanRepaymentSchedule, User)] = new Format[(LoanRepaymentSchedule, User)] {
     def reads(json: JsValue): JsResult[(LoanRepaymentSchedule, User)] = JsSuccess((
       json.as[LoanRepaymentSchedule],
