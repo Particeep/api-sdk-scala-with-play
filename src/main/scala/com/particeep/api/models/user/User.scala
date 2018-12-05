@@ -7,7 +7,7 @@ import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.InvestorType.InvestorType
 import org.cvogt.play.json.Jsonx
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.{ JsObject, Json }
 
 case class User(
   id:                       String                = "",
