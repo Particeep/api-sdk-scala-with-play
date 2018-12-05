@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.RelativeType.RelativeType
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json}
 
 case class RelativeCreation(
   email:         Option[String]        = None,
