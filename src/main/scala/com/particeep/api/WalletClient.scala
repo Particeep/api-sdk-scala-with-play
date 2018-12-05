@@ -81,6 +81,22 @@ class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = No
     ws.put[BankAccount](s"$endPoint/$id/bankaccount", timeout, Json.toJson(bank_account_creation))
   }
 
+  def addBankAccountOffline(target_id: String, bankAccountCreation: BankAccountCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
+    ws.put[BankAccount](s"$endPoint/bankaccount/$target_id", timeout, Json.toJson(bankAccountCreation))
+  }
+
+  def updateBankAccount(bankaccount_id: String, bank_account_update: BankAccountCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, BankAccount]] = {
+    ws.post[BankAccount](s"$endPoint/bankaccount/$bankaccount_id", timeout, Json.toJson(bank_account_update))
+  }
+
+  def searchBankAccounts(criteria: BankAccountSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[BankAccount]]] = {
+    ws.get[PaginatedSequence[BankAccount]](s"$endPoint/bankaccount/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+  }
+
+  def deleteBankAccountOffline(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Int]] = {
+    ws.delete[Int](s"$endPoint/bankaccount/$id", timeout)
+  }
+
   def getBankAccountsByWalletId(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Seq[BankAccount]]] = {
     ws.get[Seq[BankAccount]](s"$endPoint/$id/bankaccount", timeout)
   }

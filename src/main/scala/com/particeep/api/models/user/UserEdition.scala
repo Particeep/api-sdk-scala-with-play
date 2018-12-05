@@ -15,6 +15,7 @@ case class UserEdition(
   avatar_url:               Option[String]        = None,
   birthday:                 Option[ZonedDateTime] = None,
   birth_place:              Option[String]        = None,
+  birth_country:            Option[String]        = None,
   phone:                    Option[String]        = None,
   nationality:              Option[String]        = None,
   bio:                      Option[String]        = None,
@@ -26,6 +27,8 @@ case class UserEdition(
   does_pay_taxes:           Option[Boolean]       = None,
   address:                  Option[Address]       = None,
   tag:                      Option[String]        = None,
+  tax_system:               Option[String]        = None,
+  tax_rate:                 Option[Double]        = None,
   custom:                   Option[JsObject]      = None
 )
 
