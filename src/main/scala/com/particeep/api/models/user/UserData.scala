@@ -44,8 +44,6 @@ case class UserData(
 
 object UserData {
   implicit val date_format = Formatter.ZonedDateTimeWrites
+  val format = Jsonx.formatCaseClass[UserData]
 
-  private[this] val jsonFormatX = Jsonx.formatCaseClass[UserData]
-
-  implicit val format = Format(jsonFormatX, jsonFormatX)
 }
