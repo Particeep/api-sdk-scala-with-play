@@ -36,6 +36,7 @@ case class TransactionData(
   partner_flat_fees:     Option[Int]           = None,
   partner_variable_fees: Option[Double]        = None,
   tag:                   Option[String]        = None,
+  issuer_relatives:      Option[JsObject]      = None,
   custom:                Option[JsObject]      = None
 )
 
