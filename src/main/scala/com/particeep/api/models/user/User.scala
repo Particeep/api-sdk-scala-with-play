@@ -19,6 +19,7 @@ case class User(
   avatar_url:               Option[String]        = None,
   birthday:                 Option[ZonedDateTime] = None,
   birth_place:              Option[String]        = None,
+  birth_country:            Option[String]        = None,
   phone:                    Option[String]        = None,
   nationality:              Option[String]        = None,
   bio:                      Option[String]        = None,
