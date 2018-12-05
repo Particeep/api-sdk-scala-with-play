@@ -4,7 +4,7 @@ import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
 import org.cvogt.play.json.Jsonx
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{ JsObject, Json, Format }
 
 /**
  * Created by Noe on 18/05/2017.
@@ -20,6 +20,7 @@ case class UserData(
   avatar_url:               Option[String]        = None,
   birthday:                 Option[ZonedDateTime] = None,
   birth_place:              Option[String]        = None,
+  birth_country:            Option[String]        = None,
   phone:                    Option[String]        = None,
   nationality:              Option[String]        = None,
   bio:                      Option[String]        = None,
@@ -43,5 +44,8 @@ case class UserData(
 
 object UserData {
   implicit val date_format = Formatter.ZonedDateTimeWrites
-  val format = Jsonx.formatCaseClass[UserData]
+
+  private[this] val jsonFormatX = Jsonx.formatCaseClass[UserData]
+
+  implicit val format = Format(jsonFormatX, jsonFormatX)
 }
