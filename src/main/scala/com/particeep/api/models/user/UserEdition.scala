@@ -28,6 +28,8 @@ case class UserEdition(
   does_pay_taxes:           Option[Boolean]       = None,
   address:                  Option[Address]       = None,
   tag:                      Option[String]        = None,
+  tax_system:               Option[String]        = None,
+  tax_rate:                 Option[Double]        = None,
   custom:                   Option[JsObject]      = None
 )
 
