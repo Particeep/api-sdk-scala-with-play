@@ -3,6 +3,7 @@ package com.particeep.api.models.wallet
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
+import com.particeep.api.models.Address
 import com.particeep.api.models.enums.BankAccountStatus.BankAccountStatus
 import play.api.libs.json.Json
 
@@ -16,7 +17,8 @@ case class BankAccount(
   bic:         String                    = "",
   acct_num:    Option[String]            = None,
   aba_num:     Option[String]            = None,
-  transit_num: Option[String]            = None
+  transit_num: Option[String]            = None,
+  address:     Option[Address]           = None
 )
 
 object BankAccount {
