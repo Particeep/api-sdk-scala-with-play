@@ -3,10 +3,10 @@ package com.particeep.api.models.transaction
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.{ Currency, EUR }
+import com.particeep.api.models.enums.Currency.{Currency, EUR}
 import com.particeep.api.models.enums.PaymentMethod.PaymentMethod
-import com.particeep.api.models.enums.TransactionStatus.{ PENDING, TransactionStatus }
-import play.api.libs.json.{ JsObject, Json }
+import com.particeep.api.models.enums.TransactionStatus.{PENDING, TransactionStatus}
+import play.api.libs.json.{JsArray, JsObject, Json}
 
 case class Transaction(
   id:               String                = "",
@@ -27,7 +27,7 @@ case class Transaction(
   handled_offline:  Option[Boolean]       = None,
   comment:          Option[String]        = None,
   tag:              Option[String]        = None,
-  issuer_relatives: Option[JsObject]      = None,
+  co_issuers:       Option[JsArray]       = None,
   custom:           Option[JsObject]      = None
 )
 
