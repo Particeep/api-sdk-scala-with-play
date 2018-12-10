@@ -6,7 +6,7 @@ import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.PaymentMethod.PaymentMethod
 import org.cvogt.play.json.Jsonx
-import play.api.libs.json.JsObject
+import play.api.libs.json.{JsArray, JsObject}
 
 /**
  * Created by Noe on 30/06/2017.
@@ -36,7 +36,7 @@ case class TransactionData(
   partner_flat_fees:     Option[Int]           = None,
   partner_variable_fees: Option[Double]        = None,
   tag:                   Option[String]        = None,
-  issuer_relatives:      Option[JsObject]      = None,
+  co_issuers:            Option[JsArray]       = None,
   custom:                Option[JsObject]      = None
 )
 

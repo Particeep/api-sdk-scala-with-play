@@ -3,8 +3,8 @@ package com.particeep.api.models.transaction
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import play.api.libs.json.{ JsObject, Json }
+import com.particeep.api.models.enums.Currency.{Currency, EUR}
+import play.api.libs.json.{JsArray, JsObject, Json}
 
 /**
  * Created by Noe on 03/04/2017.
@@ -24,7 +24,7 @@ case class TransactionCreation(
   currency:         Currency              = EUR,
   comment:          Option[String]        = None,
   tag:              Option[String]        = None,
-  issuer_relatives: Option[JsObject]      = None,
+  co_issuers:       Option[JsArray]       = None,
   custom:           Option[JsObject]      = None
 )
 
