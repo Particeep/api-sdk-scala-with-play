@@ -38,10 +38,12 @@ case class UserData(
   targeting_roles:          Option[String]        = None,
   investor_score:           Option[Long]          = None,
   tag:                      Option[String]        = None,
+  relatives:                Option[Seq[Relative]] = None,
   custom:                   Option[JsObject]      = None
 )
 
 object UserData {
   implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val relative_format = Relative.format
   val format = Jsonx.formatCaseClass[UserData]
 }
