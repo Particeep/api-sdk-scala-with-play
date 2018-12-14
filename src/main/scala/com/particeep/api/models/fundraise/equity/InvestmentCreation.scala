@@ -3,12 +3,13 @@ package com.particeep.api.models.fundraise.equity
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
+import play.api.libs.json.{JsArray, Json}
 
 case class InvestmentCreation(
   user_id:    String,
   amount:     Int,
-  rib:        Option[String] = None,
+  rib:        Option[String]        = None,
+  co_issuers: Option[JsArray]       = None,
   created_at: Option[ZonedDateTime]
 )
 
