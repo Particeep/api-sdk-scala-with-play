@@ -15,7 +15,6 @@ case class ScheduledPaymentCreation(
   parent_type:        Option[String] = None,
   amount:             Int,
   fees:               Int,
-  max_attempt_to_pay: Option[Int]    = None,
   tag:                Option[String] = None
 )
 

@@ -18,8 +18,6 @@ case class ScheduledPayment(
   amount:                Int,
   fees:                  Int,
   status:                String,
-  attempt_to_pay:        Int,
-  max_attempt_to_pay:    Int,
   transaction_wallet_id: Option[String]        = None,
   tag:                   Option[String]        = None
 )
