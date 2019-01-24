@@ -27,7 +27,8 @@ object ParticeepApi {
       with TransactionCapability
       with PaymentCapability
       with FundraiseEquityCapability
-      with WalletSepaCapability {
+      with WalletSepaCapability
+      with PhoneMessagingCapability {
     self: WSClient =>
   }
 
