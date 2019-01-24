@@ -6,7 +6,7 @@ import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.PaymentMethod.PaymentMethod
 import org.cvogt.play.json.Jsonx
-import play.api.libs.json.{JsArray, JsObject}
+import play.api.libs.json.{ JsArray, JsObject }
 
 /**
  * Created by Noe on 30/06/2017.
