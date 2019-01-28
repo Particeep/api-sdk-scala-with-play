@@ -3,7 +3,7 @@ package com.particeep.api.models.fundraise.loan
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.{JsArray, Json}
+import play.api.libs.json.{ JsArray, Json }
 
 case class LendCreation(
   user_id:    String,

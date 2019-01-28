@@ -11,6 +11,7 @@ case class BankAccountCreation(
   zip:         String,
   city:        String,
   country:     String,
+  holder_name: Option[String] = None,
   acct_num:    Option[String] = None,
   aba_num:     Option[String] = None,
   transit_num: Option[String] = None,
