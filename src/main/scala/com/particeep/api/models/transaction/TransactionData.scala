@@ -37,6 +37,8 @@ case class TransactionData(
   partner_variable_fees: Option[Double]        = None,
   tag:                   Option[String]        = None,
   co_issuers:            Option[JsArray]       = None,
+  rib:                   Option[String]        = None,
+  cgp_id:                Option[String]        = None,
   custom:                Option[JsObject]      = None
 )
 

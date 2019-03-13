@@ -22,6 +22,8 @@ case class TransactionEdition(
   comment:         Option[String]   = None,
   tag:             Option[String]   = None,
   co_issuers:      Option[JsArray]  = None,
+  rib:             Option[String]   = None,
+  cgp_id:          Option[String]   = None,
   custom:          Option[JsObject] = None
 )
 
