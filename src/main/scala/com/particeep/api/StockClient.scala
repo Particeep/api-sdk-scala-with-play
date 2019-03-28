@@ -17,7 +17,7 @@ trait StockCapability {
 }
 
 object StockClient {
-  private val endPoint: String = "/financial-product"
+  private val endPoint: String = "/stock"
   private implicit val format = Stock.format
   private implicit val creation_format = StockCreation.format
   private implicit val edition_format = StockEdition.format
