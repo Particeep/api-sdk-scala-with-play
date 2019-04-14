@@ -18,6 +18,7 @@ case class WalletCreation(
   last_name:           String           = "",
   gender:              String           = "",
   birthday:            ZonedDateTime    = ZonedDateTime.now,
+  is_payer:            Option[Boolean]  = None,
   nationality:         Option[String]   = None,
   countryOfResidence:  Option[String]   = None,
   occupation:          Option[String]   = None,
