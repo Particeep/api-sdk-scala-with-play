@@ -28,7 +28,8 @@ case class FundraiseSearch(
   score:                     Option[String]        = None,
   private_group_id:          Option[String]        = None,
   targeting_roles:           Option[String]        = None,
-  tag:                       Option[String]        = None
+  tag:                       Option[String]        = None,
+  fundraise_tag:             Option[String]        = None
 )
 
 object FundraiseSearch {
