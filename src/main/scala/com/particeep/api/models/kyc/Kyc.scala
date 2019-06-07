@@ -3,6 +3,7 @@ package com.particeep.api.models.kyc
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
+import com.particeep.api.models.enums.KycStatus.{ CREATED, KycStatus }
 import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
 import play.api.libs.json.Json
 
@@ -12,6 +13,7 @@ case class Kyc(
   update_at:       Option[ZonedDateTime] = None,
   refusal_reason:  Option[String]        = None,
   refusal_message: Option[String]        = None,
+  status:          KycStatus             = CREATED,
   urls:            Seq[String]           = Seq()
 )
 
