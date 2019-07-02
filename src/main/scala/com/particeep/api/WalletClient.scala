@@ -28,7 +28,6 @@ object WalletClient {
   private implicit val bank_account_creation_format = BankAccountCreation.format
   private implicit val cashin_bank_account_format = CashInBankAccount.format
   private implicit val cashin_bank_account_creation_format = CashInBankAccountCreation.format
-  private implicit val transaction_wallet_fees_option = TransactionWalletFeesOpt.format
 }
 
 class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -59,8 +58,8 @@ class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = No
     ws.post[TransactionWallet](s"$endPoint/$id/cashout", timeout, Json.toJson(cash_out))
   }
 
-  def transfer(transfer: WalletTransfer, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, TransactionWalletFeesOpt]] = {
-    ws.post[TransactionWalletFeesOpt](s"$endPoint/transfer", timeout, Json.toJson(transfer))
+  def transfer(transfer: WalletTransfer, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, TransactionWallet]] = {
+    ws.post[TransactionWallet](s"$endPoint/transfer", timeout, Json.toJson(transfer))
   }
 
   def allRelatedTransactions(id: String, criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[TransactionWallet]]] = {
