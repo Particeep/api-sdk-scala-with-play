@@ -3,6 +3,7 @@ package com.particeep.api
 import java.io.File
 
 import com.particeep.api.core._
+import com.particeep.api.models.document.{ InvestmentDocument, TransactionDocument }
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.fundraise.loan._
 import com.particeep.api.models.imports.ImportResult
@@ -38,6 +39,8 @@ object FundraiseLoanClient {
   private implicit val lend_creation_format = LendCreation.format
   private implicit val estimate_borrower_info_format = EstimateBorrowerInfo.format
   private implicit val importResultReads = ImportResult.format[FundraiseLoan]
+  private implicit val transaction_document_format = TransactionDocument.format
+  private implicit val investment_document_format = InvestmentDocument.format
 }
 
 class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -193,5 +196,9 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredentia
 
   def importFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseLoan]]] = {
     ws.postFile[ImportResult[FundraiseLoan]](s"$endPoint_import/fundraise-loan/csv", timeout, csv, "text/csv", List())
+  }
+
+  def generateTransactionDocuments(transaction_id: String, investment_documents: List[InvestmentDocument], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[TransactionDocument]]] = {
+    ws.post[List[TransactionDocument]](s"$endPoint/generateTransDocs/$transaction_id", timeout, Json.toJson(investment_documents))
   }
 }
