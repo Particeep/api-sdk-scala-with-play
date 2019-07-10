@@ -108,6 +108,6 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredent
   }
 
   def generateTransactionDocuments(transaction_id: String, investment_documents: List[InvestmentDocument], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[TransactionDocument]]] = {
-    ws.post[List[TransactionDocument]](s"$endPoint/generateTransDocs/$transaction_id", timeout, Json.toJson(investment_documents))
+    ws.post[List[TransactionDocument]](s"$endPoint/generateTransDocsEquity/$transaction_id", timeout, Json.toJson(investment_documents))
   }
 }
