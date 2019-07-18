@@ -10,6 +10,7 @@ import play.api.libs.ws.ning._
 import play.api.Play.current
 import play.api.libs.iteratee.Enumerator
 import play.api.libs.json.{ Format, JsValue, Json }
+import play.api.mvc.{ ResponseHeader, Result }
 
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
@@ -81,6 +82,12 @@ trait WSClient {
     body:    JsValue,
     params:  List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]]
+
+  def export(
+    path:    String,
+    timeOut: Long,
+    params:  List[(String, String)] = List()
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Result]
 }
 
 trait BaseClient {
@@ -200,11 +207,25 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     }
   }
 
+  def export(path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Result] = {
+    val response = url(path, timeOut).withHeaders("Content-Type" -> "application/csv").withQueryString(params: _*).get()
+    WsResponseToResult(response)
+  }
+
   private[this] def handle_error[T](e: Throwable, method: String, path: String): Either[ErrorResult, T] = {
     val technical_code = "error.api.no.response"
     val error_msg = s"ApiClient error for $method method on path $path"
     val error_id = "#" + Random.alphanumeric.take(8).mkString
     Left(Errors(true, List(Error(technical_code, error_msg, Some(error_id), Some(e.getMessage)))))
+  }
+
+  private[this] def WsResponseToResult(response: Future[WSResponse])(implicit exec: ExecutionContext): Future[Result] = {
+    response.map { response =>
+        val headers = response.allHeaders map { h =>
+          (h._1, h._2.head)
+        }
+        Result(ResponseHeader(response.status, headers), Enumerator(response.body.getBytes))
+    }
   }
 }
 
