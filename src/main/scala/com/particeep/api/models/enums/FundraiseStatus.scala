@@ -12,6 +12,7 @@ object FundraiseStatus {
   case object REFUND_ONGOING extends FundraiseStatus { val name: String = "REFUND_ONGOING" }
   case object REFUNDED extends FundraiseStatus { val name: String = "REFUNDED" }
   case object DELETED extends FundraiseStatus { val name: String = "DELETED" }
+  case object CLOSING extends FundraiseStatus { val name: String = "CLOSING" }
 
   object FundraiseStatus extends EnumHelper[FundraiseStatus] {
     def values: Set[FundraiseStatus] = Set(INIT, UNDER_REVIEW, RUNNING, SUCCEEDED, REFUND_ONGOING, REFUNDED, DELETED)
