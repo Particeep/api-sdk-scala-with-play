@@ -10,7 +10,7 @@ import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.utils.LangUtils
 import com.particeep.api.models.user._
 import com.particeep.api.core._
-import play.api.mvc.Result
+import play.api.libs.iteratee.Enumerator
 
 trait UserCapability {
   self: WSClient =>
@@ -59,7 +59,7 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.get[PaginatedSequence[UserData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
-  def exportSearch(criteria: UserSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Result] = {
+  def exportSearch(criteria: UserSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
     ws.export(s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
