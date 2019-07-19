@@ -2,6 +2,9 @@ package com.particeep.api
 
 import java.io.File
 
+import akka.NotUsed
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -10,7 +13,6 @@ import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.utils.LangUtils
 import com.particeep.api.models.user._
 import com.particeep.api.core._
-import play.api.libs.iteratee.Enumerator
 
 trait UserCapability {
   self: WSClient =>
@@ -59,7 +61,7 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.get[PaginatedSequence[UserData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
-  def exportSearch(criteria: UserSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+  def exportSearch(criteria: UserSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     ws.export(s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 

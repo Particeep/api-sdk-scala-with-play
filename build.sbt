@@ -13,7 +13,8 @@ libraryDependencies ++= Seq(
   "com.ning"          %  "async-http-client"               % "1.9.40"          withSources(),
   "com.github.driox"  %% "sorus"                           % "1.0.0"           withSources(),
   "org.slf4j"         %  "slf4j-api"                       % "1.7.21"          withSources(),
-  "org.cvogt"         %% "play-json-extensions"            % "0.6.1"           withSources()
+  "org.cvogt"         %% "play-json-extensions"            % "0.6.1"           withSources(),
+  "com.typesafe.akka" %% "akka-stream"                     % "2.5.23"          withSources()
 )
 
 // Uncomment to use Akka

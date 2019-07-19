@@ -10,6 +10,9 @@ import play.api.libs.ws.ning._
 import play.api.Play.current
 import play.api.libs.iteratee.Enumerator
 import play.api.libs.json.{ Format, JsValue, Json }
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
+import akka.NotUsed
 
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
@@ -86,7 +89,7 @@ trait WSClient {
     path:    String,
     timeOut: Long,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]]
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 }
 
 trait BaseClient {
@@ -206,9 +209,9 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     }
   }
 
-  def export(path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
-    parseStream(url(path, timeOut).withHeaders("Content-Type" -> "application/csv").withQueryString(params: _*).withMethod("GET")).recover {
-      case NonFatal(e) => handle_error[Enumerator[Array[Byte]]](e, "GET", path)
+  def export(path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
+    url(path, timeOut).withHeaders("Content-Type" -> "application/csv").withQueryString(params: _*).get().map(parseAsSource(_)).recover {
+      case NonFatal(e) => handle_error[Source[ByteString, NotUsed]](e, "GET", path)
     }
   }
 

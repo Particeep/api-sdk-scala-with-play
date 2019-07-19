@@ -1,5 +1,8 @@
 package com.particeep.api.core
 
+import akka.NotUsed
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import com.ning.http.client.Response
 import org.slf4j.LoggerFactory
 import play.api.libs.json._
@@ -36,6 +39,14 @@ trait ResponseParser {
         case NonFatal(ex) => request.stream().map(r => Right(r._2))
       }
     }.flatMap(identity)
+  }
+
+  def parseAsSource(response: WSResponse)(implicit exec: ExecutionContext): Either[ErrorResult, Source[ByteString, NotUsed]] = {
+    try {
+      Left(validateStandardError(response.json).get)
+    } catch {
+      case NonFatal(_) => Right(Source.single(ByteString(response.bodyAsBytes)))
+    }
   }
 
   private[this] def parse[A](json: JsValue, status: Int)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
