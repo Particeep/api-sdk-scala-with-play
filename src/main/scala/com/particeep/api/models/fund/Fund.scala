@@ -4,7 +4,7 @@ import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import com.particeep.api.models.enums.FundraiseStatus.{ FundraiseStatus, INIT }
+import com.particeep.api.models.enums.FundStatus.{ FundStatus, INIT }
 import play.api.libs.json.{ JsObject, Json }
 
 case class Fund(
@@ -22,7 +22,7 @@ case class Fund(
   disclaimer_fees:     Option[String]        = None,
   disclaimer_payment:  Option[String]        = None,
   currency:            Currency              = EUR,
-  status:              FundraiseStatus       = INIT,
+  status:              FundStatus            = INIT,
   isin_code:           Option[String]        = None,
   tag:                 Option[String]        = None,
   offer:               FundOffer             = FundOffer(),
