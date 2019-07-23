@@ -1,7 +1,7 @@
 package com.particeep.api.models.fund
 
 import com.particeep.api.models.enums.Currency.Currency
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.{ JsObject, Json }
 
 case class FundCreation(
   enterprise_id:       Option[String]    = None,

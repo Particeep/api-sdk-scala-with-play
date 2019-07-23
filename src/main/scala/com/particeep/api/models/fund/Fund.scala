@@ -3,9 +3,9 @@ package com.particeep.api.models.fund
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.{Currency, EUR}
-import com.particeep.api.models.enums.FundraiseStatus.{FundraiseStatus, INIT}
-import play.api.libs.json.{JsObject, Json}
+import com.particeep.api.models.enums.Currency.{ Currency, EUR }
+import com.particeep.api.models.enums.FundraiseStatus.{ FundraiseStatus, INIT }
+import play.api.libs.json.{ JsObject, Json }
 
 case class Fund(
   id:                  String                = "",
