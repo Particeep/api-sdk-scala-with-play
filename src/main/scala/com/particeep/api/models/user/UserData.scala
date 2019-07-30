@@ -40,6 +40,7 @@ case class UserData(
   targeting_roles:          Option[String]           = None,
   investor_score:           Option[Long]             = None,
   tag:                      Option[String]           = None,
+  is_pro:                   Option[Boolean]          = None,
   relatives:                Option[Seq[Relative]]    = None,
   bankaccounts:             Option[Seq[BankAccount]] = None,
   custom:                   Option[JsObject]         = None
