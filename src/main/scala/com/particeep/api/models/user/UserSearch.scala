@@ -23,6 +23,6 @@ case class UserSearch(
   tag:              Option[String]        = None,
   roles:            Option[String]        = None,
   targeting_roles:  Option[String]        = None,
-  is_pro:           Option[Boolean]       = None,
-  ids:              Option[String]        = None
+  ids:              Option[String]        = None,
+  is_pro:           Option[Boolean]       = None
 )
