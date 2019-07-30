@@ -35,6 +35,7 @@ case class User(
   tag:                      Option[String]        = None,
   tax_system:               Option[String]        = None,
   tax_rate:                 Option[Double]        = None,
+  is_pro:                   Option[Boolean]       = None,
   relatives:                Option[Seq[Relative]] = None,
   custom:                   Option[JsObject]      = None
 )

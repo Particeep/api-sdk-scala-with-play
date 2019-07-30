@@ -17,6 +17,7 @@ case class FundCreation(
   isin_code:           Option[String]    = None,
   currency:            Currency,
   tag:                 Option[String]    = None,
+  required_pro:        Option[Boolean]   = None,
   offer:               Option[FundOffer] = None,
   custom:              Option[JsObject]  = None
 )
