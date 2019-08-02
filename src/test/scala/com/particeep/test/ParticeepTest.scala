@@ -2,6 +2,9 @@ package com.particeep.test
 
 import java.time.{ ZoneOffset, ZonedDateTime }
 
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
+
 import scala.language.postfixOps
 import com.particeep.api.core.ApiClient
 import com.particeep.api.core.Formatter
@@ -11,6 +14,7 @@ import com.particeep.api.Info
 import com.particeep.api.InfoCapability
 import org.scalatest._
 import play.api.libs.json.Json
+import play.api.libs.ws.ahc.AhcWSClient
 
 import scala.concurrent.{ Await, Future }
 import scala.concurrent.duration._
@@ -19,8 +23,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class ParticeepTest extends FlatSpec with Matchers {
 
   "the api client" should "load info" in {
-
-    val ws = new ApiClient(ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with InfoCapability
+    implicit val actor_system = ActorSystem()
+    implicit val actor_materializer = ActorMaterializer()
+    lazy val defaultSslClient = AhcWSClient()
+    val ws = new ApiClient(defaultSslClient, ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with InfoCapability
 
     val rez_f: Future[Either[ErrorResult, Info]] = ws.info.info()
 

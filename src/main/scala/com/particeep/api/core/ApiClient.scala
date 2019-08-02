@@ -2,14 +2,18 @@ package com.particeep.api.core
 
 import java.io.File
 
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import com.ning.http.client.multipart.{ FilePart, Part }
 import com.ning.http.client.AsyncHttpClient
 import com.particeep.api.models.{ Error, ErrorResult, Errors }
+import javax.inject.Inject
 import play.api.libs.ws._
-import play.api.libs.ws.ning._
-import play.api.Play.current
-import play.api.libs.iteratee.Enumerator
+import play.api.libs.ws.{ WSClient => WS }
 import play.api.libs.json.{ Format, JsValue, Json }
+import play.api.libs.ws.ahc.AhcWSClient
 
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
@@ -73,14 +77,15 @@ trait WSClient {
     path:    String,
     timeOut: Long,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]]
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, _]]]
 
   def postStream(
     path:    String,
     timeOut: Long,
     body:    JsValue,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]]
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, _]]]
+
 }
 
 trait BaseClient {
@@ -109,14 +114,14 @@ trait BaseClient {
  *
  * val result:Future[Either[JsError, Info]] = ws.user.byId("some_id")
  */
-class ApiClient(val baseUrl: String, val version: String, val credentials: Option[ApiCredential] = None) extends WSClient with BaseClient with WithSecurtiy with ResponseParser {
+class ApiClient @Inject() (ws: WS, val baseUrl: String, val version: String, val credentials: Option[ApiCredential] = None) extends WSClient with BaseClient with WithSecurtiy with ResponseParser {
 
   val defaultTimeOut: Long = 10000
   val defaultImportTimeOut: Long = -1
 
   private[this] def url(path: String, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): WSRequest = {
-    val req = WS.clientUrl(s"$baseUrl/v$version$path")
-    secure(req, credentials, timeOut).withHeaders(credentials.http_headers.getOrElse(List()): _*)
+    val req = ws.url(s"$baseUrl/v$version$path")
+    secure(req, credentials, timeOut).withHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
   }
 
   private[this] def urlFileUpload(path: String, client: AsyncHttpClient, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): AsyncHttpClient#BoundRequestBuilder = {
@@ -128,7 +133,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
   }
 
   def get[T](path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    url(path, timeOut).withQueryString(params: _*).get().map(parse[T](_)).recover {
+    url(path, timeOut).withQueryStringParameters(params: _*).get().map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "GET", path)
     }
   }
@@ -139,7 +144,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     body:    JsValue,
     params:  List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    url(path, timeOut).withQueryString(params: _*).post(body).map(parse[T](_)).recover {
+    url(path, timeOut).withQueryStringParameters(params: _*).post(body).map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "POST", path)
     }
   }
@@ -156,7 +161,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     body:    JsValue                = Json.toJson(""),
     params:  List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    url(path, timeOut).withQueryString(params: _*).withMethod("DELETE").withBody(body).execute().map(parse[T](_)).recover {
+    url(path, timeOut).withQueryStringParameters(params: _*).withMethod("DELETE").withBody(body).execute().map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "DELETE", path)
     }
   }
@@ -168,7 +173,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     contentType: String,
     bodyParts:   List[Part]
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    val client = WS.client.underlying[AsyncHttpClient]
+    val client = ws.underlying[AsyncHttpClient]
     val postBuilder = urlFileUpload(path, client, timeout)
     val builder = postBuilder.addBodyPart(
       new FilePart("document", file, contentType)
@@ -183,9 +188,9 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     path:    String,
     timeOut: Long,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
-    parseStream(url(path, timeOut).withQueryString(params: _*).withMethod("GET")).recover {
-      case NonFatal(e) => handle_error[Enumerator[Array[Byte]]](e, "GET", path)
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, _]]] = {
+    parseStream(url(path, timeOut).withQueryStringParameters(params: _*).withMethod("GET")).recover {
+      case NonFatal(e) => handle_error[Source[ByteString, _]](e, "GET", path)
     }
   }
 
@@ -194,9 +199,9 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     timeOut: Long,
     body:    JsValue,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
-    parseStream(url(path, timeOut).withQueryString(params: _*).withMethod("POST").withBody(body)).recover {
-      case NonFatal(e) => handle_error[Enumerator[Array[Byte]]](e, "POST", path)
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, _]]] = {
+    parseStream(url(path, timeOut).withQueryStringParameters(params: _*).withMethod("POST").withBody(body)).recover {
+      case NonFatal(e) => handle_error[Source[ByteString, _]](e, "POST", path)
     }
   }
 
@@ -209,6 +214,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
 }
 
 object ApiClient {
-
-  lazy val defaultSslClient = NingWSClient()
+  implicit val actor_system = ActorSystem()
+  implicit val actor_materializer = ActorMaterializer()
+  lazy val defaultSslClient = AhcWSClient()
 }

@@ -7,14 +7,15 @@ import com.ning.http.client.AsyncHttpClient
 import play.api.libs.ws._
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.duration.{ Duration, SECONDS }
 
 trait WithSecurtiy {
 
   protected def secure(req: WSRequest, apiCredential: ApiCredential, timeOut: Long)(implicit exec: ExecutionContext) = {
     val today = buildDateHeader()
     req
-      .withRequestTimeout(timeOut)
-      .withHeaders(
+      .withRequestTimeout(Duration(timeOut, SECONDS))
+      .withHttpHeaders(
         ("DateTime", today),
         ("Authorization", buildAuthorizationHeader(today, apiCredential))
       )

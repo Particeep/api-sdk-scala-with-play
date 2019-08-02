@@ -1,6 +1,7 @@
 package com.particeep.api
 
 import com.particeep.api.core.{ ApiClient, ApiCredential, WSClient }
+import play.api.test.WsTestClient
 
 /**
  * This is a high level builder for api client. We may add new
@@ -34,6 +35,7 @@ object ParticeepApi {
 
   def test(api_key: String, api_secret: String) = {
     new ApiClient(
+      WsTestClient.withClient(client => client),
       "https://test-api.particeep.com",
       last_version,
       Some(ApiCredential(api_key, api_secret))
@@ -42,6 +44,7 @@ object ParticeepApi {
 
   def prod(api_key: String, api_secret: String) = {
     new ApiClient(
+      WsTestClient.withClient(client => client),
       "https://api.particeep.com",
       last_version,
       Some(ApiCredential(api_key, api_secret))

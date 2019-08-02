@@ -3,7 +3,7 @@ package com.particeep.api.models.fundraise
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
-import org.cvogt.play.json.Jsonx
+import ai.x.play.json.Jsonx
 
 case class FundraiseSearch(
   created_before:            Option[ZonedDateTime] = None,

@@ -1,5 +1,7 @@
 package com.particeep.api.core
 
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import com.ning.http.client.Response
 import org.slf4j.LoggerFactory
 import play.api.libs.json._
@@ -8,7 +10,6 @@ import play.api.libs.ws.{ WSRequest, WSResponse }
 import scala.compat.Platform
 import scala.util.control.NonFatal
 import com.particeep.api.models._
-import play.api.libs.iteratee.Enumerator
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -27,13 +28,13 @@ trait ResponseParser {
     parse(json, response.getStatusCode)(json_reads)
   }
 
-  def parseStream(request: WSRequest)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+  def parseStream(request: WSRequest)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, _]]] = {
     val response = request.execute()
     response.map { r =>
       try {
         Future.successful(Left(validateStandardError(r.json).get))
       } catch {
-        case NonFatal(ex) => request.stream().map(r => Right(r._2))
+        case NonFatal(_) => request.stream().map(r => Right(r.bodyAsSource))
       }
     }.flatMap(identity)
   }
