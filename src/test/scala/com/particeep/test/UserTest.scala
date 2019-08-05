@@ -20,7 +20,9 @@ class UserTest extends FlatSpec with Matchers {
   "the api client" should "load user by id with correct date format" in {
 
     val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = new ApiClient(WsTestClient.withClient(client => client), ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
+    val ws = WsTestClient.withClient { client =>
+      new ApiClient(client, ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
+    }
     val rez_f: Future[Either[ErrorResult, User]] = ws.user.byId(user_id)
 
     val rez = Await.result(rez_f, 10 seconds)
@@ -36,7 +38,9 @@ class UserTest extends FlatSpec with Matchers {
   "the api client" should "load user by id with direct credentials" in {
 
     val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = new ApiClient(WsTestClient.withClient(client => client), ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
+    val ws = WsTestClient.withClient { client =>
+      new ApiClient(client, ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
+    }
     val rez_f: Future[Either[ErrorResult, User]] = ws.user.byId(user_id)
 
     val rez = Await.result(rez_f, 10 seconds)
@@ -49,7 +53,9 @@ class UserTest extends FlatSpec with Matchers {
   "the api client" should "load user by id with custom credentials" in {
 
     val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = new ApiClient(WsTestClient.withClient(client => client), ConfigTest.baseUrl, ConfigTest.version) with UserCapability
+    val ws = WsTestClient.withClient { client =>
+      new ApiClient(client, ConfigTest.baseUrl, ConfigTest.version) with UserCapability
+    }
     val credentials = ConfigTest.credential
     val rez_f: Future[Either[ErrorResult, User]] = ws.user(credentials).byId(user_id)
 
@@ -91,16 +97,18 @@ class UserTest extends FlatSpec with Matchers {
   "the api client" should "load user by id with helper and overload credentials with custom header" in {
 
     val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = new ApiClient(WsTestClient.withClient(client => client), "https://test-api.particeep.com", "1", Some(ConfigTest.credential)) with UserCapability {
-      override def parse[A](response: WSResponse)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
-        val msg = response
-          .headers
-          .filterKeys(k => k == "Info-End-User")
-          .headOption
-          .map(v => s"${v._1} -> ${v._2}")
-          .getOrElse("")
+    val ws = WsTestClient.withClient { client =>
+      new ApiClient(client, "https://test-api.particeep.com", "1", Some(ConfigTest.credential)) with UserCapability {
+        override def parse[A](response: WSResponse)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
+          val msg = response
+            .headers
+            .filterKeys(k => k == "Info-End-User")
+            .headOption
+            .map(v => s"${v._1} -> ${v._2}")
+            .getOrElse("")
 
-        Left(Errors(true, List(Error(msg, msg))))
+          Left(Errors(true, List(Error(msg, msg))))
+        }
       }
     }
 
