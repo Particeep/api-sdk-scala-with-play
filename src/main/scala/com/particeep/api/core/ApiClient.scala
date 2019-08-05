@@ -121,7 +121,7 @@ class ApiClient @Inject() (ws: WS, val baseUrl: String, val version: String, val
 
   private[this] def url(path: String, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): WSRequest = {
     val req = ws.url(s"$baseUrl/v$version$path")
-    secure(req, credentials, timeOut).withHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
+    secure(req, credentials, timeOut).addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
   }
 
   private[this] def urlFileUpload(path: String, client: AsyncHttpClient, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): AsyncHttpClient#BoundRequestBuilder = {

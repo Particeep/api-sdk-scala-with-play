@@ -34,20 +34,24 @@ object ParticeepApi {
   }
 
   def test(api_key: String, api_secret: String) = {
-    new ApiClient(
-      WsTestClient.withClient(client => client),
-      "https://test-api.particeep.com",
-      last_version,
-      Some(ApiCredential(api_key, api_secret))
-    ) with AllCapability
+    WsTestClient.withClient { client =>
+      new ApiClient(
+        client,
+        "https://test-api.particeep.com",
+        last_version,
+        Some(ApiCredential(api_key, api_secret))
+      ) with AllCapability
+    }
   }
 
   def prod(api_key: String, api_secret: String) = {
-    new ApiClient(
-      WsTestClient.withClient(client => client),
-      "https://api.particeep.com",
-      last_version,
-      Some(ApiCredential(api_key, api_secret))
-    ) with AllCapability
+    WsTestClient.withClient { client =>
+      new ApiClient(
+        client,
+        "https://api.particeep.com",
+        last_version,
+        Some(ApiCredential(api_key, api_secret))
+      ) with AllCapability
+    }
   }
 }
