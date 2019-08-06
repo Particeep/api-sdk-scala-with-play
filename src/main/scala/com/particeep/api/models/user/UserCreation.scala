@@ -32,6 +32,7 @@ case class UserCreation(
   does_pay_taxes:           Option[Boolean]       = None,
   is_pro:                   Option[Boolean]       = None,
   addresses:                Option[Seq[Address]]  = None,
+  tax_address:              Option[Address]       = None,
   tag:                      Option[String]        = None,
   custom:                   Option[JsObject]      = None
 )

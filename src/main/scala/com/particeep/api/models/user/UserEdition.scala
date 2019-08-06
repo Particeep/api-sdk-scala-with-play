@@ -28,6 +28,7 @@ case class UserEdition(
   allow_mail_notifications: Option[Boolean]       = None,
   does_pay_taxes:           Option[Boolean]       = None,
   addresses:                Option[Seq[Address]]  = None,
+  tax_address:              Option[Address]       = None,
   tag:                      Option[String]        = None,
   tax_system:               Option[String]        = None,
   tax_rate:                 Option[Double]        = None,

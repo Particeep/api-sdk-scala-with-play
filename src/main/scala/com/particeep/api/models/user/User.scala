@@ -32,6 +32,7 @@ case class User(
   does_pay_taxes:           Option[Boolean]       = None,
   has_been_claimed:         Option[Boolean]       = None,
   addresses:                Option[Seq[Address]]  = None,
+  tax_address:              Option[Address]       = None,
   tag:                      Option[String]        = None,
   tax_system:               Option[String]        = None,
   tax_rate:                 Option[Double]        = None,
