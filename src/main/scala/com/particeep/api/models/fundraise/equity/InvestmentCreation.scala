@@ -6,12 +6,12 @@ import com.particeep.api.core.Formatter
 import play.api.libs.json.{ JsArray, JsObject, Json }
 
 case class InvestmentCreation(
-  user_id:    String,
-  amount:     Int,
-  check_required_pro: Option[Boolean]  = None,
-  co_issuers: Option[JsArray]       = None,
-  created_at: Option[ZonedDateTime] = None,
-  custom:     Option[JsObject]      = None
+  user_id:            String,
+  amount:             Int,
+  check_required_pro: Option[Boolean]       = None,
+  co_issuers:         Option[JsArray]       = None,
+  created_at:         Option[ZonedDateTime] = None,
+  custom:             Option[JsObject]      = None
 )
 
 object InvestmentCreation {
