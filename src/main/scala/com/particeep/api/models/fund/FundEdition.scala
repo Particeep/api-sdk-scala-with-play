@@ -16,6 +16,7 @@ case class FundEdition(
   isin_code:           Option[String]    = None,
   required_pro:        Option[Boolean]   = None,
   offer:               Option[FundOffer] = None,
+  tax_system:          Option[String]    = None,
   custom:              Option[JsObject]  = None
 )
 
