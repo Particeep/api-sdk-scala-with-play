@@ -24,5 +24,6 @@ case class UserSearch(
   roles:            Option[String]        = None,
   targeting_roles:  Option[String]        = None,
   ids:              Option[String]        = None,
-  is_pro:           Option[Boolean]       = None
+  is_pro:           Option[Boolean]       = None,
+  kyc_status:       Option[String]        = None
 )
