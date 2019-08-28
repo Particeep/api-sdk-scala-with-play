@@ -36,6 +36,7 @@ case class User(
   tax_system:               Option[String]        = None,
   tax_rate:                 Option[Double]        = None,
   is_pro:                   Option[Boolean]       = None,
+  kyc_status:               Option[String]        = None,
   relatives:                Option[Seq[Relative]] = None,
   custom:                   Option[JsObject]      = None
 )

@@ -31,6 +31,7 @@ case class UserCreation(
   allow_mail_notifications: Option[Boolean]       = None,
   does_pay_taxes:           Option[Boolean]       = None,
   is_pro:                   Option[Boolean]       = None,
+  kyc_status:               Option[String]        = None,
   addresses:                Option[Seq[Address]]  = None,
   tag:                      Option[String]        = None,
   custom:                   Option[JsObject]      = None
