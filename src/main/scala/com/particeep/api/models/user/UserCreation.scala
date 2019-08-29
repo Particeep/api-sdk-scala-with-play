@@ -15,6 +15,7 @@ case class UserCreation(
   has_been_claimed:         Option[Boolean]       = None,
   first_name:               Option[String]        = None,
   last_name:                Option[String]        = None,
+  maiden_name:              Option[String]        = None,
   gender:                   Option[Gender]        = None,
   avatar_url:               Option[String]        = None,
   birthday:                 Option[ZonedDateTime] = None,

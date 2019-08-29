@@ -12,6 +12,7 @@ import play.api.libs.json.{ JsObject, Json }
 case class UserEdition(
   first_name:               Option[String]        = None,
   last_name:                Option[String]        = None,
+  maiden_name:              Option[String]        = None,
   gender:                   Option[Gender]        = None,
   avatar_url:               Option[String]        = None,
   birthday:                 Option[ZonedDateTime] = None,

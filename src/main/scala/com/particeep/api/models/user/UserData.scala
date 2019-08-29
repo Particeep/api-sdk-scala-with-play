@@ -18,6 +18,7 @@ case class UserData(
   gender:                   Option[String]           = None,
   first_name:               Option[String]           = None,
   last_name:                Option[String]           = None,
+  maiden_name:              Option[String]           = None,
   avatar_url:               Option[String]           = None,
   birthday:                 Option[ZonedDateTime]    = None,
   birth_place:              Option[String]           = None,
