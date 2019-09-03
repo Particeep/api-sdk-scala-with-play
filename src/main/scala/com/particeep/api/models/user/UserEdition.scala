@@ -33,7 +33,7 @@ case class UserEdition(
   tax_system:               Option[String]        = None,
   tax_rate:                 Option[Double]        = None,
   is_pro:                   Option[Boolean]       = None,
-  kyc_status:               Option[String]        = None,
+  account_validation_status:               Option[String]        = None,
   custom:                   Option[JsObject]      = None
 )
 

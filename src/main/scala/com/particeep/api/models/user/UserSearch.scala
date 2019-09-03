@@ -28,5 +28,5 @@ case class UserSearch(
 )
 
 case class UserSearchAdditional(
-  kyc_status: Option[String] = None
+  account_validation_status: Option[String] = None
 )
