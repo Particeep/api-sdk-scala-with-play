@@ -42,7 +42,7 @@ case class UserData(
   investor_score:           Option[Long]             = None,
   tag:                      Option[String]           = None,
   is_pro:                   Option[Boolean]          = None,
-  kyc_status:               Option[String]           = None,
+  account_validation_status:               Option[String]           = None,
   relatives:                Option[Seq[Relative]]    = None,
   bankaccounts:             Option[Seq[BankAccount]] = None,
   custom:                   Option[JsObject]         = None
