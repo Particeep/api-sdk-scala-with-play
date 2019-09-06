@@ -29,7 +29,7 @@ object UserClient {
   private implicit val importResultReads = ImportResult.format[User]
   private implicit val relative_creation_format = RelativeCreation.format
   private implicit val relative_format = Relative.format
-  private implicit val relative_option_format = RelativeEdtion.format
+  private implicit val relative_option_format = RelativeEdition.format
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
   private implicit val change_password_format = Json.format[ChangePassword]
@@ -99,7 +99,7 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.delete[Relative](s"$endPoint/$id/relative/$relative_id", timeout)
   }
 
-  def updateRelative(id: String, relative_edition: RelativeEdtion, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Relative]] = {
+  def updateRelative(id: String, relative_edition: RelativeEdition, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Relative]] = {
     ws.post[Relative](s"$endPoint/$id/relative", timeout, Json.toJson(relative_edition))
   }
 

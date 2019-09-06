@@ -7,7 +7,7 @@ import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.RelativeType.RelativeType
 import play.api.libs.json.{ JsObject, Json }
 
-case class RelativeEdtion(
+case class RelativeEdition(
   email:            Option[String]        = None,
   first_name:       Option[String]        = None,
   last_name:        Option[String]        = None,
@@ -21,7 +21,7 @@ case class RelativeEdtion(
   custom:           Option[JsObject]      = None
 )
 
-object RelativeEdtion {
+object RelativeEdition {
   implicit val date_format = Formatter.ZonedDateTimeWrites
-  val format = Json.format[RelativeEdtion]
+  val format = Json.format[RelativeEdition]
 }
