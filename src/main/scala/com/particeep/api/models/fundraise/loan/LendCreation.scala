@@ -10,6 +10,7 @@ case class LendCreation(
   amount:     Int,
   co_issuers: Option[JsArray]       = None,
   created_at: Option[ZonedDateTime],
+  comment:    Option[String]        = None,
   custom:     Option[JsObject]      = None
 )
 
