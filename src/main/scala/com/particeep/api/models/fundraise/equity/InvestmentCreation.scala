@@ -13,6 +13,7 @@ case class InvestmentCreation(
   created_at:             Option[ZonedDateTime] = None,
   dismemberment_duration: Option[Int]           = None,
   dismemberment_rate:     Option[Double]        = None,
+  comment:                Option[String]        = None,
   custom:                 Option[JsObject]      = None
 )
 
