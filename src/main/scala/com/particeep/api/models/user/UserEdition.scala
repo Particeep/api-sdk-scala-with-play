@@ -19,6 +19,7 @@ case class UserEdition(
   birth_place:               Option[String]        = None,
   birth_country:             Option[String]        = None,
   birth_department:          Option[String]        = None,
+  birth_cog:                 Option[String]        = None,
   phone:                     Option[String]        = None,
   nationality:               Option[String]        = None,
   bio:                       Option[String]        = None,
