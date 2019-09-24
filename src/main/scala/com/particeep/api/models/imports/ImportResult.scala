@@ -19,7 +19,9 @@ case class ImportResult[T](
   nb_created:      Int,
   nb_fail:         Int,
   line_with_error: List[LineError]       = List(),
-  line_on_success: List[LineSuccess[T]]  = List()
+  line_on_success: List[LineSuccess[T]]  = List(),
+  tag:             Option[String]        = None,
+  custom:          Option[JsObject]      = None
 )
 
 object ImportResult {
@@ -37,7 +39,9 @@ object ImportResult {
       (json \ "nb_created").as[Int],
       (json \ "nb_fail").as[Int],
       (json \ "line_with_error").as[List[LineError]],
-      (json \ "line_on_success").as[List[LineSuccess[T]]]
+      (json \ "line_on_success").as[List[LineSuccess[T]]],
+      (json \ "tag").asOpt[String],
+      (json \ "custom").asOpt[JsObject]
     ))
     def writes(ir: ImportResult[T]) = JsObject(Seq(
       "id" -> JsString(ir.id),
@@ -49,7 +53,9 @@ object ImportResult {
       "nb_created" -> JsNumber(ir.nb_created),
       "nb_fail" -> JsNumber(ir.nb_fail),
       "line_with_error" -> Json.toJson(ir.line_with_error),
-      "line_on_success" -> Json.toJson(ir.line_on_success)
+      "line_on_success" -> Json.toJson(ir.line_on_success),
+      "tag" -> Json.toJson(ir.tag),
+      "custom" -> Json.toJson(ir.custom)
     ))
   }
 }

@@ -8,6 +8,8 @@ import com.particeep.api.models.enterprise._
 import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
+import com.particeep.api.models.imports.ImportForm
+import com.ning.http.client.multipart.StringPart
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -79,7 +81,12 @@ class EnterpriseClient(val ws: WSClient, val credentials: Option[ApiCredential] 
     ws.get[Seq[NbEnterprisesByActivityDomain]](s"$endPoint/info/activity/domain", timeout)
   }
 
-  def importFromCsv(file: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Enterprise]]] = {
-    ws.postFile[ImportResult[Enterprise]](s"$endPoint_import/enterprise/csv", timeout, file, "text/csv", List())
+  def importFromCsv(file: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Enterprise]]] = {
+    val bodyParts = List(
+      new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
+      new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
+    )
+
+    ws.postFile[ImportResult[Enterprise]](s"$endPoint_import/enterprise/csv", timeout, file, "text/csv", bodyParts)
   }
 }

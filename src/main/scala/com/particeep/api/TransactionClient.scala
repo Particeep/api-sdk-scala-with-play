@@ -8,6 +8,8 @@ import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.transaction._
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
+import com.particeep.api.models.imports.ImportForm
+import com.ning.http.client.multipart.StringPart
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -64,7 +66,12 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
     ws.delete[Transaction](s"$endPoint/$id", timeout)
   }
 
-  def importFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Transaction]]] = {
-    ws.postFile[ImportResult[Transaction]](s"$endPoint_import/transaction/csv", timeout, csv, "text/csv", List())
+  def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Transaction]]] = {
+    val bodyParts = List(
+      new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
+      new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
+    )
+
+    ws.postFile[ImportResult[Transaction]](s"$endPoint_import/transaction/csv", timeout, csv, "text/csv", bodyParts)
   }
 }
