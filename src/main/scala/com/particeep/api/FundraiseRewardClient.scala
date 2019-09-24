@@ -9,6 +9,8 @@ import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.models.transaction.{ Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
+import com.particeep.api.models.imports.ImportForm
+import com.ning.http.client.multipart.StringPart
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -155,7 +157,12 @@ class FundraiseRewardClient(val ws: WSClient, val credentials: Option[ApiCredent
     ws.put[Transaction](s"$endPoint/fundraise/$fundraise_id/reward/$reward_id/buy/$user_id", timeout, Json.toJson(transaction_info))
   }
 
-  def importFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseReward]]] = {
-    ws.postFile[ImportResult[FundraiseReward]](s"$endPoint_import/fundraise-reward/csv", timeout, csv, "text/csv", List())
+  def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseReward]]] = {
+    val bodyParts = List(
+      new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
+      new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
+    )
+
+    ws.postFile[ImportResult[FundraiseReward]](s"$endPoint_import/fundraise-reward/csv", timeout, csv, "text/csv", bodyParts)
   }
 }
