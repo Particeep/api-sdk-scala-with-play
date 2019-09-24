@@ -25,6 +25,8 @@ case class Fund(
   status:              FundStatus            = INIT,
   isin_code:           Option[String]        = None,
   tag:                 Option[String]        = None,
+  required_pro:        Option[Boolean]       = None,
+  tax_system:          Option[String]        = None,
   offer:               FundOffer             = FundOffer(),
   custom:              Option[JsObject]      = None
 )
