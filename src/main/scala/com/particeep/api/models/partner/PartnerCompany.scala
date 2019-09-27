@@ -6,7 +6,6 @@ import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.OriasStatus.OriasStatus
 import com.particeep.api.models.enums.RegulatoryStatus.RegulatoryStatus
 import ai.x.play.json.Jsonx
-import play.api.libs.json.JsObject
 
 case class PartnerCompany(
   id:                    String,
