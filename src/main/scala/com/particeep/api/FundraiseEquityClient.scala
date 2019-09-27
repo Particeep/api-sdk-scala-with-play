@@ -10,8 +10,6 @@ import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.models.transaction.{ Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
-import com.particeep.api.models.imports.ImportForm
-import com.ning.http.client.multipart.StringPart
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -102,12 +100,7 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredent
     ws.post[Transaction](s"$endPoint/fundraise/$id/invest", timeout, Json.toJson(investment_creation))
   }
 
-  def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseEquity]]] = {
-    val bodyParts = List(
-      new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
-      new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
-    )
-
-    ws.postFile[ImportResult[FundraiseEquity]](s"$endPoint_import/fundraise-equity/csv", timeout, csv, "text/csv", bodyParts)
+  def importFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseEquity]]] = {
+    ws.postFile[ImportResult[FundraiseEquity]](s"$endPoint_import/fundraise-equity/csv", timeout, csv, "text/csv", List())
   }
 }

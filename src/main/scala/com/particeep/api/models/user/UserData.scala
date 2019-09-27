@@ -39,7 +39,6 @@ case class UserData(
   status:                    Option[String]           = None,
   roles:                     Option[String]           = None,
   targeting_roles:           Option[String]           = None,
-  partner_manager_id:        Option[String]           = None,
   investor_score:            Option[Long]             = None,
   tag:                       Option[String]           = None,
   is_pro:                    Option[Boolean]          = None,

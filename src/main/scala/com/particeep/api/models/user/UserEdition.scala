@@ -2,11 +2,11 @@ package com.particeep.api.models.user
 
 import java.time.ZonedDateTime
 
+import ai.x.play.json.Jsonx
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.InvestorType.InvestorType
-import ai.x.play.json.Jsonx
 import play.api.libs.json.JsObject
 
 case class UserEdition(

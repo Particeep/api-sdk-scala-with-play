@@ -13,8 +13,8 @@ case class Role(
   created_at:  Option[ZonedDateTime] = None,
   role_name:   String                = "",
   target_id:   Option[String]        = None,
-  target_type: Option[String]        = None,
-  tag:         Option[String]        = None
+  target_type: Option[String]        = None
+
 )
 
 object Role {

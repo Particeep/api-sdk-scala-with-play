@@ -1,61 +1,35 @@
 package com.particeep.api.models.imports
 
 import play.api.libs.json._
-import com.particeep.api.models.enums.ImportType.ImportType
-import com.particeep.api.models.enums.ImportStateStatus.ImportStateStatus
-import java.time.ZonedDateTime
-import com.particeep.api.core.Formatter
 
 /**
  * Created by Noe on 10/04/2017.
  */
 case class ImportResult[T](
-  id:              String,
-  created_at:      ZonedDateTime,
-  updated_at:      Option[ZonedDateTime],
-  status:          ImportStateStatus,
-  import_type:     ImportType,
-  line_processed:  Int,
-  nb_created:      Int,
-  nb_fail:         Int,
-  line_with_error: List[LineError]       = List(),
-  line_on_success: List[LineSuccess[T]]  = List(),
-  tag:             Option[String]        = None,
-  custom:          Option[JsObject]      = None
+  lineTreated:   Int                  = 0,
+  nbCreated:     Int                  = 0,
+  nbFail:        Int                  = 0,
+  lineWithError: List[LineError]      = List(),
+  lineOnSuccess: List[LineSuccess[T]] = List()
 )
 
 object ImportResult {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
   implicit val line_error_format = LineError.format
   implicit def line_success_format[T](implicit fmt: Format[T]) = LineSuccess.format[T]
   def format[T](implicit fmt: Format[T]): Format[ImportResult[T]] = new Format[ImportResult[T]] {
     def reads(json: JsValue): JsResult[ImportResult[T]] = JsSuccess(new ImportResult[T](
-      (json \ "id").as[String],
-      (json \ "created_at").as[ZonedDateTime],
-      (json \ "updated_at").asOpt[ZonedDateTime],
-      (json \ "status").as[ImportStateStatus],
-      (json \ "import_type").as[ImportType],
-      (json \ "line_processed").as[Int],
-      (json \ "nb_created").as[Int],
-      (json \ "nb_fail").as[Int],
-      (json \ "line_with_error").as[List[LineError]],
-      (json \ "line_on_success").as[List[LineSuccess[T]]],
-      (json \ "tag").asOpt[String],
-      (json \ "custom").asOpt[JsObject]
+      (json \ "lineTreated").as[Int],
+      (json \ "nbCreated").as[Int],
+      (json \ "nbFail").as[Int],
+      (json \ "lineWithError").as[List[LineError]],
+      (json \ "lineOnSuccess").as[List[LineSuccess[T]]]
     ))
     def writes(ir: ImportResult[T]) = JsObject(Seq(
-      "id" -> JsString(ir.id),
-      "created_at" -> Json.toJson(ir.created_at),
-      "updated_at" -> Json.toJson(ir.updated_at),
-      "status" -> Json.toJson(ir.status),
-      "import_type" -> Json.toJson(ir.import_type),
-      "line_processed" -> JsNumber(ir.line_processed),
-      "nb_created" -> JsNumber(ir.nb_created),
-      "nb_fail" -> JsNumber(ir.nb_fail),
-      "line_with_error" -> Json.toJson(ir.line_with_error),
-      "line_on_success" -> Json.toJson(ir.line_on_success),
-      "tag" -> Json.toJson(ir.tag),
-      "custom" -> Json.toJson(ir.custom)
+      "lineTreated" -> JsNumber(ir.lineTreated),
+      "nbCreated" -> JsNumber(ir.nbCreated),
+      "nbFail" -> JsNumber(ir.nbFail),
+      "lineWithError" -> Json.toJson(ir.lineWithError),
+      "lineOnSuccess" -> Json.toJson(ir.lineOnSuccess)
     ))
   }
 }
