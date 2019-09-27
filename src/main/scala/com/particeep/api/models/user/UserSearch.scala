@@ -23,5 +23,10 @@ case class UserSearch(
   tag:              Option[String]        = None,
   roles:            Option[String]        = None,
   targeting_roles:  Option[String]        = None,
-  ids:              Option[String]        = None
+  ids:              Option[String]        = None,
+  is_pro:           Option[Boolean]       = None
+)
+
+case class UserSearchAdditional(
+  account_validation_status: Option[String] = None
 )

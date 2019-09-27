@@ -28,5 +28,6 @@ case class SignatureSearchForEntities(
   partner_ids:    Option[String] = None,
   fundraise_id:   Option[String] = None,
   fundraise_type: Option[String] = None,
-  fundraise_name: Option[String] = None
+  fundraise_name: Option[String] = None,
+  signature_type: Option[String] = None
 )
