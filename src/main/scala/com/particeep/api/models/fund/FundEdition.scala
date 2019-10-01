@@ -4,6 +4,8 @@ import com.particeep.api.models.enums.Currency.Currency
 import play.api.libs.json.{ JsObject, Json }
 
 case class FundEdition(
+  recipient_id:        Option[String]    = None,
+  recipient_type:      Option[String]    = None,
   name:                Option[String]    = None,
   description_short:   Option[String]    = None,
   description_long:    Option[String]    = None,
