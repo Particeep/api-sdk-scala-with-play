@@ -10,7 +10,6 @@ import play.api.libs.json.{ JsObject, Json }
 case class Fund(
   id:                  String                = "",
   created_at:          Option[ZonedDateTime] = None,
-  created_by:          Option[String]        = None,
   enterprise_id:       Option[String]        = None,
   recipient_id:        Option[String]        = None,
   recipient_type:      Option[String]        = None,

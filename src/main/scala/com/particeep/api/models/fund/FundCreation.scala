@@ -1,7 +1,6 @@
 package com.particeep.api.models.fund
 
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import com.particeep.api.models.enums.FundStatus.{ FundStatus, INIT }
 import play.api.libs.json.{ JsObject, Json }
 
 case class FundCreation(
@@ -19,7 +18,6 @@ case class FundCreation(
   currency:            Currency          = EUR,
   tag:                 Option[String]    = None,
   required_pro:        Option[Boolean]   = None,
-  status:              FundStatus        = INIT,
   tax_system:          Option[String]    = None,
   offer:               Option[FundOffer] = None,
   custom:              Option[JsObject]  = None
