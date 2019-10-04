@@ -5,12 +5,13 @@ import java.time.ZonedDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
 import com.particeep.api.models.enums.FundStatus.{ FundStatus, INIT }
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.JsObject
+import com.particeep.api.models.Address
+import org.cvogt.play.json.Jsonx
 
 case class Fund(
   id:                  String                = "",
   created_at:          Option[ZonedDateTime] = None,
-  enterprise_id:       Option[String]        = None,
   recipient_id:        Option[String]        = None,
   recipient_type:      Option[String]        = None,
   name:                String                = "",
@@ -27,11 +28,16 @@ case class Fund(
   required_pro:        Option[Boolean]       = None,
   tax_system:          Option[String]        = None,
   offer:               FundOffer             = FundOffer(),
+  logo_url:            Option[String]        = None,
+  image_cover_url:     Option[String]        = None,
+  category:            Option[String]        = None,
+  website_url:         Option[String]        = None,
+  address:             Option[Address]       = None,
   custom:              Option[JsObject]      = None
 )
 
 object Fund {
   implicit val date_format = Formatter.ZonedDateTimeWrites
   implicit lazy val fund_offer_format = FundOffer.format
-  val format = Json.format[Fund]
+  implicit val format = Jsonx.formatCaseClass[Fund]
 }
