@@ -2,6 +2,7 @@ package com.particeep.api.models.fund
 
 import com.particeep.api.models.enums.Currency.Currency
 import play.api.libs.json.{ JsObject, Json }
+import com.particeep.api.models.Address
 
 case class FundEdition(
   recipient_id:        Option[String]    = None,
@@ -19,6 +20,11 @@ case class FundEdition(
   required_pro:        Option[Boolean]   = None,
   offer:               Option[FundOffer] = None,
   tax_system:          Option[String]    = None,
+  logo_url:            Option[String]    = None,
+  image_cover_url:     Option[String]    = None,
+  category:            Option[String]    = None,
+  website_url:         Option[String]    = None,
+  address:             Option[Address]   = None,
   custom:              Option[JsObject]  = None
 )
 
