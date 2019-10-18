@@ -32,6 +32,8 @@ object FundraiseEquityClient {
   private implicit val running_edition_format = FundraiseEquityRunningEdition.format
   private implicit val investment_format = Investment.format
   private implicit val transaction_format = Transaction.format
+  private implicit val dismemberment_info_format = DismembermentInfo.format
+  private implicit val dismemberment_amounts_format = DismemebermentAmounts.format
   private implicit val investment_creation_format = InvestmentCreation.format
   private implicit val importResultReads = ImportResult.format[FundraiseEquity]
 }
@@ -109,5 +111,9 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredent
     )
 
     ws.postFile[ImportResult[FundraiseEquity]](s"$endPoint_import/fundraise-equity/csv", timeout, csv, "text/csv", bodyParts)
+  }
+
+  def getDismembermentSharePrice(id: String, dismemberment_info: DismembermentInfo, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, DismemebermentAmounts]] = {
+    ws.post[DismemebermentAmounts](s"$endPoint/fundraise/$id/estimate/dismemberment", timeout, Json.toJson(dismemberment_info))
   }
 }
