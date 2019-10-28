@@ -1,8 +1,9 @@
 package com.particeep.api
 
 import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
-import com.particeep.api.models.ErrorResult
-import com.particeep.api.models.fund.{ Fund, FundCreation, FundEdition }
+import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
+import com.particeep.api.models.fund.{ Fund, FundCreation, FundEdition, FundSearch }
+import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -23,6 +24,10 @@ object FundClient {
 
 class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
   import FundClient._
+
+  def search(criteria: FundSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[Fund]]] = {
+    ws.get[PaginatedSequence[Fund]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+  }
 
   def create(fund_creation: FundCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Fund]] = {
     ws.put[Fund](s"$endPoint", timeout, Json.toJson(fund_creation))
