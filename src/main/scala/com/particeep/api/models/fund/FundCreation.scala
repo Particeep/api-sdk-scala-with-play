@@ -1,9 +1,9 @@
 package com.particeep.api.models.fund
 
 import java.time.ZonedDateTime
-
-import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import play.api.libs.json.{ JsObject, Json }
+import com.particeep.api.core.Formatter
+import com.particeep.api.models.enums.Currency.{Currency, EUR}
+import play.api.libs.json.{JsObject, Json}
 import com.particeep.api.models.Address
 
 case class FundCreation(
@@ -32,6 +32,7 @@ case class FundCreation(
 )
 
 object FundCreation {
+  implicit val date_format = Formatter.ZonedDateTimeWrites
   implicit lazy val offer_loan_creation_format = FundOffer.format
   val format = Json.format[FundCreation]
 }
