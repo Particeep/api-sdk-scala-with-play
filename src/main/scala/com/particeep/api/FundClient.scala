@@ -1,12 +1,13 @@
 package com.particeep.api
 
-import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
-import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
-import com.particeep.api.models.fund.{ Fund, FundCreation, FundEdition, FundSearch }
+import com.particeep.api.core.{ApiCredential, EntityClient, WSClient, WithCredentials, WithWS}
+import com.particeep.api.models.enums.FundStatus.FundStatus
+import com.particeep.api.models.{ErrorResult, PaginatedSequence, TableSearch}
+import com.particeep.api.models.fund.{Fund, FundCreation, FundEdition, FundSearch}
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 trait FundCapability {
   self: WSClient =>
@@ -39,5 +40,9 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def update(id: String, fund_edition: FundEdition, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Fund]] = {
     ws.post[Fund](s"$endPoint/$id", timeout, Json.toJson(fund_edition))
+  }
+
+  def updateStatus(id: String, newStatus: FundStatus, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Fund]] = {
+    ws.post[Fund](s"$endPoint/$id/status/$newStatus", timeout, Json.toJson(""))
   }
 }
