@@ -42,6 +42,10 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.post[Fund](s"$endPoint/$id", timeout, Json.toJson(fund_edition))
   }
 
+  def delete(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Fund]] = {
+    ws.delete[Fund](s"$endPoint/$id", timeout)
+  }
+
   def updateStatus(id: String, newStatus: FundStatus, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Fund]] = {
     ws.post[Fund](s"$endPoint/$id/status/$newStatus", timeout, Json.toJson(""))
   }
