@@ -32,6 +32,7 @@ case class Fund(
   image_cover_url:     Option[String]        = None,
   category:            Option[String]        = None,
   website_url:         Option[String]        = None,
+  dissolve_at:         Option[ZonedDateTime] = None,
   address:             Option[Address]       = None,
   custom:              Option[JsObject]      = None
 )
