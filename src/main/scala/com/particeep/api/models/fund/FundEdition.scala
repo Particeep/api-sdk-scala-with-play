@@ -3,7 +3,7 @@ package com.particeep.api.models.fund
 import java.time.ZonedDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.{ JsObject, Json }
 import com.particeep.api.models.Address
 
 case class FundEdition(
