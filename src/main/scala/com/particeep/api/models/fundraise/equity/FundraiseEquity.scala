@@ -33,6 +33,7 @@ case class FundraiseEquity(
   restricted_to_group: Option[String]              = None,
   private_group_id:    Option[String]              = None,
   required_pro:        Option[Boolean]             = None,
+  form_reattach:       Option[String]              = None,
   dismemberment_table: Option[Map[String, String]] = None,
   offer:               EquityOffer                 = EquityOffer()
 )
