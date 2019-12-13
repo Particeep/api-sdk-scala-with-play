@@ -101,4 +101,17 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
   def deleteMultiple(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, SignatureMultiple]] = {
     ws.delete[SignatureMultiple](s"$endPoint/$id/multiple", timeout)
   }
+
+  def export(
+    criteria:        SignatureSearch,
+    entity_criteria: SignatureSearchForEntities,
+    table_criteria:  TableSearch,
+    timeout:         Long                       = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+    ws.getStream(
+      s"$endPoint/search",
+      timeout,
+      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(entity_criteria) ++ LangUtils.productToQueryString(table_criteria)
+    )(exec, creds.withHeader("Content-Type", "application/csv"))
+  }
 }

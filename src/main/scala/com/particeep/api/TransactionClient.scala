@@ -10,6 +10,7 @@ import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 import com.particeep.api.models.imports.ImportForm
 import com.ning.http.client.multipart.StringPart
+import play.api.libs.iteratee.Enumerator
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -73,5 +74,17 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
     )
 
     ws.postFile[ImportResult[Transaction]](s"$endPoint_import/transaction/csv", timeout, csv, "text/csv", bodyParts)
+  }
+
+  def export(
+    criteria:       TransactionSearch,
+    table_criteria: TableSearch,
+    timeout:        Long              = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+    ws.getStream(
+      s"$endPoint/search",
+      timeout,
+      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria)
+    )(exec, creds.withHeader("Content-Type", "application/csv"))
   }
 }

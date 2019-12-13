@@ -12,6 +12,7 @@ import com.particeep.api.models.user._
 import com.particeep.api.core._
 import com.particeep.api.models.imports.ImportForm
 import com.ning.http.client.multipart.StringPart
+import play.api.libs.iteratee.Enumerator
 
 trait UserCapability {
   self: WSClient =>
@@ -96,6 +97,14 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     )
 
     ws.postFile[ImportResult[User]](s"$endPoint_import/user/csv", timeout, csv, "text/csv", bodyParts)
+  }
+
+  def export(criteria: UserSearch, criteria_additional: UserSearchAdditional, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+    ws.getStream(
+      s"$endPoint/search",
+      timeout,
+      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(criteria_additional) ++ LangUtils.productToQueryString(table_criteria)
+    )(exec, creds.withHeader("Content-Type", "application/csv"))
   }
 
   def addRelative(id: String, relative_option: RelativeCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Relative]] = {
