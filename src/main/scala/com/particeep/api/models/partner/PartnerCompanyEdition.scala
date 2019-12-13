@@ -22,6 +22,7 @@ case class PartnerCompanyEdition(
   contact_first_name:    Option[String]           = None,
   contact_last_name:     Option[String]           = None,
   contact_email:         Option[String]           = None,
+  tradename:             Option[String]           = None,
   url:                   Option[String]           = None,
   tag:                   Option[String]           = None,
   custom:                Option[JsObject]         = None
