@@ -4,6 +4,7 @@ import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.fundraise.{ FundraiseData, FundraiseSearch, NbProjectsByCategory }
 import com.particeep.api.utils.LangUtils
+import play.api.libs.iteratee.Enumerator
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -30,6 +31,18 @@ class FundraiseSearchClient(val ws: WSClient, val credentials: Option[ApiCredent
     timeout:        Long            = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[FundraiseData]]] = {
     ws.get[PaginatedSequence[FundraiseData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+  }
+
+  def export(
+    criteria:       FundraiseSearch,
+    table_criteria: TableSearch,
+    timeout:        Long            = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+    ws.getStream(
+      s"$endPoint/search",
+      timeout,
+      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria)
+    )(exec, creds.withHeader("Content-Type", "application/csv"))
   }
 
   def byIds(ids: List[String], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[FundraiseData]]] = {
