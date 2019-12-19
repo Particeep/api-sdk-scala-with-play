@@ -8,7 +8,8 @@ case class DocumentGenerationAndUpload(
   params_str:  Option[Map[String, String]],
   name:        Option[String],
   description: Option[String],
-  path:        Option[String]
+  path:        Option[String],
+  override_existing_file: Option[Boolean]
 )
 
 object DocumentGenerationAndUpload {
