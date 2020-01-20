@@ -3,7 +3,7 @@ package com.particeep.api
 import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
 import com.particeep.api.models.enums.FundStatus.FundStatus
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
-import com.particeep.api.models.fund.{ Fund, FundCreation, FundEdition, FundSearch, InvestmentCreation, TransactionEditPart }
+import com.particeep.api.models.fund.{ Fund, FundCreation, FundData, FundEdition, FundSearch, InvestmentCreation, TransactionEditPart }
 import com.particeep.api.models.transaction.{ Investment, Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
@@ -22,6 +22,7 @@ object FundClient {
   private implicit val creation_format = FundCreation.format
   private implicit val fund_format = Fund.format
   private implicit val fund_edition_format = FundEdition.format
+  private implicit val fund_data_format = FundData.format
   private implicit val investment_format = Investment.format
   private implicit val investment_creation_format = InvestmentCreation.format
   private implicit val transaction_edit_part_format = TransactionEditPart.format
@@ -55,8 +56,8 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.delete[Fund](s"$endPoint/$id", timeout)
   }
 
-  def search(criteria: FundSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[Fund]]] = {
-    ws.get[PaginatedSequence[Fund]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+  def search(criteria: FundSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[FundData]]] = {
+    ws.get[PaginatedSequence[FundData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
   def invest(id: String, investment_creation: InvestmentCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
