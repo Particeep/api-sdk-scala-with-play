@@ -3,8 +3,8 @@ package com.particeep.api
 import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
 import com.particeep.api.models.enums.FundStatus.FundStatus
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
-import com.particeep.api.models.fund.{ Fund, FundCreation, FundData, FundEdition, FundSearch, InvestmentCreation, TransactionEditPart }
-import com.particeep.api.models.transaction.{ Investment, Transaction, TransactionSearch }
+import com.particeep.api.models.fund.{ Fund, FundCreation, FundEdition, FundSearch, InvestmentCreation, TransactionEditPart, FundData }
+import com.particeep.api.models.transaction.{ Investment, RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 
@@ -27,6 +27,7 @@ object FundClient {
   private implicit val investment_creation_format = InvestmentCreation.format
   private implicit val transaction_edit_part_format = TransactionEditPart.format
   private implicit val transaction_format = Transaction.format
+  private implicit val recurring_transaction_format = RecurringTransaction.format
 }
 
 class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -75,5 +76,9 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def editTransactionsPricePerShare(id: String, transaction_edit_part: TransactionEditPart, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Transaction]]] = {
     ws.post[List[Transaction]](s"$endPoint/$id/edit/transaction/share", timeout, Json.toJson(transaction_edit_part))
+  }
+
+  def recurringLend(id: String, recurring_transaction_create: RecurringTransactionCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, RecurringTransaction]] = {
+    ws.post[RecurringTransaction](s"$endPoint/$id/lend/recurring", timeout, Json.toJson(recurring_transaction_create))
   }
 }
