@@ -7,7 +7,7 @@ import com.particeep.api.models.enums.FundraiseStatus.FundraiseStatus
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.fundraise.equity._
 import com.particeep.api.models.imports.ImportResult
-import com.particeep.api.models.transaction.{ Investment, Transaction, TransactionSearch }
+import com.particeep.api.models.transaction.{ Investment, RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 import com.particeep.api.models.imports.ImportForm
@@ -36,6 +36,7 @@ object FundraiseEquityClient {
   private implicit val dismemberment_amounts_format = DismemebermentAmounts.format
   private implicit val investment_creation_format = InvestmentCreation.format
   private implicit val importResultReads = ImportResult.format[FundraiseEquity]
+  private implicit val recurring_transaction_format = RecurringTransaction.format
 }
 
 class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -115,5 +116,9 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredent
 
   def getDismembermentSharePrice(id: String, dismemberment_info: DismembermentInfo, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, DismemebermentAmounts]] = {
     ws.post[DismemebermentAmounts](s"$endPoint/fundraise/$id/estimate/dismemberment", timeout, Json.toJson(dismemberment_info))
+  }
+
+  def recurringEquity(id: String, recurring_transaction_create: RecurringTransactionCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, RecurringTransaction]] = {
+    ws.post[RecurringTransaction](s"$endPoint/$id/equity/recurring", timeout, Json.toJson(recurring_transaction_create))
   }
 }

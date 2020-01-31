@@ -6,7 +6,7 @@ import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.fundraise.loan._
 import com.particeep.api.models.imports.ImportResult
-import com.particeep.api.models.transaction.{ Transaction, TransactionSearch }
+import com.particeep.api.models.transaction.{ RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch }
 import com.particeep.api.models.user.User
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
@@ -40,6 +40,7 @@ object FundraiseLoanClient {
   private implicit val lend_creation_format = LendCreation.format
   private implicit val estimate_borrower_info_format = EstimateBorrowerInfo.format
   private implicit val importResultReads = ImportResult.format[FundraiseLoan]
+  private implicit val recurring_transaction_format = RecurringTransaction.format
 }
 
 class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -200,5 +201,9 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredentia
     )
 
     ws.postFile[ImportResult[FundraiseLoan]](s"$endPoint_import/fundraise-loan/csv", timeout, csv, "text/csv", bodyParts)
+  }
+
+  def recurringLend(id: String, recurring_transaction_create: RecurringTransactionCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, RecurringTransaction]] = {
+    ws.post[RecurringTransaction](s"$endPoint/$id/lend/recurring", timeout, Json.toJson(recurring_transaction_create))
   }
 }
