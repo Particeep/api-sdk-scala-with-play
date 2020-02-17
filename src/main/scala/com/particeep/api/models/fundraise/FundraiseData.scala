@@ -35,7 +35,7 @@ case class FundraiseData(
   visible:           Option[Boolean]       = None,
   private_group_id:  Option[String]        = None,
   targeting_roles:   Option[String]        = None,
-  form_reattach:     Option[String]        = None
+  form_id:           Option[String]        = None
 )
 
 object FundraiseData {
