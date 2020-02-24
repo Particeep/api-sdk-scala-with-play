@@ -29,6 +29,7 @@ case class FundEdition(
   website_url:         Option[String]        = None,
   dissolve_at:         Option[ZonedDateTime] = None,
   address:             Option[Address]       = None,
+  form_id:             Option[String]        = None,
   custom:              Option[JsObject]      = None
 )
 
