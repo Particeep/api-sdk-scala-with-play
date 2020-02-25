@@ -4,8 +4,9 @@ import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.JsObject
 import com.particeep.api.models.Address
+import org.cvogt.play.json.Jsonx
 
 case class FundEdition(
   recipient_id:        Option[String]        = None,
@@ -36,5 +37,5 @@ case class FundEdition(
 object FundEdition {
   implicit val date_format = Formatter.ZonedDateTimeWrites
   implicit lazy val offer_loan_creation_format = FundOffer.format
-  val format = Json.format[FundEdition]
+  val format = Jsonx.formatCaseClass[FundEdition]
 }
