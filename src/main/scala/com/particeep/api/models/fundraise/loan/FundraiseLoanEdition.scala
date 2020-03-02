@@ -22,7 +22,6 @@ case class FundraiseLoanEdition(
   amount_target_max:   Option[Long]             = None,
   currency:            Option[Currency]         = None,
   score:               Option[String]           = None,
-  form_id:             Option[String]           = None,
   tag:                 Option[String]           = None,
   offer:               Option[LoanOfferEdition] = None,
   custom:              Option[JsObject]         = None
