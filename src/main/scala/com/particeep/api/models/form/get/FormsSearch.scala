@@ -8,6 +8,8 @@ case class FormsSearch(
   created_at:      Option[DateTime] = None,
   name:            Option[String]   = None,
   description:     Option[String]   = None,
+  target_id:       Option[String]   = None,
+  target_type:     Option[String]   = None,
   tag:             Option[String]   = None,
   last_updated_at: Option[DateTime] = None
 )

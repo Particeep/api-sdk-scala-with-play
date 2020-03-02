@@ -18,7 +18,6 @@ case class FundraiseEquityRunningEdition(
   disclaimer_payment:  Option[String]        = None,
   end_at:              Option[ZonedDateTime] = None,
   score:               Option[String]        = None,
-  form_id:             Option[String]        = None,
   tag:                 Option[String]        = None,
   required_pro:        Option[Boolean]       = None,
   custom:              Option[JsObject]      = None
