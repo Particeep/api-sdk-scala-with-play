@@ -67,6 +67,10 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
     ws.delete[Transaction](s"$endPoint/$id", timeout)
   }
 
+  def deleteMulti(ids: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Transaction]]] = {
+    ws.delete[List[Transaction]](s"$endPoint/multiple/$ids", timeout)
+  }
+
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Transaction]]] = {
     val bodyParts = List(
       new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
