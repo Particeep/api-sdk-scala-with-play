@@ -96,6 +96,10 @@ class PartnerClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
     ws.get[PartnerCompany](s"$endPoint/company/$user_id", timeout)
   }
 
+  def getPartnerCompanysByUserIds(user_ids: List[String], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[PartnerCompany]]] = {
+    ws.get[List[PartnerCompany]](s"$endPoint/company", timeout, List("user_ids" -> user_ids.mkString(",")))
+  }
+
   def updatePartnerCompany(user_id: String, partner_company_edition: PartnerCompanyEdition, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PartnerCompany]] = {
     ws.post[PartnerCompany](s"$endPoint/company/$user_id", timeout, Json.toJson(partner_company_edition))
   }
