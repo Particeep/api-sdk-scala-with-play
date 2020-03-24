@@ -52,6 +52,10 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     ws.get[SignatureMultiple](s"$endPoint/multiple/$id", timeout)
   }
 
+  def multipleByIds(ids: Seq[String], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[SignatureMultiple]]] = {
+    ws.get[List[SignatureMultiple]](s"$endPoint/multiple", timeout, List("ids" -> ids.mkString(",")))
+  }
+
   def search(
     criteria:        SignatureSearch,
     entity_criteria: SignatureSearchForEntities,
