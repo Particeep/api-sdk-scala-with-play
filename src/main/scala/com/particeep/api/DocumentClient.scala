@@ -47,6 +47,7 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
       new StringPart("description", document_creation.description.getOrElse("")),
       new StringPart("name", document_creation.name.getOrElse("")),
       new StringPart("path", document_creation.path.getOrElse("")),
+      new StringPart("tag", document_creation.tag.getOrElse("")),
       new StringPart("locked", document_creation.locked.getOrElse(false).toString),
       new StringPart("override_existing_file", document_creation.override_existing_file.getOrElse(false).toString)
     )
@@ -94,3 +95,4 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     ws.delete[Document](s"$endPoint/$id", timeout)
   }
 }
+
