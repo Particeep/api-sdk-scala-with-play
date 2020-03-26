@@ -15,6 +15,7 @@ case class DocumentSearch(
   content_type: Option[String] = None,
   external_id:  Option[String] = None,
   doc_type:     Option[String] = None,
+  tag:          Option[String] = None,
   custom:       Option[String] = None
 )
 
