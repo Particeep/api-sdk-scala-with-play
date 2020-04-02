@@ -20,7 +20,7 @@ object RoleClient {
   private implicit val format = Roles.format
   private implicit val creation_format = RoleCreation.format
   private implicit val creations_format = RolesCreation.format
-  private implicit val global_role_edition_format = GlobalRoleEdition.format
+  private implicit val global_role_option_format = GlobalRoleOption.format
 }
 
 class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -67,7 +67,7 @@ class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.get[PaginatedSequence[Roles]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
-  def updates(roles_edition: List[GlobalRoleEdition], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Roles]]] = {
-    ws.delete[List[Roles]](s"$endPoint/updates", timeout, Json.toJson(roles_edition))
+  def updates(ids: String, global_role_option: GlobalRoleOption, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Roles]]] = {
+    ws.post[List[Roles]](s"$endPoint/updates/$ids", timeout, Json.toJson(global_role_option))
   }
 }
