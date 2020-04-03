@@ -68,6 +68,6 @@ class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
   }
 
   def updates(ids: String, global_role_option: GlobalRoleOption, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Roles]]] = {
-    ws.post[List[Roles]](s"$endPoint/updates/$ids", timeout, Json.toJson(global_role_option))
+    ws.post[List[Roles]](s"$endPoint/update/$ids/tag", timeout, Json.toJson(global_role_option))
   }
 }
