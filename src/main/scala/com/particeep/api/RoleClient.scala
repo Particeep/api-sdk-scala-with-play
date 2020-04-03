@@ -67,7 +67,7 @@ class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.get[PaginatedSequence[Roles]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
-  def updates(ids: String, global_role_option: GlobalRoleOption, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Roles]]] = {
+  def updateRoles(ids: String, global_role_option: GlobalRoleOption, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Roles]]] = {
     ws.post[List[Roles]](s"$endPoint/update/$ids/tag", timeout, Json.toJson(global_role_option))
   }
 }
