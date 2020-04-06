@@ -5,7 +5,9 @@ import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.role._
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
-
+import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import java.io.File
+import com.ning.http.client.multipart.StringPart
 import scala.concurrent.{ ExecutionContext, Future }
 
 trait RoleCapability {
@@ -17,9 +19,12 @@ trait RoleCapability {
 
 object RoleClient {
   private val endPoint: String = "/role"
-  private implicit val format = Roles.format
+  private val endPoint_import: String = "/import"
+  private implicit val role_format = Role.format
+  private implicit val roles_format = Roles.format
   private implicit val creation_format = RoleCreation.format
   private implicit val creations_format = RolesCreation.format
+  private implicit val importResultReads = ImportResult.format[Role]
 }
 
 class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -64,5 +69,13 @@ class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def search(criteria: RoleSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[Roles]]] = {
     ws.get[PaginatedSequence[Roles]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+  }
+
+  def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Role]]] = {
+    val bodyParts = List(
+      new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
+      new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
+    )
+    ws.postFile[ImportResult[Role]](s"$endPoint_import/role/csv", timeout, csv, "text/csv", bodyParts)
   }
 }
