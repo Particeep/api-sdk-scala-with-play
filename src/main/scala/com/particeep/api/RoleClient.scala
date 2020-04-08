@@ -24,6 +24,7 @@ object RoleClient {
   private implicit val roles_format = Roles.format
   private implicit val creation_format = RoleCreation.format
   private implicit val creations_format = RolesCreation.format
+  private implicit val global_role_option_format = GlobalRoleOption.format
   private implicit val importResultReads = ImportResult.format[Role]
 }
 
@@ -69,6 +70,10 @@ class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def search(criteria: RoleSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[Roles]]] = {
     ws.get[PaginatedSequence[Roles]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+  }
+
+  def update_roles(ids: String, global_role_option: GlobalRoleOption, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Roles]]] = {
+    ws.post[List[Roles]](s"$endPoint/update/$ids", timeout, Json.toJson(global_role_option))
   }
 
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Role]]] = {
