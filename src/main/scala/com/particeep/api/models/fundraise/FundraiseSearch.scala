@@ -30,7 +30,8 @@ case class FundraiseSearch(
   targeting_roles:           Option[String]        = None,
   tag:                       Option[String]        = None,
   fundraise_tag:             Option[String]        = None,
-  required_pro:              Option[Boolean]       = None
+  required_pro:              Option[Boolean]       = None,
+  form_id:                   Option[String]        = None
 )
 
 object FundraiseSearch {
