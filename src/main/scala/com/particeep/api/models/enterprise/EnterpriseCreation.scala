@@ -19,6 +19,7 @@ case class EnterpriseCreation(
   image_cover_url:   Option[String]        = None,
   video_url:         Option[String]        = None,
   status:            Option[String]        = None,
+  siret:             Option[String]        = None,
   tag:               Option[String]        = None,
   custom:            Option[JsObject]      = None,
   address:           Option[Address]       = None

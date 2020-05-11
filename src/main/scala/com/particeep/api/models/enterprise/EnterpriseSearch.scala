@@ -16,5 +16,6 @@ case class EnterpriseSearch(
   createdAfter:      Option[ZonedDateTime] = None,
   creationAfter:     Option[ZonedDateTime] = None,
   statuses:          Option[String]        = None,
+  siret:             Option[String]        = None,
   tag:               Option[String]        = None
 )
