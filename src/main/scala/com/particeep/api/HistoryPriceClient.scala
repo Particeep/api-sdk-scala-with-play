@@ -10,9 +10,9 @@ import scala.concurrent.{ ExecutionContext, Future }
 trait HistoryPriceCapability {
   self: WSClient =>
 
-  val user: HistoryPriceClient = new HistoryPriceClient(this)
+  val history_price: HistoryPriceClient = new HistoryPriceClient(this)
 
-  def user(credentials: ApiCredential): HistoryPriceClient = new HistoryPriceClient(this, Some(credentials))
+  def history_price(credentials: ApiCredential): HistoryPriceClient = new HistoryPriceClient(this, Some(credentials))
 }
 
 object HistoryPriceClient {
