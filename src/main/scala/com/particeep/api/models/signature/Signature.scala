@@ -19,6 +19,7 @@ case class Signature(
   lastName:       String,
   email:          String,
   phone:          String,
+  description:    Option[String]          = None,
   signedFileUrl:  Option[String]          = None,
   signature_type: Option[String]          = None,
   target_id:      Option[String]          = None,

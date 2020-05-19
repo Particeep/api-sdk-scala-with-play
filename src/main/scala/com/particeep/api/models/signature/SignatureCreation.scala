@@ -10,6 +10,7 @@ case class SignatureCreation(
   lastName:       String,
   email:          String,
   phone:          String,
+  description:    Option[String]   = None,
   successURL:     Option[String]   = None,
   cancelURL:      Option[String]   = None,
   failURL:        Option[String]   = None,

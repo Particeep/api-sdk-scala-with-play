@@ -20,6 +20,7 @@ case class SignatureData(
   lastName:       Option[String]        = None,
   email:          Option[String]        = None,
   phone:          Option[String]        = None,
+  description:    Option[String]        = None,
   target_id:      Option[String]        = None,
   target_type:    Option[String]        = None,
   signer_order:   Option[Int]           = None,
