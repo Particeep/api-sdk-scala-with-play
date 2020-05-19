@@ -16,6 +16,7 @@ case class SignatureSearch(
   lastName:       Option[String]        = None,
   email:          Option[String]        = None,
   phone:          Option[String]        = None,
+  description:    Option[String]        = None,
   signer_order:   Option[Int]           = None,
   total_signer:   Option[Int]           = None,
   ids:            Option[String]        = None

@@ -6,6 +6,7 @@ case class SignatureMultipleCreation(
   language:       Option[String]       = None,
   fileUrl:        String,
   fileName:       String,
+  description:    Option[String]       = None,
   signers:        Seq[SignatureSigner],
   target_id:      Option[String]       = None,
   target_type:    Option[String]       = None,
