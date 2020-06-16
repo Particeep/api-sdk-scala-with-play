@@ -12,8 +12,9 @@ object ImportType {
   case object TRANSACTION extends ImportType { val name: String = "TRANSACTION" }
   case object ANSWER_QUESTION extends ImportType { val name: String = "ANSWER_QUESTION" }
   case object DOCUMENT extends ImportType { val name: String = "DOCUMENT" }
+  case object PARTNER_COMPANY extends ImportType { val name: String = "PARTNER_COMPANY" }
 
   object ImportType extends EnumHelper[ImportType] {
-    def values: Set[ImportType] = Set(USER, ENTERPRISE, FUNDRAISE_REWARD, FUNDRAISE_LOAN, FUNDRAISE_EQUITY, TRANSACTION, ANSWER_QUESTION, DOCUMENT)
+    def values: Set[ImportType] = Set(USER, ENTERPRISE, FUNDRAISE_REWARD, FUNDRAISE_LOAN, FUNDRAISE_EQUITY, TRANSACTION, ANSWER_QUESTION, DOCUMENT, PARTNER_COMPANY)
   }
 }
