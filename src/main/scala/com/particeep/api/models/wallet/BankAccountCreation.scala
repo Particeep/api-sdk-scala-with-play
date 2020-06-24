@@ -6,7 +6,7 @@ case class BankAccountCreation(
   bank_name:    String,
   iban:         String,
   bic:          String,
-  number:       String,
+  number:       Option[String] = None,
   street:       String,
   zip:          String,
   city:         String,
