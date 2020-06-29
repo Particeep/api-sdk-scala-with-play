@@ -17,5 +17,6 @@ case class EnterpriseSearch(
   creationAfter:     Option[ZonedDateTime] = None,
   statuses:          Option[String]        = None,
   siret:             Option[String]        = None,
-  tag:               Option[String]        = None
+  tag:               Option[String]        = None,
+  is_auto_assigned_to_partners: Option[Boolean]       = None
 )
