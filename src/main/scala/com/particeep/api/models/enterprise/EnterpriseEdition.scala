@@ -18,6 +18,7 @@ case class EnterpriseEdition(
   logo_url:          Option[String]        = None,
   image_cover_url:   Option[String]        = None,
   video_url:         Option[String]        = None,
+  is_auto_assigned_to_partners: Option[Boolean]       = None,
   status:            Option[String]        = None,
   siret:             Option[String]        = None,
   tag:               Option[String]        = None,
