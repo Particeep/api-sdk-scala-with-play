@@ -57,6 +57,10 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.delete[Fund](s"$endPoint/$id", timeout)
   }
 
+  def deletes(ids: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Fund]]] = {
+    ws.delete[List[Fund]](s"$endPoint/multiple/$ids", timeout)
+  }
+
   def search(criteria: FundSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[FundData]]] = {
     ws.get[PaginatedSequence[FundData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
