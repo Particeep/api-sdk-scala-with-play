@@ -23,7 +23,8 @@ case class TransactionEdition(
   tag:             Option[String]   = None,
   co_issuers:      Option[JsArray]  = None,
   rib:             Option[String]   = None,
-  custom:          Option[JsObject] = None
+  custom:          Option[JsObject] = None,
+  partner_fees:    Option[Int]      = None
 )
 
 object TransactionEdition {

@@ -25,7 +25,8 @@ case class TransactionCreation(
   comment:        Option[String]        = None,
   tag:            Option[String]        = None,
   co_issuers:     Option[JsArray]       = None,
-  custom:         Option[JsObject]      = None
+  custom:         Option[JsObject]      = None,
+  partner_fees:   Option[Int]           = None
 )
 
 object TransactionCreation {

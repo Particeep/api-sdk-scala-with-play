@@ -47,7 +47,8 @@ case class TransactionData(
   dismemberment_rate:      Option[Double]        = None,
   bare_owner_amount:       Option[Int]           = None,
   usufructuary_amount:     Option[Int]           = None,
-  custom:                  Option[JsObject]      = None
+  custom:                  Option[JsObject]      = None,
+  partner_fees:            Option[Int]           = None
 )
 
 object TransactionData {
