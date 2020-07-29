@@ -130,6 +130,10 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredentia
     ws.post[List[RepaymentWithDate]](s"$endPoint/fundraise/$id/info/borrower", timeout, Json.toJson(""))
   }
 
+  def getRepaymentScheduleByLender(user_id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[LoanRepaymentSchedule]]] = {
+    ws.get[List[LoanRepaymentSchedule]](s"$endPoint/repayment/user/$user_id", timeout)
+  }
+
   def getBorrowerRepaymentScheduleDetail(
     id:            String,
     payment_day:   Int,
