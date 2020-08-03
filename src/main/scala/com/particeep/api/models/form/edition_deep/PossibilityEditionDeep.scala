@@ -4,7 +4,7 @@ import play.api.libs.json.Json
 
 case class PossibilityEditionDeep(
   id:     Option[String],
-  label:  Option[Map[String, String]] = None,
+  label:  Option[String],
   index:  Option[Int],
   weight: Option[Int]
 )
