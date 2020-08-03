@@ -5,7 +5,7 @@ import play.api.libs.json.Json
 
 case class QuestionCreation(
   section_id:    String,
-  label:         Option[String]       = None,
+  label:         Option[Map[String, String]] = None,
   description:   Option[String]       = None,
   question_type: Option[QuestionType] = None,
   required:      Option[Boolean]      = None,
