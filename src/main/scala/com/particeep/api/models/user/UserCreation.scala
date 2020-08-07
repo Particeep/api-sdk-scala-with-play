@@ -33,7 +33,7 @@ case class UserCreation(
   does_pay_taxes:            Option[Boolean]       = None,
   is_pro:                    Option[Boolean]       = None,
   account_validation_status: Option[String]        = None,
-  language:                  Option[String]        = None,
+  lang:                      Option[String]        = None,
   addresses:                 Option[Seq[Address]]  = None,
   tag:                       Option[String]        = None,
   custom:                    Option[JsObject]      = None

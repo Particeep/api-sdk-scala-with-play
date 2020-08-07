@@ -35,7 +35,7 @@ case class UserEdition(
   tax_rate:                  Option[Double]        = None,
   is_pro:                    Option[Boolean]       = None,
   account_validation_status: Option[String]        = None,
-  language:                  Option[String]        = None,
+  lang:                      Option[String]        = None,
   custom:                    Option[JsObject]      = None
 )
 
