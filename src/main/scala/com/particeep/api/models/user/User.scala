@@ -39,6 +39,7 @@ case class User(
   tax_rate:                  Option[Double]        = None,
   is_pro:                    Option[Boolean]       = None,
   account_validation_status: Option[String]        = None,
+  language:                  Option[String]        = None,
   relatives:                 Option[Seq[Relative]] = None,
   custom:                    Option[JsObject]      = None
 )
