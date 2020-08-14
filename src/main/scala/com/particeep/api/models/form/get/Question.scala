@@ -11,7 +11,7 @@ case class Question(
   created_at:         Option[ZonedDateTime]       = None,
   section_id:         String                      = "",
   label:              Option[Map[String, String]] = None,
-  description:        Option[String]              = None,
+  description:        Option[Map[String, String]] = None,
   possibility_id_dep: Option[String]              = None,
   question_type:      Option[QuestionType]        = None,
   pattern:            Option[String]              = None,
