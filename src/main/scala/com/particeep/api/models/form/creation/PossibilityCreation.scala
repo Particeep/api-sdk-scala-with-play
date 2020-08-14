@@ -4,9 +4,9 @@ import play.api.libs.json.Json
 
 case class PossibilityCreation(
   question_id: String,
-  label:       Option[String] = None,
-  index:       Option[Int]    = None,
-  weight:      Option[Int]    = None
+  label:       Option[Map[String, String]] = None,
+  index:       Option[Int]                 = None,
+  weight:      Option[Int]                 = None
 )
 
 object PossibilityCreation {

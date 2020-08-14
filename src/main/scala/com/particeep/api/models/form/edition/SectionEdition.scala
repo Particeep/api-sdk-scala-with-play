@@ -3,8 +3,8 @@ package com.particeep.api.models.form.edition
 import play.api.libs.json.Json
 
 case class SectionEdition(
-  name:        Option[String],
-  description: Option[String],
+  name:        Option[Map[String, String]],
+  description: Option[Map[String, String]],
   index:       Option[Int]
 )
 

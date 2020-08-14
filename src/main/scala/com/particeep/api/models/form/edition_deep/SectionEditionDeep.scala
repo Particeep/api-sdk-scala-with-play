@@ -4,8 +4,8 @@ import play.api.libs.json.Json
 
 case class SectionEditionDeep(
   id:          Option[String],
-  name:        Option[String],
-  description: Option[String],
+  name:        Option[Map[String, String]],
+  description: Option[Map[String, String]],
   index:       Option[Int],
   questions:   Option[Seq[QuestionEditionDeep]]
 )
