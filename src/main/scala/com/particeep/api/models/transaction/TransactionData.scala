@@ -26,7 +26,6 @@ case class TransactionData(
   item_type:               Option[String]        = None,
   amount:                  Option[Int]           = None,
   fees:                    Option[Int]           = None,
-  partner_fees:            Option[Int]           = None,
   currency:                Option[Currency]      = None,
   status:                  Option[String]        = None,
   payment_method:          Option[PaymentMethod] = None,

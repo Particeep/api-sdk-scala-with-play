@@ -22,7 +22,6 @@ case class Transaction(
   item_type:               Option[String]        = None,
   amount:                  Int                   = 0,
   fees:                    Int                   = 0,
-  partner_fees:            Option[Int]           = None,
   currency:                Currency              = EUR,
   status:                  TransactionStatus     = PENDING,
   payment_method:          Option[PaymentMethod] = None,

@@ -20,7 +20,6 @@ case class TransactionSearch(
   item_type:        Option[String]        = None,
   amount:           Option[Int]           = None,
   fees:             Option[Int]           = None,
-  partner_fees:     Option[Int]           = None,
   currency:         Option[String]        = None,
   status:           Option[String]        = None,
   signature_status: Option[String]        = None,

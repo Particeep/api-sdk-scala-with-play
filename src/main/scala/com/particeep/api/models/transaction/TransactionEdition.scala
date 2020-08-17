@@ -17,7 +17,6 @@ case class TransactionEdition(
   item_type:       Option[String]   = None,
   amount:          Option[Int]      = None,
   fees:            Option[Int]      = None,
-  partner_fees:    Option[Int]      = None,
   currency:        Option[Currency] = None,
   handled_offline: Option[Boolean]  = None,
   comment:         Option[String]   = None,
