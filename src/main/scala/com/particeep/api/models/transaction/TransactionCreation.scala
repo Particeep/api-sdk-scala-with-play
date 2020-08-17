@@ -21,12 +21,12 @@ case class TransactionCreation(
   item_type:      Option[String]        = None,
   amount:         Int                   = 0,
   fees:           Int                   = 0,
+  partner_fees:   Option[Int]           = None,
   currency:       Currency              = EUR,
   comment:        Option[String]        = None,
   tag:            Option[String]        = None,
   co_issuers:     Option[JsArray]       = None,
-  custom:         Option[JsObject]      = None,
-  partner_fees:   Option[Int]           = None
+  custom:         Option[JsObject]      = None
 )
 
 object TransactionCreation {

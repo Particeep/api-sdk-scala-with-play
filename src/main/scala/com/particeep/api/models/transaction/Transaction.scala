@@ -22,6 +22,7 @@ case class Transaction(
   item_type:               Option[String]        = None,
   amount:                  Int                   = 0,
   fees:                    Int                   = 0,
+  partner_fees:            Option[Int]           = None,
   currency:                Currency              = EUR,
   status:                  TransactionStatus     = PENDING,
   payment_method:          Option[PaymentMethod] = None,
@@ -37,8 +38,7 @@ case class Transaction(
   dismemberment_rate:      Option[Double]        = None,
   bare_owner_amount:       Option[Int]           = None,
   usufructuary_amount:     Option[Int]           = None,
-  custom:                  Option[JsObject]      = None,
-  partner_fees:            Option[Int]           = None
+  custom:                  Option[JsObject]      = None
 )
 
 object Transaction {

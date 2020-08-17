@@ -17,14 +17,14 @@ case class TransactionEdition(
   item_type:       Option[String]   = None,
   amount:          Option[Int]      = None,
   fees:            Option[Int]      = None,
+  partner_fees:    Option[Int]      = None,
   currency:        Option[Currency] = None,
   handled_offline: Option[Boolean]  = None,
   comment:         Option[String]   = None,
   tag:             Option[String]   = None,
   co_issuers:      Option[JsArray]  = None,
   rib:             Option[String]   = None,
-  custom:          Option[JsObject] = None,
-  partner_fees:    Option[Int]      = None
+  custom:          Option[JsObject] = None
 )
 
 object TransactionEdition {

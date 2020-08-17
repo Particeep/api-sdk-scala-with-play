@@ -20,14 +20,14 @@ case class TransactionSearch(
   item_type:        Option[String]        = None,
   amount:           Option[Int]           = None,
   fees:             Option[Int]           = None,
+  ids:              Option[String]        = None,
   currency:         Option[String]        = None,
   status:           Option[String]        = None,
   signature_status: Option[String]        = None,
   payment_method:   Option[String]        = None,
   handled_offline:  Option[Boolean]       = None,
   comment:          Option[String]        = None,
-  targeting_roles:  Option[String]        = None,
-  ids:              Option[String]        = None
+  targeting_roles:  Option[String]        = None
 )
 
 object TransactionSearch {
