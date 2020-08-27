@@ -22,7 +22,9 @@ case class EnterpriseCreation(
   siret:             Option[String]        = None,
   tag:               Option[String]        = None,
   custom:            Option[JsObject]      = None,
-  address:           Option[Address]       = None
+  address:           Option[Address]       = None,
+  creator_type:      Option[String]        = None,
+  creator_name:      Option[String]        = None
 )
 
 object EnterpriseCreation {
