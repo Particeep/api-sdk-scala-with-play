@@ -3,9 +3,10 @@ package com.particeep.api
 import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
 import com.particeep.api.models.enums.FundStatus.FundStatus
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
-import com.particeep.api.models.fund.{ Fund, FundCreation, FundEdition, FundSearch, InvestmentCreation, TransactionEditPart, FundData }
+import com.particeep.api.models.fund.{ Fund, FundCreation, FundData, FundEdition, FundSearch, InvestmentCreation, TransactionEditPart }
 import com.particeep.api.models.transaction.{ Investment, RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
+import play.api.libs.iteratee.Enumerator
 import play.api.libs.json.Json
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -63,6 +64,18 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def search(criteria: FundSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[FundData]]] = {
     ws.get[PaginatedSequence[FundData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+  }
+
+  def export(
+    criteria:       FundSearch,
+    table_criteria: TableSearch,
+    timeout:        Long        = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+    ws.getStream(
+      s"$endPoint/search",
+      timeout,
+      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria)
+    )(exec, creds.withHeader("Content-Type", "application/csv"))
   }
 
   def invest(id: String, investment_creation: InvestmentCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
