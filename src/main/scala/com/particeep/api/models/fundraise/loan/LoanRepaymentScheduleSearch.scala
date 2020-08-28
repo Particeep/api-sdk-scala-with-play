@@ -2,6 +2,9 @@ package com.particeep.api.models.fundraise.loan
 
 import java.time.ZonedDateTime
 
+import com.particeep.api.core.Formatter
+import play.api.libs.json.Json
+
 case class LoanRepaymentScheduleSearch(
   payment_date_after:  Option[ZonedDateTime] = None,
   payment_date_before: Option[ZonedDateTime] = None,
@@ -14,3 +17,8 @@ case class LoanRepaymentScheduleSearch(
   is_offline:          Option[Boolean]       = None,
   tag:                 Option[String]        = None
 )
+
+object LoanRepaymentScheduleSearch {
+  implicit val date_format = Formatter.ZonedDateTimeWrites
+  val format = Json.format[LoanRepaymentScheduleSearch]
+}
