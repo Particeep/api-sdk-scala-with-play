@@ -5,7 +5,7 @@ import play.api.libs.json.Json
 case class BankAccountCreation(
   bank_name:    String,
   iban:         String,
-  bic:          String,
+  bic:          Option[String] = None,
   number:       Option[String] = None,
   street:       String,
   zip:          String,
