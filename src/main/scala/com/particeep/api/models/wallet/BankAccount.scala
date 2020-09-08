@@ -14,7 +14,7 @@ case class BankAccount(
   status:       Option[BankAccountStatus] = None,
   bank_name:    String                    = "",
   iban:         String                    = "",
-  bic:          String                    = "",
+  bic:          Option[String]            = None,
   holder_name:  Option[String]            = None,
   acct_num:     Option[String]            = None,
   aba_num:      Option[String]            = None,
