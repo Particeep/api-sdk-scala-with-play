@@ -13,9 +13,10 @@ object Locale {
   case object pt_BR extends Locale { val name: String = "pt_BR" }
   case object nl_NL extends Locale { val name: String = "nl_NL" }
   case object nl_BE extends Locale { val name: String = "nl_BE" }
+  case object ar_AR extends Locale { val name: String = "ar_AR" }
 
   object Locale extends EnumHelper[Locale] {
-    def values: Set[Locale] = Set(fr_FR, en_GB, en_US, es_ES, de_DE, pt_PT, pt_BR, nl_NL, nl_BE)
+    def values: Set[Locale] = Set(fr_FR, en_GB, en_US, es_ES, de_DE, pt_PT, pt_BR, nl_NL, nl_BE, ar_AR)
 
     val defaultLocal = fr_FR
 
