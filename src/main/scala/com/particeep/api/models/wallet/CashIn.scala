@@ -1,6 +1,5 @@
 package com.particeep.api.models.wallet
 
-import com.particeep.api.models.enums.Locale.Locale
 import play.api.libs.json.Json
 
 case class CashIn(
