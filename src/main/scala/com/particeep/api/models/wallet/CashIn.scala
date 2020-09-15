@@ -11,7 +11,7 @@ case class CashIn(
   decline_url: String         = "",
   pending_url: String         = "",
   owner_ip:    String         = "",
-  locale:      Option[Locale] = None
+  locale:      Option[String] = None
 )
 
 object CashIn {
