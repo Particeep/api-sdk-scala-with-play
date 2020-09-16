@@ -49,8 +49,8 @@ trait WithSecurtiy {
     val hexChars = Crypto.encodeToHex(result)
 
     val sign = new String(hexChars).toLowerCase()
-    val signature = Crypto.encodeBase64(sign)
+    val signature = Crypto.encodeBase64(sign).replaceAll("=", "")
 
-    s"PTP:$apiKey:$signature"
+    s"PTP#$apiKey#$signature"
   }
 }
