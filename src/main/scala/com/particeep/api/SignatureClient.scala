@@ -4,7 +4,9 @@ import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.signature._
 import com.particeep.api.utils.LangUtils
-import play.api.libs.iteratee.Enumerator
+import akka.NotUsed
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import play.api.libs.json.Json
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -86,7 +88,7 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     )
   }
 
-  def getFile(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+  def getFile(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     ws.getStream(s"$endPoint/file/$id", timeout)
   }
 
@@ -111,7 +113,7 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     entity_criteria: SignatureSearchForEntities,
     table_criteria:  TableSearch,
     timeout:         Long                       = defaultTimeOut
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     ws.getStream(
       s"$endPoint/search",
       timeout,

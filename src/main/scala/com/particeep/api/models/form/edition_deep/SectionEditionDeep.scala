@@ -3,11 +3,11 @@ package com.particeep.api.models.form.edition_deep
 import play.api.libs.json.Json
 
 case class SectionEditionDeep(
-  id:          Option[String],
-  name:        Option[Map[String, String]],
-  description: Option[Map[String, String]],
-  index:       Option[Int],
-  questions:   Option[Seq[QuestionEditionDeep]]
+    id:          Option[String],
+    name:        Option[Map[String, String]],
+    description: Option[Map[String, String]],
+    index:       Option[Int],
+    questions:   Option[Seq[QuestionEditionDeep]]
 )
 
 object SectionEditionDeep {

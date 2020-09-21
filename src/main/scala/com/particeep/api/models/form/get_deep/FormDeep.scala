@@ -6,13 +6,13 @@ import com.particeep.api.core.Formatter
 import play.api.libs.json.Json
 
 case class FormDeep(
-  id:              String                = "",
-  created_at:      Option[ZonedDateTime] = None,
-  name:            Option[String]        = None,
-  description:     Option[String]        = None,
-  tag:             Option[String]        = None,
-  last_updated_at: Option[ZonedDateTime] = None,
-  sections:        Seq[SectionDeep]      = Seq()
+    id:              String                = "",
+    created_at:      Option[ZonedDateTime] = None,
+    name:            Option[String]        = None,
+    description:     Option[String]        = None,
+    tag:             Option[String]        = None,
+    last_updated_at: Option[ZonedDateTime] = None,
+    sections:        Seq[SectionDeep]      = Seq()
 )
 
 object FormDeep {

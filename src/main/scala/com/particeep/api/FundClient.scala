@@ -6,7 +6,9 @@ import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.fund.{ Fund, FundCreation, FundData, FundEdition, FundSearch, InvestmentCreation, TransactionEditPart }
 import com.particeep.api.models.transaction.{ Investment, RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
-import play.api.libs.iteratee.Enumerator
+import akka.NotUsed
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import play.api.libs.json.Json
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -70,7 +72,7 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     criteria:       FundSearch,
     table_criteria: TableSearch,
     timeout:        Long        = defaultTimeOut
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     ws.getStream(
       s"$endPoint/search",
       timeout,

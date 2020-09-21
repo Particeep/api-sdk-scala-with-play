@@ -6,8 +6,8 @@ import com.particeep.api.core.Formatter
 import play.api.libs.json.Json
 
 case class PayCancelledSchedulePaymentForParentAndDate(
-  parent_id: String,
-  date:      ZonedDateTime
+    parent_id: String,
+    date:      ZonedDateTime
 )
 
 object PayCancelledSchedulePaymentForParentAndDate {

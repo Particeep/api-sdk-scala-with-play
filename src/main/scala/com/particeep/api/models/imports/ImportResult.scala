@@ -10,18 +10,18 @@ import com.particeep.api.core.Formatter
  * Created by Noe on 10/04/2017.
  */
 case class ImportResult[T](
-  id:              String,
-  created_at:      ZonedDateTime,
-  updated_at:      Option[ZonedDateTime],
-  status:          ImportStateStatus,
-  import_type:     ImportType,
-  line_processed:  Int,
-  nb_created:      Int,
-  nb_fail:         Int,
-  line_with_error: List[LineError]       = List(),
-  line_on_success: List[LineSuccess[T]]  = List(),
-  tag:             Option[String]        = None,
-  custom:          Option[JsObject]      = None
+    id:              String,
+    created_at:      ZonedDateTime,
+    updated_at:      Option[ZonedDateTime],
+    status:          ImportStateStatus,
+    import_type:     ImportType,
+    line_processed:  Int,
+    nb_created:      Int,
+    nb_fail:         Int,
+    line_with_error: List[LineError]       = List(),
+    line_on_success: List[LineSuccess[T]]  = List(),
+    tag:             Option[String]        = None,
+    custom:          Option[JsObject]      = None
 )
 
 object ImportResult {

@@ -6,12 +6,12 @@ import com.particeep.api.core.Formatter
 import play.api.libs.json.Json
 
 case class Form(
-  id:              String                = "",
-  created_at:      Option[ZonedDateTime] = None,
-  name:            Option[String]        = None,
-  description:     Option[String]        = None,
-  tag:             Option[String]        = None,
-  last_updated_at: Option[ZonedDateTime] = None
+    id:              String                = "",
+    created_at:      Option[ZonedDateTime] = None,
+    name:            Option[String]        = None,
+    description:     Option[String]        = None,
+    tag:             Option[String]        = None,
+    last_updated_at: Option[ZonedDateTime] = None
 )
 
 object Form {

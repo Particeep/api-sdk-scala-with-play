@@ -11,8 +11,10 @@ import com.particeep.api.utils.LangUtils
 import com.particeep.api.models.user._
 import com.particeep.api.core._
 import com.particeep.api.models.imports.ImportForm
-import com.ning.http.client.multipart.StringPart
-import play.api.libs.iteratee.Enumerator
+import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
+import akka.NotUsed
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 
 trait UserCapability {
   self: WSClient =>
@@ -99,7 +101,7 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.postFile[ImportResult[User]](s"$endPoint_import/user/csv", timeout, csv, "text/csv", bodyParts)
   }
 
-  def export(criteria: UserSearch, criteria_additional: UserSearchAdditional, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+  def export(criteria: UserSearch, criteria_additional: UserSearchAdditional, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     ws.getStream(
       s"$endPoint/search",
       timeout,

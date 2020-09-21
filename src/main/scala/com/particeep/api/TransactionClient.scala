@@ -9,8 +9,10 @@ import com.particeep.api.models.transaction._
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 import com.particeep.api.models.imports.ImportForm
-import com.ning.http.client.multipart.StringPart
-import play.api.libs.iteratee.Enumerator
+import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
+import akka.NotUsed
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -84,7 +86,7 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
     criteria:       TransactionSearch,
     table_criteria: TableSearch,
     timeout:        Long              = defaultTimeOut
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     ws.getStream(
       s"$endPoint/search",
       timeout,

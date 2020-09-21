@@ -1,20 +1,25 @@
 package com.particeep.test
 
+import akka.actor.ActorSystem
+import akka.stream.Materializer
+
 import scala.language.postfixOps
 import com.particeep.api.models.user.User
-import com.particeep.api.core.{ ApiClient }
+import com.particeep.api.core.ApiClient
 import com.particeep.api.models._
 import com.particeep.api.UserCapability
 import com.particeep.api.ParticeepApi
+import javax.inject.{ Inject, Singleton }
 import org.scalatest._
-import play.api.libs.json.{ Reads }
+import play.api.libs.json.Reads
 import play.api.libs.ws.WSResponse
 
 import scala.concurrent.{ Await, Future }
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class UserTest extends FlatSpec with Matchers {
+@Singleton
+class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends FlatSpec with Matchers {
 
   "the api client" should "load user by id with correct date format" in {
 

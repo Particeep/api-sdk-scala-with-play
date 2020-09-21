@@ -6,11 +6,11 @@ import com.particeep.api.core.Formatter
 import play.api.libs.json.Json
 
 case class HistoryPrice(
-  id:          String                = "",
-  created_at:  Option[ZonedDateTime] = None,
-  target_id:   String,
-  target_type: String,
-  price:       Int
+    id:          String                = "",
+    created_at:  Option[ZonedDateTime] = None,
+    target_id:   String,
+    target_type: String,
+    price:       Int
 )
 
 object HistoryPrice {
