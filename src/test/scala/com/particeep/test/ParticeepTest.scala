@@ -13,7 +13,8 @@ import com.particeep.api.models.user.User
 import com.particeep.api.Info
 import com.particeep.api.InfoCapability
 import javax.inject.{ Inject, Singleton }
-import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 
 import scala.concurrent.{ Await, Future }
@@ -21,7 +22,7 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends FlatSpec with Matchers {
+class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends AnyFlatSpec with Matchers {
 
   "the api client" should "load info" in {
 
@@ -32,7 +33,7 @@ class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: M
     val rez = Await.result(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
-    val info = rez.right.get
+    val info = rez.getOrElse(Info(version = "0", debugEnable = true, metaEnable = true))
     info.version shouldBe "1"
   }
 

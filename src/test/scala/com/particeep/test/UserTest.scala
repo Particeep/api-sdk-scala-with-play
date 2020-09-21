@@ -10,16 +10,17 @@ import com.particeep.api.models._
 import com.particeep.api.UserCapability
 import com.particeep.api.ParticeepApi
 import javax.inject.{ Inject, Singleton }
-import org.scalatest._
+import play.api.libs.ws.StandaloneWSResponse
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Reads
-import play.api.libs.ws.WSResponse
 
 import scala.concurrent.{ Await, Future }
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends FlatSpec with Matchers {
+class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends AnyFlatSpec with Matchers {
 
   "the api client" should "load user by id with correct date format" in {
 
@@ -30,7 +31,7 @@ class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materi
     val rez = Await.result(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
-    val user = rez.right.get
+    val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
     user.id shouldBe user_id
 
     val created_at = user.created_at.map(_.toString).getOrElse("")
@@ -46,7 +47,7 @@ class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materi
     val rez = Await.result(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
-    val user = rez.right.get
+    val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
     user.id shouldBe user_id
   }
 
@@ -60,7 +61,7 @@ class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materi
     val rez = Await.result(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
-    val user = rez.right.get
+    val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
     user.id shouldBe user_id
   }
 
@@ -73,7 +74,7 @@ class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materi
     val rez = Await.result(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
-    val user = rez.right.get
+    val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
     user.id shouldBe user_id
   }
 
@@ -88,7 +89,7 @@ class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materi
     val rez = Await.result(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
-    val user = rez.right.get
+    val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
     user.id shouldBe user_id
   }
 
@@ -96,10 +97,10 @@ class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materi
 
     val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
     val ws = new ApiClient("https://test-api.particeep.com", "1", Some(ConfigTest.credential)) with UserCapability {
-      override def parse[A](response: WSResponse)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
+      override def parse[A](response: StandaloneWSResponse)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
         val msg = response
-          .allHeaders
-          .filterKeys(k => k == "Info-End-User")
+          .headers
+          .view.filterKeys(k => k == "Info-End-User")
           .headOption
           .map(v => s"${v._1} -> ${v._2}")
           .getOrElse("")
@@ -115,7 +116,7 @@ class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materi
     val rez = Await.result(rez_f, 10 seconds)
     rez.isLeft shouldBe true
 
-    val error_msg = rez.left.get.asInstanceOf[Errors]
+    val error_msg = rez.left.getOrElse(Errors).asInstanceOf[Errors]
     val maybe_header = error_msg.errors
       .flatMap(_.message.split(","))
       .filter(_.contains("Info-End-User"))
