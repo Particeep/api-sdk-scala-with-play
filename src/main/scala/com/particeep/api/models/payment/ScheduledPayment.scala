@@ -1,6 +1,6 @@
 package com.particeep.api.models.payment
 
-import java.time.ZonedDateTime
+import java.time.{ ZoneOffset, ZonedDateTime }
 
 import com.particeep.api.core.Formatter
 import play.api.libs.json.Json
@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 case class ScheduledPayment(
     id:                    String                = "",
     created_at:            Option[ZonedDateTime] = None,
-    payment_date:          ZonedDateTime         = ZonedDateTime.now,
+    payment_date:          ZonedDateTime         = ZonedDateTime.now(ZoneOffset.UTC),
     issuer_id:             String                = "",
     issuer_type:           String                = "",
     recipient_id:          String                = "",

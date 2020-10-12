@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import java.time.ZonedDateTime
+import java.time.{ ZoneOffset, ZonedDateTime }
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
@@ -17,7 +17,7 @@ case class WalletCreation(
     first_name:          String           = "",
     last_name:           String           = "",
     gender:              String           = "",
-    birthday:            ZonedDateTime    = ZonedDateTime.now,
+    birthday:            ZonedDateTime    = ZonedDateTime.now(ZoneOffset.UTC),
     is_payer:            Option[Boolean]  = None,
     nationality:         Option[String]   = None,
     countryOfResidence:  Option[String]   = None,
