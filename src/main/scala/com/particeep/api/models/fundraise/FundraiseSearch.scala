@@ -11,6 +11,7 @@ case class FundraiseSearch(
     created_after:             Option[ZonedDateTime] = None,
     end_before:                Option[ZonedDateTime] = None,
     end_after:                 Option[ZonedDateTime] = None,
+    id:                        Option[String]        = None,
     enterprise_id:             Option[String]        = None,
     manager_id:                Option[String]        = None,
     manager_email:             Option[String]        = None,

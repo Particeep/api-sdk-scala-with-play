@@ -24,6 +24,7 @@ case class Signature(
     signature_type: Option[String]          = None,
     target_id:      Option[String]          = None,
     target_type:    Option[String]          = None,
+    group_id:       Option[String]          = None,
     tag:            Option[String]          = None,
     custom:         Option[JsObject]        = None
 )
