@@ -31,6 +31,7 @@ case class FundraiseLoan(
   tag:                 Option[String]        = None,
   private_group_id:    Option[String]        = None,
   form_id:             Option[String]        = None,
+  is_featured:         Option[Boolean]       = None,
   offer:               LoanOffer             = LoanOffer(),
   custom:              Option[JsObject]      = None
 )

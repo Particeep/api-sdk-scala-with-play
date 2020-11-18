@@ -23,6 +23,7 @@ case class FundraiseLoanEdition(
   currency:            Option[Currency]         = None,
   score:               Option[String]           = None,
   form_id:             Option[String]           = None,
+  is_featured:         Option[Boolean]          = None,
   tag:                 Option[String]           = None,
   offer:               Option[LoanOfferEdition] = None,
   custom:              Option[JsObject]         = None

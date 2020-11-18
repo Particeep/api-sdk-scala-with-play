@@ -19,6 +19,7 @@ case class FundraiseLoanRunningEdition(
   end_at:              Option[ZonedDateTime] = None,
   score:               Option[String]        = None,
   form_id:             Option[String]        = None,
+  is_featured:         Option[Boolean]       = None,
   tag:                 Option[String]        = None,
   custom:              Option[JsObject]      = None
 )
