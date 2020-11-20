@@ -25,7 +25,6 @@ case class FundraiseEquityCreation(
   score:               Option[String]              = None,
   tag:                 Option[String]              = None,
   custom:              Option[JsObject]            = None,
-  restricted_to_group: Option[String]              = None,
   required_pro:        Option[Boolean]             = None,
   dismemberment_table: Option[Map[String, String]] = None,
   offer:               Option[EquityOffer]         = None
