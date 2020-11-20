@@ -32,8 +32,8 @@ case class FundraiseEquity(
   custom:              Option[JsObject]            = None,
   private_group_id:    Option[String]              = None,
   required_pro:        Option[Boolean]             = None,
-  form_id:             Option[String]              = None,
   is_featured:         Option[Boolean]             = None,
+  form_id:             Option[String]              = None,
   dismemberment_table: Option[Map[String, String]] = None,
   offer:               EquityOffer                 = EquityOffer()
 )

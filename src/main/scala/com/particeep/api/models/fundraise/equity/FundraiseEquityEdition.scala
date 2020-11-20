@@ -25,8 +25,8 @@ case class FundraiseEquityEdition(
   tag:                 Option[String]              = None,
   custom:              Option[JsObject]            = None,
   required_pro:        Option[Boolean]             = None,
-  form_id:             Option[String]              = None,
   is_featured:         Option[Boolean]             = None,
+  form_id:             Option[String]              = None,
   dismemberment_table: Option[Map[String, String]] = None,
   offer:               Option[EquityOffer]         = None
 )
