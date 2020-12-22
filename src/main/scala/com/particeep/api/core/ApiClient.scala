@@ -5,7 +5,7 @@ import java.io.File
 import com.ning.http.client.multipart.{ FilePart, Part }
 import com.ning.http.client.AsyncHttpClient
 import com.particeep.api.models.{ Error, ErrorResult, Errors }
-import play.api.libs.ws._
+import play.api.libs.ws.{ WS, _ }
 import play.api.libs.ws.ning._
 import play.api.Play.current
 import play.api.libs.iteratee.Enumerator
@@ -35,6 +35,12 @@ trait WSClient {
    * @param exec : Execution context for the request
    * @return
    */
+  def getOutVersion[T](
+    path:    String,
+    timeOut: Long,
+    params:  List[(String, String)] = List()
+  )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
+
   def get[T](
     path:    String,
     timeOut: Long,
@@ -114,6 +120,11 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
   val defaultTimeOut: Long = 10000
   val defaultImportTimeOut: Long = -1
 
+  private[this] def urlOutVersion(path: String, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): WSRequest = {
+    val req = WS.clientUrl(s"$baseUrl$path")
+    secure(req, credentials, timeOut).withHeaders(credentials.http_headers.getOrElse(List()): _*)
+  }
+
   private[this] def url(path: String, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): WSRequest = {
     val req = WS.clientUrl(s"$baseUrl/v$version$path")
     secure(req, credentials, timeOut).withHeaders(credentials.http_headers.getOrElse(List()): _*)
@@ -125,6 +136,12 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     credentials.http_headers.map(_.foldLeft(url) { (acc, elem) =>
       acc.addHeader(elem._1, elem._2)
     }).getOrElse(url)
+  }
+
+  def getOutVersion[T](path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
+    urlOutVersion(path, timeOut).withQueryString(params: _*).get().map(parse[T](_)).recover {
+      case NonFatal(e) => handle_error(e, "GET", path)
+    }
   }
 
   def get[T](path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
