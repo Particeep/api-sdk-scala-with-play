@@ -10,6 +10,15 @@ import scala.concurrent.ExecutionContext
 
 trait WithSecurtiy {
 
+  protected def secure(req: WSRequest, timeOut: Long)(implicit exec: ExecutionContext) = {
+    val today = buildDateHeader()
+    req
+      .withRequestTimeout(timeOut)
+      .withHeaders(
+        ("DateTime", today)
+      )
+  }
+
   protected def secure(req: WSRequest, apiCredential: ApiCredential, timeOut: Long)(implicit exec: ExecutionContext) = {
     val today = buildDateHeader()
     req

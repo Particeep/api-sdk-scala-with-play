@@ -39,7 +39,7 @@ trait WSClient {
     path:    String,
     timeOut: Long,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
+  )(implicit exec: ExecutionContext, f: Format[T]): Future[Either[ErrorResult, T]]
 
   def get[T](
     path:    String,
@@ -120,9 +120,9 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
   val defaultTimeOut: Long = 10000
   val defaultImportTimeOut: Long = -1
 
-  private[this] def urlOutVersion(path: String, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): WSRequest = {
+  private[this] def urlOutVersion(path: String, timeOut: Long)(implicit exec: ExecutionContext): WSRequest = {
     val req = WS.clientUrl(s"$baseUrl$path")
-    secure(req, credentials, timeOut).withHeaders(credentials.http_headers.getOrElse(List()): _*)
+    secure(req, timeOut).withHeaders(Seq[(String, String)](): _*)
   }
 
   private[this] def url(path: String, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): WSRequest = {
@@ -138,7 +138,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     }).getOrElse(url)
   }
 
-  def getOutVersion[T](path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
+  def getOutVersion[T](path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, f: Format[T]): Future[Either[ErrorResult, T]] = {
     urlOutVersion(path, timeOut).withQueryString(params: _*).get().map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "GET", path)
     }
