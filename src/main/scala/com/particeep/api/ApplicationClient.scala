@@ -5,7 +5,7 @@ import com.particeep.api.models.ErrorResult
 
 import scala.concurrent.{ ExecutionContext, Future }
 
-trait AapplicationCapability {
+trait ApplicationCapability {
   self: WSClient =>
 
   val application: ApplicationClient = new ApplicationClient(this)
