@@ -31,8 +31,6 @@ case class UserEdition(
   does_pay_taxes:            Option[Boolean]       = None,
   addresses:                 Option[Seq[Address]]  = None,
   tag:                       Option[String]        = None,
-  tax_system:                Option[String]        = None,
-  tax_rate:                  Option[Double]        = None,
   is_pro:                    Option[Boolean]       = None,
   account_validation_status: Option[String]        = None,
   lang:                      Option[String]        = None,
