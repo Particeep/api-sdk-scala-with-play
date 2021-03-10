@@ -16,6 +16,7 @@ case class FundData(
   description_short:            Option[String]        = None,
   description_long:             Option[String]        = None,
   description_offline:          Option[String]        = None,
+  description_financial:        Option[String]        = None,
   disclaimer_risk:              Option[String]        = None,
   disclaimer_fees:              Option[String]        = None,
   disclaimer_payment:           Option[String]        = None,
