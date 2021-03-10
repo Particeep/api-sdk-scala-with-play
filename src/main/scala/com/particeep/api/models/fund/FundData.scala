@@ -1,11 +1,11 @@
 package com.particeep.api.models.fund
 
-import java.time.ZonedDateTime
-
-import com.particeep.api.core.Formatter
-import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
+import ai.x.play.json.Jsonx
+import com.particeep.api.core.Formatter
 import play.api.libs.json.JsObject
+
+import java.time.ZonedDateTime
 
 case class FundData(
     id:                           String                = "",
@@ -17,6 +17,7 @@ case class FundData(
     description_short:            Option[String]        = None,
     description_long:             Option[String]        = None,
     description_offline:          Option[String]        = None,
+    description_financial:        Option[String]        = None,
     disclaimer_risk:              Option[String]        = None,
     disclaimer_fees:              Option[String]        = None,
     disclaimer_payment:           Option[String]        = None,

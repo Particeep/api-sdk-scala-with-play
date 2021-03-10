@@ -1,12 +1,13 @@
 package com.particeep.api.models.fund
 
-import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
-import java.time.ZonedDateTime
+import ai.x.play.json.Jsonx
 import com.particeep.api.core.Formatter
+import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
 import play.api.libs.json.JsObject
-import com.particeep.api.models.Address
+
+import java.time.ZonedDateTime
 
 case class FundCreation(
     recipient_id:                 Option[String]        = None,
@@ -15,6 +16,7 @@ case class FundCreation(
     description_short:            Option[String]        = None,
     description_long:             Option[String]        = None,
     description_offline:          Option[String]        = None,
+    description_financial:        Option[String]        = None,
     disclaimer_risk:              Option[String]        = None,
     disclaimer_fees:              Option[String]        = None,
     disclaimer_payment:           Option[String]        = None,
