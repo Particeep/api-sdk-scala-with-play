@@ -1,13 +1,13 @@
 package com.particeep.api.models.fund
 
-import java.time.ZonedDateTime
-
+import ai.x.play.json.Encoders._
+import ai.x.play.json.Jsonx
 import com.particeep.api.core.Formatter
+import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Currency.Currency
 import play.api.libs.json.JsObject
-import com.particeep.api.models.Address
-import ai.x.play.json.Jsonx
-import ai.x.play.json.Encoders._
+
+import java.time.ZonedDateTime
 
 case class FundEdition(
     recipient_id:                 Option[String]        = None,

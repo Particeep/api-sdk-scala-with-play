@@ -33,6 +33,7 @@ case class FundraiseSearch(
     tag:                       Option[String]        = None,
     fundraise_tag:             Option[String]        = None,
     required_pro:              Option[Boolean]       = None,
+    is_featured:               Option[Boolean]       = None,
     form_id:                   Option[String]        = None,
     creator_type:              Option[String]        = None,
     creator_name:              Option[String]        = None
