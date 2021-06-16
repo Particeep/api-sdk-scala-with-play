@@ -119,6 +119,6 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredent
   }
 
   def recurringEquity(id: String, recurring_transaction_create: RecurringTransactionCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, RecurringTransaction]] = {
-    ws.post[RecurringTransaction](s"$endPoint/$id/equity/recurring", timeout, Json.toJson(recurring_transaction_create))
+    ws.post[RecurringTransaction](s"$endPoint/fundraise/$id/equity/recurring", timeout, Json.toJson(recurring_transaction_create))
   }
 }
