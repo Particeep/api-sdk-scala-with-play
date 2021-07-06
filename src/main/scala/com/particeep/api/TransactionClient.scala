@@ -31,6 +31,7 @@ object TransactionClient {
   private implicit val editionFormat = TransactionEdition.format
   private implicit val transactionDataFormat = TransactionData.format
   private implicit val importResultReads = ImportResult.format[Transaction]
+  private implicit val recurringFormat = RecurringTransaction.format
 }
 
 class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -92,5 +93,17 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
       timeout,
       LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria)
     )(exec, creds.withHeader("Content-Type", "application/csv"))
+  }
+
+  def recurringById(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, RecurringTransaction]] = {
+    ws.get[RecurringTransaction](s"$endPoint/recurring/$id", timeout)
+  }
+
+  def recurringSearch(
+    criteria:       RecurringTransactionsSearch,
+    table_criteria: TableSearch,
+    timeout:        Long                        = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[RecurringTransaction]]] = {
+    ws.get[PaginatedSequence[RecurringTransaction]](s"$endPoint/recurring/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 }
