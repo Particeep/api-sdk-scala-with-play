@@ -16,6 +16,7 @@ case class FundOffer(
     current_share_price:      Option[Int]           = None,
     share_priced_at:          Option[ZonedDateTime] = None,
     num_of_shares:            Option[Int]           = None,
+    step:                     Option[Int]           = None,
     net_assets:               Option[Long]          = None,
     partner_fees_lower_range: Option[Double]        = None,
     partner_fees_upper_range: Option[Double]        = None
