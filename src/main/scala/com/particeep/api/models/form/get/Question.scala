@@ -7,16 +7,17 @@ import com.particeep.api.models.enums.QuestionType.QuestionType
 import play.api.libs.json.Json
 
 case class Question(
-  id:                 String                      = "",
-  created_at:         Option[ZonedDateTime]       = None,
-  section_id:         String                      = "",
-  label:              Option[Map[String, String]] = None,
-  description:        Option[Map[String, String]] = None,
-  possibility_id_dep: Option[String]              = None,
-  question_type:      Option[QuestionType]        = None,
-  pattern:            Option[String]              = None,
-  required:           Boolean                     = false,
-  index:              Option[Int]                 = None
+  id:                    String                      = "",
+  created_at:            Option[ZonedDateTime]       = None,
+  section_id:            String                      = "",
+  label:                 Option[Map[String, String]] = None,
+  description:           Option[Map[String, String]] = None,
+  possibility_id_dep:    Option[String]              = None,
+  valid_possibility_ids: Option[String]              = None,
+  question_type:         Option[QuestionType]        = None,
+  pattern:               Option[String]              = None,
+  required:              Boolean                     = false,
+  index:                 Option[Int]                 = None
 )
 
 object Question {
