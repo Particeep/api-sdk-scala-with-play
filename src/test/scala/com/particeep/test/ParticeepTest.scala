@@ -2,6 +2,9 @@ package com.particeep.test
 
 import java.time.{ ZoneOffset, ZonedDateTime }
 
+import akka.actor.ActorSystem
+import akka.stream.Materializer
+
 import scala.language.postfixOps
 import com.particeep.api.core.ApiClient
 import com.particeep.api.core.Formatter
@@ -9,14 +12,17 @@ import com.particeep.api.models.ErrorResult
 import com.particeep.api.models.user.User
 import com.particeep.api.Info
 import com.particeep.api.InfoCapability
-import org.scalatest._
+import javax.inject.{ Inject, Singleton }
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 
 import scala.concurrent.{ Await, Future }
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class ParticeepTest extends FlatSpec with Matchers {
+@Singleton
+class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends AnyFlatSpec with Matchers {
 
   "the api client" should "load info" in {
 
@@ -27,7 +33,7 @@ class ParticeepTest extends FlatSpec with Matchers {
     val rez = Await.result(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
-    val info = rez.right.get
+    val info = rez.getOrElse(Info(version = "0", debugEnable = true, metaEnable = true))
     info.version shouldBe "1"
   }
 

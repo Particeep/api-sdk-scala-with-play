@@ -8,13 +8,13 @@ import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
 import play.api.libs.json.Json
 
 case class Kyc(
-  doc_type:        KycType               = ID_CARD,
-  created_at:      Option[ZonedDateTime] = None,
-  update_at:       Option[ZonedDateTime] = None,
-  refusal_reason:  Option[String]        = None,
-  refusal_message: Option[String]        = None,
-  status:          KycStatus             = CREATED,
-  urls:            Seq[String]           = Seq()
+    doc_type:        KycType               = ID_CARD,
+    created_at:      Option[ZonedDateTime] = None,
+    update_at:       Option[ZonedDateTime] = None,
+    refusal_reason:  Option[String]        = None,
+    refusal_message: Option[String]        = None,
+    status:          KycStatus             = CREATED,
+    urls:            Seq[String]           = Seq()
 )
 
 object Kyc {

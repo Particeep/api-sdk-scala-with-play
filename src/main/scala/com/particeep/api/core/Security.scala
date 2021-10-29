@@ -3,24 +3,25 @@ package com.particeep.api.core
 import java.time.format.DateTimeFormatter
 import java.time.{ ZoneOffset, ZonedDateTime }
 
-import com.ning.http.client.AsyncHttpClient
 import play.api.libs.ws._
+import play.shaded.ahc.org.asynchttpclient.BoundRequestBuilder
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
+import scala.language.postfixOps
 
 trait WithSecurtiy {
 
-  protected def secure(req: WSRequest, apiCredential: ApiCredential, timeOut: Long)(implicit exec: ExecutionContext) = {
+  protected def secure(req: StandaloneWSRequest, apiCredential: ApiCredential, timeOut: Long): StandaloneWSRequest = {
     val today = buildDateHeader()
     req
-      .withRequestTimeout(timeOut)
-      .withHeaders(
+      .withRequestTimeout(timeOut millis)
+      .withHttpHeaders(
         ("DateTime", today),
         ("Authorization", buildAuthorizationHeader(today, apiCredential))
       )
   }
 
-  protected def secure(req: AsyncHttpClient#BoundRequestBuilder, apiCredential: ApiCredential, timeOut: Long)(implicit exec: ExecutionContext) = {
+  protected def secure(req: BoundRequestBuilder, apiCredential: ApiCredential, timeOut: Long) = {
     val today = buildDateHeader()
     req
       .setRequestTimeout(timeOut.toInt)
