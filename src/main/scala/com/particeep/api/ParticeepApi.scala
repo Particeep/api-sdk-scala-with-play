@@ -1,5 +1,7 @@
 package com.particeep.api
 
+import akka.actor.ActorSystem
+import akka.stream.Materializer
 import com.particeep.api.core.{ ApiClient, ApiCredential, WSClient }
 
 /**
@@ -12,27 +14,27 @@ object ParticeepApi {
   private[this] val last_version = "1"
 
   trait AllCapability extends InfoCapability
-      with UserCapability
-      with WalletCapability
-      with KycCapability
-      with RoleCapability
-      with DocumentCapability
-      with FormCapability
-      with DocumentGenerationCapability
-      with SignatureCapability
-      with EnterpriseCapability
-      with FundraiseLoanCapability
-      with FundraiseSearchCapability
-      with NewsCapability
-      with TransactionCapability
-      with PaymentCapability
-      with FundraiseEquityCapability
-      with WalletSepaCapability
-      with PhoneMessagingCapability {
+    with UserCapability
+    with WalletCapability
+    with KycCapability
+    with RoleCapability
+    with DocumentCapability
+    with FormCapability
+    with DocumentGenerationCapability
+    with SignatureCapability
+    with EnterpriseCapability
+    with FundraiseLoanCapability
+    with FundraiseSearchCapability
+    with NewsCapability
+    with TransactionCapability
+    with PaymentCapability
+    with FundraiseEquityCapability
+    with WalletSepaCapability
+    with PhoneMessagingCapability {
     self: WSClient =>
   }
 
-  def test(api_key: String, api_secret: String) = {
+  def test(api_key: String, api_secret: String)(implicit s: ActorSystem) = {
     new ApiClient(
       "https://test-api.particeep.com",
       last_version,
@@ -40,7 +42,7 @@ object ParticeepApi {
     ) with AllCapability
   }
 
-  def prod(api_key: String, api_secret: String) = {
+  def prod(api_key: String, api_secret: String)(implicit s: ActorSystem, m: Materializer) = {
     new ApiClient(
       "https://api.particeep.com",
       last_version,

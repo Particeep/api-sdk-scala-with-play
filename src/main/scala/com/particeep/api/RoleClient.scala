@@ -7,7 +7,7 @@ import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 import com.particeep.api.models.imports.{ ImportForm, ImportResult }
 import java.io.File
-import com.ning.http.client.multipart.StringPart
+import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 import scala.concurrent.{ ExecutionContext, Future }
 
 trait RoleCapability {
@@ -64,8 +64,8 @@ class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     )
   }
 
-  def hasRole(user_id: String, role: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Boolean]] = {
-    allByUser(user_id).map(result => result.right.map(roles => roles.roles.map(_.role_name).contains(role)))
+  def hasRole(user_id: String, role: String)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Boolean]] = {
+    allByUser(user_id).map(result => result.map(roles => roles.roles.map(_.role_name).contains(role)))
   }
 
   def search(criteria: RoleSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[Roles]]] = {

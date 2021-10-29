@@ -9,7 +9,7 @@ import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 import com.particeep.api.models.imports.ImportForm
-import com.ning.http.client.multipart.StringPart
+import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import scala.concurrent.{ ExecutionContext, Future }
 

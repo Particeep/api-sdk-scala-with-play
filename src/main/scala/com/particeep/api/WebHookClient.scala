@@ -41,4 +41,8 @@ class WebHookClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
   def delete(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, WebHook]] = {
     ws.delete[WebHook](s"$endPoint/$id", timeout)
   }
+
+  def createAll(webhooks_simple: List[WebHookSimple], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[WebHook]]] = {
+    ws.post[List[WebHook]](s"$endPoint/createAll", timeout, Json.toJson(webhooks_simple))
+  }
 }

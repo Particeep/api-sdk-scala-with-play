@@ -3,18 +3,19 @@ package com.particeep.api.models.transaction
 import java.time.ZonedDateTime
 
 import com.particeep.api.core.Formatter
-import org.cvogt.play.json.Jsonx
+import ai.x.play.json.Jsonx
+import ai.x.play.json.Encoders._
 
 case class RecurringTransaction(
-  id:             String                = "",
-  created_at:     Option[ZonedDateTime] = None,
-  user_id:        String                = "",
-  amount:         Int                   = 0,
-  fundraise_id:   String                = "",
-  fundraise_type: String                = "",
-  frequency:      Int                   = 0,
-  start_at:       Option[ZonedDateTime] = None,
-  duration:       Option[Int]           = None
+    id:             String                = "",
+    created_at:     Option[ZonedDateTime] = None,
+    user_id:        String                = "",
+    amount:         Int                   = 0,
+    fundraise_id:   String                = "",
+    fundraise_type: String                = "",
+    frequency:      Int                   = 0,
+    start_at:       Option[ZonedDateTime] = None,
+    duration:       Option[Int]           = None
 )
 
 object RecurringTransaction {

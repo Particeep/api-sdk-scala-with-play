@@ -2,14 +2,17 @@ package com.particeep.api.core
 
 import java.io.File
 
-import com.ning.http.client.multipart.{ FilePart, Part }
-import com.ning.http.client.AsyncHttpClient
+import akka.NotUsed
+import akka.actor.ActorSystem
+import akka.stream.Materializer
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import com.particeep.api.models.{ Error, ErrorResult, Errors }
 import play.api.libs.ws._
-import play.api.libs.ws.ning._
-import play.api.Play.current
-import play.api.libs.iteratee.Enumerator
 import play.api.libs.json.{ Format, JsValue, Json }
+import play.api.libs.ws.ahc.StandaloneAhcWSClient
+import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilder }
+import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
 
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
@@ -73,14 +76,14 @@ trait WSClient {
     path:    String,
     timeOut: Long,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]]
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 
   def postStream(
     path:    String,
     timeOut: Long,
     body:    JsValue,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]]
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 }
 
 trait BaseClient {
@@ -91,7 +94,9 @@ trait BaseClient {
   //    val config = new NingAsyncHttpClientConfigBuilder(DefaultWSClientConfig()).build
   //    val builder = new AsyncHttpClientConfig.Builder(config)
   //    val client = new NingWSClient(builder.build)
-  protected implicit val sslClient = ApiClient.defaultSslClient
+  protected implicit val system: ActorSystem
+  protected implicit val materializer: Materializer
+  protected implicit val sslClient = ApiClient.defaultSslClient(materializer)
 
   def cleanup() = {
     sslClient.close()
@@ -109,17 +114,17 @@ trait BaseClient {
  *
  * val result:Future[Either[JsError, Info]] = ws.user.byId("some_id")
  */
-class ApiClient(val baseUrl: String, val version: String, val credentials: Option[ApiCredential] = None) extends WSClient with BaseClient with WithSecurtiy with ResponseParser {
+class ApiClient(val baseUrl: String, val version: String, val credentials: Option[ApiCredential] = None)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurtiy with ResponseParser {
 
   val defaultTimeOut: Long = 10000
   val defaultImportTimeOut: Long = -1
 
-  private[this] def url(path: String, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): WSRequest = {
-    val req = WS.clientUrl(s"$baseUrl/v$version$path")
-    secure(req, credentials, timeOut).withHeaders(credentials.http_headers.getOrElse(List()): _*)
+  private[this] def url(path: String, timeOut: Long)(implicit credentials: ApiCredential): StandaloneWSRequest = {
+    val req = sslClient.url(s"$baseUrl/v$version$path")
+    secure(req, credentials, timeOut).addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
   }
 
-  private[this] def urlFileUpload(path: String, client: AsyncHttpClient, timeOut: Long)(implicit exec: ExecutionContext, credentials: ApiCredential): AsyncHttpClient#BoundRequestBuilder = {
+  private[this] def urlFileUpload(path: String, client: AsyncHttpClient, timeOut: Long)(implicit credentials: ApiCredential): BoundRequestBuilder = {
     val postBuilder = client.preparePost(s"$baseUrl/v$version$path")
     val url = secure(postBuilder, credentials, timeOut)
     credentials.http_headers.map(_.foldLeft(url) { (acc, elem) =>
@@ -128,7 +133,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
   }
 
   def get[T](path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    url(path, timeOut).withQueryString(params: _*).get().map(parse[T](_)).recover {
+    url(path, timeOut).withQueryStringParameters(params: _*).get().map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "GET", path)
     }
   }
@@ -139,7 +144,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     body:    JsValue,
     params:  List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    url(path, timeOut).withQueryString(params: _*).post(body).map(parse[T](_)).recover {
+    url(path, timeOut).withQueryStringParameters(params: _*).post(body).map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "POST", path)
     }
   }
@@ -156,7 +161,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     body:    JsValue                = Json.toJson(""),
     params:  List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    url(path, timeOut).withQueryString(params: _*).withMethod("DELETE").withBody(body).execute().map(parse[T](_)).recover {
+    url(path, timeOut).withQueryStringParameters(params: _*).withMethod("DELETE").withBody(body).execute().map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "DELETE", path)
     }
   }
@@ -168,7 +173,7 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     contentType: String,
     bodyParts:   List[Part]
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    val client = WS.client.underlying[AsyncHttpClient]
+    val client = sslClient.underlying[AsyncHttpClient]
     val postBuilder = urlFileUpload(path, client, timeout)
     val builder = postBuilder.addBodyPart(
       new FilePart("document", file, contentType)
@@ -183,9 +188,9 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     path:    String,
     timeOut: Long,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
-    parseStream(url(path, timeOut).withQueryString(params: _*).withMethod("GET")).recover {
-      case NonFatal(e) => handle_error[Enumerator[Array[Byte]]](e, "GET", path)
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
+    parseStream(url(path, timeOut).withQueryStringParameters(params: _*).withMethod("GET")).recover {
+      case NonFatal(e) => handle_error[Source[ByteString, NotUsed]](e, "GET", path)
     }
   }
 
@@ -194,9 +199,9 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
     timeOut: Long,
     body:    JsValue,
     params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Enumerator[Array[Byte]]]] = {
-    parseStream(url(path, timeOut).withQueryString(params: _*).withMethod("POST").withBody(body)).recover {
-      case NonFatal(e) => handle_error[Enumerator[Array[Byte]]](e, "POST", path)
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
+    parseStream(url(path, timeOut).withQueryStringParameters(params: _*).withMethod("POST").withBody(body)).recover {
+      case NonFatal(e) => handle_error[Source[ByteString, NotUsed]](e, "POST", path)
     }
   }
 
@@ -210,5 +215,5 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
 
 object ApiClient {
 
-  lazy val defaultSslClient = NingWSClient()
+  def defaultSslClient(implicit m: Materializer) = StandaloneAhcWSClient()
 }
