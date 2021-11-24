@@ -9,7 +9,8 @@ case class DocumentGenerationAndUpload(
     name:                   Option[String]               = None,
     description:            Option[String]               = None,
     path:                   Option[String]               = None,
-    override_existing_file: Option[Boolean]              = None
+    override_existing_file: Option[Boolean]              = None,
+    tag:                    Option[String]               = None
 )
 
 object DocumentGenerationAndUpload {
