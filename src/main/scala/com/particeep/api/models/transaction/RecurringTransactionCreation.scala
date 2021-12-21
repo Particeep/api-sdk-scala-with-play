@@ -6,7 +6,7 @@ import com.particeep.api.core.Formatter
 import play.api.libs.json.Json
 
 case class RecurringTransactionCreation(
-    user_id:   String,
+    issuer_id: String,
     amount:    Int,
     frequency: Int,
     start_at:  ZonedDateTime,
