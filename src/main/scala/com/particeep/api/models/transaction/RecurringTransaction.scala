@@ -9,10 +9,12 @@ import ai.x.play.json.Encoders._
 case class RecurringTransaction(
     id:             String                = "",
     created_at:     Option[ZonedDateTime] = None,
-    user_id:        String                = "",
+    issuer_id:      String                = "",
+    issuer_name:    String                = "",
     amount:         Int                   = 0,
-    fundraise_id:   String                = "",
-    fundraise_type: String                = "",
+    recipient_id:   String                = "",
+    recipient_name: String                = "",
+    recipient_type: String                = "",
     frequency:      Int                   = 0,
     start_at:       Option[ZonedDateTime] = None,
     duration:       Option[Int]           = None
