@@ -108,7 +108,7 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     ws.delete[SignatureMultiple](s"$endPoint/$id/multiple", timeout)
   }
 
-  def export(
+  def exportCsv(
     criteria:        SignatureSearch,
     entity_criteria: SignatureSearchForEntities,
     table_criteria:  TableSearch,

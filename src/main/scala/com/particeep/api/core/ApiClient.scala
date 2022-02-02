@@ -30,7 +30,7 @@ trait WSClient {
   val defaultImportTimeOut: Long
 
   def cleanup(): Unit
-  def credentials(): Option[ApiCredential]
+  def credentials: Option[ApiCredential]
 
   /**
    * @param path : relative path for the request
