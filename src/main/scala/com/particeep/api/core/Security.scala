@@ -9,7 +9,7 @@ import play.shaded.ahc.org.asynchttpclient.BoundRequestBuilder
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-trait WithSecurtiy {
+trait WithSecurity {
 
   protected def secure(req: StandaloneWSRequest, apiCredential: ApiCredential, timeOut: Long): StandaloneWSRequest = {
     val today = buildDateHeader()
