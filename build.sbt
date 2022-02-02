@@ -16,9 +16,6 @@ libraryDependencies ++= Seq(
   "com.opentable.components" %  "otj-pg-embedded"    % "0.13.3"   % "test" withSources()
 )
 
-// Uncomment to use Akka
-//libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.11"
-
 // sbt and compiler option
 scalacOptions ++= Seq(
     "-deprecation",
@@ -27,8 +24,7 @@ scalacOptions ++= Seq(
     "-Xfatal-warnings",
     "-Xlint",
     "-Ywarn-dead-code",
-    "-Ywarn-unused",
-    //"-Ywarn-unused-import"
+    "-Ywarn-unused"
 )
 
 // ~~~~~~~~~~~~~~~~~
