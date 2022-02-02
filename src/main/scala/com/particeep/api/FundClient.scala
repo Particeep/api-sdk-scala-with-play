@@ -68,7 +68,7 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.get[PaginatedSequence[FundData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
-  def export(
+  def exportCsv(
     criteria:       FundSearch,
     table_criteria: TableSearch,
     timeout:        Long        = defaultTimeOut

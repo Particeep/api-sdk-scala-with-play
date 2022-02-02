@@ -17,8 +17,4 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0" excludeAll(
 
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.6.1")
 
-// scala lint tool : https://github.com/puffnfresh/wartremover
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.5")
-
-// wait for next release
 addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.8.3")

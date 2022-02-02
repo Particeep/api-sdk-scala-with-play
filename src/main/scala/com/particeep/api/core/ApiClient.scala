@@ -30,7 +30,7 @@ trait WSClient {
   val defaultImportTimeOut: Long
 
   def cleanup(): Unit
-  def credentials(): Option[ApiCredential]
+  def credentials: Option[ApiCredential]
 
   /**
    * @param path : relative path for the request
@@ -114,7 +114,7 @@ trait BaseClient {
  *
  * val result:Future[Either[JsError, Info]] = ws.user.byId("some_id")
  */
-class ApiClient(val baseUrl: String, val version: String, val credentials: Option[ApiCredential] = None)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurtiy with ResponseParser {
+class ApiClient(val baseUrl: String, val version: String, val credentials: Option[ApiCredential] = None)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity with ResponseParser {
 
   val defaultTimeOut: Long = 10000
   val defaultImportTimeOut: Long = -1
