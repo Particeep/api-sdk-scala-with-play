@@ -35,7 +35,7 @@ class FundraiseSearchClient(val ws: WSClient, val credentials: Option[ApiCredent
     ws.get[PaginatedSequence[FundraiseData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
-  def export(
+  def exportCsv(
     criteria:       FundraiseSearch,
     table_criteria: TableSearch,
     timeout:        Long            = defaultTimeOut

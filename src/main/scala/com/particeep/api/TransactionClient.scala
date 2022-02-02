@@ -83,7 +83,7 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
     ws.postFile[ImportResult[Transaction]](s"$endPoint_import/transaction/csv", timeout, csv, "text/csv", bodyParts)
   }
 
-  def export(
+  def exportCsv(
     criteria:       TransactionSearch,
     table_criteria: TableSearch,
     timeout:        Long              = defaultTimeOut

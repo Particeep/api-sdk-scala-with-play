@@ -101,7 +101,7 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.postFile[ImportResult[User]](s"$endPoint_import/user/csv", timeout, csv, "text/csv", bodyParts)
   }
 
-  def export(criteria: UserSearch, criteria_additional: UserSearchAdditional, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
+  def exportCsv(criteria: UserSearch, criteria_additional: UserSearchAdditional, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     ws.getStream(
       s"$endPoint/search",
       timeout,
