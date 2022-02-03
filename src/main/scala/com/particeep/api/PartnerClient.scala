@@ -1,8 +1,13 @@
 package com.particeep.api
 
+import akka.NotUsed
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import com.particeep.api.core._
-import com.particeep.api.models.ErrorResult
+import com.particeep.api.models.{ ErrorResult, TableSearch }
 import com.particeep.api.models.partner.{ PartnerCompany, PartnerCompanyCreation, PartnerCompanyEdition, _ }
+import com.particeep.api.models.user.{ UserSearch, UserSearchAdditional }
+import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -106,5 +111,18 @@ class PartnerClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
 
   def deletePartnerCompany(user_id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PartnerCompany]] = {
     ws.delete[PartnerCompany](s"$endPoint/company/$user_id", timeout)
+  }
+
+  def exportPartner(
+    criteria:            UserSearch,
+    criteria_additional: UserSearchAdditional,
+    table_criteria:      TableSearch,
+    timeout:             Long                 = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
+    ws.getStream(
+      s"$endPoint/search",
+      timeout,
+      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(criteria_additional) ++ LangUtils.productToQueryString(table_criteria)
+    )(exec, creds.withHeader("Content-Type", "application/csv"))
   }
 }
