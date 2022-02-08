@@ -113,7 +113,7 @@ class PartnerClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
     ws.delete[PartnerCompany](s"$endPoint/company/$user_id", timeout)
   }
 
-  def exportPartner(
+  def exportCsv(
     criteria:            UserSearch,
     criteria_additional: UserSearchAdditional,
     table_criteria:      TableSearch,
