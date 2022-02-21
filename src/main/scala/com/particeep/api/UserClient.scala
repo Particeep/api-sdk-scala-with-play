@@ -35,6 +35,9 @@ object UserClient {
   private implicit val relative_creation_format = RelativeCreation.format
   private implicit val relative_format = Relative.format
   private implicit val relative_option_format = RelativeEdition.format
+  private implicit val relative_legal_creation_format = RelativeLegalCreation.format
+  private implicit val relative_legal_format = RelativeLegal.format
+  private implicit val relative_legal_option_format = RelativeLegalEdition.format
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
   private implicit val change_password_format = Json.format[ChangePassword]
@@ -119,6 +122,18 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def updateRelative(id: String, relative_edition: RelativeEdition, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Relative]] = {
     ws.post[Relative](s"$endPoint/$id/relative", timeout, Json.toJson(relative_edition))
+  }
+
+  def addRelativeLegal(id: String, relative_legal_option: RelativeLegalCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, RelativeLegal]] = {
+    ws.put[RelativeLegal](s"$endPoint/$id/relative-legal", timeout, Json.toJson(relative_legal_option))
+  }
+
+  def deleteRelativeLegal(id: String, relative_legal_id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, RelativeLegal]] = {
+    ws.delete[RelativeLegal](s"$endPoint/$id/relative-legal/$relative_legal_id", timeout)
+  }
+
+  def updateRelativeLegal(id: String, relative_legal_edition: RelativeLegalEdition, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, RelativeLegal]] = {
+    ws.post[RelativeLegal](s"$endPoint/$id/relative-legal", timeout, Json.toJson(relative_legal_edition))
   }
 
 }
