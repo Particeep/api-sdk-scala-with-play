@@ -4,10 +4,10 @@ import scala.language.implicitConversions
 
 object WalletType {
 
-  sealed abstract class WalletType extends Enum
+  sealed abstract class WalletType extends Product with Enum
 
-  case object NATURAL extends WalletType { val name: String = "NATURAL" }
-  case object LEGAL extends WalletType { val name: String = "LEGAL" }
+  case object NATURAL extends WalletType
+  case object LEGAL extends WalletType
 
   object WalletType extends EnumHelper[WalletType] {
     def values: Set[WalletType] = Set(NATURAL, LEGAL)

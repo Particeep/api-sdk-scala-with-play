@@ -1,12 +1,12 @@
 package com.particeep.api.models.enums
 
 object RegulatoryStatus {
-  sealed abstract class RegulatoryStatus extends Enum
+  sealed abstract class RegulatoryStatus extends Product with Enum
 
-  case object CIF extends RegulatoryStatus { val name: String = "CIF" }
-  case object ALPSI extends RegulatoryStatus { val name: String = "ALPSI" }
-  case object PSI extends RegulatoryStatus { val name: String = "PSI" }
-  case object SDG extends RegulatoryStatus { val name: String = "SDG" }
+  case object CIF extends RegulatoryStatus
+  case object ALPSI extends RegulatoryStatus
+  case object PSI extends RegulatoryStatus
+  case object SDG extends RegulatoryStatus
 
   object RegulatoryStatus extends EnumHelper[RegulatoryStatus] {
     def values: Set[RegulatoryStatus] = Set(CIF, ALPSI, PSI, SDG)

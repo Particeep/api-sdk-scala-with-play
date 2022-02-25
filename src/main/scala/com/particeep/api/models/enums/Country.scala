@@ -3,12 +3,12 @@ package com.particeep.api.models.enums
 import scala.language.implicitConversions
 
 object Country {
-  sealed abstract class Country extends Enum
+  sealed abstract class Country extends Product with Enum
 
-  case object BE extends Country { val name: String = "BE" }
-  case object DE extends Country { val name: String = "DE" }
-  case object FR extends Country { val name: String = "FR" }
-  case object IT extends Country { val name: String = "IT" }
+  case object BE extends Country
+  case object DE extends Country
+  case object FR extends Country
+  case object IT extends Country
 
   object Country extends EnumHelper[Country] {
     def values: Set[Country] = Set(BE, DE, FR, IT)

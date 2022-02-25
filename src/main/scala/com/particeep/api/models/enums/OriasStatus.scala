@@ -4,11 +4,11 @@ import play.api.libs.json.{ JsString, JsValue, Writes }
 import scala.language.implicitConversions
 
 object OriasStatus {
-  sealed abstract class OriasStatus extends Enum
+  sealed abstract class OriasStatus extends Product with Enum
 
-  case object REGISTERED extends OriasStatus { val name: String = "INSCRIT" }
-  case object DELETED extends OriasStatus { val name: String = "SUPPRIME" }
-  case object NEVER_REGISTERED extends OriasStatus { val name: String = "JAMAIS_INSCRIT" }
+  case object REGISTERED extends OriasStatus
+  case object DELETED extends OriasStatus
+  case object NEVER_REGISTERED extends OriasStatus
 
   object OriasStatus extends EnumHelper[OriasStatus] {
     def values: Set[OriasStatus] = Set(REGISTERED, DELETED, NEVER_REGISTERED)
