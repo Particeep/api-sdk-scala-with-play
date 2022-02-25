@@ -19,7 +19,7 @@ object KycClient {
   private implicit val group_format = KycGroup.format
   private implicit val creation_format = KycCreation.format
   private implicit val edition_format = KycsEdition.format
-  private implicit val kyc_ask_validation_format = KycAskValidation.format
+  private implicit val kyc_ask_validation_format = DocumentValidation.format
   private implicit val kyc_validation_format = KycValidation.format
 }
 
@@ -65,7 +65,7 @@ class KycClient(val ws: WSClient, val credentials: Option[ApiCredential] = None)
     )
   }
 
-  def validate(kyc_ask_validation: KycAskValidation, timeout: Long = 50000)(implicit exec: ExecutionContext): Future[Either[ErrorResult, KycValidation]] = {
+  def validate(kyc_ask_validation: DocumentValidation, timeout: Long = 50000)(implicit exec: ExecutionContext): Future[Either[ErrorResult, KycValidation]] = {
     ws.post[KycValidation](s"$endPoint/document/validate", timeout, Json.toJson(kyc_ask_validation))
   }
 }

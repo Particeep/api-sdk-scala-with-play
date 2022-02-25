@@ -4,11 +4,11 @@ import scala.language.implicitConversions
 
 object FundStatus {
 
-  sealed abstract class FundStatus extends Enum
+  sealed abstract class FundStatus extends Product with Enum
 
-  case object INIT extends FundStatus { val name: String = "INIT" }
-  case object RUNNING extends FundStatus { val name: String = "RUNNING" }
-  case object CLOSING extends FundStatus { val name: String = "CLOSING" }
+  case object INIT extends FundStatus
+  case object RUNNING extends FundStatus
+  case object CLOSING extends FundStatus
 
   object FundStatus extends EnumHelper[FundStatus] {
     def values: Set[FundStatus] = Set(INIT, RUNNING, CLOSING)

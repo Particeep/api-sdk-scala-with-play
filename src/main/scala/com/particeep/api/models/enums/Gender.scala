@@ -4,9 +4,9 @@ import scala.language.implicitConversions
 
 object Gender {
 
-  sealed abstract class Gender extends Enum
-  case object MAN extends Gender { val name: String = "MAN" }
-  case object WOMAN extends Gender { val name: String = "WOMAN" }
+  sealed abstract class Gender extends Product with Enum
+  case object MAN extends Gender
+  case object WOMAN extends Gender
 
   object Gender extends EnumHelper[Gender] {
     def values: Set[Gender] = Set(MAN, WOMAN)

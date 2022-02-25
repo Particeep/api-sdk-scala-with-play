@@ -1,10 +1,10 @@
 package com.particeep.api.models.enums
 
 object RelativeType {
-  sealed abstract class RelativeType extends Enum
-  case object CONJOINT extends RelativeType { val name: String = "CONJOINT" }
-  case object USUFRUCTUARY extends RelativeType { val name: String = "USUFRUCTUARY" }
-  case object PAYER extends RelativeType { val name: String = "PAYER" }
+  sealed abstract class RelativeType extends Product with Enum
+  case object CONJOINT extends RelativeType
+  case object USUFRUCTUARY extends RelativeType
+  case object PAYER extends RelativeType
 
   object RelativeType extends EnumHelper[RelativeType] {
     def values: Set[RelativeType] = Set(CONJOINT, USUFRUCTUARY, PAYER)

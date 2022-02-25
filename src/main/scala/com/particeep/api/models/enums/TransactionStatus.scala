@@ -4,11 +4,11 @@ import scala.language.implicitConversions
 
 object TransactionStatus {
 
-  sealed abstract class TransactionStatus extends Enum
-  case object PENDING extends TransactionStatus { val name: String = "PENDING" }
-  case object SUCCEEDED extends TransactionStatus { val name: String = "SUCCEEDED" }
-  case object REFUNDED extends TransactionStatus { val name: String = "REFUNDED" }
-  case object CANCELLED extends TransactionStatus { val name: String = "CANCELLED" }
+  sealed abstract class TransactionStatus extends Product with Enum
+  case object PENDING extends TransactionStatus
+  case object SUCCEEDED extends TransactionStatus
+  case object REFUNDED extends TransactionStatus
+  case object CANCELLED extends TransactionStatus
 
   object TransactionStatus extends EnumHelper[TransactionStatus] {
     def values: Set[TransactionStatus] = Set(PENDING, SUCCEEDED, REFUNDED, CANCELLED)

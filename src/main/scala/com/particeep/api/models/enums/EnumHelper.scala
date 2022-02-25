@@ -4,8 +4,8 @@ import play.api.libs.json._
 
 import scala.language.implicitConversions
 
-trait Enum {
-  def name: String
+trait Enum { self: Product =>
+  val name = this.productPrefix
 }
 
 trait EnumHelper[E <: Enum] {

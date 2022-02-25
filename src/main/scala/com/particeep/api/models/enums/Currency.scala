@@ -5,190 +5,190 @@ import scala.language.implicitConversions
 // scalastyle:off
 object Currency {
 
-  sealed abstract class Currency extends Enum
-  case object AED extends Currency { val name: String = "AED" }
-  case object AFN extends Currency { val name: String = "AFN" }
-  case object ALL extends Currency { val name: String = "ALL" }
-  case object AMD extends Currency { val name: String = "AMD" }
-  case object ANG extends Currency { val name: String = "ANG" }
-  case object AOA extends Currency { val name: String = "AOA" }
-  case object ARP extends Currency { val name: String = "ARP" }
-  case object ARS extends Currency { val name: String = "ARS" }
-  case object AUD extends Currency { val name: String = "AUD" }
-  case object AWG extends Currency { val name: String = "AWG" }
-  case object AZN extends Currency { val name: String = "AZN" }
-  case object BAM extends Currency { val name: String = "BAM" }
-  case object BBD extends Currency { val name: String = "BBD" }
-  case object BDT extends Currency { val name: String = "BDT" }
-  case object BGN extends Currency { val name: String = "BGN" }
-  case object BHD extends Currency { val name: String = "BHD" }
-  case object BIF extends Currency { val name: String = "BIF" }
-  case object BMD extends Currency { val name: String = "BMD" }
-  case object BND extends Currency { val name: String = "BND" }
-  case object BOB extends Currency { val name: String = "BOB" }
-  case object BOV extends Currency { val name: String = "BOV" }
-  case object BRL extends Currency { val name: String = "BRL" }
-  case object BSD extends Currency { val name: String = "BSD" }
-  case object BTN extends Currency { val name: String = "BTN" }
-  case object BWP extends Currency { val name: String = "BWP" }
-  case object BYR extends Currency { val name: String = "BYR" }
-  case object BYN extends Currency { val name: String = "BYN" }
-  case object BZD extends Currency { val name: String = "BZD" }
-  case object BTC extends Currency { val name: String = "BTC" }
-  case object CAD extends Currency { val name: String = "CAD" }
-  case object CDF extends Currency { val name: String = "CDF" }
-  case object CHF extends Currency { val name: String = "CHF" }
-  case object CLF extends Currency { val name: String = "CLF" }
-  case object CLP extends Currency { val name: String = "CLP" }
-  case object CNY extends Currency { val name: String = "CNY" }
-  case object COP extends Currency { val name: String = "COP" }
-  case object COU extends Currency { val name: String = "COU" }
-  case object CRC extends Currency { val name: String = "CRC" }
-  case object CUC extends Currency { val name: String = "CUC" }
-  case object CUP extends Currency { val name: String = "CUP" }
-  case object CVE extends Currency { val name: String = "CVE" }
-  case object CYP extends Currency { val name: String = "CYP" }
-  case object CZK extends Currency { val name: String = "CZK" }
-  case object DJF extends Currency { val name: String = "DJF" }
-  case object DKK extends Currency { val name: String = "DKK" }
-  case object DOP extends Currency { val name: String = "DOP" }
-  case object DZD extends Currency { val name: String = "DZD" }
-  case object ECS extends Currency { val name: String = "ECS" }
-  case object ECV extends Currency { val name: String = "ECV" }
-  case object EGP extends Currency { val name: String = "EGP" }
-  case object ERN extends Currency { val name: String = "ERN" }
-  case object ETB extends Currency { val name: String = "ETB" }
-  case object EUR extends Currency { val name: String = "EUR" }
-  case object ETH extends Currency { val name: String = "ETH" }
-  case object FJD extends Currency { val name: String = "FJD" }
-  case object FKP extends Currency { val name: String = "FKP" }
-  case object GBP extends Currency { val name: String = "GBP" }
-  case object GEL extends Currency { val name: String = "GEL" }
-  case object GHS extends Currency { val name: String = "GHS" }
-  case object GIP extends Currency { val name: String = "GIP" }
-  case object GMD extends Currency { val name: String = "GMD" }
-  case object GNF extends Currency { val name: String = "GNF" }
-  case object GTQ extends Currency { val name: String = "GTQ" }
-  case object GWP extends Currency { val name: String = "GWP" }
-  case object GYD extends Currency { val name: String = "GYD" }
-  case object HKD extends Currency { val name: String = "HKD" }
-  case object HNL extends Currency { val name: String = "HNL" }
-  case object HRK extends Currency { val name: String = "HRK" }
-  case object HTG extends Currency { val name: String = "HTG" }
-  case object HUF extends Currency { val name: String = "HUF" }
-  case object IDR extends Currency { val name: String = "IDR" }
-  case object ILS extends Currency { val name: String = "ILS" }
-  case object INR extends Currency { val name: String = "INR" }
-  case object IQD extends Currency { val name: String = "IQD" }
-  case object IRR extends Currency { val name: String = "IRR" }
-  case object ISK extends Currency { val name: String = "ISK" }
-  case object JMD extends Currency { val name: String = "JMD" }
-  case object JOD extends Currency { val name: String = "JOD" }
-  case object JPY extends Currency { val name: String = "JPY" }
-  case object KES extends Currency { val name: String = "KES" }
-  case object KGS extends Currency { val name: String = "KGS" }
-  case object KHR extends Currency { val name: String = "KHR" }
-  case object KMF extends Currency { val name: String = "KMF" }
-  case object KPW extends Currency { val name: String = "KPW" }
-  case object KRW extends Currency { val name: String = "KRW" }
-  case object KZT extends Currency { val name: String = "KZT" }
-  case object KWD extends Currency { val name: String = "KWD" }
-  case object KYD extends Currency { val name: String = "KYD" }
-  case object LAK extends Currency { val name: String = "LAK" }
-  case object LBP extends Currency { val name: String = "LBP" }
-  case object LKR extends Currency { val name: String = "LKR" }
-  case object LRD extends Currency { val name: String = "LRD" }
-  case object LSL extends Currency { val name: String = "LSL" }
-  case object LTL extends Currency { val name: String = "LTL" }
-  case object LVL extends Currency { val name: String = "LVL" }
-  case object LYD extends Currency { val name: String = "LYD" }
-  case object MAD extends Currency { val name: String = "MAD" }
-  case object MDL extends Currency { val name: String = "MDL" }
-  case object MGA extends Currency { val name: String = "MGA" }
-  case object MKD extends Currency { val name: String = "MKD" }
-  case object MMK extends Currency { val name: String = "MMK" }
-  case object MNT extends Currency { val name: String = "MNT" }
-  case object MOP extends Currency { val name: String = "MOP" }
-  case object MRO extends Currency { val name: String = "MRO" }
-  case object MUR extends Currency { val name: String = "MUR" }
-  case object MVR extends Currency { val name: String = "MVR" }
-  case object MWK extends Currency { val name: String = "MWK" }
-  case object MXN extends Currency { val name: String = "MXN" }
-  case object MXV extends Currency { val name: String = "MXV" }
-  case object MYR extends Currency { val name: String = "MYR" }
-  case object MZN extends Currency { val name: String = "MZN" }
-  case object NAD extends Currency { val name: String = "NAD" }
-  case object NGN extends Currency { val name: String = "NGN" }
-  case object NHF extends Currency { val name: String = "NHF" }
-  case object NIO extends Currency { val name: String = "NIO" }
-  case object NOK extends Currency { val name: String = "NOK" }
-  case object NPR extends Currency { val name: String = "NPR" }
-  case object NZD extends Currency { val name: String = "NZD" }
-  case object OMR extends Currency { val name: String = "OMR" }
-  case object PAB extends Currency { val name: String = "PAB" }
-  case object PEN extends Currency { val name: String = "PEN" }
-  case object PGK extends Currency { val name: String = "PGK" }
-  case object PHP extends Currency { val name: String = "PHP" }
-  case object PKR extends Currency { val name: String = "PKR" }
-  case object PLN extends Currency { val name: String = "PLN" }
-  case object PYG extends Currency { val name: String = "PYG" }
-  case object QAR extends Currency { val name: String = "QAR" }
-  case object RON extends Currency { val name: String = "RON" }
-  case object RSD extends Currency { val name: String = "RSD" }
-  case object RUB extends Currency { val name: String = "RUB" }
-  case object RWF extends Currency { val name: String = "RWF" }
-  case object SAR extends Currency { val name: String = "SAR" }
-  case object SBD extends Currency { val name: String = "SBD" }
-  case object SCR extends Currency { val name: String = "SCR" }
-  case object SDG extends Currency { val name: String = "SDG" }
-  case object SEK extends Currency { val name: String = "SEK" }
-  case object SGD extends Currency { val name: String = "SGD" }
-  case object SHP extends Currency { val name: String = "SHP" }
-  case object SLL extends Currency { val name: String = "SLL" }
-  case object SOS extends Currency { val name: String = "SOS" }
-  case object SRD extends Currency { val name: String = "SRD" }
-  case object SSP extends Currency { val name: String = "SSP" }
-  case object STD extends Currency { val name: String = "STD" }
-  case object SVC extends Currency { val name: String = "SVC" }
-  case object SYP extends Currency { val name: String = "SYP" }
-  case object SZL extends Currency { val name: String = "SZL" }
-  case object THB extends Currency { val name: String = "THB" }
-  case object TJS extends Currency { val name: String = "TJS" }
-  case object TMT extends Currency { val name: String = "TMT" }
-  case object TND extends Currency { val name: String = "TND" }
-  case object TOP extends Currency { val name: String = "TOP" }
-  case object TRY extends Currency { val name: String = "TRY" }
-  case object TTD extends Currency { val name: String = "TTD" }
-  case object TWD extends Currency { val name: String = "TWD" }
-  case object TZS extends Currency { val name: String = "TZS" }
-  case object UAH extends Currency { val name: String = "UAH" }
-  case object UGX extends Currency { val name: String = "UGX" }
-  case object USD extends Currency { val name: String = "USD" }
-  case object USN extends Currency { val name: String = "USN" }
-  case object USS extends Currency { val name: String = "USS" }
-  case object UYU extends Currency { val name: String = "UYU" }
-  case object UZS extends Currency { val name: String = "UZS" }
-  case object VEB extends Currency { val name: String = "VEB" }
-  case object VEF extends Currency { val name: String = "VEF" }
-  case object VND extends Currency { val name: String = "VND" }
-  case object VUV extends Currency { val name: String = "VUV" }
-  case object WST extends Currency { val name: String = "WST" }
-  case object XAF extends Currency { val name: String = "XAF" }
-  case object XAG extends Currency { val name: String = "XAG" }
-  case object XAU extends Currency { val name: String = "XAU" }
-  case object XCD extends Currency { val name: String = "XCD" }
-  case object XDR extends Currency { val name: String = "XDR" }
-  case object XFO extends Currency { val name: String = "XFO" }
-  case object XFU extends Currency { val name: String = "XFU" }
-  case object XOF extends Currency { val name: String = "XOF" }
-  case object XPD extends Currency { val name: String = "XPD" }
-  case object XPF extends Currency { val name: String = "XPF" }
-  case object XPT extends Currency { val name: String = "XPT" }
-  case object YER extends Currency { val name: String = "YER" }
-  case object ZAR extends Currency { val name: String = "ZAR" }
-  case object ZMK extends Currency { val name: String = "ZMK" }
-  case object ZWL extends Currency { val name: String = "ZWL" }
-  case object TCH extends Currency { val name: String = "TCH" }
+  sealed abstract class Currency extends Product with Enum
+  case object AED extends Currency
+  case object AFN extends Currency
+  case object ALL extends Currency
+  case object AMD extends Currency
+  case object ANG extends Currency
+  case object AOA extends Currency
+  case object ARP extends Currency
+  case object ARS extends Currency
+  case object AUD extends Currency
+  case object AWG extends Currency
+  case object AZN extends Currency
+  case object BAM extends Currency
+  case object BBD extends Currency
+  case object BDT extends Currency
+  case object BGN extends Currency
+  case object BHD extends Currency
+  case object BIF extends Currency
+  case object BMD extends Currency
+  case object BND extends Currency
+  case object BOB extends Currency
+  case object BOV extends Currency
+  case object BRL extends Currency
+  case object BSD extends Currency
+  case object BTN extends Currency
+  case object BWP extends Currency
+  case object BYR extends Currency
+  case object BYN extends Currency
+  case object BZD extends Currency
+  case object BTC extends Currency
+  case object CAD extends Currency
+  case object CDF extends Currency
+  case object CHF extends Currency
+  case object CLF extends Currency
+  case object CLP extends Currency
+  case object CNY extends Currency
+  case object COP extends Currency
+  case object COU extends Currency
+  case object CRC extends Currency
+  case object CUC extends Currency
+  case object CUP extends Currency
+  case object CVE extends Currency
+  case object CYP extends Currency
+  case object CZK extends Currency
+  case object DJF extends Currency
+  case object DKK extends Currency
+  case object DOP extends Currency
+  case object DZD extends Currency
+  case object ECS extends Currency
+  case object ECV extends Currency
+  case object EGP extends Currency
+  case object ERN extends Currency
+  case object ETB extends Currency
+  case object EUR extends Currency
+  case object ETH extends Currency
+  case object FJD extends Currency
+  case object FKP extends Currency
+  case object GBP extends Currency
+  case object GEL extends Currency
+  case object GHS extends Currency
+  case object GIP extends Currency
+  case object GMD extends Currency
+  case object GNF extends Currency
+  case object GTQ extends Currency
+  case object GWP extends Currency
+  case object GYD extends Currency
+  case object HKD extends Currency
+  case object HNL extends Currency
+  case object HRK extends Currency
+  case object HTG extends Currency
+  case object HUF extends Currency
+  case object IDR extends Currency
+  case object ILS extends Currency
+  case object INR extends Currency
+  case object IQD extends Currency
+  case object IRR extends Currency
+  case object ISK extends Currency
+  case object JMD extends Currency
+  case object JOD extends Currency
+  case object JPY extends Currency
+  case object KES extends Currency
+  case object KGS extends Currency
+  case object KHR extends Currency
+  case object KMF extends Currency
+  case object KPW extends Currency
+  case object KRW extends Currency
+  case object KZT extends Currency
+  case object KWD extends Currency
+  case object KYD extends Currency
+  case object LAK extends Currency
+  case object LBP extends Currency
+  case object LKR extends Currency
+  case object LRD extends Currency
+  case object LSL extends Currency
+  case object LTL extends Currency
+  case object LVL extends Currency
+  case object LYD extends Currency
+  case object MAD extends Currency
+  case object MDL extends Currency
+  case object MGA extends Currency
+  case object MKD extends Currency
+  case object MMK extends Currency
+  case object MNT extends Currency
+  case object MOP extends Currency
+  case object MRO extends Currency
+  case object MUR extends Currency
+  case object MVR extends Currency
+  case object MWK extends Currency
+  case object MXN extends Currency
+  case object MXV extends Currency
+  case object MYR extends Currency
+  case object MZN extends Currency
+  case object NAD extends Currency
+  case object NGN extends Currency
+  case object NHF extends Currency
+  case object NIO extends Currency
+  case object NOK extends Currency
+  case object NPR extends Currency
+  case object NZD extends Currency
+  case object OMR extends Currency
+  case object PAB extends Currency
+  case object PEN extends Currency
+  case object PGK extends Currency
+  case object PHP extends Currency
+  case object PKR extends Currency
+  case object PLN extends Currency
+  case object PYG extends Currency
+  case object QAR extends Currency
+  case object RON extends Currency
+  case object RSD extends Currency
+  case object RUB extends Currency
+  case object RWF extends Currency
+  case object SAR extends Currency
+  case object SBD extends Currency
+  case object SCR extends Currency
+  case object SDG extends Currency
+  case object SEK extends Currency
+  case object SGD extends Currency
+  case object SHP extends Currency
+  case object SLL extends Currency
+  case object SOS extends Currency
+  case object SRD extends Currency
+  case object SSP extends Currency
+  case object STD extends Currency
+  case object SVC extends Currency
+  case object SYP extends Currency
+  case object SZL extends Currency
+  case object THB extends Currency
+  case object TJS extends Currency
+  case object TMT extends Currency
+  case object TND extends Currency
+  case object TOP extends Currency
+  case object TRY extends Currency
+  case object TTD extends Currency
+  case object TWD extends Currency
+  case object TZS extends Currency
+  case object UAH extends Currency
+  case object UGX extends Currency
+  case object USD extends Currency
+  case object USN extends Currency
+  case object USS extends Currency
+  case object UYU extends Currency
+  case object UZS extends Currency
+  case object VEB extends Currency
+  case object VEF extends Currency
+  case object VND extends Currency
+  case object VUV extends Currency
+  case object WST extends Currency
+  case object XAF extends Currency
+  case object XAG extends Currency
+  case object XAU extends Currency
+  case object XCD extends Currency
+  case object XDR extends Currency
+  case object XFO extends Currency
+  case object XFU extends Currency
+  case object XOF extends Currency
+  case object XPD extends Currency
+  case object XPF extends Currency
+  case object XPT extends Currency
+  case object YER extends Currency
+  case object ZAR extends Currency
+  case object ZMK extends Currency
+  case object ZWL extends Currency
+  case object TCH extends Currency
 
   object Currency extends EnumHelper[Currency] {
     def values: Set[Currency] = Set(AED, AFN, ALL, AMD, ANG, AOA, ARP, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BOV, BRL, BSD, BTN, BWP, BYR, BYN, BZD, BTC, CAD, CDF, CHF, CLF, CLP, CNY, COP, COU, CRC, CUC, CUP, CVE, CYP, CZK, DJF, DKK, DOP, DZD, ECS, ECV, EGP, ERN, ETB, EUR, ETH, FJD, FKP, GBP, GEL, GHS, GIP, GMD, GNF, GTQ, GWP, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KGS, KHR, KMF, KPW, KRW, KZT, KWD, KYD, KYD, LAK, LBP, LKR, LRD, LSL, LTL, LVL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRO, MUR, MVR, MWK, MXN, MXV, MYR, MZN, NAD, NGN, NHF, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SEK, SGD, SHP, SLL, SOS, SRD, SSP, STD, SVC, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, USD, USN, USS, UYU, UZS, VEB, VEF, VND, VUV, WST, XAF, XAG, XAU, XCD, XDR, XFO, XFU, XOF, XPD, XPF, XPT, YER, ZAR, ZMK, ZWL, TCH)
