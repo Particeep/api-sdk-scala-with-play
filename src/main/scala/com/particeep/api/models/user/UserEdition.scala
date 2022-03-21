@@ -39,7 +39,7 @@ case class UserEdition(
     siret:                     Option[String]        = None,
     rcs_registration_year:     Option[String]        = None,
     rcs_city:                  Option[String]        = None,
-    regulatory_status:         Option[String]        = None,
+    legal_status:              Option[String]        = None,
     tva_intra:                 Option[String]        = None,
     lang:                      Option[String]        = None,
     custom:                    Option[JsObject]      = None
