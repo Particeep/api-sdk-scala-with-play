@@ -1,14 +1,13 @@
 package com.particeep.api.models.user
 
 import java.time.ZonedDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.InvestorType.InvestorType
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
-import play.api.libs.json.JsObject
+import play.api.libs.json.{ JsArray, JsObject }
 
 case class UserEdition(
     first_name:                Option[String]        = None,
@@ -42,6 +41,13 @@ case class UserEdition(
     legal_status:              Option[String]        = None,
     tva_intra:                 Option[String]        = None,
     lang:                      Option[String]        = None,
+    ips:                       Option[JsArray]       = None,
+    creator_type:              Option[String]        = None,
+    creator_name:              Option[String]        = None,
+    is_id_doc_verified:        Option[Boolean]       = None,
+    id_doc_check_date:         Option[ZonedDateTime] = None,
+    id_doc_expiration_date:    Option[ZonedDateTime] = None,
+    can_access:                Option[Boolean]       = None,
     custom:                    Option[JsObject]      = None
 )
 
