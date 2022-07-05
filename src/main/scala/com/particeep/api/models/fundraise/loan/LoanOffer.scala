@@ -10,6 +10,8 @@ case class LoanOffer(
     term:                 Int                    = 0,
     rate:                 Double                 = 0,
     tax_rate:             Double                 = 0,
+    fees_in:              Option[Double]         = None,
+    fees_in_flat:         Option[Int]            = None,
     step:                 Int                    = 1,
     amount_min:           Option[Int]            = None,
     amount_max:           Option[Int]            = None,
