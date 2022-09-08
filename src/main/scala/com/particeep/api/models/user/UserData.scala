@@ -36,6 +36,8 @@ case class UserData(
     single_fixed_tax_base_1:       Option[Boolean]            = None,
     single_fixed_tax_base_2_and_3: Option[Boolean]            = None,
     has_been_claimed:              Option[Boolean]            = Some(true),
+    profession:                    Option[String]             = None,
+    business_line:                 Option[String]             = None,
     city:                          Option[String]             = None,
     wallet_id:                     Option[String]             = None,
     wallet_updated_at:             Option[ZonedDateTime]      = None,
