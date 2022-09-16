@@ -1,8 +1,10 @@
 package com.particeep.api.models.fundraise.equity
 
+import ai.x.play.json.Jsonx
+import ai.x.play.json.Encoders._
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.JsObject
 
 import java.time.ZonedDateTime
 
@@ -27,6 +29,7 @@ case class FundraiseEquityCreation(
     tag:                   Option[String]              = None,
     custom:                Option[JsObject]            = None,
     required_pro:          Option[Boolean]             = None,
+    unicia_id:             Option[String]              = None,
     dismemberment_table:   Option[Map[String, String]] = None,
     offer:                 Option[EquityOffer]         = None
 )
@@ -34,5 +37,5 @@ case class FundraiseEquityCreation(
 object FundraiseEquityCreation {
   implicit val date_format = Formatter.ZonedDateTimeWrites
   implicit lazy val equity_offer_format = EquityOffer.format
-  val format = Json.format[FundraiseEquityCreation]
+  val format = Jsonx.formatCaseClass[FundraiseEquityCreation]
 }
