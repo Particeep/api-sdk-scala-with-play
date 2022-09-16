@@ -31,6 +31,7 @@ case class PartnerCompany(
     contact_last_name:     Option[String]           = None,
     contact_email:         Option[String]           = None,
     trade_name:            Option[String]           = None,
+    unicia_id:             Option[String]           = None,
     url:                   Option[String]           = None,
     tag:                   Option[String]           = None,
     custom:                Option[JsObject]         = None
