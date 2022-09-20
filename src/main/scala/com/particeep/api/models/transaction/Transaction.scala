@@ -1,7 +1,6 @@
 package com.particeep.api.models.transaction
 
-import java.time.ZonedDateTime
-
+import java.time.{ OffsetDateTime, ZonedDateTime }
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
 import com.particeep.api.models.enums.PaymentMethod.PaymentMethod
@@ -11,36 +10,37 @@ import ai.x.play.json.Encoders._
 import play.api.libs.json.{ JsArray, JsObject }
 
 case class Transaction(
-    id:                      String                = "",
-    created_at:              Option[ZonedDateTime] = None,
-    issuer_id:               String                = "",
-    issuer_type:             String                = "",
-    recipient_id:            String                = "",
-    recipient_type:          String                = "",
-    fundraise_id:            Option[String]        = None,
-    fundraise_type:          Option[String]        = None,
-    item_id:                 Option[String]        = None,
-    item_type:               Option[String]        = None,
-    amount:                  Int                   = 0,
-    fees:                    Int                   = 0,
-    partner_fees:            Option[Int]           = None,
-    currency:                Currency              = EUR,
-    status:                  TransactionStatus     = PENDING,
-    payment_method:          Option[PaymentMethod] = None,
-    handled_offline:         Option[Boolean]       = None,
-    comment:                 Option[String]        = None,
-    tag:                     Option[String]        = None,
-    co_issuers:              Option[JsArray]       = None,
-    co_issuers_legal:        Option[JsArray]       = None,
-    rib:                     Option[String]        = None,
-    price_per_share:         Option[Int]           = None,
-    pre_share_fixing_amount: Option[Int]           = None,
-    pre_share_fixing_fees:   Option[Int]           = None,
-    dismemberment_duration:  Option[Int]           = None,
-    dismemberment_rate:      Option[Double]        = None,
-    bare_owner_amount:       Option[Int]           = None,
-    usufructuary_amount:     Option[Int]           = None,
-    custom:                  Option[JsObject]      = None
+    id:                      String                 = "",
+    created_at:              Option[ZonedDateTime]  = None,
+    succeeded_at:            Option[OffsetDateTime] = None,
+    issuer_id:               String                 = "",
+    issuer_type:             String                 = "",
+    recipient_id:            String                 = "",
+    recipient_type:          String                 = "",
+    fundraise_id:            Option[String]         = None,
+    fundraise_type:          Option[String]         = None,
+    item_id:                 Option[String]         = None,
+    item_type:               Option[String]         = None,
+    amount:                  Int                    = 0,
+    fees:                    Int                    = 0,
+    partner_fees:            Option[Int]            = None,
+    currency:                Currency               = EUR,
+    status:                  TransactionStatus      = PENDING,
+    payment_method:          Option[PaymentMethod]  = None,
+    handled_offline:         Option[Boolean]        = None,
+    comment:                 Option[String]         = None,
+    tag:                     Option[String]         = None,
+    co_issuers:              Option[JsArray]        = None,
+    co_issuers_legal:        Option[JsArray]        = None,
+    rib:                     Option[String]         = None,
+    price_per_share:         Option[Int]            = None,
+    pre_share_fixing_amount: Option[Int]            = None,
+    pre_share_fixing_fees:   Option[Int]            = None,
+    dismemberment_duration:  Option[Int]            = None,
+    dismemberment_rate:      Option[Double]         = None,
+    bare_owner_amount:       Option[Int]            = None,
+    usufructuary_amount:     Option[Int]            = None,
+    custom:                  Option[JsObject]       = None
 )
 
 object Transaction {
