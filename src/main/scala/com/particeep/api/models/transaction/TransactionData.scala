@@ -41,7 +41,6 @@ case class TransactionData(
     signature_status:        Option[String]        = None,
     tag:                     Option[String]        = None,
     co_issuers:              Option[JsArray]       = None,
-    co_issuers_legal:        Option[JsArray]       = None,
     rib:                     Option[String]        = None,
     price_per_share:         Option[Int]           = None,
     pre_share_fixing_amount: Option[Int]           = None,
