@@ -10,7 +10,6 @@ case class InvestmentCreation(
     amount:                 Int,
     check_required_pro:     Option[Boolean]       = None,
     co_issuers:             Option[JsArray]       = None,
-    co_issuers_legal:       Option[JsArray]       = None,
     created_at:             Option[ZonedDateTime] = None,
     dismemberment_duration: Option[Int]           = None,
     dismemberment_rate:     Option[Double]        = None,
