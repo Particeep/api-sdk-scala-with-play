@@ -64,6 +64,21 @@ class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     )
   }
 
+  def remove_multiple(
+    user_id:     String,
+    roles:       Seq[String],
+    target_id:   Option[String] = None,
+    target_type: Option[String] = None,
+    timeout:     Long           = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Roles]] = {
+    ws.delete[Roles](
+      s"$endPoint/$user_id/remove_roles",
+      timeout,
+      Json.toJson(roles),
+      LangUtils.productToQueryString(TargetInfo(target_id, target_type))
+    )
+  }
+
   def hasRole(user_id: String, role: String)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Boolean]] = {
     allByUser(user_id).map(result => result.map(roles => roles.roles.map(_.role_name).contains(role)))
   }
