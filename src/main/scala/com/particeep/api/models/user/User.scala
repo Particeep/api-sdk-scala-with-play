@@ -24,6 +24,8 @@ case class User(
     birth_country:                 Option[String]        = None,
     birth_department:              Option[String]        = None,
     residence_country:             Option[String]        = None,
+    family_status:                 Option[String]        = None,
+    matrimonial_regime:            Option[String]        = None,
     birth_cog:                     Option[String]        = None,
     phone:                         Option[String]        = None,
     nationality:                   Option[String]        = None,
