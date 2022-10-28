@@ -24,6 +24,8 @@ case class UserCreation(
     birth_country:                 Option[String]        = None,
     birth_department:              Option[String]        = None,
     residence_country:             Option[String]        = None,
+    family_status:                 Option[String]        = None,
+    matrimonial_regime:            Option[String]        = None,
     phone:                         Option[String]        = None,
     nationality:                   Option[String]        = None,
     bio:                           Option[String]        = None,
