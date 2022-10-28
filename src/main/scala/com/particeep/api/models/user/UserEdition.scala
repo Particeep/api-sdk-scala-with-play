@@ -23,7 +23,6 @@ case class UserEdition(
     residence_country:             Option[String]        = None,
     family_status:                 Option[String]        = None,
     matrimonial_regime:            Option[String]        = None,
-    birth_cog:                     Option[String]        = None,
     phone:                         Option[String]        = None,
     nationality:                   Option[String]        = None,
     bio:                           Option[String]        = None,
