@@ -29,5 +29,6 @@ case class UserSearch(
 
 case class UserSearchAdditional(
     account_validation_status: Option[String] = None,
-    partner_manager_id:        Option[String] = None
+    partner_manager_id:        Option[String] = None,
+    company_business_name:     Option[String] = None
 )
