@@ -56,7 +56,8 @@ case class UserData(
     lang:                          Option[String]           = None,
     relatives:                     Option[Seq[Relative]]    = None,
     bankaccounts:                  Option[Seq[BankAccount]] = None,
-    custom:                        Option[JsObject]         = None
+    custom:                        Option[JsObject]         = None,
+    company_business_name:         Option[String]           = None
 )
 
 object UserData {
