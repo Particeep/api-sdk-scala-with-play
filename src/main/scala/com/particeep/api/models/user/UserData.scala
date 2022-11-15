@@ -57,7 +57,13 @@ case class UserData(
     relatives:                     Option[Seq[Relative]]    = None,
     bankaccounts:                  Option[Seq[BankAccount]] = None,
     custom:                        Option[JsObject]         = None,
-    company_business_name:         Option[String]           = None
+    company_business_name:         Option[String]           = None,
+    siren:                         Option[String]           = None,
+    siret:                         Option[String]           = None,
+    rcs_registration_year:         Option[String]           = None,
+    rcs_city:                      Option[String]           = None,
+    legal_status:                  Option[String]           = None,
+    tva_intra:                     Option[String]           = None
 )
 
 object UserData {
