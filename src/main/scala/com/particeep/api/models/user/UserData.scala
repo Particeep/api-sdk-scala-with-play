@@ -51,7 +51,7 @@ case class UserData(
     partner_manager_id:            Option[String]           = None,
     investor_score:                Option[Long]             = None,
     tag:                           Option[String]           = None,
-    is_pro:                        Option[String]           = None,
+    pro_qualification:             Option[String]           = None,
     account_validation_status:     Option[String]           = None,
     lang:                          Option[String]           = None,
     relatives:                     Option[Seq[Relative]]    = None,
