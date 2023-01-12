@@ -58,8 +58,11 @@ case class UserEdition(
     id_doc_expiration_date:        Option[ZonedDateTime]    = None,
     can_access:                    Option[Boolean]          = None,
     custom:                        Option[JsObject]         = None,
-    patrimony:                     Option[UserPatrimony] = None
-)
+    yearly_income:                 Option[Long]             = None,
+    total_liquidity:               Option[Long]             = None,
+    yearly_engagement:             Option[Long]             = None,
+    exploit_result:                Option[Long]             = None
+) extends UserPatrimony
 
 object UserEdition {
   implicit val date_format = Formatter.ZonedDateTimeWrites
