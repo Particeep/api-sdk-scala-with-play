@@ -1,8 +1,8 @@
 package com.particeep.api.models.user
 
 trait UserPatrimony {
-  val yearly_income: Option[Long]
-  val total_liquidity: Option[Long]
-  val yearly_engagement: Option[Long]
-  val exploit_result: Option[Long]
+  def yearly_income: Option[Long]
+  def total_liquidity: Option[Long]
+  def yearly_engagement: Option[Long]
+  def exploit_result: Option[Long]
 }
