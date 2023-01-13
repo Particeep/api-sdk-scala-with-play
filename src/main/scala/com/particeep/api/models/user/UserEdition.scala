@@ -58,7 +58,7 @@ case class UserEdition(
     id_doc_expiration_date:        Option[ZonedDateTime]    = None,
     can_access:                    Option[Boolean]          = None,
     custom:                        Option[JsObject]         = None,
-    patrimony:                     Option[UserPatrimony] = None
+    patrimony:                     Option[UserPatrimony]    = None
 )
 
 object UserEdition {
