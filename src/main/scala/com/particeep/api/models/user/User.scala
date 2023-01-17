@@ -44,7 +44,7 @@ case class User(
     profession:                    Option[String]           = None,
     business_line:                 Option[String]           = None,
     addresses:                     Option[Seq[Address]]     = None,
-    tag:                           Option[String]           = None,
+    tag:                           List[String]             = List(),
     pro_qualification:             Option[ProQualification] = None,
     account_validation_status:     Option[String]           = None,
     company_business_name:         Option[String]           = None,

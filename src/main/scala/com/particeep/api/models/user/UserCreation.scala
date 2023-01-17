@@ -60,7 +60,7 @@ case class UserCreation(
     id_doc_expiration_date:        Option[OffsetDateTime]   = None,
     can_access:                    Option[Boolean]          = None,
     addresses:                     Option[Seq[Address]]     = None,
-    tag:                           Option[String]           = None,
+    tag:                           Option[List[String]]     = None,
     custom:                        Option[JsObject]         = None
 )
 
