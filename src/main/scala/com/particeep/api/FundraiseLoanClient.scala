@@ -38,6 +38,7 @@ object FundraiseLoanClient {
   private implicit val lend_format = Lend.format
   private implicit val transaction_format = Transaction.format
   private implicit val lend_creation_format = LendCreation.format
+  private implicit val estimate_borrower_info_format = EstimateBorrowerInfo.format
   private implicit val importResultReads = ImportResult.format[FundraiseLoan]
   private implicit val recurring_transaction_format = RecurringTransaction.format
 }
@@ -111,10 +112,11 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredentia
   }
 
   def getBorrowerRepaymentScheduleEstimation(
-    id:      String,
-    timeout: Long   = defaultTimeOut
+    fundraise_id:           String,
+    estimate_borrower_info: EstimateBorrowerInfo,
+    timeout:                Long                 = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[RepaymentWithDate]]] = {
-    ws.post[List[RepaymentWithDate]](s"$endPoint/fundraise/$id/info/estimate/borrower", timeout, Json.toJson(""))
+    ws.post[List[RepaymentWithDate]](s"$endPoint/fundraise/$fundraise_id/info/estimate/borrower", timeout, Json.toJson(estimate_borrower_info))
   }
 
   def getLenderRepaymentSchedule(id: String, user_id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[RepaymentWithDate]]] = {
