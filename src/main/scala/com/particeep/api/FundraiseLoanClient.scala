@@ -112,10 +112,11 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredentia
   }
 
   def getBorrowerRepaymentScheduleEstimation(
+    fundraise_id:           String,
     estimate_borrower_info: EstimateBorrowerInfo,
     timeout:                Long                 = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[RepaymentWithDate]]] = {
-    ws.post[List[RepaymentWithDate]](s"$endPoint/fundraise/info/estimate/borrower", timeout, Json.toJson(estimate_borrower_info))
+    ws.post[List[RepaymentWithDate]](s"$endPoint/fundraise/$fundraise_id/info/estimate/borrower", timeout, Json.toJson(estimate_borrower_info))
   }
 
   def getLenderRepaymentSchedule(id: String, user_id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[RepaymentWithDate]]] = {
