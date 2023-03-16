@@ -4,7 +4,7 @@ import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.wallet.BankAccount
-import play.api.libs.json.JsObject
+import play.api.libs.json.{JsArray, JsObject}
 
 import java.time.ZonedDateTime
 
@@ -56,6 +56,7 @@ case class UserData(
     lang:                          Option[String]           = None,
     relatives:                     Option[Seq[Relative]]    = None,
     bankaccounts:                  Option[Seq[BankAccount]] = None,
+    ips:                           Option[JsArray]          = None,
     custom:                        Option[JsObject]         = None,
     company_business_name:         Option[String]           = None,
     siren:                         Option[String]           = None,
