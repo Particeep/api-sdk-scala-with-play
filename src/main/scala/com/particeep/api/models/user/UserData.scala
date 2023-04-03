@@ -4,7 +4,7 @@ import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.wallet.BankAccount
-import play.api.libs.json.{JsArray, JsObject}
+import play.api.libs.json.{ JsArray, JsObject }
 
 import java.time.ZonedDateTime
 
