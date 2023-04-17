@@ -3,7 +3,7 @@ package com.particeep.api.models.imports
 import play.api.libs.json._
 import com.particeep.api.models.enums.ImportType.ImportType
 import com.particeep.api.models.enums.ImportStateStatus.ImportStateStatus
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 
 /**
@@ -11,28 +11,28 @@ import com.particeep.api.core.Formatter
  */
 case class ImportResult[T](
     id:              String,
-    created_at:      ZonedDateTime,
-    updated_at:      Option[ZonedDateTime],
+    created_at:      OffsetDateTime,
+    updated_at:      Option[OffsetDateTime],
     status:          ImportStateStatus,
     import_type:     ImportType,
     line_processed:  Int,
     nb_created:      Int,
     nb_fail:         Int,
-    line_with_error: List[LineError]       = List(),
-    line_on_success: List[LineSuccess[T]]  = List(),
-    tag:             Option[String]        = None,
-    custom:          Option[JsObject]      = None
+    line_with_error: List[LineError]        = List(),
+    line_on_success: List[LineSuccess[T]]   = List(),
+    tag:             Option[String]         = None,
+    custom:          Option[JsObject]       = None
 )
 
 object ImportResult {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   implicit val line_error_format = LineError.format
   implicit def line_success_format[T](implicit fmt: Format[T]) = LineSuccess.format[T]
   def format[T](implicit fmt: Format[T]): Format[ImportResult[T]] = new Format[ImportResult[T]] {
     def reads(json: JsValue): JsResult[ImportResult[T]] = JsSuccess(new ImportResult[T](
       (json \ "id").as[String],
-      (json \ "created_at").as[ZonedDateTime],
-      (json \ "updated_at").asOpt[ZonedDateTime],
+      (json \ "created_at").as[OffsetDateTime],
+      (json \ "updated_at").asOpt[OffsetDateTime],
       (json \ "status").as[ImportStateStatus],
       (json \ "import_type").as[ImportType],
       (json \ "line_processed").as[Int],

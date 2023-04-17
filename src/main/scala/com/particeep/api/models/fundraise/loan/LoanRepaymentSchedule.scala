@@ -1,6 +1,6 @@
 package com.particeep.api.models.fundraise.loan
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.user.User
@@ -8,11 +8,11 @@ import play.api.libs.json._
 
 case class LoanRepaymentSchedule(
     id:                     String,
-    created_at:             ZonedDateTime,
+    created_at:             OffsetDateTime,
     user_id:                String,
     enterprise_id:          String,
     fundraise_id:           String,
-    payment_date:           ZonedDateTime,
+    payment_date:           OffsetDateTime,
     capital:                Int,
     capital_remains_to_pay: Int,
     interest:               Int,
@@ -28,7 +28,7 @@ case class LoanRepaymentSchedule(
 )
 
 object LoanRepaymentSchedule {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   implicit val format = Json.format[LoanRepaymentSchedule]
   private[this] implicit val user_format = User.format
 

@@ -1,6 +1,6 @@
 package com.particeep.test
 
-import java.time.{ ZoneOffset, ZonedDateTime }
+import java.time.{ ZoneOffset, OffsetDateTime }
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
@@ -41,7 +41,7 @@ class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: M
 
     implicit val user_format = User.format
 
-    val date = ZonedDateTime.now(ZoneOffset.UTC)
+    val date = OffsetDateTime.now(ZoneOffset.UTC)
       .withYear(1980)
       .withMonth(1)
       .withDayOfMonth(2)
@@ -65,8 +65,8 @@ class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: M
   }
 
   "the api client" should "format a date in ISO with UTC Zone" in {
-    val date: ZonedDateTime = ZonedDateTime.of(2017, 12, 12, 8, 2, 3, 0, ZoneOffset.of("+03:00"))
-    val json = Formatter.ZonedDateTimeWrites.writes(date).toString()
+    val date: OffsetDateTime = OffsetDateTime.of(2017, 12, 12, 8, 2, 3, 0, ZoneOffset.of("+03:00"))
+    val json = Formatter.OffsetDateTimeWrites.writes(date).toString()
 
     json shouldBe "\"2017-12-12T05:02:03Z\""
   }

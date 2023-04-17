@@ -7,11 +7,11 @@ import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
 import play.api.libs.json.JsObject
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 case class FundraiseEquity(
     id:                    String                      = "",
-    created_at:            Option[ZonedDateTime]       = None,
+    created_at:            Option[OffsetDateTime]      = None,
     enterprise_id:         Option[String]              = None,
     recipient_id:          Option[String]              = None,
     recipient_type:        Option[String]              = None,
@@ -23,8 +23,8 @@ case class FundraiseEquity(
     disclaimer_risk:       Option[String]              = None,
     disclaimer_fees:       Option[String]              = None,
     disclaimer_payment:    Option[String]              = None,
-    start_at:              Option[ZonedDateTime]       = None,
-    end_at:                Option[ZonedDateTime]       = None,
+    start_at:              Option[OffsetDateTime]      = None,
+    end_at:                Option[OffsetDateTime]      = None,
     amount_target:         Long                        = 0,
     amount_target_max:     Option[Long]                = None,
     currency:              Currency                    = EUR,
@@ -42,7 +42,7 @@ case class FundraiseEquity(
 )
 
 object FundraiseEquity {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   implicit lazy val equity_offer_format = EquityOffer.format
   val format = Jsonx.formatCaseClass[FundraiseEquity]
 }

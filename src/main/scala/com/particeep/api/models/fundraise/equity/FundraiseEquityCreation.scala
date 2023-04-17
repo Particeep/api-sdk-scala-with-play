@@ -6,7 +6,7 @@ import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
 import play.api.libs.json.JsObject
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 case class FundraiseEquityCreation(
     enterprise_id:         Option[String]              = None,
@@ -20,8 +20,8 @@ case class FundraiseEquityCreation(
     disclaimer_risk:       Option[String]              = None,
     disclaimer_fees:       Option[String]              = None,
     disclaimer_payment:    Option[String]              = None,
-    start_at:              Option[ZonedDateTime]       = None,
-    end_at:                Option[ZonedDateTime]       = None,
+    start_at:              Option[OffsetDateTime]      = None,
+    end_at:                Option[OffsetDateTime]      = None,
     amount_target:         Long,
     amount_target_max:     Option[Long]                = None,
     currency:              Currency,
@@ -35,7 +35,7 @@ case class FundraiseEquityCreation(
 )
 
 object FundraiseEquityCreation {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   implicit lazy val equity_offer_format = EquityOffer.format
   val format = Jsonx.formatCaseClass[FundraiseEquityCreation]
 }

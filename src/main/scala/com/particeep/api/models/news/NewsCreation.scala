@@ -1,6 +1,6 @@
 package com.particeep.api.models.news
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import play.api.libs.json.{ JsObject, Json }
@@ -9,7 +9,7 @@ case class NewsCreation(
     target_id:   String,
     target_type: String,
     author_id:   String,
-    publish_at:  ZonedDateTime,
+    publish_at:  OffsetDateTime,
     title:       Option[String]   = None,
     message:     Option[String]   = None,
     img_url:     Option[String]   = None,
@@ -19,6 +19,6 @@ case class NewsCreation(
 )
 
 object NewsCreation {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   val format = Json.format[NewsCreation]
 }
