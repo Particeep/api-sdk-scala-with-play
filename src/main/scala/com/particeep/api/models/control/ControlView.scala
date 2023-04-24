@@ -25,11 +25,12 @@ object ControlView {
 }
 
 final case class ControlViewSearchCriteria(
-    created_after:  Option[OffsetDateTime],
-    created_before: Option[OffsetDateTime],
-    level:          Option[Int],
-    target_id:      Option[String],
-    target_type:    Option[String],
-    status:         Option[ControlStatus],
-    ids:            Option[String]
+    created_after:  Option[OffsetDateTime] = None,
+    created_before: Option[OffsetDateTime] = None,
+    level:          Option[Int]            = None,
+    target_id:      Option[String]         = None,
+    target_type:    Option[String]         = None,
+    status:         Option[ControlStatus]  = None,
+    assigned_to:    Option[String]         = None,
+    ids:            Option[String]         = None
 )

@@ -1,5 +1,7 @@
 package com.particeep.api.models.enums
 
+import play.api.data.format.Formatter
+import play.api.data.{ FormError, Forms, Mapping }
 import play.api.libs.json._
 
 import scala.language.implicitConversions
@@ -36,5 +38,18 @@ trait EnumHelper[E <: Enum] {
 
   implicit def enumWrites: Writes[E] = new Writes[E] {
     def writes(v: E): JsValue = JsString(v)
+  }
+
+  val formatMapping: Mapping[E] = Forms.of(enumFormat)
+
+  private[this] def enumFormat: Formatter[E] = new Formatter[E] {
+    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], E] = {
+      data.get(key) match {
+        case Some(value) => get(value).map(Right(_)).getOrElse(Left(List(FormError(key, "error.enum.not.found"))))
+        case None        => Left(List(FormError(key, "error.enum.unknown")))
+      }
+    }
+
+    def unbind(key: String, value: E) = Map(key -> value.name)
   }
 }
