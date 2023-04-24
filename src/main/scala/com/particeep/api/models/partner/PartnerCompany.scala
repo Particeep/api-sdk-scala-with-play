@@ -1,6 +1,6 @@
 package com.particeep.api.models.partner
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.OriasStatus.OriasStatus
@@ -11,7 +11,7 @@ import play.api.libs.json.JsObject
 
 case class PartnerCompany(
     id:                    String,
-    created_at:            ZonedDateTime,
+    created_at:            OffsetDateTime,
     user_id:               String,
     is_rcs_verified:       Option[Boolean]          = None,
     rcs_registration_year: Option[String]           = None,
@@ -38,6 +38,6 @@ case class PartnerCompany(
 )
 
 object PartnerCompany {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   val format = Jsonx.formatCaseClass[PartnerCompany]
 }

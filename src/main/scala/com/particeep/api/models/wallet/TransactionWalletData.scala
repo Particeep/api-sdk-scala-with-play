@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
@@ -11,7 +11,7 @@ import ai.x.play.json.Encoders._
 
 case class TransactionWalletData(
     id:                 String,
-    created_at:         Option[ZonedDateTime]              = None,
+    created_at:         Option[OffsetDateTime]             = None,
     debited_amount:     Option[Int]                        = None,
     credited_amount:    Option[Int]                        = None,
     fees:               Option[Int]                        = None,
@@ -27,6 +27,6 @@ case class TransactionWalletData(
 )
 
 object TransactionWalletData {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   val format = Jsonx.formatCaseClass[TransactionWalletData]
 }

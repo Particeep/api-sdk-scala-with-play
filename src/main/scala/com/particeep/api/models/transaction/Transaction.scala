@@ -1,6 +1,6 @@
 package com.particeep.api.models.transaction
 
-import java.time.{ OffsetDateTime, ZonedDateTime }
+import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
 import com.particeep.api.models.enums.PaymentMethod.PaymentMethod
@@ -11,7 +11,7 @@ import play.api.libs.json.{ JsArray, JsObject }
 
 case class Transaction(
     id:                      String                 = "",
-    created_at:              Option[ZonedDateTime]  = None,
+    created_at:              Option[OffsetDateTime] = None,
     succeeded_at:            Option[OffsetDateTime] = None,
     issuer_id:               String                 = "",
     issuer_type:             String                 = "",
@@ -43,6 +43,6 @@ case class Transaction(
 )
 
 object Transaction {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   val format = Jsonx.formatCaseClass[Transaction]
 }

@@ -1,13 +1,13 @@
 package com.particeep.api.models.form.get
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import play.api.libs.json.Json
 
 case class Section(
     id:          String                      = "",
-    created_at:  Option[ZonedDateTime]       = None,
+    created_at:  Option[OffsetDateTime]      = None,
     form_id:     String                      = "",
     name:        Option[Map[String, String]] = None,
     description: Option[Map[String, String]] = None,
@@ -15,6 +15,6 @@ case class Section(
 )
 
 object Section {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   val format = Json.format[Section]
 }
