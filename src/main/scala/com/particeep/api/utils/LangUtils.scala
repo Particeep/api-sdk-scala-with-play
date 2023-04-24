@@ -1,6 +1,6 @@
 package com.particeep.api.utils
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
 object LangUtils {
@@ -16,8 +16,8 @@ object LangUtils {
       case None    => ""
       case x: Any  => x
     }.mapValues {
-      case d: ZonedDateTime => d.format(date_time_formatter)
-      case v: Any           => v.toString
+      case d: OffsetDateTime => d.format(date_time_formatter)
+      case v: Any            => v.toString
     }.filter { case (_, v) => v != "" }.map { case (k, v) => (k, v) }.toList
   }
 }

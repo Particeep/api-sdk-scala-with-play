@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
@@ -9,7 +9,7 @@ import play.api.libs.json.Json
 
 case class BankAccount(
     id:                     String                    = "",
-    created_at:             Option[ZonedDateTime]     = None,
+    created_at:             Option[OffsetDateTime]    = None,
     wallet_id:              Option[String]            = None,
     status:                 Option[BankAccountStatus] = None,
     bank_name:              String                    = "",
@@ -25,6 +25,6 @@ case class BankAccount(
 )
 
 object BankAccount {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   val format = Json.format[BankAccount]
 }

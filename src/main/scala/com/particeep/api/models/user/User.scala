@@ -9,18 +9,18 @@ import com.particeep.api.models.enums.InvestorType.InvestorType
 import com.particeep.api.models.enums.ProQualification
 import play.api.libs.json.{ JsArray, JsObject }
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 case class User(
     id:                            String                   = "",
-    created_at:                    Option[ZonedDateTime]    = None,
+    created_at:                    Option[OffsetDateTime]   = None,
     email:                         String,
     first_name:                    Option[String]           = None,
     last_name:                     Option[String]           = None,
     maiden_name:                   Option[String]           = None,
     gender:                        Option[Gender]           = None,
     avatar_url:                    Option[String]           = None,
-    birthday:                      Option[ZonedDateTime]    = None,
+    birthday:                      Option[OffsetDateTime]   = None,
     birth_place:                   Option[String]           = None,
     birth_country:                 Option[String]           = None,
     birth_department:              Option[String]           = None,
@@ -59,8 +59,8 @@ case class User(
     creator_type:                  Option[String]           = None,
     creator_name:                  Option[String]           = None,
     is_id_doc_verified:            Option[Boolean]          = None,
-    id_doc_check_date:             Option[ZonedDateTime]    = None,
-    id_doc_expiration_date:        Option[ZonedDateTime]    = None,
+    id_doc_check_date:             Option[OffsetDateTime]   = None,
+    id_doc_expiration_date:        Option[OffsetDateTime]   = None,
     can_access:                    Option[Boolean]          = None,
     relatives:                     Option[Seq[Relative]]    = None,
     patrimony:                     Option[UserPatrimony]    = None,
@@ -69,7 +69,7 @@ case class User(
 )
 
 object User {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   implicit val relative_format = Relative.format
   implicit val format = Jsonx.formatCaseClass[User]
 }

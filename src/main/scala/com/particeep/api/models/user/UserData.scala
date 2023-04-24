@@ -6,14 +6,14 @@ import com.particeep.api.core.Formatter
 import com.particeep.api.models.wallet.BankAccount
 import play.api.libs.json.{ JsArray, JsObject }
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 /**
  * Created by Noe on 18/05/2017.
  */
 case class UserData(
     id:                            String                   = "",
-    created_at:                    Option[ZonedDateTime]    = None,
+    created_at:                    Option[OffsetDateTime]   = None,
     email:                         String                   = "",
     allow_mail_notifications:      Option[Boolean]          = None,
     gender:                        Option[String]           = None,
@@ -21,7 +21,7 @@ case class UserData(
     last_name:                     Option[String]           = None,
     maiden_name:                   Option[String]           = None,
     avatar_url:                    Option[String]           = None,
-    birthday:                      Option[ZonedDateTime]    = None,
+    birthday:                      Option[OffsetDateTime]   = None,
     birth_place:                   Option[String]           = None,
     birth_country:                 Option[String]           = None,
     birth_department:              Option[String]           = None,
@@ -43,7 +43,7 @@ case class UserData(
     business_line:                 Option[String]           = None,
     city:                          Option[String]           = None,
     wallet_id:                     Option[String]           = None,
-    wallet_updated_at:             Option[ZonedDateTime]    = None,
+    wallet_updated_at:             Option[OffsetDateTime]   = None,
     wallet_type:                   Option[String]           = None,
     status:                        Option[String]           = None,
     roles:                         Option[String]           = None,
@@ -68,7 +68,7 @@ case class UserData(
 )
 
 object UserData {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   implicit val relative_format = Relative.format
   implicit val bankaccount_format = BankAccount.format
   val format = Jsonx.formatCaseClass[UserData]

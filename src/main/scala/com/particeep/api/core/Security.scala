@@ -1,7 +1,7 @@
 package com.particeep.api.core
 
 import java.time.format.DateTimeFormatter
-import java.time.{ ZoneOffset, ZonedDateTime }
+import java.time.{ ZoneOffset, OffsetDateTime }
 
 import play.api.libs.ws._
 import play.shaded.ahc.org.asynchttpclient.BoundRequestBuilder
@@ -30,7 +30,7 @@ trait WithSecurity {
   }
 
   private[this] def buildDateHeader(): String = {
-    val date = ZonedDateTime.now(ZoneOffset.UTC).withNano(0)
+    val date = OffsetDateTime.now(ZoneOffset.UTC).withNano(0)
     val format = DateTimeFormatter.ISO_INSTANT
     format.format(date)
   }

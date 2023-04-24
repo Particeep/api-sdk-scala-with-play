@@ -1,6 +1,6 @@
 package com.particeep.api.models.fundraise.equity
 
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
@@ -19,8 +19,8 @@ case class FundraiseEquityEdition(
     disclaimer_risk:       Option[String]              = None,
     disclaimer_fees:       Option[String]              = None,
     disclaimer_payment:    Option[String]              = None,
-    start_at:              Option[ZonedDateTime]       = None,
-    end_at:                Option[ZonedDateTime]       = None,
+    start_at:              Option[OffsetDateTime]      = None,
+    end_at:                Option[OffsetDateTime]      = None,
     amount_target:         Option[Long]                = None,
     amount_target_max:     Option[Long]                = None,
     currency:              Option[Currency]            = None,
@@ -36,7 +36,7 @@ case class FundraiseEquityEdition(
 )
 
 object FundraiseEquityEdition {
-  implicit val date_format = Formatter.ZonedDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   implicit lazy val equity_offer_format = EquityOffer.format
   val format = Jsonx.formatCaseClassUseDefaults[FundraiseEquityEdition]
 }
