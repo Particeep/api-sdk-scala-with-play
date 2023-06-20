@@ -8,7 +8,7 @@ object Crypto {
 
   private[this] val HEX_CHARS = "0123456789ABCDEF".toCharArray()
   private[this] final val UTF_8 = "UTF-8"
-  private[this] final val HMAC_SHA1 = "HmacSHA256"
+  private[this] final val HMAC_SHA256 = "HmacSHA256"
 
   def encodeToHex(toEncode: Array[Byte]): Array[Char] = {
     val len = toEncode.length
@@ -35,8 +35,8 @@ object Crypto {
   }
 
   def sign(toSign: Array[Byte], secret: Array[Byte]): Array[Byte] = {
-    val mac: Mac = Mac.getInstance(HMAC_SHA1)
-    val signingKey = new SecretKeySpec(secret, HMAC_SHA1)
+    val mac: Mac = Mac.getInstance(HMAC_SHA256)
+    val signingKey = new SecretKeySpec(secret, HMAC_SHA256)
     mac.init(signingKey)
     mac.doFinal(toSign)
   }
