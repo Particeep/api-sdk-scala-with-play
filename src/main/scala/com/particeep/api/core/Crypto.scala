@@ -8,7 +8,7 @@ object Crypto {
 
   private[this] val HEX_CHARS = "0123456789ABCDEF".toCharArray()
   private[this] final val UTF_8 = "UTF-8"
-  private[this] final val HMAC_SHA1 = "HmacSHA1"
+  private[this] final val HMAC_SHA1 = "HmacSHA256"
 
   def encodeToHex(toEncode: Array[Byte]): Array[Char] = {
     val len = toEncode.length
