@@ -8,8 +8,8 @@ case class Address(
     zip:                Option[String] = None,
     city:               Option[String] = None,
     country:            Option[String] = None,
-    tag:                Option[String] = None,
-    complementary_info: Option[String] = None
+    additional_details: Option[String] = None,
+    tag:                Option[String] = None
 )
 
 object Address {
