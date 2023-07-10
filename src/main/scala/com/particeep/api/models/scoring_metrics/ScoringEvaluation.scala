@@ -14,7 +14,8 @@ case class ScoringEvaluation(
     target_id:     Option[String]         = None,
     target_type:   Option[String]         = None,
     tag:           Option[String]         = None,
-    custom:        Option[JsObject]       = None
+    custom:        Option[JsObject]       = None,
+    risk:          Option[String]         = None
 )
 
 object ScoringEvaluation {
