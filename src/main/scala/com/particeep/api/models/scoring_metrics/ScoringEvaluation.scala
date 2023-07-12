@@ -9,6 +9,7 @@ case class ScoringEvaluation(
     id:            String                 = "",
     created_at:    Option[OffsetDateTime] = None,
     score:         Option[Long]           = None,
+    risk:          Option[String]         = None,
     metric_id:     String,
     source_params: JsObject,
     target_id:     Option[String]         = None,
