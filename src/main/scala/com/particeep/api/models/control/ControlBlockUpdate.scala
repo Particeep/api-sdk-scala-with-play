@@ -4,7 +4,7 @@ import com.particeep.api.models.enums.ControlBlockStatus
 import play.api.libs.json.{ Json, OFormat }
 
 final case class ControlBlockUpdate(
-    doc_ids: Seq[String],
+    doc_ids: Option[Seq[String]],
     status:  Option[ControlBlockStatus],
     comment: Option[String]
 )
