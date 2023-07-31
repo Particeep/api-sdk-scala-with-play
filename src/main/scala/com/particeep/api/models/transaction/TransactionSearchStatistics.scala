@@ -15,5 +15,5 @@ case class TransactionSearchStatistics(
 
 object TransactionSearchStatistics {
   implicit val date_format = Formatter.OffsetDateTimeWrites
-  val format = Jsonx.formatCaseClass[TransactionSearchStatistics]
+  implicit val format = Jsonx.formatCaseClass[TransactionSearchStatistics]
 }
