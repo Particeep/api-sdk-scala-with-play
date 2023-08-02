@@ -11,7 +11,8 @@ case class QuestionEdition(
     question_type:         Option[QuestionType],
     required:              Option[Boolean],
     pattern:               Option[String]              = None,
-    index:                 Option[Int]
+    index:                 Option[Int],
+    document_filename:     Option[String]              = None
 )
 
 object QuestionEdition {
