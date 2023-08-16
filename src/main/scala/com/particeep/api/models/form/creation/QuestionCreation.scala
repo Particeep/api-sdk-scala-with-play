@@ -10,7 +10,8 @@ case class QuestionCreation(
     question_type: Option[QuestionType]        = None,
     required:      Option[Boolean]             = None,
     pattern:       Option[String]              = None,
-    index:         Option[Int]                 = None
+    index:         Option[Int]                 = None,
+    tag:           Option[String]              = None
 )
 
 object QuestionCreation {
