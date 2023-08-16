@@ -4,10 +4,10 @@ import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
 
 case class UserPatrimonyEdition(
-    yearly_income:     Option[Double],
-    total_liquidity:   Option[Double],
-    yearly_engagement: Option[Double],
-    exploit_result:    Option[Double]
+    yearly_income:     Double,
+    total_liquidity:   Double,
+    yearly_engagement: Double,
+    exploit_result:    Double
 )
 
 object UserPatrimonyEdition {
