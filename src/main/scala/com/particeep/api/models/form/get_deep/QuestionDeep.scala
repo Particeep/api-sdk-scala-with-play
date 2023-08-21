@@ -21,7 +21,7 @@ case class QuestionDeep(
     index:                 Option[Int]                 = None,
     possibilities:         Seq[Possibility]            = Seq(),
     tag:                   Option[String]              = None,
-    
+
     //Only when getting a Form for a User
     answers: Option[Seq[String]] = None
 )
