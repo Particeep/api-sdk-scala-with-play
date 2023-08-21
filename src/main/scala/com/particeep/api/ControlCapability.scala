@@ -42,13 +42,12 @@ class ControlClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
     ws.post[Control](s"$endPoint/$id", timeout, Json.toJson(control_update))
   }
 
-  def updateBlock(
-    id:                   String,
-    block_id:             String,
-    timeout:              Long               = defaultTimeOut,
-    control_block_update: ControlBlockUpdate
+  def updateBlocks(
+    id:                    String,
+    timeout:               Long                     = defaultTimeOut,
+    control_blocks_update: List[ControlBlockUpdate]
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Control]] = {
-    ws.post[Control](s"$endPoint/$id/block/$block_id", timeout, Json.toJson(control_block_update))
+    ws.post[Control](s"$endPoint/$id/block", timeout, Json.toJson(control_blocks_update))
   }
 
   def publish(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Control]] = {
