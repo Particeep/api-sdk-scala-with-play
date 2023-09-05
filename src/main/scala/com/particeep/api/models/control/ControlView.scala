@@ -30,7 +30,7 @@ final case class ControlViewSearchCriteria(
     level:          Option[Int]            = None,
     target_id:      Option[String]         = None,
     target_type:    Option[String]         = None,
-    status:         Option[ControlStatus]  = None,
+    status:         Option[String]         = None,
     assigned_to:    Option[String]         = None,
     ids:            Option[String]         = None
 )
