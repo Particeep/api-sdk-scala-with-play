@@ -10,4 +10,6 @@ object ControlStatus extends EnumHelper[ControlStatus] {
   case object SUCCEED extends ControlStatus
 
   val values: Set[ControlStatus] = Set(ONGOING, VALIDATED, REJECTED, SUCCEED)
+
+  def stringToControlStatus(value: String): ControlStatus = get(value.toUpperCase).getOrElse(ONGOING)
 }
