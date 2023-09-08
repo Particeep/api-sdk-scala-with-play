@@ -38,6 +38,7 @@ object FundraiseLoanClient {
   private implicit val lend_format = Lend.format
   private implicit val transaction_format = Transaction.format
   private implicit val lend_creation_format = LendCreation.format
+  private implicit val lend_option_format = LendOption.format
   private implicit val estimate_borrower_info_format = EstimateBorrowerInfo.format
   private implicit val importResultReads = ImportResult.format[FundraiseLoan]
   private implicit val recurring_transaction_format = RecurringTransaction.format
@@ -197,6 +198,10 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredentia
 
   def lend(id: String, lend_creation: LendCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
     ws.post[Transaction](s"$endPoint/fundraise/$id/lend", timeout, Json.toJson(lend_creation))
+  }
+
+  def updateLend(id: String, transaction_id: String, lend_option: LendOption, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
+    ws.post[Transaction](s"$endPoint/fundraise/$id/lend/$transaction_id", timeout, Json.toJson(lend_option))
   }
 
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseLoan]]] = {

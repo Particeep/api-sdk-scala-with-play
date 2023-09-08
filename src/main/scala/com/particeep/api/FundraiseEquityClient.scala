@@ -35,6 +35,7 @@ object FundraiseEquityClient {
   private implicit val dismemberment_info_format = DismembermentInfo.format
   private implicit val dismemberment_amounts_format = DismemebermentAmounts.format
   private implicit val investment_creation_format = InvestmentCreation.format
+  private implicit val investment_option_format = InvestmentOption.format
   private implicit val importResultReads = ImportResult.format[FundraiseEquity]
   private implicit val recurring_transaction_format = RecurringTransaction.format
 }
@@ -103,6 +104,10 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredent
 
   def invest(id: String, investment_creation: InvestmentCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
     ws.post[Transaction](s"$endPoint/fundraise/$id/invest", timeout, Json.toJson(investment_creation))
+  }
+
+  def updateInvest(id: String, transaction_id: String, investment_option: InvestmentOption, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
+    ws.post[Transaction](s"$endPoint/fundraise/$id/invest/$transaction_id", timeout, Json.toJson(investment_option))
   }
 
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[FundraiseEquity]]] = {

@@ -3,7 +3,7 @@ package com.particeep.api
 import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
 import com.particeep.api.models.enums.FundStatus.FundStatus
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
-import com.particeep.api.models.fund.{ Fund, FundCreation, FundData, FundEdition, FundSearch, InvestmentCreation, TransactionEditPart }
+import com.particeep.api.models.fund.{ Fund, FundCreation, FundData, FundEdition, FundSearch, InvestmentCreation, InvestmentOption, TransactionEditPart }
 import com.particeep.api.models.transaction.{ Investment, RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
 import akka.NotUsed
@@ -28,6 +28,7 @@ object FundClient {
   private implicit val fund_data_format = FundData.format
   private implicit val investment_format = Investment.format
   private implicit val investment_creation_format = InvestmentCreation.format
+  private implicit val investment_option_format = InvestmentOption.format
   private implicit val transaction_edit_part_format = TransactionEditPart.format
   private implicit val transaction_format = Transaction.format
   private implicit val recurring_transaction_format = RecurringTransaction.format
@@ -82,6 +83,10 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def invest(id: String, investment_creation: InvestmentCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
     ws.post[Transaction](s"$endPoint/$id/invest", timeout, Json.toJson(investment_creation))
+  }
+
+  def updateInvest(id: String, transaction_id: String, investment_option: InvestmentOption, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
+    ws.post[Transaction](s"$endPoint/$id/invest/$transaction_id", timeout, Json.toJson(investment_option))
   }
 
   def allInvestmentByFund(
