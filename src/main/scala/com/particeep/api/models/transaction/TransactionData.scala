@@ -30,6 +30,7 @@ case class TransactionData(
     partner_fees:            Option[Int]            = None,
     currency:                Option[Currency]       = None,
     status:                  Option[String]         = None,
+    control_status:          Option[String]         = None,
     payment_method:          Option[PaymentMethod]  = None,
     external_reference:      Option[String]         = None,
     handled_offline:         Option[Boolean]        = None,
