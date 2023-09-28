@@ -56,19 +56,21 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
   }
 
   def search(
-    criteria:       TransactionSearch,
-    table_criteria: TableSearch,
-    timeout:        Long              = defaultTimeOut
+    criteria:            TransactionSearch,
+    criteria_additional: TransactionSearchAdditional,
+    table_criteria:      TableSearch,
+    timeout:             Long                        = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[TransactionData]]] = {
-    ws.get[PaginatedSequence[TransactionData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+    ws.get[PaginatedSequence[TransactionData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(criteria_additional) ++ LangUtils.productToQueryString(table_criteria))
   }
 
   def search_stats(
-    criteria:       TransactionSearch,
-    table_criteria: TableSearch,
-    timeout:        Long              = defaultTimeOut
+    criteria:            TransactionSearch,
+    criteria_additional: TransactionSearchAdditional,
+    table_criteria:      TableSearch,
+    timeout:             Long                        = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, TransactionSearchStatistics]] = {
-    ws.get[TransactionSearchStatistics](s"$endPoint/search_stats", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
+    ws.get[TransactionSearchStatistics](s"$endPoint/search_stats", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(criteria_additional) ++ LangUtils.productToQueryString(table_criteria))
   }
 
   def cancel(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
@@ -93,14 +95,15 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
   }
 
   def exportCsv(
-    criteria:       TransactionSearch,
-    table_criteria: TableSearch,
-    timeout:        Long              = defaultTimeOut
+    criteria:            TransactionSearch,
+    criteria_additional: TransactionSearchAdditional,
+    table_criteria:      TableSearch,
+    timeout:             Long                        = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     ws.getStream(
       s"$endPoint/search",
       timeout,
-      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria)
+      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(criteria_additional) ++ LangUtils.productToQueryString(table_criteria)
     )(exec, creds.withHeader("Content-Type", "application/csv"))
   }
 
