@@ -5,11 +5,11 @@ import ai.x.play.json.Encoders._
 import com.particeep.api.core.Formatter
 
 case class TransactionSearchStatistics(
-    amount:              Long,
-    bare_owner_amount:   Long,
-    fees:                Long,
-    usufructuary_amount: Long,
-    partner_fees:        Long,
+    amount:              Double,
+    bare_owner_amount:   Double,
+    fees:                Double,
+    usufructuary_amount: Double,
+    partner_fees:        Double,
     num_of_shares:       Long
 )
 
