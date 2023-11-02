@@ -3,7 +3,7 @@ package com.particeep.api.models.transaction
 import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import com.particeep.api.models.enums.PaymentMethod.PaymentMethod
+import com.particeep.api.models.enums.PaymentMethod
 import com.particeep.api.models.enums.TransactionStatus.{ PENDING, TransactionStatus }
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
