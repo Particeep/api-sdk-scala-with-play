@@ -21,7 +21,7 @@ case class UserSearch(
     wallet_type:       Option[String]         = None,
     status:            Option[String]         = None,
     tag:               Option[String]         = None,
-    roles:             Option[String]         = None,
+    roles:             List[String]           = List.empty,
     targeting_roles:   Option[String]         = None,
     ids:               Option[String]         = None,
     pro_qualification: Option[String]         = None
