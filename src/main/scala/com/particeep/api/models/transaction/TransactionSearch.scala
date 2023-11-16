@@ -29,6 +29,8 @@ case class TransactionSearch(
 case class TransactionSearchAdditional(
     created_after:                         Option[OffsetDateTime] = None,
     created_before:                        Option[OffsetDateTime] = None,
+    signature_succeeded_after:             Option[OffsetDateTime] = None,
+    signature_succeeded_before:            Option[OffsetDateTime] = None,
     ids:                                   Option[String]         = None,
     tag:                                   Option[String]         = None,
     partner_manager_id:                    Option[String]         = None,
