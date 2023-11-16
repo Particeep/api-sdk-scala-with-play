@@ -42,6 +42,7 @@ case class TransactionData(
     partner_manager_company_business_name: Option[String]         = None,
     signature_ids:                         Option[String]         = None,
     signature_status:                      Option[String]         = None,
+    signature_succeeded_at:                Option[OffsetDateTime] = None,
     tag:                                   Option[String]         = None,
     co_issuers:                            Option[JsArray]        = None,
     rib:                                   Option[String]         = None,
