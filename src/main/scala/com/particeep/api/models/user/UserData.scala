@@ -14,6 +14,7 @@ import java.time.OffsetDateTime
 case class UserData(
     id:                                    String                   = "",
     created_at:                            Option[OffsetDateTime]   = None,
+    created_by:                            Option[String]           = None,
     email:                                 String                   = "",
     allow_mail_notifications:              Option[Boolean]          = None,
     gender:                                Option[String]           = None,
