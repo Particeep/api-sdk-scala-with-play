@@ -11,7 +11,7 @@ object TransactionControlBlockType extends EnumHelper[TransactionControlBlockTyp
   case object BANK_ACCOUNT extends TransactionControlBlockType
   case object TRANSACTION extends TransactionControlBlockType
   case object DOCUMENTS extends TransactionControlBlockType
-  case object QUESTION extends TransactionControlBlockType
+  case object FORM_SECTION extends TransactionControlBlockType
 
   val values: Set[TransactionControlBlockType] = {
     Set(
@@ -22,7 +22,7 @@ object TransactionControlBlockType extends EnumHelper[TransactionControlBlockTyp
       BANK_ACCOUNT,
       TRANSACTION,
       DOCUMENTS,
-      QUESTION
+      FORM_SECTION
     )
   }
 
