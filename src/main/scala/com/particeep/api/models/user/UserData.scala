@@ -34,6 +34,7 @@ case class UserData(
     sector:                                Option[String]           = None,
     investor_type:                         Option[String]           = None,
     linkedin_url:                          Option[String]           = None,
+    viadeo_url:                            Option[String]           = None,
     does_pay_taxes:                        Option[Boolean]          = None,
     subject_to_income_tax:                 Option[Boolean]          = None,
     single_fixed_tax_base_1:               Option[Boolean]          = None,
@@ -65,7 +66,10 @@ case class UserData(
     rcs_registration_year:                 Option[String]           = None,
     rcs_city:                              Option[String]           = None,
     legal_status:                          Option[String]           = None,
-    tva_intra:                             Option[String]           = None
+    tva_intra:                             Option[String]           = None,
+    patrimony:                             Option[UserPatrimony]    = None,
+    net_patrimony:                         Option[Long]             = None,
+    is_locked:                             Option[String]           = None
 )
 
 object UserData {
