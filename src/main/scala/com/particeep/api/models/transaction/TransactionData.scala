@@ -35,6 +35,7 @@ case class TransactionData(
     external_reference:                    Option[String]         = None,
     handled_offline:                       Option[Boolean]        = None,
     comment:                               Option[String]         = None,
+    private_comment:                       Option[String]         = None,
     targeting_roles:                       Option[String]         = None,
     partner_flat_fees:                     Option[Int]            = None,
     partner_variable_fees:                 Option[Double]         = None,
@@ -53,6 +54,7 @@ case class TransactionData(
     dismemberment_rate:                    Option[Double]         = None,
     bare_owner_amount:                     Option[Int]            = None,
     usufructuary_amount:                   Option[Int]            = None,
+    unicia_id:                             Option[String]         = None,
     custom:                                Option[JsObject]       = None
 )
 
