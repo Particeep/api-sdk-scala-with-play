@@ -3,6 +3,7 @@ package com.particeep.api.models.user
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
 import com.particeep.api.core.Formatter
+import com.particeep.api.models.Address
 import com.particeep.api.models.wallet.BankAccount
 import play.api.libs.json.{ JsArray, JsObject }
 
@@ -34,7 +35,6 @@ case class UserData(
     sector:                                Option[String]           = None,
     investor_type:                         Option[String]           = None,
     linkedin_url:                          Option[String]           = None,
-    viadeo_url:                            Option[String]           = None,
     does_pay_taxes:                        Option[Boolean]          = None,
     subject_to_income_tax:                 Option[Boolean]          = None,
     single_fixed_tax_base_1:               Option[Boolean]          = None,
@@ -59,6 +59,10 @@ case class UserData(
     relatives:                             Option[Seq[Relative]]    = None,
     bankaccounts:                          Option[Seq[BankAccount]] = None,
     ips:                                   Option[JsArray]          = None,
+    is_id_doc_verified:                    Option[Boolean]          = None,
+    id_doc_check_date:                     Option[OffsetDateTime]   = None,
+    id_doc_expiration_date:                Option[OffsetDateTime]   = None,
+    can_access:                            Option[Boolean]          = None,
     custom:                                Option[JsObject]         = None,
     company_business_name:                 Option[String]           = None,
     siren:                                 Option[String]           = None,
@@ -69,7 +73,12 @@ case class UserData(
     tva_intra:                             Option[String]           = None,
     patrimony:                             Option[UserPatrimony]    = None,
     net_patrimony:                         Option[Long]             = None,
-    is_locked:                             Option[String]           = None
+    is_locked:                             Option[String]           = None,
+    addresses:                             Option[Seq[Address]]     = None,
+    birth_cog:                             Option[String]           = None,
+    is_rcs_verified:                       Option[Boolean]          = None,
+    creator_type:                          Option[String]           = None,
+    creator_name:                          Option[String]           = None
 )
 
 object UserData {
