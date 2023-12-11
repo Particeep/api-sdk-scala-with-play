@@ -3,6 +3,7 @@ package com.particeep.api.models.user
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
 import com.particeep.api.core.Formatter
+import com.particeep.api.models.Address
 import com.particeep.api.models.wallet.BankAccount
 import play.api.libs.json.{ JsArray, JsObject }
 
@@ -47,7 +48,7 @@ case class UserData(
     wallet_updated_at:                     Option[OffsetDateTime]   = None,
     wallet_type:                           Option[String]           = None,
     status:                                Option[String]           = None,
-    roles:                                 Option[String]           = None,
+    roles:                                 List[String]             = List.empty,
     targeting_roles:                       Option[String]           = None,
     partner_manager_id:                    Option[String]           = None,
     partner_manager_company_business_name: Option[String]           = None,
@@ -59,6 +60,10 @@ case class UserData(
     relatives:                             Option[Seq[Relative]]    = None,
     bankaccounts:                          Option[Seq[BankAccount]] = None,
     ips:                                   Option[JsArray]          = None,
+    is_id_doc_verified:                    Option[Boolean]          = None,
+    id_doc_check_date:                     Option[OffsetDateTime]   = None,
+    id_doc_expiration_date:                Option[OffsetDateTime]   = None,
+    can_access:                            Option[Boolean]          = None,
     custom:                                Option[JsObject]         = None,
     company_business_name:                 Option[String]           = None,
     siren:                                 Option[String]           = None,
@@ -66,7 +71,15 @@ case class UserData(
     rcs_registration_year:                 Option[String]           = None,
     rcs_city:                              Option[String]           = None,
     legal_status:                          Option[String]           = None,
-    tva_intra:                             Option[String]           = None
+    tva_intra:                             Option[String]           = None,
+    patrimony:                             Option[UserPatrimony]    = None,
+    net_patrimony:                         Option[Long]             = None,
+    is_locked:                             Option[String]           = None,
+    addresses:                             Option[Seq[Address]]     = None,
+    birth_cog:                             Option[String]           = None,
+    is_rcs_verified:                       Option[Boolean]          = None,
+    creator_type:                          Option[String]           = None,
+    creator_name:                          Option[String]           = None
 )
 
 object UserData {
