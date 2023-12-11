@@ -67,7 +67,8 @@ case class User(
     relatives:                     Option[Seq[Relative]]    = None,
     patrimony:                     Option[UserPatrimony]    = None,
     net_patrimony:                 Option[Long]             = None,
-    custom:                        Option[JsObject]         = None
+    custom:                        Option[JsObject]         = None,
+    is_locked:                     Option[String]           = None
 )
 
 object User {
