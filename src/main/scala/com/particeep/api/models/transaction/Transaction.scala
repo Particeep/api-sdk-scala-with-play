@@ -34,6 +34,7 @@ case class Transaction(
     tag:                     Option[String]         = None,
     co_issuers:              Option[JsArray]        = None,
     rib:                     Option[String]         = None,
+    price_per_bond:          Option[Int]            = None,
     price_per_share:         Option[Int]            = None,
     pre_share_fixing_amount: Option[Int]            = None,
     pre_share_fixing_fees:   Option[Int]            = None,
