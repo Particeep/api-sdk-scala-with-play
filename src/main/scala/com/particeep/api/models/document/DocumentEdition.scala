@@ -8,6 +8,7 @@ import play.api.libs.json.{ JsObject, Json }
 case class DocumentEdition(
     name:        Option[String],
     description: Option[String],
+    scope:       Option[String]   = None,
     tag:         Option[String]   = None,
     custom:      Option[JsObject] = None
 )
