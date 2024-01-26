@@ -19,6 +19,9 @@ case class PartnerCompany(
     regafi_number:        Option[String]           = None,
     geco_number:          Option[String]           = None,
     legal_representative: Option[String]           = None,
+    contact_first_name:   Option[String]           = None,
+    contact_last_name:    Option[String]           = None,
+    contact_email:        Option[String]           = None,
     unicia_id:            Option[String]           = None,
     tag:                  Option[String]           = None,
     custom:               Option[JsObject]         = None

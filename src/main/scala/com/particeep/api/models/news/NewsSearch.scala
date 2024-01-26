@@ -11,6 +11,7 @@ case class NewsSearch(
     author_id:      Option[String]         = None,
     title:          Option[String]         = None,
     message:        Option[String]         = None,
+    is_report:      Option[Boolean]        = None,
     tag:            Option[String]         = None,
     publish_before: Option[OffsetDateTime] = None,
     publish_after:  Option[OffsetDateTime] = None

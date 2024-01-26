@@ -10,6 +10,7 @@ case class InvestmentOption(
     private_comment: Option[String]   = None,
     tag:             Option[String]   = None,
     co_issuers:      Option[JsArray]  = None,
+    rib:             Option[String]   = None,
     custom:          Option[JsObject] = None
 )
 
