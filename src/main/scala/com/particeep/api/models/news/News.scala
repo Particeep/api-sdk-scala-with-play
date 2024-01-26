@@ -16,6 +16,7 @@ case class News(
     message:     Option[String]         = None,
     img_url:     Option[String]         = None,
     content_url: Option[String]         = None,
+    is_report:   Option[Boolean]        = None,
     tag:         Option[String]         = None,
     custom:      Option[JsObject]       = None
 )
