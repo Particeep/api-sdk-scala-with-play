@@ -44,7 +44,7 @@ case class UserData(
     wallet_id:                             Option[String]           = None,
     wallet_updated_at:                     Option[OffsetDateTime]   = None,
     wallet_type:                           Option[String]           = None,
-    status:                                Option[String]           = None,
+    wallet_status:                         Option[String]           = None,
     roles:                                 List[String]             = List.empty,
     targeting_roles:                       Option[String]           = None,
     partner_manager_id:                    Option[String]           = None,
