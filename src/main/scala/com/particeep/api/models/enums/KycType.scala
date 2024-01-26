@@ -27,19 +27,4 @@ object KycType {
   object KycType extends EnumHelper[KycType] {
     def values: Set[KycType] = Set(ID_CARD, PASSPORT, RESIDENCE_PERMIT, DRIVER_LICENSE, ADDRESS_PROOF, COMPANY_STATUS, RIB, KBIS, TAX_STATUS, PRESIDENT_OF_ASSOCIATION, OFFICIAL_JOURNAL, ASSOCIATION_STATUS, SHAREHOLDER_KYCS, GENERAL_MEETING, HEALTH_INSURANCE_CARD, DESCRIPTION_PROJECT, SHAREHOLDER_ID, SHAREHOLDER_ID2, SHAREHOLDER_ID3)
   }
-
-  def parseFromHipay(kycType: String): Option[KycType] = {
-    kycType match {
-      case "1" | "3" | "7" => Some(ID_CARD)
-      case "2"             => Some(ADDRESS_PROOF)
-      case "4" | "8"       => Some(KBIS)
-      case "5"             => Some(COMPANY_STATUS)
-      case "6"             => Some(RIB)
-      case "9"             => Some(TAX_STATUS)
-      case "11"            => Some(PRESIDENT_OF_ASSOCIATION)
-      case "12"            => Some(OFFICIAL_JOURNAL)
-      case "13"            => Some(ASSOCIATION_STATUS)
-      case _               => None
-    }
-  }
 }

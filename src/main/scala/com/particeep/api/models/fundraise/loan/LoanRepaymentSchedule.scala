@@ -22,7 +22,6 @@ case class LoanRepaymentSchedule(
     is_amount_paid:         Boolean,
     is_tax_paid:            Boolean,
     is_offline:             Boolean,
-    transaction_wallet_ids: Option[String]   = None,
     tag:                    Option[String]   = None,
     custom:                 Option[JsObject] = None
 )
