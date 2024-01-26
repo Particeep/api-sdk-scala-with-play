@@ -11,7 +11,6 @@ case class InvestmentOption(
     private_comment:        Option[String]               = None,
     tag:                    Option[String]               = None,
     co_issuers:             Option[JsArray]              = None,
-    rib:                    Option[String]               = None,
     dismemberment_duration: Option[Int]                  = None,
     dismemberment_rate:     Option[Double]               = None,
     custom:                 Option[JsObject]             = None,

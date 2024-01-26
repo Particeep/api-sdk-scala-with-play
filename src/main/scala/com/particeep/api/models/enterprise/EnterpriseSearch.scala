@@ -8,7 +8,6 @@ import java.time.OffsetDateTime
 case class EnterpriseSearch(
     name:                         Option[String]         = None,
     activity_domains:             Option[String]         = None,
-    legal_status:                 Option[String]         = None,
     description_short:            Option[String]         = None,
     description_long:             Option[String]         = None,
     city:                         Option[String]         = None,
@@ -16,7 +15,6 @@ case class EnterpriseSearch(
     createdAfter:                 Option[OffsetDateTime] = None,
     creationAfter:                Option[OffsetDateTime] = None,
     statuses:                     Option[String]         = None,
-    siret:                        Option[String]         = None,
     tag:                          Option[String]         = None,
     is_auto_assigned_to_partners: Option[Boolean]        = None
 )
