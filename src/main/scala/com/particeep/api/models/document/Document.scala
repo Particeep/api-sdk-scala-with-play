@@ -22,7 +22,7 @@ case class Document(
     folder_id:    Option[String]         = None,
     locked:       Boolean                = false,
     permalink:    Option[String]         = None,
-    scope:        String,
+    scope:        Scope,
     tag:          Option[String]         = None,
     custom:       Option[JsObject]       = None
 )

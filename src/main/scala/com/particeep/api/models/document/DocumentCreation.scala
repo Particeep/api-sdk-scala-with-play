@@ -13,7 +13,7 @@ case class DocumentCreation(
     path:                   Option[String]   = None,
     locked:                 Option[Boolean]  = None,
     override_existing_file: Option[Boolean]  = None,
-    scope:                  Option[String]   = None,
+    scope:                  Option[Scope]    = None,
     tag:                    Option[String]   = None,
     custom:                 Option[JsObject] = None
 )
