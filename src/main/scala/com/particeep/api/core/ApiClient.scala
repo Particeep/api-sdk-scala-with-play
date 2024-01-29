@@ -1,7 +1,6 @@
 package com.particeep.api.core
 
 import java.io.File
-
 import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.Materializer
@@ -17,6 +16,7 @@ import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Pa
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
 import scala.util.control.NonFatal
+import play.api.mvc.Result
 
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
@@ -78,6 +78,11 @@ trait WSClient {
     params:  List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 
+  def getDoc(
+    path:    String,
+    timeOut: Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Result]]
+
   def postStream(
     path:    String,
     timeOut: Long,
@@ -114,7 +119,11 @@ trait BaseClient {
  *
  * val result:Future[Either[JsError, Info]] = ws.user.byId("some_id")
  */
-class ApiClient(val baseUrl: String, val version: String, val credentials: Option[ApiCredential] = None)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity with ResponseParser {
+class ApiClient(
+    val baseUrl:     String,
+    val version:     String,
+    val credentials: Option[ApiCredential] = None
+)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity with ResponseParser {
 
   val defaultTimeOut: Long = 10000
   val defaultImportTimeOut: Long = -1
@@ -191,6 +200,15 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     parseStream(url(path, timeOut).withQueryStringParameters(params: _*).withMethod("GET")).recover {
       case NonFatal(e) => handle_error[Source[ByteString, NotUsed]](e, "GET", path)
+    }
+  }
+
+  def getDoc(
+    path:    String,
+    timeOut: Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Result]] = {
+    parseDocumentStream(url(path, timeOut)).recover {
+      case NonFatal(e) => handle_error[Result](e, "GET", path)
     }
   }
 

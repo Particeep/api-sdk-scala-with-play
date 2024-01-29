@@ -1,16 +1,13 @@
 package com.particeep.api
 
 import java.io.File
-
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 import com.particeep.api.core._
 import com.particeep.api.models.document._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
-import akka.NotUsed
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import play.api.libs.json.Json
+import play.api.mvc.Result
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -60,8 +57,8 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     ws.post[Document](s"$endPoint/$owner_id/dir", timeout, Json.toJson(document_creation))
   }
 
-  def download(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
-    ws.getStream(s"$endPoint/download/$id", timeout)
+  def download(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Result]] = {
+    ws.getDoc(path = s"$endPoint/download/$id", timeOut = timeout)
   }
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Document]] = {
