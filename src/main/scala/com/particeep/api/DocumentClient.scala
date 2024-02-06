@@ -7,7 +7,6 @@ import com.particeep.api.models.document._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
 import play.api.libs.json.Json
-import play.api.mvc.Result
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -57,8 +56,8 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     ws.post[Document](s"$endPoint/$owner_id/dir", timeout, Json.toJson(document_creation))
   }
 
-  def download(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Result]] = {
-    ws.getDoc(path = s"$endPoint/download/$id", timeOut = timeout)
+  def download(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]] = {
+    ws.getDoc(document_id = id, path = s"$endPoint/download/$id", timeOut = timeout)
   }
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Document]] = {

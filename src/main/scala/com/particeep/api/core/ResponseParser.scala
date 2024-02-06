@@ -9,13 +9,11 @@ import play.api.libs.ws.{ StandaloneWSRequest, StandaloneWSResponse }
 
 import scala.util.control.NonFatal
 import com.particeep.api.models._
-import play.api.http.{ HeaderNames, HttpEntity }
 
 import scala.concurrent.{ ExecutionContext, Future }
 import play.api.libs.ws.JsonBodyReadables._
-import play.api.mvc.Result
-import play.api.mvc.Results.Ok
 import play.shaded.ahc.org.asynchttpclient.Response
+import com.particeep.api.models.document.DocumentDownload
 
 trait ResponseParser {
 
@@ -44,43 +42,32 @@ trait ResponseParser {
   }
 
   def parseDocumentStream(
-    request: StandaloneWSRequest
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Result]] = {
+    document_id: String,
+    request:     StandaloneWSRequest
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]] = {
     request
       .stream()
-      .map(response => if (response.status < 300) constructResultForDocument(response) else constructError(response))
+      .map(response => if (response.status < 300) constructResultForDocument(document_id, response) else constructError(response))
   }
 
   private[this] def constructResultForDocument(
-    response: StandaloneWSResponse
-  ): Right[ErrorResult, Result] = {
-    val length_of_document: Option[Long] = response.headers.get(HeaderNames.CONTENT_LENGTH) match {
-      case Some(Seq(length)) => Option(length).flatMap(_.toLongOption)
-      case _                 => None
-    }
-
-    // if length of document is known, browser will display progress bar.
-    if (length_of_document.isDefined) {
-      Right[ErrorResult, Result](
-        Ok.sendEntity(
-          HttpEntity.Streamed(response.bodyAsSource, length_of_document, Some(response.contentType))
-        )
-          .withHeaders(response.headers.collect({ case (key, Seq(value)) => key -> value }).toSeq: _*)
+    document_id: String,
+    response:    StandaloneWSResponse
+  ): Right[ErrorResult, DocumentDownload] = {
+    Right[ErrorResult, DocumentDownload](
+      DocumentDownload(
+        id = document_id,
+        body = response.bodyAsSource,
+        headers = response.headers
       )
-    } else {
-      Right[ErrorResult, Result](
-        Ok.chunked(response.bodyAsSource)
-          .withHeaders(response.headers.collect({ case (key, Seq(value)) => key -> value }).toSeq: _*)
-          .as(response.contentType)
-      )
-    }
+    )
   }
 
-  private[this] def constructError(response: StandaloneWSResponse): Left[ErrorResult, Result] = {
+  private[this] def constructError(response: StandaloneWSResponse): Left[ErrorResult, DocumentDownload] = {
     val body = response.body[JsValue]
     validateStandardError(body)
-      .map(Left[ErrorResult, Result])
-      .getOrElse(Left[ErrorResult, Result](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), body))))
+      .map(Left[ErrorResult, DocumentDownload])
+      .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), body))))
   }
 
   private[this] def parse[A](json: JsValue, status: Int)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {

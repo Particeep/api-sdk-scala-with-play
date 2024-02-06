@@ -6,6 +6,7 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
+import com.particeep.api.models.document.DocumentDownload
 import com.particeep.api.models.{ Error, ErrorResult, Errors }
 import play.api.libs.ws._
 import play.api.libs.json.{ Format, JsValue, Json }
@@ -16,7 +17,6 @@ import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Pa
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
 import scala.util.control.NonFatal
-import play.api.mvc.Result
 
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
@@ -79,9 +79,10 @@ trait WSClient {
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 
   def getDoc(
-    path:    String,
-    timeOut: Long
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Result]]
+    document_id: String,
+    path:        String,
+    timeOut:     Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
 
   def postStream(
     path:    String,
@@ -204,11 +205,12 @@ class ApiClient(
   }
 
   def getDoc(
-    path:    String,
-    timeOut: Long
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Result]] = {
-    parseDocumentStream(url(path, timeOut)).recover {
-      case NonFatal(e) => handle_error[Result](e, "GET", path)
+    document_id: String,
+    path:        String,
+    timeOut:     Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
+    parseDocumentStream(document_id, url(path, timeOut)).recover {
+      case NonFatal(e) => handle_error[DocumentDownload](e, "GET", path)
     }
   }
 
