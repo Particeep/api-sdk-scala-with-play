@@ -13,10 +13,11 @@ import play.api.libs.json.{ Format, JsValue, Json }
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilder }
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
-
+import com.particeep.api.models.ParsingError
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
 import scala.util.control.NonFatal
+import play.api.libs.json._
 
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
@@ -209,9 +210,25 @@ class ApiClient(
     path:        String,
     timeOut:     Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
-    parseDocumentStream(document_id, url(path, timeOut)).recover {
-      case NonFatal(e) => handle_error[DocumentDownload](e, "GET", path)
-    }
+    url(path, timeOut)
+      .stream()
+      .map(response => {
+        if (response.status < 300) {
+          Right(
+            DocumentDownload(
+              id = document_id,
+              body = response.bodyAsSource,
+              headers = response.headers
+            ))
+        } else {
+          val json = response.body[JsValue]
+          validateStandardError(json)
+            .map(Left[ErrorResult, DocumentDownload])
+            .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), json))))
+        }
+      }).recover {
+        case NonFatal(e) => handle_error[DocumentDownload](e, "GET", path)
+      }
   }
 
   def postStream(

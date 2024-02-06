@@ -13,7 +13,6 @@ import com.particeep.api.models._
 import scala.concurrent.{ ExecutionContext, Future }
 import play.api.libs.ws.JsonBodyReadables._
 import play.shaded.ahc.org.asynchttpclient.Response
-import com.particeep.api.models.document.DocumentDownload
 
 trait ResponseParser {
 
@@ -39,35 +38,6 @@ trait ResponseParser {
         case NonFatal(_) => request.stream().map(r => Right(r.bodyAsSource.mapMaterializedValue(_ => NotUsed)))
       }
     }.flatMap(identity)
-  }
-
-  def parseDocumentStream(
-    document_id: String,
-    request:     StandaloneWSRequest
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]] = {
-    request
-      .stream()
-      .map(response => if (response.status < 300) constructResultForDocument(document_id, response) else constructError(response))
-  }
-
-  private[this] def constructResultForDocument(
-    document_id: String,
-    response:    StandaloneWSResponse
-  ): Right[ErrorResult, DocumentDownload] = {
-    Right[ErrorResult, DocumentDownload](
-      DocumentDownload(
-        id = document_id,
-        body = response.bodyAsSource,
-        headers = response.headers
-      )
-    )
-  }
-
-  private[this] def constructError(response: StandaloneWSResponse): Left[ErrorResult, DocumentDownload] = {
-    val body = response.body[JsValue]
-    validateStandardError(body)
-      .map(Left[ErrorResult, DocumentDownload])
-      .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), body))))
   }
 
   private[this] def parse[A](json: JsValue, status: Int)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
@@ -121,7 +91,7 @@ trait ResponseParser {
     )
   }
 
-  private[this] def validateStandardError(json: JsValue): Option[ErrorResult] = {
+  def validateStandardError(json: JsValue): Option[ErrorResult] = {
     json.validate[Errors] match {
       case result: JsSuccess[Errors] => Some(result.get)
       case _: JsError                => validateParsingError(json)
