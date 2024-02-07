@@ -91,7 +91,7 @@ trait ResponseParser {
     )
   }
 
-  def validateStandardError(json: JsValue): Option[ErrorResult] = {
+  private[core] def validateStandardError(json: JsValue): Option[ErrorResult] = {
     json.validate[Errors] match {
       case result: JsSuccess[Errors] => Some(result.get)
       case _: JsError                => validateParsingError(json)
