@@ -213,19 +213,24 @@ class ApiClient(
     url(path, timeOut)
       .withMethod(method = "GET")
       .stream()
-      .map(response => {
-        if (response.status < 300) {
-          Right(DocumentDownload(id = document_id, body = response.bodyAsSource, headers = response.headers))
-        } else {
-          val json = response.body[JsValue]
-          validateStandardError(json)
-            .map(Left[ErrorResult, DocumentDownload])
-            .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), json))))
-        }
-      })
+      .map(handleResponseForGetDoc(_, document_id))
       .recover {
         case NonFatal(e) => handle_error[DocumentDownload](e, method = "GET", path)
       }
+  }
+
+  private[this] def handleResponseForGetDoc(
+    response:    StandaloneWSRequest#Response,
+    document_id: String
+  ): Either[ErrorResult, DocumentDownload] = {
+    if (response.status < 300) {
+      Right(DocumentDownload(id = document_id, body = response.bodyAsSource, headers = response.headers))
+    } else {
+      val json = response.body[JsValue]
+      validateStandardError(json)
+        .map(Left[ErrorResult, DocumentDownload])
+        .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), json))))
+    }
   }
 
   def postStream(
