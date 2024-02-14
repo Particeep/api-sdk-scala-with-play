@@ -98,7 +98,7 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     timeout:       Long         = defaultTimeOut
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, TemporaryLinks]] = {
     ws.generateTemporaryLinks(
-      path = s"$endPoint/generate_temporary_links",
+      path = s"$endPoint/generate-temporary-links",
       timeOut = timeout,
       documentsIds = documents_ids
     )
