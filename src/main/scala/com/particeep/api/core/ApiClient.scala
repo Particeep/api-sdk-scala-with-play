@@ -258,8 +258,8 @@ class ApiClient(
     documentsIds: List[String]
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, TemporaryLinks]] = {
     url(path, timeOut)
-      .withQueryStringParameters("ids" -> documentsIds.mkString(","))
-      .withMethod("GET")
+      .withQueryStringParameters(parameters = "ids" -> documentsIds.mkString(","))
+      .withMethod(method = "GET")
       .get()
       .map(parse[TemporaryLinks])
       .recover {
