@@ -93,12 +93,12 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     ws.delete[Document](s"$endPoint/$id", timeout)
   }
 
-  def generateTimeBoundedLinks(
+  def generateTimeBoundedUrls(
     documents_ids: List[String],
     timeout:       Long         = defaultTimeOut
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, TimeBoundedLinks]] = {
-    ws.generateTimeBoundedLinks(
-      path = s"$endPoint/generate-time-bounded-links",
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, TimeBoundedUrls]] = {
+    ws.generateTimeBoundedUrls(
+      path = s"$endPoint/generate-time-bounded-urls",
       timeOut = timeout,
       documentsIds = documents_ids
     )
