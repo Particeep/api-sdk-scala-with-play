@@ -1,22 +1,23 @@
 package com.particeep.api.core
 
 import java.io.File
-
 import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.Materializer
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
+import com.particeep.api.models.document.DocumentDownload
 import com.particeep.api.models.{ Error, ErrorResult, Errors }
 import play.api.libs.ws._
 import play.api.libs.json.{ Format, JsValue, Json }
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilder }
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
-
+import com.particeep.api.models.ParsingError
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
 import scala.util.control.NonFatal
+import play.api.libs.json._
 
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
@@ -78,6 +79,12 @@ trait WSClient {
     params:  List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 
+  def getDoc(
+    document_id: String,
+    path:        String,
+    timeOut:     Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
+
   def postStream(
     path:    String,
     timeOut: Long,
@@ -114,7 +121,11 @@ trait BaseClient {
  *
  * val result:Future[Either[JsError, Info]] = ws.user.byId("some_id")
  */
-class ApiClient(val baseUrl: String, val version: String, val credentials: Option[ApiCredential] = None)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity with ResponseParser {
+class ApiClient(
+    val baseUrl:     String,
+    val version:     String,
+    val credentials: Option[ApiCredential] = None
+)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity with ResponseParser {
 
   val defaultTimeOut: Long = 10000
   val defaultImportTimeOut: Long = -1
@@ -191,6 +202,34 @@ class ApiClient(val baseUrl: String, val version: String, val credentials: Optio
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     parseStream(url(path, timeOut).withQueryStringParameters(params: _*).withMethod("GET")).recover {
       case NonFatal(e) => handle_error[Source[ByteString, NotUsed]](e, "GET", path)
+    }
+  }
+
+  def getDoc(
+    document_id: String,
+    path:        String,
+    timeOut:     Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
+    url(path, timeOut)
+      .withMethod(method = "GET")
+      .stream()
+      .map(handleResponseForGetDoc(_, document_id))
+      .recover {
+        case NonFatal(e) => handle_error[DocumentDownload](e, method = "GET", path)
+      }
+  }
+
+  private[this] def handleResponseForGetDoc(
+    response:    StandaloneWSRequest#Response,
+    document_id: String
+  ): Either[ErrorResult, DocumentDownload] = {
+    if (response.status < 300) {
+      Right(DocumentDownload(id = document_id, body = response.bodyAsSource, headers = response.headers))
+    } else {
+      val json = response.body[JsValue]
+      validateStandardError(json)
+        .map(Left[ErrorResult, DocumentDownload])
+        .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), json))))
     }
   }
 
