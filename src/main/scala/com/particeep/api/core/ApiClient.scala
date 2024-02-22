@@ -14,7 +14,7 @@ import play.api.libs.ws.ahc.StandaloneAhcWSClient
 import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilder }
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
 import com.particeep.api.models.ParsingError
-import com.particeep.api.models.document.TemporaryLinks
+import com.particeep.api.models.document.TimeBoundedLinks
 
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
@@ -94,11 +94,11 @@ trait WSClient {
     params:  List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 
-  def generateTemporaryLinks(
+  def generateTimeBoundedLinks(
     path:         String,
     timeOut:      Long,
     documentsIds: List[String]
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, TemporaryLinks]]
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, TimeBoundedLinks]]
 }
 
 trait BaseClient {
@@ -252,18 +252,18 @@ class ApiClient(
     }
   }
 
-  def generateTemporaryLinks(
+  def generateTimeBoundedLinks(
     path:         String,
     timeOut:      Long,
     documentsIds: List[String]
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, TemporaryLinks]] = {
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, TimeBoundedLinks]] = {
     url(path, timeOut)
       .withQueryStringParameters(parameters = "ids" -> documentsIds.mkString(","))
       .withMethod(method = "GET")
       .get()
-      .map(parse[TemporaryLinks])
+      .map(parse[TimeBoundedLinks])
       .recover {
-        case NonFatal(e) => handle_error[TemporaryLinks](e, "GET", path)
+        case NonFatal(e) => handle_error[TimeBoundedLinks](e, "GET", path)
       }
   }
 
