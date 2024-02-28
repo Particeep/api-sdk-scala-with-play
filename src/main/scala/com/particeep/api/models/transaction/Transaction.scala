@@ -3,7 +3,7 @@ package com.particeep.api.models.transaction
 import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import com.particeep.api.models.enums.PaymentMethod.PaymentMethod
+import com.particeep.api.models.enums.PaymentMethod
 import com.particeep.api.models.enums.TransactionStatus.{ PENDING, TransactionStatus }
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
@@ -27,11 +27,13 @@ case class Transaction(
     currency:                Currency               = EUR,
     status:                  TransactionStatus      = PENDING,
     payment_method:          Option[PaymentMethod]  = None,
+    unicia_id:               Option[String]         = None,
     handled_offline:         Option[Boolean]        = None,
     comment:                 Option[String]         = None,
+    private_comment:         Option[String]         = None,
     tag:                     Option[String]         = None,
     co_issuers:              Option[JsArray]        = None,
-    rib:                     Option[String]         = None,
+    price_per_bond:          Option[Int]            = None,
     price_per_share:         Option[Int]            = None,
     pre_share_fixing_amount: Option[Int]            = None,
     pre_share_fixing_fees:   Option[Int]            = None,

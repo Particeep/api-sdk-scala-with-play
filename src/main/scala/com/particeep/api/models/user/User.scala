@@ -14,12 +14,12 @@ import java.time.OffsetDateTime
 case class User(
     id:                            String                   = "",
     created_at:                    Option[OffsetDateTime]   = None,
+    created_by:                    Option[String]           = None,
     email:                         String,
     first_name:                    Option[String]           = None,
     last_name:                     Option[String]           = None,
-    maiden_name:                   Option[String]           = None,
+    use_name:                      Option[String]           = None,
     gender:                        Option[Gender]           = None,
-    avatar_url:                    Option[String]           = None,
     birthday:                      Option[OffsetDateTime]   = None,
     birth_place:                   Option[String]           = None,
     birth_country:                 Option[String]           = None,
@@ -30,11 +30,8 @@ case class User(
     birth_cog:                     Option[String]           = None,
     phone:                         Option[String]           = None,
     nationality:                   Option[String]           = None,
-    bio:                           Option[String]           = None,
     sector:                        Option[String]           = None,
     investor_type:                 Option[InvestorType]     = None,
-    linkedin_url:                  Option[String]           = None,
-    viadeo_url:                    Option[String]           = None,
     allow_mail_notifications:      Option[Boolean]          = None,
     does_pay_taxes:                Option[Boolean]          = None,
     subject_to_income_tax:         Option[Boolean]          = None,
@@ -50,6 +47,7 @@ case class User(
     company_business_name:         Option[String]           = None,
     siren:                         Option[String]           = None,
     siret:                         Option[String]           = None,
+    is_rcs_verified:               Option[Boolean]          = None,
     rcs_registration_year:         Option[String]           = None,
     rcs_city:                      Option[String]           = None,
     legal_status:                  Option[String]           = None,
@@ -65,7 +63,8 @@ case class User(
     relatives:                     Option[Seq[Relative]]    = None,
     patrimony:                     Option[UserPatrimony]    = None,
     net_patrimony:                 Option[Long]             = None,
-    custom:                        Option[JsObject]         = None
+    custom:                        Option[JsObject]         = None,
+    is_locked:                     Option[String]           = None
 )
 
 object User {

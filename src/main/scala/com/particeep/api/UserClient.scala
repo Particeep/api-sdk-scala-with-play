@@ -64,6 +64,10 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.get[PaginatedSequence[UserData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(criteria_additional) ++ LangUtils.productToQueryString(table_criteria))
   }
 
+  def companyBusinessNames(criteria: UserSearch, criteria_additional: UserSearchAdditional, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[String]]] = {
+    ws.get[List[String]](s"$endPoint/company-business-name", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(criteria_additional) ++ LangUtils.productToQueryString(table_criteria))
+  }
+
   def create(user_creation: UserCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, User]] = {
     ws.put[User](s"$endPoint", timeout, Json.toJson(user_creation))
   }

@@ -11,7 +11,8 @@ case class QuestionCreation(
     required:          Option[Boolean]             = None,
     pattern:           Option[String]              = None,
     index:             Option[Int]                 = None,
-    document_filename: Option[String]              = None
+    document_filename: Option[String]              = None,
+    tag:               Option[String]              = None
 )
 
 object QuestionCreation {

@@ -30,8 +30,8 @@ class ControlClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
     ws.get[List[ControlView]](s"$endPoint/", timeout, List("ids" -> ids))
   }
 
-  def audit(id: String, entity_type: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[EventControl]]] = {
-    ws.get[List[EventControl]](s"$endPoint/$entity_type/$id/audit", timeout)
+  def audit(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[EventControl]]] = {
+    ws.get[List[EventControl]](s"$endPoint/$id/audit", timeout)
   }
 
   def create(user_id: String, timeout: Long = defaultTimeOut, control_creation: ControlCreation)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Control]] = {
@@ -42,13 +42,12 @@ class ControlClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
     ws.post[Control](s"$endPoint/$id", timeout, Json.toJson(control_update))
   }
 
-  def updateBlock(
-    id:                   String,
-    block_id:             String,
-    timeout:              Long               = defaultTimeOut,
-    control_block_update: ControlBlockUpdate
+  def updateBlocks(
+    id:                    String,
+    timeout:               Long                     = defaultTimeOut,
+    control_blocks_update: List[ControlBlockUpdate]
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Control]] = {
-    ws.post[Control](s"$endPoint/$id/block/$block_id", timeout, Json.toJson(control_block_update))
+    ws.post[Control](s"$endPoint/$id/block", timeout, Json.toJson(control_blocks_update))
   }
 
   def publish(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Control]] = {

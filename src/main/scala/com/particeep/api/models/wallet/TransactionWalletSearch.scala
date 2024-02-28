@@ -7,5 +7,6 @@ case class TransactionWalletSearch(
     transactions_ids:    Option[String] = None,
     operations:          Option[String] = None,
     fundraise_ids:       Option[String] = None,
-    fundraise_names:     Option[String] = None
+    fundraise_names:     Option[String] = None,
+    wallet_ids:          Option[String] = None
 )
