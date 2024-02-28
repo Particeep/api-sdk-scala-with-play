@@ -23,7 +23,8 @@ case class QuestionDeep(
     tag:                   Option[String]              = None,
 
     //Only when getting a Form for a User
-    answers: Option[Seq[String]] = None
+    answers:           Option[Seq[String]] = None,
+    document_filename: Option[String]      = None
 )
 
 object QuestionDeep {

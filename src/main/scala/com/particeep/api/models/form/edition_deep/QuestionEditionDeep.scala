@@ -15,6 +15,7 @@ case class QuestionEditionDeep(
     index:                 Option[Int],
     pattern:               Option[String]                                   = None,
     possibilities:         Option[Seq[edition_deep.PossibilityEditionDeep]],
+    document_filename:     Option[String]                                   = None,
     tag:                   Option[String]                                   = None
 )
 
