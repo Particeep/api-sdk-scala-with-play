@@ -12,6 +12,7 @@ case class QuestionEdition(
     required:              Option[Boolean],
     pattern:               Option[String]              = None,
     index:                 Option[Int],
+    document_filename:     Option[String]              = None,
     tag:                   Option[String]              = None
 )
 

@@ -17,8 +17,9 @@ case class Question(
     question_type:         Option[QuestionType]        = None,
     pattern:               Option[String]              = None,
     required:              Boolean                     = false,
-    index:                 Option[Int]                 = None,
-    tag:                   Option[String]              = None
+    document_filename:     Option[String]              = None,
+    index:                 Option[Int]                 = None
+
 )
 
 object Question {
