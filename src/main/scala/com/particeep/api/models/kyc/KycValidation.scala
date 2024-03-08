@@ -1,6 +1,6 @@
 package com.particeep.api.models.kyc
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class KycValidation(
     is_valid:         Boolean                    = false,
@@ -10,6 +10,6 @@ case class KycValidation(
 )
 
 object KycValidation {
-  implicit val drr_format = DocumentValidationResponse.format
+  implicit val drr_format: OFormat[DocumentValidationResponse] = DocumentValidationResponse.format
   val format = Json.format[KycValidation]
 }

@@ -1,7 +1,6 @@
 package com.particeep.api.models.enums
 
 import play.api.libs.json.{ JsString, JsValue, Writes }
-import scala.language.implicitConversions
 
 object OriasStatus {
   sealed abstract class OriasStatus extends Product with Enum

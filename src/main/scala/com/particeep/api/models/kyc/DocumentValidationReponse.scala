@@ -1,7 +1,8 @@
 package com.particeep.api.models.kyc
 
-import com.particeep.api.models.enums.{ EnumHelper, Enum }
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
+
+import com.particeep.api.models.enums.{Enum, EnumHelper}
 
 case class DocumentValidationResponse(
     lastReport: Option[DocumentReportResponse]
@@ -55,23 +56,23 @@ sealed trait CheckStatus extends Product with Enum
 
 object CheckStatus extends EnumHelper[CheckStatus] {
 
-  final case object NONE extends CheckStatus
-  final case object OK extends CheckStatus
-  final case object WARN extends CheckStatus
-  final case object ERROR extends CheckStatus
-  final case object OBSOLETE extends CheckStatus
+  case object NONE extends CheckStatus
+  case object OK extends CheckStatus
+  case object WARN extends CheckStatus
+  case object ERROR extends CheckStatus
+  case object OBSOLETE extends CheckStatus
 
   val values = Set(NONE, OK, WARN, ERROR, OBSOLETE)
 }
 
 object DocumentValidationResponse {
-  implicit val cr_format = Json.format[CheckResponse]
-  implicit val rdi_format = Json.format[ReportDataItem]
-  implicit val rdli_format = Json.format[ReportDataListItem]
-  implicit val rid_format = Json.format[ReportIdentityData]
-  implicit val rfd_format = Json.format[ReportFinanceData]
-  implicit val drp_format = Json.format[DocumentReportPerson]
-  implicit val drir_format = Json.format[DocumentReportInfoResponse]
-  implicit val drr_format = Json.format[DocumentReportResponse]
+  implicit val cr_format: OFormat[CheckResponse] = Json.format[CheckResponse]
+  implicit val rdi_format: OFormat[ReportDataItem] = Json.format[ReportDataItem]
+  implicit val rdli_format: OFormat[ReportDataListItem] = Json.format[ReportDataListItem]
+  implicit val rid_format: OFormat[ReportIdentityData] = Json.format[ReportIdentityData]
+  implicit val rfd_format: OFormat[ReportFinanceData] = Json.format[ReportFinanceData]
+  implicit val drp_format: OFormat[DocumentReportPerson] = Json.format[DocumentReportPerson]
+  implicit val drir_format: OFormat[DocumentReportInfoResponse] = Json.format[DocumentReportInfoResponse]
+  implicit val drr_format: OFormat[DocumentReportResponse] = Json.format[DocumentReportResponse]
   val format = Json.format[DocumentValidationResponse]
 }

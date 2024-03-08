@@ -1,6 +1,6 @@
 package com.particeep.api.models.enums
 
-import scala.language.implicitConversions
+
 
 // scalastyle:off
 object Currency {

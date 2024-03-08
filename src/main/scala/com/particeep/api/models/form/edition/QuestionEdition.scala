@@ -1,7 +1,8 @@
 package com.particeep.api.models.form.edition
 
-import com.particeep.api.models.enums.QuestionType.QuestionType
 import play.api.libs.json.Json
+
+import com.particeep.api.models.enums.QuestionType.QuestionType
 
 case class QuestionEdition(
     label:                 Option[Map[String, String]] = None,

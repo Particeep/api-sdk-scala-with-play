@@ -1,9 +1,10 @@
 package com.particeep.api.models.form.get_deep
 
+import play.api.libs.json.{Json, OFormat, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
 
 case class FormDeep(
     id:              String                 = "",
@@ -16,7 +17,7 @@ case class FormDeep(
 )
 
 object FormDeep {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit val section_format = SectionDeep.format
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val section_format: OFormat[SectionDeep] = SectionDeep.format
   val format = Json.format[FormDeep]
 }

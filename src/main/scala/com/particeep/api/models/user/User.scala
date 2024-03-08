@@ -2,14 +2,15 @@ package com.particeep.api.models.user
 
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
+import play.api.libs.json.{JsArray, JsObject, OFormat, Writes}
+
+import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.InvestorType.InvestorType
 import com.particeep.api.models.enums.ProQualification
-import play.api.libs.json.{ JsArray, JsObject }
-
-import java.time.OffsetDateTime
 
 case class User(
     id:                            String                   = "",
@@ -68,7 +69,7 @@ case class User(
 )
 
 object User {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit val relative_format = Relative.format
-  implicit val format = Jsonx.formatCaseClass[User]
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val relative_format: OFormat[Relative] = Relative.format
+  implicit val format: OFormat[User] = Jsonx.formatCaseClass[User]
 }

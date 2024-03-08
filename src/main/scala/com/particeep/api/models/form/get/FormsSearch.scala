@@ -1,9 +1,10 @@
 package com.particeep.api.models.form.get
 
+import play.api.libs.json.{Json, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
 
 case class FormsSearch(
     created_at:      Option[OffsetDateTime] = None,
@@ -14,6 +15,6 @@ case class FormsSearch(
 )
 
 object FormsSearch {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[FormsSearch]
 }

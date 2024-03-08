@@ -1,6 +1,6 @@
 package com.particeep.api.models.phonemessaging
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class SmsInformation(
     from: String,
@@ -9,5 +9,5 @@ case class SmsInformation(
 )
 
 object SmsInformation {
-  implicit val format = Json.format[SmsInformation]
+  implicit val format: OFormat[SmsInformation] = Json.format[SmsInformation]
 }

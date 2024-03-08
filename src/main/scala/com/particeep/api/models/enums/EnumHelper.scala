@@ -4,8 +4,6 @@ import play.api.data.format.Formatter
 import play.api.data.{ FormError, Forms, Mapping }
 import play.api.libs.json._
 
-import scala.language.implicitConversions
-
 trait Enum { self: Product =>
   val name = this.productPrefix
 }

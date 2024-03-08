@@ -1,9 +1,10 @@
 package com.particeep.api.models.fundraise.loan
 
+import play.api.libs.json.{Json, OFormat, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
 
 case class RepaymentVectorWithDate(
     date:                   OffsetDateTime,
@@ -18,7 +19,7 @@ case class RepaymentInfoVector(
 )
 
 object RepaymentInfoVector {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit val repayment_vector_date_format = Json.format[RepaymentVectorWithDate]
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val repayment_vector_date_format: OFormat[RepaymentVectorWithDate] = Json.format[RepaymentVectorWithDate]
   val format = Json.format[RepaymentInfoVector]
 }

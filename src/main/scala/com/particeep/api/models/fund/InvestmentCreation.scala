@@ -1,7 +1,8 @@
 package com.particeep.api.models.fund
 
-import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 import play.api.libs.json.{ JsArray, JsObject, Json }
+
+import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 
 case class InvestmentCreation(
     user_id:                String,

@@ -1,7 +1,8 @@
 package com.particeep.api.models.wallet.sepa
 
-import com.particeep.api.models.enums.MandateLanguage.MandateLanguage
 import play.api.libs.json.Json
+
+import com.particeep.api.models.enums.MandateLanguage.MandateLanguage
 
 case class SddMandateCreation(
     owner_ip:         String                  = "",

@@ -1,8 +1,9 @@
 package com.particeep.api.models.transaction
 
+import play.api.libs.json.{ JsArray, JsObject, Json }
+
 import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
-import play.api.libs.json.{ JsArray, JsObject, Json }
 
 /**
  * Created by Noe on 25/04/2017.

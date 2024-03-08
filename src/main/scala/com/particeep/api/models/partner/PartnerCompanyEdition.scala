@@ -1,8 +1,9 @@
 package com.particeep.api.models.partner
 
+import play.api.libs.json.{ JsObject, Json }
+
 import com.particeep.api.models.enums.OriasStatus.OriasStatus
 import com.particeep.api.models.enums.RegulatoryStatus.RegulatoryStatus
-import play.api.libs.json.{ JsObject, Json }
 
 case class PartnerCompanyEdition(
     regulatory_status:    Option[RegulatoryStatus] = None,

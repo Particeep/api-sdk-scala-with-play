@@ -1,9 +1,10 @@
 package com.particeep.api.models.fundraise.equity
 
-import com.particeep.api.core.Formatter
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, Writes}
 
 import java.time.OffsetDateTime
+
+import com.particeep.api.core.Formatter
 
 /**
  * Created by Noe on 16/05/2017.
@@ -27,6 +28,6 @@ case class FundraiseEquityRunningEdition(
 )
 
 object FundraiseEquityRunningEdition {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[FundraiseEquityRunningEdition]
 }

@@ -1,13 +1,14 @@
 package com.particeep.api.models.user
 
+import ai.x.play.json.Encoders._
+import ai.x.play.json.Jsonx
+import play.api.libs.json.{JsObject, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.RelativeType.RelativeType
-import ai.x.play.json.Jsonx
-import ai.x.play.json.Encoders._
-import play.api.libs.json.JsObject
 
 case class Relative(
     id:               String                 = "",
@@ -31,6 +32,6 @@ case class Relative(
 )
 
 object Relative {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Jsonx.formatCaseClass[Relative]
 }

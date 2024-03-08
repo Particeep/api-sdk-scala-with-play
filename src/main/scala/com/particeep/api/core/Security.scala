@@ -1,13 +1,11 @@
 package com.particeep.api.core
 
-import java.time.format.DateTimeFormatter
-import java.time.{ ZoneOffset, OffsetDateTime }
-
 import play.api.libs.ws._
 import play.shaded.ahc.org.asynchttpclient.BoundRequestBuilder
 
+import java.time.format.DateTimeFormatter
+import java.time.{ OffsetDateTime, ZoneOffset }
 import scala.concurrent.duration._
-import scala.language.postfixOps
 
 trait WithSecurity {
 
@@ -30,7 +28,7 @@ trait WithSecurity {
   }
 
   private[this] def buildDateHeader(): String = {
-    val date = OffsetDateTime.now(ZoneOffset.UTC).withNano(0)
+    val date   = OffsetDateTime.now(ZoneOffset.UTC).withNano(0)
     val format = DateTimeFormatter.ISO_INSTANT
     format.format(date)
   }
@@ -43,13 +41,13 @@ trait WithSecurity {
     val toSign: String = apiSecret + apiKey + dataToSign
 
     val messageBytes = toSign.getBytes("UTF-8")
-    val secretBytes = apiSecret.getBytes("UTF-8")
+    val secretBytes  = apiSecret.getBytes("UTF-8")
 
     val result = Crypto.sign(messageBytes, secretBytes)
 
     val hexChars = Crypto.encodeToHex(result)
 
-    val sign = new String(hexChars).toLowerCase()
+    val sign      = new String(hexChars).toLowerCase()
     val signature = Crypto.encodeBase64(sign)
 
     s"PTP:$apiKey:$signature"

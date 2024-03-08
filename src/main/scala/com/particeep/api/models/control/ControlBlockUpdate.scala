@@ -1,7 +1,8 @@
 package com.particeep.api.models.control
 
-import com.particeep.api.models.enums.ControlBlockStatus
 import play.api.libs.json.{ Json, OFormat }
+
+import com.particeep.api.models.enums.ControlBlockStatus
 
 final case class ControlBlockUpdate(
     id:      String,

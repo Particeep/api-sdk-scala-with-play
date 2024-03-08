@@ -1,8 +1,8 @@
 package com.particeep.api.models
 
-import play.api.libs.json._
-import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
 case class PaginatedSequence[T](
     total_size: Int     = 0,

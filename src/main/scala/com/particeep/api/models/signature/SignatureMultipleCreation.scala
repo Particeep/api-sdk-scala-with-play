@@ -1,6 +1,6 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, OFormat}
 
 case class SignatureMultipleCreation(
     language:       Option[String]       = None,
@@ -16,6 +16,6 @@ case class SignatureMultipleCreation(
 )
 
 object SignatureMultipleCreation {
-  implicit val signatureSignerFormat = SignatureSigner.format
+  implicit val signatureSignerFormat: OFormat[SignatureSigner] = SignatureSigner.format
   val format = Json.format[SignatureMultipleCreation]
 }

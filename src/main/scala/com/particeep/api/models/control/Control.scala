@@ -1,9 +1,10 @@
 package com.particeep.api.models.control
 
-import com.particeep.api.models.enums.ControlStatus
 import play.api.libs.json.{ JsObject, Json, OFormat }
 
 import java.time.OffsetDateTime
+
+import com.particeep.api.models.enums.ControlStatus
 
 final case class Control(
     id:            String,

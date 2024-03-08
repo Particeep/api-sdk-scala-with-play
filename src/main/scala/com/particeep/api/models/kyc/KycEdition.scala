@@ -1,7 +1,8 @@
 package com.particeep.api.models.kyc
 
+import play.api.libs.json.{Json, OFormat}
+
 import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
-import play.api.libs.json.Json
 
 case class KycEdition(
     doc_type: KycType     = ID_CARD,
@@ -20,7 +21,7 @@ case class KycsEdition(
 )
 
 object KycsEdition {
-  implicit val kyc_format = KycEdition.format
+  implicit val kyc_format: OFormat[KycEdition] = KycEdition.format
 
   val format = Json.format[KycsEdition]
 }

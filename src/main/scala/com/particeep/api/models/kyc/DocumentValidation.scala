@@ -1,7 +1,8 @@
 package com.particeep.api.models.kyc
 
-import com.particeep.api.models.enums.{ DocumentPart, DocumentType }
 import play.api.libs.json.{ JsValue, Json }
+
+import com.particeep.api.models.enums.{ DocumentPart, DocumentType }
 
 case class DocumentValidation(
     url:                 String               = "",

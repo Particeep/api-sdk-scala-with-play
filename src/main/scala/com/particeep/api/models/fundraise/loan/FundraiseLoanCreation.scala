@@ -1,10 +1,11 @@
 package com.particeep.api.models.fundraise.loan
 
-import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.Currency
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, OFormat, Writes}
 
 import java.time.OffsetDateTime
+
+import com.particeep.api.core.Formatter
+import com.particeep.api.models.enums.Currency.Currency
 
 case class FundraiseLoanCreation(
     name:                  String,
@@ -30,7 +31,7 @@ case class FundraiseLoanCreation(
 )
 
 object FundraiseLoanCreation {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit lazy val offer_loan_creation_format = LoanOfferCreation.format
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit lazy val offer_loan_creation_format: OFormat[LoanOfferCreation] = LoanOfferCreation.format
   val format = Json.format[FundraiseLoanCreation]
 }

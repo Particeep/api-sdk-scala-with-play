@@ -1,10 +1,11 @@
 package com.particeep.api.models.transaction
 
+import play.api.libs.json.{JsArray, JsObject, Json, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import play.api.libs.json.{ JsArray, JsObject, Json }
 
 /**
  * Created by Noe on 03/04/2017.
@@ -32,6 +33,6 @@ case class TransactionCreation(
 )
 
 object TransactionCreation {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[TransactionCreation]
 }

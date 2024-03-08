@@ -1,6 +1,6 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class SignatureDataMultiple(
     id:             String,
@@ -10,6 +10,6 @@ case class SignatureDataMultiple(
 )
 
 object SignatureDataMultiple {
-  implicit val signatureDataFormat = SignatureData.format
-  implicit val format = Json.format[SignatureDataMultiple]
+  implicit val signatureDataFormat: OFormat[SignatureData] = SignatureData.format
+  implicit val format: OFormat[SignatureDataMultiple] = Json.format[SignatureDataMultiple]
 }

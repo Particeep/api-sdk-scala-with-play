@@ -1,8 +1,9 @@
 package com.particeep.api.models.payment
 
+import play.api.libs.json.{Json, OFormat}
+
 import com.particeep.api.models.transaction.Transaction
 import com.particeep.api.models.wallet.CashInBankAccount
-import play.api.libs.json.Json
 
 case class PayResult(
     transaction:  Transaction,
@@ -11,7 +12,7 @@ case class PayResult(
 )
 
 object PayResult {
-  implicit val transaction_format = Transaction.format
-  implicit val bank_account_format = CashInBankAccount.format
+  implicit val transaction_format: OFormat[Transaction] = Transaction.format
+  implicit val bank_account_format: OFormat[CashInBankAccount] = CashInBankAccount.format
   val format = Json.format[PayResult]
 }

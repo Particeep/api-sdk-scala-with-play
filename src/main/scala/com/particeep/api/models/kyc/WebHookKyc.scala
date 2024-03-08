@@ -1,10 +1,11 @@
 package com.particeep.api.models.kyc
 
+import play.api.libs.json.{Json, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
-import play.api.libs.json.Json
 
 case class WebHookKyc(
     owner_id:        String                 = "",
@@ -17,6 +18,6 @@ case class WebHookKyc(
 )
 
 object WebHookKyc {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[WebHookKyc]
 }

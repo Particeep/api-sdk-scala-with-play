@@ -1,10 +1,11 @@
 package com.particeep.api.models.form.get
 
+import play.api.libs.json.{Json, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.QuestionType.QuestionType
-import play.api.libs.json.Json
 
 case class Question(
     id:                    String                      = "",
@@ -23,6 +24,6 @@ case class Question(
 )
 
 object Question {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[Question]
 }

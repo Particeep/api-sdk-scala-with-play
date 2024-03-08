@@ -1,9 +1,10 @@
 package com.particeep.api.models.phonemessaging
 
+import play.api.libs.json.{JsObject, Json, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.{ JsObject, Json }
 
 case class PhoneMessage(
     id:               String                 = "",
@@ -21,6 +22,6 @@ case class PhoneMessage(
 )
 
 object PhoneMessage {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[PhoneMessage]
 }

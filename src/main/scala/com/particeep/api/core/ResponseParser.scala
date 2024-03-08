@@ -3,16 +3,17 @@ package com.particeep.api.core
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
-import org.slf4j.LoggerFactory
 import play.api.libs.json._
+import play.api.libs.ws.JsonBodyReadables._
 import play.api.libs.ws.{ StandaloneWSRequest, StandaloneWSResponse }
-
-import scala.util.control.NonFatal
-import com.particeep.api.models._
+import play.shaded.ahc.org.asynchttpclient.Response
 
 import scala.concurrent.{ ExecutionContext, Future }
-import play.api.libs.ws.JsonBodyReadables._
-import play.shaded.ahc.org.asynchttpclient.Response
+import scala.util.control.NonFatal
+
+import org.slf4j.LoggerFactory
+
+import com.particeep.api.models._
 
 trait ResponseParser {
 

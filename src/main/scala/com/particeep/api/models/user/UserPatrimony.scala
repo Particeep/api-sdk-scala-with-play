@@ -2,6 +2,7 @@ package com.particeep.api.models.user
 
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
+import play.api.libs.json.OFormat
 
 case class UserPatrimony(
     yearly_income:     Option[Long] = None,
@@ -11,5 +12,5 @@ case class UserPatrimony(
 )
 
 object UserPatrimony {
-  implicit val format = Jsonx.formatCaseClass[UserPatrimony]
+  implicit val format: OFormat[UserPatrimony] = Jsonx.formatCaseClass[UserPatrimony]
 }

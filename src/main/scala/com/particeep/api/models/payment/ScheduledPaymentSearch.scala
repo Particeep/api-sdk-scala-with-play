@@ -1,9 +1,10 @@
 package com.particeep.api.models.payment
 
+import play.api.libs.json.{Json, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
 
 case class ScheduledPaymentSearch(
     start_payment_date: Option[OffsetDateTime] = None,
@@ -23,6 +24,6 @@ case class ScheduledPaymentSearch(
 )
 
 object ScheduledPaymentSearch {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[ScheduledPaymentSearch]
 }

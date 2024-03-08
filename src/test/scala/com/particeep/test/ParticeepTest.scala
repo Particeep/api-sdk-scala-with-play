@@ -1,28 +1,26 @@
 package com.particeep.test
 
-import java.time.{ ZoneOffset, OffsetDateTime }
-
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-
-import scala.language.postfixOps
-import com.particeep.api.core.ApiClient
-import com.particeep.api.core.Formatter
-import com.particeep.api.models.ErrorResult
-import com.particeep.api.models.user.User
-import com.particeep.api.Info
-import com.particeep.api.InfoCapability
-import javax.inject.{ Inject, Singleton }
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 
-import scala.concurrent.{ Await, Future }
-import scala.concurrent.duration._
+import java.time.{ OffsetDateTime, ZoneOffset }
+import javax.inject.{ Inject, Singleton }
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.duration._
+
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+
+import com.particeep.api.core.{ ApiClient, Formatter }
+import com.particeep.api.models.ErrorResult
+import com.particeep.api.models.user.User
+import com.particeep.api.{ Info, InfoCapability }
 
 @Singleton
-class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends AnyFlatSpec with Matchers {
+class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends AnyFlatSpec
+    with Matchers with TestUtils {
 
   "the api client" should "load info" in {
 
@@ -30,7 +28,7 @@ class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: M
 
     val rez_f: Future[Either[ErrorResult, Info]] = ws.info.info()
 
-    val rez = Await.result(rez_f, 10 seconds)
+    val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
     val info = rez.getOrElse(Info(version = "0", debugEnable = true, metaEnable = true))
@@ -54,11 +52,11 @@ class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: M
     val json = Json.toJson(user)
 
     val result = Json.parse("""
-        |{
-        | "id": "1234",
-        | "email": "toto@gmail.com",
-        | "birthday": "1980-01-02T03:20:12Z"
-        |}
+                              |{
+                              | "id": "1234",
+                              | "email": "toto@gmail.com",
+                              | "birthday": "1980-01-02T03:20:12Z"
+                              |}
         """.stripMargin)
 
     Json.prettyPrint(json) shouldBe Json.prettyPrint(result)
@@ -66,7 +64,7 @@ class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: M
 
   "the api client" should "format a date in ISO with UTC Zone" in {
     val date: OffsetDateTime = OffsetDateTime.of(2017, 12, 12, 8, 2, 3, 0, ZoneOffset.of("+03:00"))
-    val json = Formatter.OffsetDateTimeWrites.writes(date).toString()
+    val json                 = Formatter.OffsetDateTimeWrites.writes(date).toString()
 
     json shouldBe "\"2017-12-12T05:02:03Z\""
   }

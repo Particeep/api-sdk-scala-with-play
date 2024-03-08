@@ -1,6 +1,6 @@
 package com.particeep.api.models.document
 
-import com.particeep.api.models.enums.{ EnumHelper, Enum }
+import com.particeep.api.models.enums.{Enum, EnumHelper}
 
 sealed trait Scope extends Product with Serializable with Enum
 

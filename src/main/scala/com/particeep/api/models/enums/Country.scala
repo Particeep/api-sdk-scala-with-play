@@ -1,6 +1,6 @@
 package com.particeep.api.models.enums
 
-import scala.language.implicitConversions
+
 
 object Country {
   sealed abstract class Country extends Product with Enum

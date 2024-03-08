@@ -1,7 +1,7 @@
 package com.particeep.api.models.document
 
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
 
 /**
  * Created by Noe on 17/02/2017.
@@ -12,7 +12,7 @@ case class FolderOrFile(
 )
 
 object FolderOrFile {
-  implicit val document_format = Document.format
+  implicit val document_format: OFormat[Document] = Document.format
 
   implicit val reads: Reads[FolderOrFile] = (
     (__ \ "document").read[Document] and

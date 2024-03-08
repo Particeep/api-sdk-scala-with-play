@@ -1,6 +1,7 @@
 package com.particeep.api.models.scoring_metrics
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, Writes}
+
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
@@ -17,8 +18,8 @@ case class ScoringMetric(
 )
 
 object ScoringMetric {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit val type_signature_reads = TypeSignature.typeSignatureReads
-  implicit val type_signature_writes = TypeSignature.typeSignatureWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val type_signature_reads: TypeSignature.typeSignatureReads.type = TypeSignature.typeSignatureReads
+  implicit val type_signature_writes: TypeSignature.typeSignatureWrites.type = TypeSignature.typeSignatureWrites
   val format = Json.format[ScoringMetric]
 }
