@@ -5,8 +5,8 @@ import play.api.libs.json.{ JsString, JsValue, Writes }
 object OriasStatus {
   sealed abstract class OriasStatus extends Product with Enum
 
-  case object REGISTERED extends OriasStatus
-  case object DELETED extends OriasStatus
+  case object REGISTERED       extends OriasStatus
+  case object DELETED          extends OriasStatus
   case object NEVER_REGISTERED extends OriasStatus
 
   object OriasStatus extends EnumHelper[OriasStatus] {

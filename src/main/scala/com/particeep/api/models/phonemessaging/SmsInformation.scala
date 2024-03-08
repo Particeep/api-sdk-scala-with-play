@@ -1,11 +1,11 @@
 package com.particeep.api.models.phonemessaging
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 
 case class SmsInformation(
-    from: String,
-    to:   String,
-    body: String
+  from: String,
+  to:   String,
+  body: String
 )
 
 object SmsInformation {

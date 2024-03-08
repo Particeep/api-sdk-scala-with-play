@@ -1,12 +1,10 @@
 package com.particeep.api.models.enums
 
-
-
 object FundStatus {
 
   sealed abstract class FundStatus extends Product with Enum
 
-  case object INIT extends FundStatus
+  case object INIT    extends FundStatus
   case object RUNNING extends FundStatus
   case object CLOSING extends FundStatus
 

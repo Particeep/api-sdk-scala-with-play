@@ -5,10 +5,10 @@ import play.api.libs.json.Json
 import com.particeep.api.models.enums.UserType.{ NATURAL, UserType }
 
 case class KycCreation(
-    owner_id:   String         = "",
-    owner_type: String         = "",
-    user_type:  UserType       = NATURAL,
-    owner_ip:   Option[String] = None
+  owner_id:   String         = "",
+  owner_type: String         = "",
+  user_type:  UserType       = NATURAL,
+  owner_ip:   Option[String] = None
 )
 
 object KycCreation {

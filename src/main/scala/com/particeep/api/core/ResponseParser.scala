@@ -30,7 +30,9 @@ trait ResponseParser {
     parse(json, response.getStatusCode)(json_reads)
   }
 
-  def parseStream(request: StandaloneWSRequest)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
+  def parseStream(request: StandaloneWSRequest)(implicit
+    exec:                  ExecutionContext
+  ): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     val response = request.execute()
     response.map { r =>
       try {
@@ -73,7 +75,7 @@ trait ResponseParser {
       case Left(json_err) => {
         val err = Error(
           technicalCode = json_err.errors.mkString(System.lineSeparator),
-          message = "unknown json error"
+          message       = "unknown json error"
         )
         Left(Errors(true, List(err)))
       }
@@ -83,8 +85,8 @@ trait ResponseParser {
   private[this] def ex2error(ex: Throwable): Errors = {
     val err = Error(
       technicalCode = ex.toString(),
-      message = ex.getMessage,
-      stack = Some(ex.getStackTrace().mkString("", System.lineSeparator, System.lineSeparator))
+      message       = ex.getMessage,
+      stack         = Some(ex.getStackTrace().mkString("", System.lineSeparator, System.lineSeparator))
     )
     Errors(
       hasError = true,

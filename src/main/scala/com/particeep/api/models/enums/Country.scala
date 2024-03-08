@@ -1,7 +1,5 @@
 package com.particeep.api.models.enums
 
-
-
 object Country {
   sealed abstract class Country extends Product with Enum
 
