@@ -1,12 +1,13 @@
 package com.particeep.api
 
+import play.api.libs.json._
+
 import scala.concurrent.{ ExecutionContext, Future }
 
 import com.particeep.api.core._
 import com.particeep.api.models._
 import com.particeep.api.models.history_price.{ HistoryPrice, HistoryPriceSearch }
 import com.particeep.api.utils.LangUtils
-import play.api.libs.json._
 
 trait HistoryPriceCapability {
   self: WSClient =>
