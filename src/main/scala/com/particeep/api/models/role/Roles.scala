@@ -1,14 +1,14 @@
 package com.particeep.api.models.role
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class Roles(
-    user_id: String     = "",
-    roles:   List[Role] = List()
+  user_id: String     = "",
+  roles:   List[Role] = List()
 )
 
 object Roles {
-  implicit val role_format = Role.format
+  implicit val role_format: OFormat[Role] = Role.format
 
   val format = Json.format[Roles]
 }

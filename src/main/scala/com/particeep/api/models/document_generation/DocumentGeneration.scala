@@ -1,11 +1,11 @@
 package com.particeep.api.models.document_generation
 
-import play.api.libs.json.{ JsValue, Json }
+import play.api.libs.json._
 
 case class DocumentGeneration(
-    url:        String,
-    params_obj: Option[Map[String, JsValue]],
-    params_str: Option[Map[String, String]]
+  url:        String,
+  params_obj: Option[Map[String, JsValue]],
+  params_str: Option[Map[String, String]]
 )
 
 object DocumentGeneration {

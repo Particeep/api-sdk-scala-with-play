@@ -1,10 +1,10 @@
 package com.particeep.api.models.webhook
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class WebHookSimple(
-    name: String,
-    url:  String
+  name: String,
+  url:  String
 )
 
 object WebHookSimple {

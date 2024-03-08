@@ -1,6 +1,6 @@
 package com.particeep.api.models.document
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json._
 
 final case class TimeBoundedUrls(urls: List[String])
 

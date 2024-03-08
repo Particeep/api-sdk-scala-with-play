@@ -4,13 +4,13 @@ sealed trait TransactionControlBlockType extends ControlBlockType
 
 object TransactionControlBlockType extends EnumHelper[TransactionControlBlockType] {
 
-  case object INVESTOR extends TransactionControlBlockType
-  case object CO_ISSUER extends TransactionControlBlockType
-  case object PARTNER extends TransactionControlBlockType
+  case object INVESTOR     extends TransactionControlBlockType
+  case object CO_ISSUER    extends TransactionControlBlockType
+  case object PARTNER      extends TransactionControlBlockType
   case object USUFRUCTUARY extends TransactionControlBlockType
   case object BANK_ACCOUNT extends TransactionControlBlockType
-  case object TRANSACTION extends TransactionControlBlockType
-  case object DOCUMENTS extends TransactionControlBlockType
+  case object TRANSACTION  extends TransactionControlBlockType
+  case object DOCUMENTS    extends TransactionControlBlockType
   case object FORM_SECTION extends TransactionControlBlockType
 
   val values: Set[TransactionControlBlockType] = {

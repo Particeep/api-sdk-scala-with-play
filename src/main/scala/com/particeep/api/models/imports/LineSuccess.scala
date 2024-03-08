@@ -6,8 +6,8 @@ import play.api.libs.json._
  * Created by Noe on 10/04/2017.
  */
 case class LineSuccess[T](
-    line:   Int,
-    output: T
+  line:   Int,
+  output: T
 )
 
 object LineSuccess {
@@ -16,8 +16,8 @@ object LineSuccess {
       (json \ "line").as[Int],
       (json \ "output").as[T]
     ))
-    def writes(l: LineSuccess[T]) = JsObject(Seq(
-      "line" -> JsNumber(l.line),
+    def writes(l: LineSuccess[T])                      = JsObject(Seq(
+      "line"   -> JsNumber(l.line),
       "output" -> Json.toJson(l.output)
     ))
   }

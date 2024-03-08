@@ -1,15 +1,15 @@
 package com.particeep.api.models.form.edition_deep
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class FormEditionDeep(
-    name:        Option[String],
-    description: Option[String],
-    tag:         Option[String],
-    sections:    Option[Seq[SectionEditionDeep]]
+  name:        Option[String],
+  description: Option[String],
+  tag:         Option[String],
+  sections:    Option[Seq[SectionEditionDeep]]
 )
 
 object FormEditionDeep {
-  implicit val section_edition_format = SectionEditionDeep.format
-  val format = Json.format[FormEditionDeep]
+  implicit val section_edition_format: OFormat[SectionEditionDeep] = SectionEditionDeep.format
+  val format                                                       = Json.format[FormEditionDeep]
 }

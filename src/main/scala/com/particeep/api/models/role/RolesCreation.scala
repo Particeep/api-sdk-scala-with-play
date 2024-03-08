@@ -1,14 +1,14 @@
 package com.particeep.api.models.role
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class RolesCreation(
-    id:          String         = "",
-    user_id:     String         = "",
-    role_name:   String         = "",
-    target_id:   Option[String] = None,
-    target_type: Option[String] = None,
-    tag:         Option[String] = None
+  id:          String         = "",
+  user_id:     String         = "",
+  role_name:   String         = "",
+  target_id:   Option[String] = None,
+  target_type: Option[String] = None,
+  tag:         Option[String] = None
 )
 
 object RolesCreation {

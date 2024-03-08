@@ -1,14 +1,14 @@
 package com.particeep.api.models.enterprise
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 /**
  * Created by Noe on 10/03/2017.
  */
 case class ManagerCreation(
-    new_manager_id: String,
-    name:           Option[String],
-    tag:            Option[String]
+  new_manager_id: String,
+  name:           Option[String],
+  tag:            Option[String]
 )
 
 object ManagerCreation {

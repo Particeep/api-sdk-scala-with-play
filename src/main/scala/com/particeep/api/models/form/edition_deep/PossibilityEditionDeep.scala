@@ -1,12 +1,12 @@
 package com.particeep.api.models.form.edition_deep
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class PossibilityEditionDeep(
-    id:     Option[String],
-    label:  Option[Map[String, String]],
-    index:  Option[Int],
-    weight: Option[Int]
+  id:     Option[String],
+  label:  Option[Map[String, String]],
+  index:  Option[Int],
+  weight: Option[Int]
 )
 
 object PossibilityEditionDeep {
