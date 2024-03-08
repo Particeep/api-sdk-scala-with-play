@@ -1,6 +1,6 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class SignatureSigner(
   firstName:  String,

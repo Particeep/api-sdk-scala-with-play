@@ -1,6 +1,6 @@
 package com.particeep.api.models.club_deal
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 /**
  * Created by Noe on 04/07/2017.

@@ -3,7 +3,7 @@ package com.particeep.api
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -22,16 +22,24 @@ trait PartnerCapability {
 }
 
 object PartnerClient {
-  private val endPoint: String                                = "/partner"
-  private implicit val partner_fees_format                    = PartnerFees.format
-  private implicit val partner_fees_creation_format           = PartnerFeesCreation.format
-  private implicit val partner_fees_edition_format            = PartnerFeesEdition.format
-  private implicit val partner_fees_on_target_format          = PartnerFeesOnTarget.format
-  private implicit val partner_fees_on_target_creation_format = PartnerFeesOnTargetCreation.format
-  private implicit val partner_fees_on_target_edition_format  = PartnerFeesOnTargetEdition.format
-  private implicit val partner_company_format                 = PartnerCompany.format
-  private implicit val partner_company_creation_format        = PartnerCompanyCreation.format
-  private implicit val partner_company_edition_format         = PartnerCompanyEdition.format
+  private val endPoint: String                                                                      = "/partner"
+  private implicit val partner_fees_format: OFormat[PartnerFees]                                    = PartnerFees.format
+  private implicit val partner_fees_creation_format: OFormat[PartnerFeesCreation]                   =
+    PartnerFeesCreation.format
+  private implicit val partner_fees_edition_format: OFormat[PartnerFeesEdition]                     =
+    PartnerFeesEdition.format
+  private implicit val partner_fees_on_target_format: OFormat[PartnerFeesOnTarget]                  =
+    PartnerFeesOnTarget.format
+  private implicit val partner_fees_on_target_creation_format: OFormat[PartnerFeesOnTargetCreation] =
+    PartnerFeesOnTargetCreation.format
+  private implicit val partner_fees_on_target_edition_format: OFormat[PartnerFeesOnTargetEdition]   =
+    PartnerFeesOnTargetEdition.format
+  private implicit val partner_company_format: OFormat[PartnerCompany]                              =
+    PartnerCompany.format
+  private implicit val partner_company_creation_format: OFormat[PartnerCompanyCreation]             =
+    PartnerCompanyCreation.format
+  private implicit val partner_company_edition_format: OFormat[PartnerCompanyEdition]               =
+    PartnerCompanyEdition.format
 }
 
 class PartnerClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials

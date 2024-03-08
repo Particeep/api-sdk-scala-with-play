@@ -3,7 +3,7 @@ package com.particeep.api
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -28,17 +28,17 @@ trait FundCapability {
 }
 
 object FundClient {
-  private val endPoint: String                      = "/fund"
-  private implicit val creation_format              = FundCreation.format
-  private implicit val fund_format                  = Fund.format
-  private implicit val fund_edition_format          = FundEdition.format
-  private implicit val fund_data_format             = FundData.format
-  private implicit val investment_format            = Investment.format
-  private implicit val investment_creation_format   = InvestmentCreation.format
-  private implicit val investment_option_format     = InvestmentOption.format
-  private implicit val transaction_edit_part_format = TransactionEditPart.format
-  private implicit val transaction_format           = Transaction.format
-  private implicit val recurring_transaction_format = RecurringTransaction.format
+  private val endPoint: String                                                     = "/fund"
+  private implicit val creation_format: OFormat[FundCreation]                      = FundCreation.format
+  private implicit val fund_format: OFormat[Fund]                                  = Fund.format
+  private implicit val fund_edition_format: OFormat[FundEdition]                   = FundEdition.format
+  private implicit val fund_data_format: OFormat[FundData]                         = FundData.format
+  private implicit val investment_format: OFormat[Investment]                      = Investment.format
+  private implicit val investment_creation_format: OFormat[InvestmentCreation]     = InvestmentCreation.format
+  private implicit val investment_option_format: OFormat[InvestmentOption]         = InvestmentOption.format
+  private implicit val transaction_edit_part_format: OFormat[TransactionEditPart]  = TransactionEditPart.format
+  private implicit val transaction_format: OFormat[Transaction]                    = Transaction.format
+  private implicit val recurring_transaction_format: OFormat[RecurringTransaction] = RecurringTransaction.format
 }
 
 class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials

@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.edition_deep
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json._
 
 case class SectionEditionDeep(
   id:          Option[String],

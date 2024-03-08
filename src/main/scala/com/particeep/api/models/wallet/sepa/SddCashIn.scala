@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet.sepa
 
-import play.api.libs.json.{ Json, Writes }
+import play.api.libs.json._
 
 import java.time.OffsetDateTime
 

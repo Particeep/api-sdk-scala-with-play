@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.{ JsObject, Json, Writes }
+import play.api.libs.json._
 
 import java.time.{ OffsetDateTime, ZoneOffset }
 

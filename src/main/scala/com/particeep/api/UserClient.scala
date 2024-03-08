@@ -24,19 +24,20 @@ trait UserCapability {
 }
 
 object UserClient {
-  private val endPoint: String                  = "/user"
-  private val endPoint_import: String           = "/import"
-  private implicit val format                   = User.format
-  private implicit val creation_format          = UserCreation.format
-  private implicit val edition_format           = UserEdition.format
-  private implicit val data_format              = UserData.format
-  private implicit val importResultReads        = ImportResult.format[User]
-  private implicit val relative_creation_format = RelativeCreation.format
-  private implicit val relative_format          = Relative.format
-  private implicit val relative_option_format   = RelativeEdition.format
+  private val endPoint: String                                             = "/user"
+  private val endPoint_import: String                                      = "/import"
+  private implicit val format: OFormat[User]                               = User.format
+  private implicit val creation_format: OFormat[UserCreation]              = UserCreation.format
+  private implicit val edition_format: OFormat[UserEdition]                = UserEdition.format
+  private implicit val data_format: OFormat[UserData]                      = UserData.format
+  private implicit val importResultReads: Format[ImportResult[User]]       = ImportResult.format[User]
+  private implicit val relative_creation_format: OFormat[RelativeCreation] = RelativeCreation.format
+  private implicit val relative_format: OFormat[Relative]                  = Relative.format
+  private implicit val relative_option_format: OFormat[RelativeEdition]    = RelativeEdition.format
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
-  private implicit val change_password_format = Json.format[ChangePassword]
+  private implicit val change_password_format: OFormat[ChangePassword] =
+    Json.format[ChangePassword]
 }
 
 class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials

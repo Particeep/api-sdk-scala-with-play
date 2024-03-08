@@ -43,8 +43,8 @@ lazy val compiler_option = Seq(
 
   // doc : https://github.com/scala/scala/pull/8373
   "-Wconf:src=views/.*:silent,src=api_client/.*:silent",
-  "-Wconf:cat=unused-imports&site=router:s"
-  // ,"-quickfix:any"
+  "-Wconf:cat=unused-imports&site=router:s",
+  "-quickfix:any"
 )
 
 ThisBuild / scalacOptions ++= compiler_option

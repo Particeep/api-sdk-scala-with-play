@@ -1,6 +1,6 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json._
 
 case class SignatureDataMultiple(
   id:             String,

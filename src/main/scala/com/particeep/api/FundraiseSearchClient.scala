@@ -3,7 +3,7 @@ package com.particeep.api
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
-
+import play.api.libs.json._
 import scala.concurrent.{ ExecutionContext, Future }
 
 import com.particeep.api.core._
@@ -20,9 +20,9 @@ trait FundraiseSearchCapability {
 }
 
 object FundraiseSearchClient {
-  private val endPoint: String                    = "/fundraises"
-  private implicit val format                     = FundraiseData.format
-  private implicit val project_by_category_format = NbProjectsByCategory.format
+  private val endPoint: String                                                   = "/fundraises"
+  private implicit val format: OFormat[FundraiseData]                            = FundraiseData.format
+  private implicit val project_by_category_format: OFormat[NbProjectsByCategory] = NbProjectsByCategory.format
 }
 
 class FundraiseSearchClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS

@@ -1,6 +1,6 @@
 package com.particeep.api.models.fundraise.loan
 
-import play.api.libs.json.{ Json, OFormat, Writes }
+import play.api.libs.json._
 
 import java.time.OffsetDateTime
 

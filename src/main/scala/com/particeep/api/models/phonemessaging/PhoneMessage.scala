@@ -1,6 +1,6 @@
 package com.particeep.api.models.phonemessaging
 
-import play.api.libs.json.{ JsObject, Json, Writes }
+import play.api.libs.json._
 
 import java.time.OffsetDateTime
 

@@ -1,6 +1,6 @@
 package com.particeep.api.models.enterprise
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 /**
  * Created by Noe on 10/03/2017.

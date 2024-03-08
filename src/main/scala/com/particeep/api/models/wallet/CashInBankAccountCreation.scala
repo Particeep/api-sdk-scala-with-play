@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import com.particeep.api.models.enums.Country.Country
 

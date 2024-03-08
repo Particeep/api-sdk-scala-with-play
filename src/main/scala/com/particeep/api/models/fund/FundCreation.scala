@@ -2,7 +2,7 @@ package com.particeep.api.models.fund
 
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
-import play.api.libs.json.{ JsObject, OFormat, Writes }
+import play.api.libs.json._
 
 import java.time.OffsetDateTime
 

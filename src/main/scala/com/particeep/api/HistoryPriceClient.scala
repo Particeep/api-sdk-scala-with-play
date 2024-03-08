@@ -6,6 +6,7 @@ import com.particeep.api.core._
 import com.particeep.api.models._
 import com.particeep.api.models.history_price.{ HistoryPrice, HistoryPriceSearch }
 import com.particeep.api.utils.LangUtils
+import play.api.libs.json._
 
 trait HistoryPriceCapability {
   self: WSClient =>
@@ -16,8 +17,8 @@ trait HistoryPriceCapability {
 }
 
 object HistoryPriceClient {
-  private val endPoint: String = "/history/price"
-  private implicit val format  = HistoryPrice.format
+  private val endPoint: String                       = "/history/price"
+  private implicit val format: OFormat[HistoryPrice] = HistoryPrice.format
 }
 
 class HistoryPriceClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS

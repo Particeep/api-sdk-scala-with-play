@@ -1,6 +1,6 @@
 package com.particeep.api.models.transaction
 
-import play.api.libs.json.{ Json, OFormat, Writes }
+import play.api.libs.json._
 
 import java.time.OffsetDateTime
 

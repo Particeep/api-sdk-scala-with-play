@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -18,10 +18,11 @@ trait ScoringMetricsCapability {
 }
 
 object ScoringMetricClient {
-  private val endPoint: String                            = "/scoring-metrics"
-  private implicit val scoring_evaluation_format          = ScoringEvaluation.format
-  private implicit val scoring_evaluation_creation_format = ScoringEvaluationCreation.format
-  private implicit val scoring_metric_format              = ScoringMetric.format
+  private val endPoint: String                                                                = "/scoring-metrics"
+  private implicit val scoring_evaluation_format: OFormat[ScoringEvaluation]                  = ScoringEvaluation.format
+  private implicit val scoring_evaluation_creation_format: OFormat[ScoringEvaluationCreation] =
+    ScoringEvaluationCreation.format
+  private implicit val scoring_metric_format: OFormat[ScoringMetric]                          = ScoringMetric.format
 }
 
 class ScoringMetricClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS

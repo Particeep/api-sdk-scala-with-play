@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -18,8 +18,8 @@ trait WebHookCapability {
 object WebHookClient {
   private val endPoint: String = "/webhook"
 
-  private implicit val format        = WebHook.format
-  private implicit val simple_format = WebHookSimple.format
+  private implicit val format: OFormat[WebHook]              = WebHook.format
+  private implicit val simple_format: OFormat[WebHookSimple] = WebHookSimple.format
 
 }
 

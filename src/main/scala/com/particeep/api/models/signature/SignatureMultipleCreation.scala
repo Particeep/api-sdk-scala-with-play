@@ -1,6 +1,6 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.{ JsObject, Json, OFormat }
+import play.api.libs.json._
 
 case class SignatureMultipleCreation(
   language:       Option[String]   = None,

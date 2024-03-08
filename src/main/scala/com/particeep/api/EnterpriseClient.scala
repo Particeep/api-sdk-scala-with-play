@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import java.io.File
@@ -20,15 +20,16 @@ trait EnterpriseCapability {
 }
 
 object EnterpriseClient {
-  private val endPoint: String                                  = "/enterprise"
-  private val endPoint_import: String                           = "/import"
-  private implicit val format                                   = Enterprise.format
-  private implicit val creation_format                          = EnterpriseCreation.format
-  private implicit val edition_format                           = EnterpriseEdition.format
-  private implicit val manager_link_format                      = ManagerLink.format
-  private implicit val manager_creation_format                  = ManagerCreation.format
-  private implicit val nb_enterprises_by_activity_domain_format = NbEnterprisesByActivityDomain.format
-  private implicit val importResultReads                        = ImportResult.format[Enterprise]
+  private val endPoint: String                                                                          = "/enterprise"
+  private val endPoint_import: String                                                                   = "/import"
+  private implicit val format: OFormat[Enterprise]                                                      = Enterprise.format
+  private implicit val creation_format: OFormat[EnterpriseCreation]                                     = EnterpriseCreation.format
+  private implicit val edition_format: OFormat[EnterpriseEdition]                                       = EnterpriseEdition.format
+  private implicit val manager_link_format: OFormat[ManagerLink]                                        = ManagerLink.format
+  private implicit val manager_creation_format: OFormat[ManagerCreation]                                = ManagerCreation.format
+  private implicit val nb_enterprises_by_activity_domain_format: OFormat[NbEnterprisesByActivityDomain] =
+    NbEnterprisesByActivityDomain.format
+  private implicit val importResultReads: Format[ImportResult[Enterprise]]                              = ImportResult.format[Enterprise]
 
 }
 

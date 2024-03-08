@@ -1,6 +1,6 @@
 package com.particeep.api.models.news
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json._
 
 case class NewsEdition(
   title:       Option[String]   = None,

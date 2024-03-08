@@ -2,7 +2,7 @@ package com.particeep.api.models.user
 
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
-import play.api.libs.json.OFormat
+import play.api.libs.json._
 
 case class UserPatrimony(
   yearly_income:     Option[Long] = None,

@@ -3,7 +3,7 @@ package com.particeep.api
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -21,13 +21,13 @@ trait SignatureCapability {
 
 object SignatureClient {
 
-  private val endPoint: String                        = "/signature"
-  private implicit val format                         = Signature.format
-  private implicit val multiple_format                = SignatureMultiple.format
-  private implicit val creation_format                = SignatureCreation.format
-  private implicit val multiple_creation_format       = SignatureMultipleCreation.format
-  private implicit val signature_data_format          = SignatureData.format
-  private implicit val signature_multiple_data_format = SignatureDataMultiple.format
+  private val endPoint: String                                                        = "/signature"
+  private implicit val format: OFormat[Signature]                                     = Signature.format
+  private implicit val multiple_format: OFormat[SignatureMultiple]                    = SignatureMultiple.format
+  private implicit val creation_format: OFormat[SignatureCreation]                    = SignatureCreation.format
+  private implicit val multiple_creation_format: OFormat[SignatureMultipleCreation]   = SignatureMultipleCreation.format
+  private implicit val signature_data_format: OFormat[SignatureData]                  = SignatureData.format
+  private implicit val signature_multiple_data_format: OFormat[SignatureDataMultiple] = SignatureDataMultiple.format
 
 }
 

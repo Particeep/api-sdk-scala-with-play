@@ -3,7 +3,7 @@ package com.particeep.api
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -22,10 +22,11 @@ trait DocumentGenerationCapability {
 }
 
 object DocumentGenerationClient {
-  private val endPoint: String                      = "/document-generation"
-  private implicit val format_generation            = DocumentGeneration.format
-  private implicit val format_generation_and_upload = DocumentGenerationAndUpload.format
-  private implicit val format_document              = Document.format
+  private val endPoint: String                                                            = "/document-generation"
+  private implicit val format_generation: OFormat[DocumentGeneration]                     = DocumentGeneration.format
+  private implicit val format_generation_and_upload: OFormat[DocumentGenerationAndUpload] =
+    DocumentGenerationAndUpload.format
+  private implicit val format_document: OFormat[Document]                                 = Document.format
 }
 
 class DocumentGenerationClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS

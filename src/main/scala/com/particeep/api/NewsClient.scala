@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -20,10 +20,10 @@ object NewsClient {
 
   private val endPoint: String = "/newsfeed"
 
-  private implicit val format               = News.format
-  private implicit val prev_and_next_format = NewsPrevAndNext.format
-  private implicit val creation_format      = NewsCreation.format
-  private implicit val edition_format       = NewsEdition.format
+  private implicit val format: OFormat[News]                          = News.format
+  private implicit val prev_and_next_format: OFormat[NewsPrevAndNext] = NewsPrevAndNext.format
+  private implicit val creation_format: OFormat[NewsCreation]         = NewsCreation.format
+  private implicit val edition_format: OFormat[NewsEdition]           = NewsEdition.format
 }
 
 class NewsClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials

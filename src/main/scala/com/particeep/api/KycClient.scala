@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -16,12 +16,12 @@ trait KycCapability {
 }
 
 object KycClient {
-  private val endPoint: String                   = "/kycs"
-  private implicit val group_format              = KycGroup.format
-  private implicit val creation_format           = KycCreation.format
-  private implicit val edition_format            = KycsEdition.format
-  private implicit val kyc_ask_validation_format = DocumentValidation.format
-  private implicit val kyc_validation_format     = KycValidation.format
+  private val endPoint: String                                                = "/kycs"
+  private implicit val group_format: OFormat[KycGroup]                        = KycGroup.format
+  private implicit val creation_format: OFormat[KycCreation]                  = KycCreation.format
+  private implicit val edition_format: OFormat[KycsEdition]                   = KycsEdition.format
+  private implicit val kyc_ask_validation_format: OFormat[DocumentValidation] = DocumentValidation.format
+  private implicit val kyc_validation_format: OFormat[KycValidation]          = KycValidation.format
 }
 
 class KycClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials

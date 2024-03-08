@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet.sepa
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class SepaSddSignature(
   owner_ip:      String = "",

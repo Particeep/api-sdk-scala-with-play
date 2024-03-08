@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import java.io.File
@@ -23,10 +23,10 @@ trait DocumentCapability {
 }
 
 object DocumentClient {
-  private val endPoint: String         = "/document"
-  private implicit val format          = Document.format
-  private implicit val format_creation = DocumentCreation.format
-  private implicit val format_edition  = DocumentEdition.format
+  private val endPoint: String                                    = "/document"
+  private implicit val format: OFormat[Document]                  = Document.format
+  private implicit val format_creation: OFormat[DocumentCreation] = DocumentCreation.format
+  private implicit val format_edition: OFormat[DocumentEdition]   = DocumentEdition.format
 }
 
 class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS

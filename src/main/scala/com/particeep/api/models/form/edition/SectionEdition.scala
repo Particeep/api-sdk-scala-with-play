@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.edition
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class SectionEdition(
   name:        Option[Map[String, String]],

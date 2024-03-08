@@ -1,6 +1,6 @@
 package com.particeep.api.models.history_price
 
-import play.api.libs.json.{ Json, Writes }
+import play.api.libs.json._
 
 import java.time.OffsetDateTime
 

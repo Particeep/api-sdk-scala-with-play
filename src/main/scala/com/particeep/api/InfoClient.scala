@@ -10,8 +10,8 @@ import com.particeep.api.models._
 case class Info(version: String, debugEnable: Boolean, metaEnable: Boolean)
 
 object InfoClient {
-  private val endPoint: String = "/info"
-  private implicit val format  = Json.format[Info]
+  private val endPoint: String               = "/info"
+  private implicit val format: OFormat[Info] = Json.format[Info]
 }
 
 trait InfoCapability {

@@ -1,6 +1,6 @@
 package com.particeep.api.models.kyc
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json._
 
 import com.particeep.api.models.enums.KycStatus.{ CREATED, KycStatus }
 

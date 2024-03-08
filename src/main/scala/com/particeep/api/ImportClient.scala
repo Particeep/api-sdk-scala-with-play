@@ -16,8 +16,8 @@ trait ImportCapability {
 }
 
 object ImportClient {
-  private val endPoint: String                            = "/import"
-  private implicit def format[T](implicit fmt: Format[T]) = ImportResult.format
+  private val endPoint: String                                                     = "/import"
+  private implicit def format[T](implicit fmt: Format[T]): Format[ImportResult[T]] = ImportResult.format
 }
 
 class ImportClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials

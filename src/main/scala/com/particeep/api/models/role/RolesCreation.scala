@@ -1,6 +1,6 @@
 package com.particeep.api.models.role
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class RolesCreation(
   id:          String         = "",

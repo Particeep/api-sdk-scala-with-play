@@ -1,6 +1,6 @@
 package com.particeep.api.models.document
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json._
 
 /**
  * Created by Noe on 17/02/2017.

@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class CashIn(
   amount:      Int            = 0,

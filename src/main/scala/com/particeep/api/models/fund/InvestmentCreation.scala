@@ -1,6 +1,6 @@
 package com.particeep.api.models.fund
 
-import play.api.libs.json.{ JsArray, JsObject, Json }
+import play.api.libs.json._
 
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 

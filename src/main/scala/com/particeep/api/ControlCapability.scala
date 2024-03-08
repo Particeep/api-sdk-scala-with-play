@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.{ JsNull, Json }
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 

@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -25,13 +25,15 @@ trait PaymentCapability {
 
 object PaymentClient {
 
-  private val endPoint: String                                      = "/payment"
-  private implicit lazy val pay_result_format                       = PayResult.format
-  private implicit lazy val payment_cb_creation_format              = PaymentCbCreation.format
-  private implicit lazy val transaction_format                      = Transaction.format
-  private implicit lazy val scheduled_payment_creation_format       = ScheduledPaymentCreation.format
-  private implicit lazy val scheduled_payment_format                = ScheduledPayment.format
-  private implicit lazy val pay_cancelled_scheduled_payments_format = PayCancelledSchedulePaymentForParentAndDate.format
+  private val endPoint: String                                                                   = "/payment"
+  private implicit lazy val pay_result_format: OFormat[PayResult]                                = PayResult.format
+  private implicit lazy val payment_cb_creation_format: OFormat[PaymentCbCreation]               = PaymentCbCreation.format
+  private implicit lazy val transaction_format: OFormat[Transaction]                             = Transaction.format
+  private implicit lazy val scheduled_payment_creation_format: OFormat[ScheduledPaymentCreation] =
+    ScheduledPaymentCreation.format
+  private implicit lazy val scheduled_payment_format: OFormat[ScheduledPayment]                  = ScheduledPayment.format
+  private implicit lazy val pay_cancelled_scheduled_payments_format
+    : OFormat[PayCancelledSchedulePaymentForParentAndDate] = PayCancelledSchedulePaymentForParentAndDate.format
 }
 
 class PaymentClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials

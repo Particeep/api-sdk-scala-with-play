@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -17,13 +17,13 @@ trait ClubDealCapability {
 }
 
 object ClubDealClient {
-  private val endPoint: String                = "/club-deal"
-  private implicit val format                 = DealGroup.format
-  private implicit val creation_format        = DealGroupCreation.format
-  private implicit val edition_format         = DealGroupEdition.format
-  private implicit val member_format          = DealGroupMember.format
-  private implicit val member_creation_format = DealGroupMemberCreation.format
-  private implicit val email_list_format      = EmailList.format
+  private val endPoint: String                                                  = "/club-deal"
+  private implicit val format: OFormat[DealGroup]                               = DealGroup.format
+  private implicit val creation_format: OFormat[DealGroupCreation]              = DealGroupCreation.format
+  private implicit val edition_format: OFormat[DealGroupEdition]                = DealGroupEdition.format
+  private implicit val member_format: OFormat[DealGroupMember]                  = DealGroupMember.format
+  private implicit val member_creation_format: OFormat[DealGroupMemberCreation] = DealGroupMemberCreation.format
+  private implicit val email_list_format: OFormat[EmailList]                    = EmailList.format
 }
 
 class ClubDealClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS

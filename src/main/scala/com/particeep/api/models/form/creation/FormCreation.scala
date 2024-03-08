@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.creation
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json._
 
 case class FormCreation(
   name:        Option[String],

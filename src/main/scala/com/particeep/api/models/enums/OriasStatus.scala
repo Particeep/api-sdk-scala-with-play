@@ -1,6 +1,6 @@
 package com.particeep.api.models.enums
 
-import play.api.libs.json.{ JsString, JsValue, Writes }
+import play.api.libs.json._
 
 object OriasStatus {
   sealed abstract class OriasStatus extends Product with Enum

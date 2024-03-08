@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import java.io.File
@@ -20,14 +20,14 @@ trait RoleCapability {
 }
 
 object RoleClient {
-  private val endPoint: String                   = "/role"
-  private val endPoint_import: String            = "/import"
-  private implicit val role_format               = Role.format
-  private implicit val roles_format              = Roles.format
-  private implicit val creation_format           = RoleCreation.format
-  private implicit val creations_format          = RolesCreation.format
-  private implicit val global_role_option_format = GlobalRoleOption.format
-  private implicit val importResultReads         = ImportResult.format[Role]
+  private val endPoint: String                                              = "/role"
+  private val endPoint_import: String                                       = "/import"
+  private implicit val role_format: OFormat[Role]                           = Role.format
+  private implicit val roles_format: OFormat[Roles]                         = Roles.format
+  private implicit val creation_format: OFormat[RoleCreation]               = RoleCreation.format
+  private implicit val creations_format: OFormat[RolesCreation]             = RolesCreation.format
+  private implicit val global_role_option_format: OFormat[GlobalRoleOption] = GlobalRoleOption.format
+  private implicit val importResultReads: Format[ImportResult[Role]]        = ImportResult.format[Role]
 }
 
 class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials

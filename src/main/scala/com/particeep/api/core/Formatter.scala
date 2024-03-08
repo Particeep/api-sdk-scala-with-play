@@ -1,6 +1,6 @@
 package com.particeep.api.core
 
-import play.api.libs.json.Writes
+import play.api.libs.json._
 
 import java.time.format.DateTimeFormatter
 import java.time.{ OffsetDateTime, ZoneOffset }

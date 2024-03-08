@@ -2,7 +2,7 @@ package com.particeep.test
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import java.time.{ OffsetDateTime, ZoneOffset }
 import javax.inject.{ Inject, Singleton }

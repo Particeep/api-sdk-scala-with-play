@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import java.io.File
@@ -30,20 +30,21 @@ trait FundraiseEquityCapability {
 }
 
 object FundraiseEquityClient {
-  private val endPoint: String                      = "/equity"
-  private val endPoint_import: String               = "/import"
-  private implicit val format                       = FundraiseEquity.format
-  private implicit val creation_format              = FundraiseEquityCreation.format
-  private implicit val edition_format               = FundraiseEquityEdition.format
-  private implicit val running_edition_format       = FundraiseEquityRunningEdition.format
-  private implicit val investment_format            = Investment.format
-  private implicit val transaction_format           = Transaction.format
-  private implicit val dismemberment_info_format    = DismembermentInfo.format
-  private implicit val dismemberment_amounts_format = DismemebermentAmounts.format
-  private implicit val investment_creation_format   = InvestmentCreation.format
-  private implicit val investment_option_format     = InvestmentOption.format
-  private implicit val importResultReads            = ImportResult.format[FundraiseEquity]
-  private implicit val recurring_transaction_format = RecurringTransaction.format
+  private val endPoint: String                                                        = "/equity"
+  private val endPoint_import: String                                                 = "/import"
+  private implicit val format: OFormat[FundraiseEquity]                               = FundraiseEquity.format
+  private implicit val creation_format: OFormat[FundraiseEquityCreation]              = FundraiseEquityCreation.format
+  private implicit val edition_format: OFormat[FundraiseEquityEdition]                = FundraiseEquityEdition.format
+  private implicit val running_edition_format: OFormat[FundraiseEquityRunningEdition] =
+    FundraiseEquityRunningEdition.format
+  private implicit val investment_format: OFormat[Investment]                         = Investment.format
+  private implicit val transaction_format: OFormat[Transaction]                       = Transaction.format
+  private implicit val dismemberment_info_format: OFormat[DismembermentInfo]          = DismembermentInfo.format
+  private implicit val dismemberment_amounts_format: OFormat[DismemebermentAmounts]   = DismemebermentAmounts.format
+  private implicit val investment_creation_format: OFormat[InvestmentCreation]        = InvestmentCreation.format
+  private implicit val investment_option_format: OFormat[InvestmentOption]            = InvestmentOption.format
+  private implicit val importResultReads: Format[ImportResult[FundraiseEquity]]       = ImportResult.format[FundraiseEquity]
+  private implicit val recurring_transaction_format: OFormat[RecurringTransaction]    = RecurringTransaction.format
 }
 
 class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS

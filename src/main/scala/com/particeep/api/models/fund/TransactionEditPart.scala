@@ -1,6 +1,6 @@
 package com.particeep.api.models.fund
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class TransactionEditPart(
   transaction_ids: Seq[String],

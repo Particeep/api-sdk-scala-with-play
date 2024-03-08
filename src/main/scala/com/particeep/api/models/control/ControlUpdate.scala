@@ -1,6 +1,6 @@
 package com.particeep.api.models.control
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json._
 
 final case class ControlUpdate(
   comment: Option[String] = None
