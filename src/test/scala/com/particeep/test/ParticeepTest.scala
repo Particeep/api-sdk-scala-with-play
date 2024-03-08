@@ -18,9 +18,9 @@ import com.particeep.api.models.ErrorResult
 import com.particeep.api.models.user.User
 import com.particeep.api.{ Info, InfoCapability }
 
-@Singleton
-class ParticeepTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends AnyFlatSpec
-    with Matchers with TestUtils {
+class ParticeepTest extends AnyFlatSpec with Matchers with TestUtils {
+
+  implicit val system: ActorSystem = ActorSystem("ParticeepTest")
 
   "the api client" should "load info" in {
 
