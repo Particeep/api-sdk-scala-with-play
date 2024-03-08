@@ -1,11 +1,9 @@
 package com.particeep.test
 
 import akka.actor.ActorSystem
-import akka.stream.Materializer
 import play.api.libs.json._
 import play.api.libs.ws.StandaloneWSResponse
 
-import javax.inject.{ Inject, Singleton }
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
