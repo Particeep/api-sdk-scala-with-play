@@ -19,8 +19,9 @@ import scala.concurrent.{ Await, Future }
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-@Singleton
-class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materializer) extends AnyFlatSpec with Matchers {
+class UserTest extends AnyFlatSpec with Matchers with TestUtils {
+
+  implicit val system: ActorSystem = ActorSystem("UserTest")
 
   "the api client" should "load user by id with correct date format" in {
 
@@ -122,6 +123,6 @@ class UserTest @Inject() (implicit system: ActorSystem, val materializer: Materi
       .filter(_.contains("Info-End-User"))
       .headOption
 
-    maybe_header shouldBe Some("Info-End-User -> Buffer(1234)")
+    maybe_header shouldBe Some("Info-End-User -> List(1234)")
   }
 }
