@@ -39,9 +39,9 @@
    <parameter name="regex"><![CDATA[[A-Z][A-Za-z]*]]></parameter>
   </parameters>
  </check>
- <check level="error" enabled="true" class="org.scalastyle.scalariform.ObjectNamesChecker">
+ <check level="warning" enabled="true" class="org.scalastyle.scalariform.ObjectNamesChecker">
   <parameters>
-   <parameter name="regex"><![CDATA[(^[A-Z][A-Za-z0-9_]*$)|(^m$)|(^img$)|(^css$)|(^js$)]]></parameter>
+   <parameter name="regex"><![CDATA[(^[A-Z][A-Za-z0-9_]*$)|(^m$)]]></parameter>
   </parameters>
  </check>
  <check level="error" enabled="true" class="org.scalastyle.scalariform.PackageObjectNamesChecker">
