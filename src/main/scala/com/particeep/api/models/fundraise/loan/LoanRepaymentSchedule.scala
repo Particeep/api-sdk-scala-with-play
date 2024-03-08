@@ -27,8 +27,8 @@ case class LoanRepaymentSchedule(
 )
 
 object LoanRepaymentSchedule {
-  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  implicit val format: OFormat[LoanRepaymentSchedule] = Json.format[LoanRepaymentSchedule]
+  implicit val date_format: Writes[OffsetDateTime]      = Formatter.OffsetDateTimeWrites
+  implicit val format: OFormat[LoanRepaymentSchedule]   = Json.format[LoanRepaymentSchedule]
   private[this] implicit val user_format: OFormat[User] = User.format
 
   val loan_repayment_schedule_and_user_format: Format[(LoanRepaymentSchedule, User)] = new Format[(LoanRepaymentSchedule, User)] {
