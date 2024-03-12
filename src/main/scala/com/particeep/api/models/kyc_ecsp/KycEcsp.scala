@@ -19,6 +19,7 @@ sealed trait KycEcsp {
   def updated_at: Option[OffsetDateTime]
   def validated_at: Option[OffsetDateTime]
   def is_sophisticated: Boolean
+  def net_worth: Long
   def investment_advice_threshold: Long
   def tag: Option[String]
   def custom: Option[JsObject]
@@ -38,6 +39,7 @@ object KycEcsp {
       amount_of_assets:            Option[Long]           = None,
       amount_of_debt:              Option[Long]           = None,
       is_sophisticated:            Boolean                = false,
+      net_worth:                   Long                   = 0L,
       investment_advice_threshold: Long                   = 0L,
       tag:                         Option[String]         = None,
       custom:                      Option[JsObject]       = None
@@ -54,6 +56,7 @@ object KycEcsp {
       has_high_balance_sheet:      Boolean                = false, // FR : Bilan comptable
       operating_income:            Option[Long]           = None,
       is_sophisticated:            Boolean                = false,
+      net_worth:                   Long                   = 0L,
       investment_advice_threshold: Long                   = 0L,
       tag:                         Option[String]         = None,
       custom:                      Option[JsObject]       = None
