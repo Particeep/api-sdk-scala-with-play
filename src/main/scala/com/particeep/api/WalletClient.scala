@@ -63,10 +63,6 @@ class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = No
     ws.post[TransactionWalletFeesOpt](s"$endPoint/transfer", timeout, Json.toJson(transfer))
   }
 
-  def allRelatedTransactions(id: String, criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[TransactionWallet]]] = {
-    ws.get[PaginatedSequence[TransactionWallet]](s"$endPoint/$id/transactions", timeout, LangUtils.productToQueryString(criteria))
-  }
-
   def search(
     criteria:       TransactionWalletSearch,
     table_criteria: TableSearch,

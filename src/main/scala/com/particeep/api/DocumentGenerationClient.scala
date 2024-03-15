@@ -3,10 +3,7 @@ package com.particeep.api
 import com.particeep.api.core._
 import com.particeep.api.models.ErrorResult
 import com.particeep.api.models.document.Document
-import com.particeep.api.models.document_generation.{ DocumentGeneration, DocumentGenerationAndUpload }
-import akka.NotUsed
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
+import com.particeep.api.models.document_generation.DocumentGenerationAndUpload
 import play.api.libs.json.Json
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -21,7 +18,6 @@ trait DocumentGenerationCapability {
 
 object DocumentGenerationClient {
   private val endPoint: String = "/document-generation"
-  private implicit val format_generation = DocumentGeneration.format
   private implicit val format_generation_and_upload = DocumentGenerationAndUpload.format
   private implicit val format_document = Document.format
 }
@@ -29,10 +25,6 @@ object DocumentGenerationClient {
 class DocumentGenerationClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
 
   import DocumentGenerationClient._
-
-  def generation(document_generation: DocumentGeneration, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
-    ws.postStream(s"$endPoint", timeout, Json.toJson(document_generation))
-  }
 
   def generationAndUpload(
     document_generation: DocumentGenerationAndUpload,

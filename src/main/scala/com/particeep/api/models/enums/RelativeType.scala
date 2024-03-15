@@ -8,12 +8,5 @@ object RelativeType {
 
   object RelativeType extends EnumHelper[RelativeType] {
     def values: Set[RelativeType] = Set(CONJOINT, USUFRUCTUARY, PAYER)
-
-    def jsonToString = {
-      val s = values.map { v =>
-        s""""$v""""
-      }.mkString(",")
-      s"[$s]"
-    }
   }
 }

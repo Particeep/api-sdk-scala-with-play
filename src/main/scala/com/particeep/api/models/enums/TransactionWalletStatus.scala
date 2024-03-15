@@ -10,8 +10,6 @@ object TransactionWalletStatus {
 
   object TransactionWalletStatus extends EnumHelper[TransactionWalletStatus] {
     def values: Set[TransactionWalletStatus] = Set(PENDING, FAILED, VALIDATED)
-
-    def stringToTransactionWalletStatus(value: String): TransactionWalletStatus = get(value.toUpperCase).getOrElse(PENDING)
   }
 
 }

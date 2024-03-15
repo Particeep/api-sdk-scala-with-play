@@ -50,14 +50,6 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     ws.get[List[Signature]](s"$endPoint", timeout, List("ids" -> ids.mkString(",")))
   }
 
-  def multipleById(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, SignatureMultiple]] = {
-    ws.get[SignatureMultiple](s"$endPoint/multiple/$id", timeout)
-  }
-
-  def multipleByIds(ids: Seq[String], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[SignatureMultiple]]] = {
-    ws.get[List[SignatureMultiple]](s"$endPoint/multiple", timeout, List("ids" -> ids.mkString(",")))
-  }
-
   def search(
     criteria:        SignatureSearch,
     entity_criteria: SignatureSearchForEntities,
@@ -86,18 +78,6 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
         LangUtils.productToQueryString(entity_criteria) ++
         LangUtils.productToQueryString(table_criteria)
     )
-  }
-
-  def getFile(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
-    ws.getStream(s"$endPoint/file/$id", timeout)
-  }
-
-  def getStatus(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, String]] = {
-    ws.get[String](s"$endPoint/status/$id", timeout)
-  }
-
-  def signatureTypes(timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Set[String]]] = {
-    ws.get[Set[String]](s"$endPoint/type", timeout)
   }
 
   def delete(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Signature]] = {

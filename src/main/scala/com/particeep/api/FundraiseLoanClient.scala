@@ -1,7 +1,6 @@
 package com.particeep.api
 
 import java.io.File
-
 import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.fundraise.loan._
@@ -172,10 +171,6 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredentia
   def generateCustomRepaymentSchedule(id: String, repayment_info_vector: RepaymentInfoVector,
                                       timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[ScheduledPayment]]] = {
     ws.post[List[ScheduledPayment]](s"$endPoint/fundraise/$id/schedule/update", timeout, Json.toJson(repayment_info_vector))
-  }
-
-  def cancelRemainingPayments(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[ScheduledPayment]]] = {
-    ws.post[List[ScheduledPayment]](s"$endPoint/fundraise/$id/schedule/cancel-all", timeout, Json.toJson(""))
   }
 
   def allLendsOnFundraise(

@@ -20,7 +20,6 @@ object NewsClient {
   private val endPoint: String = "/newsfeed"
 
   private implicit val format = News.format
-  private implicit val prev_and_next_format = NewsPrevAndNext.format
   private implicit val creation_format = NewsCreation.format
   private implicit val edition_format = NewsEdition.format
 }
@@ -31,10 +30,6 @@ class NewsClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def byIds(ids: Seq[String], timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[News]]] = {
     ws.get[List[News]](s"$endPoint", timeout, List("ids" -> ids.mkString(",")))
-  }
-
-  def getPrevAndNext(id: String, limit: Int, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, NewsPrevAndNext]] = {
-    ws.get[NewsPrevAndNext](s"$endPoint/with-prev-next/$id/$limit", timeout)
   }
 
   def delete(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, News]] = {
