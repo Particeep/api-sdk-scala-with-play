@@ -17,11 +17,11 @@ trait WalletSepaCapability {
 
 object WalletSepaClient {
   private val endPoint: String = "/wallet"
-  private implicit val format: play.api.libs.json.OFormat[com.particeep.api.models.wallet.sepa.SddMandate] = SddMandate.format
-  private implicit val creation_format: play.api.libs.json.OFormat[com.particeep.api.models.wallet.sepa.SddMandateCreation] = SddMandateCreation.format
-  private implicit val signature_format: play.api.libs.json.OFormat[com.particeep.api.models.wallet.sepa.SepaSddSignature] = SepaSddSignature.format
-  private implicit val cashin_format: play.api.libs.json.OFormat[com.particeep.api.models.wallet.sepa.SddCashIn] = SddCashIn.format
-  private implicit val transaction_wallet_format: play.api.libs.json.OFormat[com.particeep.api.models.wallet.TransactionWallet] = TransactionWallet.format
+  private implicit val format = SddMandate.format
+  private implicit val creation_format = SddMandateCreation.format
+  private implicit val signature_format = SepaSddSignature.format
+  private implicit val cashin_format = SddCashIn.format
+  private implicit val transaction_wallet_format = TransactionWallet.format
 }
 
 class WalletSepaClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
@@ -38,7 +38,7 @@ class WalletSepaClient(val ws: WSClient, val credentials: Option[ApiCredential] 
 
   private[this] case class OwnerIp(owner_ip: String)
 
-  private[this] implicit lazy val owner_ip_format: play.api.libs.json.OFormat[WalletSepaClient.this.OwnerIp] = Json.format[OwnerIp]
+  private[this] implicit lazy val owner_ip_format = Json.format[OwnerIp]
 
   def removeSddMandate(sdd_mandate_id: String, owner_ip: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, SddMandate]] = {
     ws.delete[SddMandate](s"$endPoint/sepa/$sdd_mandate_id", timeout, Json.toJson(OwnerIp(owner_ip)))

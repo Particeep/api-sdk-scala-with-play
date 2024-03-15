@@ -23,6 +23,6 @@ case class SddMandate(
 )
 
 object SddMandate {
-  implicit val date_format: play.api.libs.json.Writes[java.time.OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val date_format = Formatter.OffsetDateTimeWrites
   val format = Json.format[SddMandate]
 }
