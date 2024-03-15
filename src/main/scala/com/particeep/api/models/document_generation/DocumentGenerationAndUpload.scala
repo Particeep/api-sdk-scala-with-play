@@ -3,7 +3,7 @@ package com.particeep.api.models.document_generation
 import play.api.libs.json.{ JsValue, Json }
 
 case class DocumentGenerationAndUpload(
-    url:                    String,
+    document_id:            String,
     params_obj:             Option[Map[String, JsValue]] = None,
     params_str:             Option[Map[String, String]]  = None,
     name:                   Option[String]               = None,
