@@ -2,7 +2,6 @@ package com.particeep.api.models.transaction
 
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
-import com.particeep.api.core.Formatter
 
 case class TransactionSearchStatistics(
     amount:              Long,
@@ -14,6 +13,5 @@ case class TransactionSearchStatistics(
 )
 
 object TransactionSearchStatistics {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit val format = Jsonx.formatCaseClass[TransactionSearchStatistics]
+  val format = Jsonx.formatCaseClass[TransactionSearchStatistics]
 }

@@ -1,9 +1,8 @@
 package com.particeep.api.models.club_deal
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, Writes }
 
 /**
  * Created by Noe on 04/07/2017.
@@ -18,6 +17,6 @@ case class DealGroupMember(
 )
 
 object DealGroupMember {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[DealGroupMember]
 }

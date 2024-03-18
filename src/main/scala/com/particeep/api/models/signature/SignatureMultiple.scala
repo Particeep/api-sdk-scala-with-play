@@ -1,7 +1,7 @@
 package com.particeep.api.models.signature
 
 import com.particeep.api.models.enums.SignatureStatus.SignatureStatus
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 case class SignatureMultiple(
     id:             String,
@@ -11,6 +11,6 @@ case class SignatureMultiple(
 )
 
 object SignatureMultiple {
-  implicit val signatureFormat = Signature.format
-  implicit val format = Json.format[SignatureMultiple]
+  implicit val signatureFormat: OFormat[Signature] = Signature.format
+  val format = Json.format[SignatureMultiple]
 }

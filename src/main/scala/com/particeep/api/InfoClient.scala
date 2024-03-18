@@ -2,7 +2,7 @@ package com.particeep.api
 
 import com.particeep.api.core._
 import com.particeep.api.models._
-import play.api.libs.json._
+import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -10,7 +10,7 @@ case class Info(version: String, debugEnable: Boolean, metaEnable: Boolean)
 
 object InfoClient {
   private val endPoint: String = "/info"
-  private implicit val format = Json.format[Info]
+  private implicit val format: OFormat[Info] = Json.format[Info]
 }
 
 trait InfoCapability {

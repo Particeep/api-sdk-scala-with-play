@@ -8,7 +8,7 @@ import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.models.transaction.{ RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch }
 import com.particeep.api.models.user.User
 import com.particeep.api.utils.LangUtils
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 import com.particeep.api.models.imports.ImportForm
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
@@ -24,23 +24,24 @@ trait FundraiseLoanCapability {
 object FundraiseLoanClient {
   private val endPoint: String = "/loan"
   private val endPoint_import: String = "/import"
-  private implicit val format = FundraiseLoan.format
-  private implicit val creation_format = FundraiseLoanCreation.format
-  private implicit val edition_format = FundraiseLoanEdition.format
-  private implicit val running_edition_format = FundraiseLoanRunningEdition.format
-  private implicit val repayment_info_format = RepaymentInfo.format
-  private implicit val repayment_with_date_format = RepaymentWithDate.format
-  private implicit val repayment_info_vector_format = RepaymentInfoVector.format
-  private implicit val loan_repayment_schedule_format = LoanRepaymentSchedule.format
-  private implicit val loan_repayment_schedule_and_user_format = LoanRepaymentSchedule.loan_repayment_schedule_and_user_format
-  private implicit val scheduled_payment_format = ScheduledPayment.format
-  private implicit val lend_format = Lend.format
-  private implicit val transaction_format = Transaction.format
-  private implicit val lend_creation_format = LendCreation.format
-  private implicit val lend_option_format = LendOption.format
-  private implicit val estimate_borrower_info_format = EstimateBorrowerInfo.format
-  private implicit val importResultReads = ImportResult.format[FundraiseLoan]
-  private implicit val recurring_transaction_format = RecurringTransaction.format
+  private implicit val format: OFormat[FundraiseLoan] = FundraiseLoan.format
+  private implicit val creation_format: OFormat[FundraiseLoanCreation] = FundraiseLoanCreation.format
+  private implicit val edition_format: OFormat[FundraiseLoanEdition] = FundraiseLoanEdition.format
+  private implicit val running_edition_format: OFormat[FundraiseLoanRunningEdition] = FundraiseLoanRunningEdition.format
+  private implicit val repayment_info_format: OFormat[RepaymentInfo] = RepaymentInfo.format
+  private implicit val repayment_with_date_format: OFormat[RepaymentWithDate] = RepaymentWithDate.format
+  private implicit val repayment_info_vector_format: OFormat[RepaymentInfoVector] = RepaymentInfoVector.format
+  private implicit val loan_repayment_schedule_format: OFormat[LoanRepaymentSchedule] = LoanRepaymentSchedule.format
+  private implicit val loan_repayment_schedule_and_user_format: Format[(LoanRepaymentSchedule, User)] = LoanRepaymentSchedule.loan_repayment_schedule_and_user_format
+  private implicit val scheduled_payment_format: OFormat[ScheduledPayment] = ScheduledPayment.format
+  private implicit val lend_format: OFormat[Lend] = Lend.format
+  private implicit val transaction_format: OFormat[Transaction] = Transaction.format
+  private implicit val lend_creation_format: OFormat[LendCreation] = LendCreation.format
+  private implicit val lend_option_format: OFormat[LendOption] = LendOption.format
+  private implicit val estimate_borrower_info_format: OFormat[EstimateBorrowerInfo] = EstimateBorrowerInfo.format
+  private implicit val importResultReads: Format[ImportResult[FundraiseLoan]] = ImportResult.format[FundraiseLoan]
+  private implicit val recurring_transaction_format: OFormat[RecurringTransaction] = RecurringTransaction.format
+  private implicit val recurring_transaction_creation_format: OFormat[RecurringTransactionCreation] = RecurringTransactionCreation.format
 }
 
 class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {

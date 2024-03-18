@@ -7,7 +7,7 @@ import com.particeep.api.models.enums.PaymentMethod
 import com.particeep.api.models.enums.TransactionStatus.{ PENDING, TransactionStatus }
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
-import play.api.libs.json.{ JsArray, JsObject }
+import play.api.libs.json.{ JsArray, JsObject, Writes }
 
 case class Transaction(
     id:                      String                 = "",
@@ -45,6 +45,6 @@ case class Transaction(
 )
 
 object Transaction {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Jsonx.formatCaseClass[Transaction]
 }

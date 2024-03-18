@@ -5,7 +5,7 @@ import ai.x.play.json.Jsonx
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Currency.Currency
-import play.api.libs.json.JsObject
+import play.api.libs.json.{ Format, JsObject, OFormat, Writes }
 
 import java.time.OffsetDateTime
 
@@ -38,7 +38,8 @@ case class FundEdition(
 )
 
 object FundEdition {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit lazy val offer_loan_creation_format = FundOffer.format
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val address_format: Format[Address] = Address.format
+  implicit lazy val fund_offer_format: OFormat[FundOffer] = FundOffer.format
   val format = Jsonx.formatCaseClass[FundEdition]
 }

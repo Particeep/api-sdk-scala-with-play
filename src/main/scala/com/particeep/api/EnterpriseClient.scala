@@ -1,13 +1,12 @@
 package com.particeep.api
 
 import java.io.File
-
 import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.enterprise._
 import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.utils.LangUtils
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 import com.particeep.api.models.imports.ImportForm
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
@@ -23,12 +22,12 @@ trait EnterpriseCapability {
 object EnterpriseClient {
   private val endPoint: String = "/enterprise"
   private val endPoint_import: String = "/import"
-  private implicit val format = Enterprise.format
-  private implicit val creation_format = EnterpriseCreation.format
-  private implicit val edition_format = EnterpriseEdition.format
-  private implicit val manager_link_format = ManagerLink.format
-  private implicit val manager_creation_format = ManagerCreation.format
-  private implicit val importResultReads = ImportResult.format[Enterprise]
+  private implicit val format: OFormat[Enterprise] = Enterprise.format
+  private implicit val creation_format: OFormat[EnterpriseCreation] = EnterpriseCreation.format
+  private implicit val edition_format: OFormat[EnterpriseEdition] = EnterpriseEdition.format
+  private implicit val manager_link_format: OFormat[ManagerLink] = ManagerLink.format
+  private implicit val manager_creation_format: OFormat[ManagerCreation] = ManagerCreation.format
+  private implicit val import_result_reads: Format[ImportResult[Enterprise]] = ImportResult.format[Enterprise]
 
 }
 

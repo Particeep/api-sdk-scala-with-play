@@ -1,13 +1,12 @@
 package com.particeep.api
 
 import java.io.File
-
 import com.particeep.api.core._
 import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.transaction._
 import com.particeep.api.utils.LangUtils
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 import com.particeep.api.models.imports.ImportForm
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 import akka.NotUsed
@@ -26,13 +25,13 @@ trait TransactionCapability {
 object TransactionClient {
   private val endPoint: String = "/transaction"
   private val endPoint_import: String = "/import"
-  private implicit val format = Transaction.format
-  private implicit val creationFormat = TransactionCreation.format
-  private implicit val editionFormat = TransactionEdition.format
-  private implicit val transactionDataFormat = TransactionData.format
-  private implicit val importResultReads = ImportResult.format[Transaction]
-  private implicit val recurringFormat = RecurringTransaction.format
-  private implicit val transactionStatsFormat = TransactionSearchStatistics.format
+  private implicit val format: OFormat[Transaction] = Transaction.format
+  private implicit val creationFormat: OFormat[TransactionCreation] = TransactionCreation.format
+  private implicit val editionFormat: OFormat[TransactionEdition] = TransactionEdition.format
+  private implicit val transactionDataFormat: OFormat[TransactionData] = TransactionData.format
+  private implicit val importResultReads: Format[ImportResult[Transaction]] = ImportResult.format[Transaction]
+  private implicit val recurringFormat: OFormat[RecurringTransaction] = RecurringTransaction.format
+  private implicit val transactionStatsFormat: OFormat[TransactionSearchStatistics] = TransactionSearchStatistics.format
 }
 
 class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {

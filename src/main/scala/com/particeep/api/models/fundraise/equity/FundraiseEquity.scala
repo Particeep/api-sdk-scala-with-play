@@ -5,7 +5,7 @@ import com.particeep.api.models.enums.Currency.{ Currency, EUR }
 import com.particeep.api.models.enums.FundraiseStatus.{ FundraiseStatus, INIT }
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
-import play.api.libs.json.JsObject
+import play.api.libs.json.{ JsObject, OFormat, Writes }
 
 import java.time.OffsetDateTime
 
@@ -42,7 +42,7 @@ case class FundraiseEquity(
 )
 
 object FundraiseEquity {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit lazy val equity_offer_format = EquityOffer.format
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit lazy val equity_offer_format: OFormat[EquityOffer] = EquityOffer.format
   val format = Jsonx.formatCaseClass[FundraiseEquity]
 }
