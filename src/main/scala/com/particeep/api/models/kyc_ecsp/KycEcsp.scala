@@ -5,13 +5,6 @@ import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
 import play.api.libs.json.JsObject
 
-/*
- * KYC ECSP stands for : Know Your Consumer, European Crowdfunding Service Providers
- * in French : PSFP, Prestataire de Services de Financement Participatif
- *
- * Here are handled features for our consumers doing crowdfunding type of fundraises and are bounded to european rules
- */
-
 sealed trait KycEcsp {
   def id: String
   def created_at: OffsetDateTime
@@ -51,9 +44,9 @@ object KycEcsp {
       user_id:                     String,
       updated_at:                  Option[OffsetDateTime] = None,
       validated_at:                Option[OffsetDateTime] = None,
-      has_high_capital:            Boolean                = false, // FR : Capital de l'entreprise
-      has_high_sales_figures:      Boolean                = false, // FR : Chiffre d'affaire
-      has_high_balance_sheet:      Boolean                = false, // FR : Bilan comptable
+      has_high_capital:            Boolean                = false,
+      has_high_sales_figures:      Boolean                = false,
+      has_high_balance_sheet:      Boolean                = false,
       operating_income:            Option[Long]           = None,
       is_sophisticated:            Boolean                = false,
       net_worth:                   Long                   = 0L,

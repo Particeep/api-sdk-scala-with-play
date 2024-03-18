@@ -22,9 +22,9 @@ object KycEcspUpdate {
   ) extends KycEcspUpdate
 
   final case class Legal(
-      has_high_capital:       Option[Boolean]  = None, // FR : Capital de l'entreprise
-      has_high_sales_figures: Option[Boolean]  = None, // FR : Chiffre d'affaire
-      has_high_balance_sheet: Option[Boolean]  = None, // FR : Bilan comptable
+      has_high_capital:       Option[Boolean]  = None,
+      has_high_sales_figures: Option[Boolean]  = None,
+      has_high_balance_sheet: Option[Boolean]  = None,
       operating_income:       Option[Long]     = None,
       tag:                    Option[String]   = None,
       custom:                 Option[JsObject] = None
