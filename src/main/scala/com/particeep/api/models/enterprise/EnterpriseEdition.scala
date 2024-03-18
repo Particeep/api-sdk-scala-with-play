@@ -1,10 +1,9 @@
 package com.particeep.api.models.enterprise
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{ Format, JsObject, Json, Writes }
 
 case class EnterpriseEdition(
     name:                         Option[String]         = None,
@@ -25,6 +24,7 @@ case class EnterpriseEdition(
 )
 
 object EnterpriseEdition {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val address_format: Format[Address] = Address.format
   val format = Json.format[EnterpriseEdition]
 }

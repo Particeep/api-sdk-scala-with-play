@@ -3,7 +3,7 @@ package com.particeep.api.models.fundraise.equity
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, Writes }
 
 case class FundraiseEquitySearch(
     start_date:     Option[OffsetDateTime] = None,
@@ -13,6 +13,6 @@ case class FundraiseEquitySearch(
 )
 
 object FundraiseEquitySearch {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[FundraiseEquitySearch]
 }

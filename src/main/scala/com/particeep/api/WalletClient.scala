@@ -4,7 +4,7 @@ import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.wallet._
 import com.particeep.api.utils.LangUtils
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -17,18 +17,18 @@ trait WalletCapability {
 
 object WalletClient {
   private val endPoint: String = "/wallet"
-  private implicit val format = Wallet.format
-  private implicit val creation_format = WalletCreation.format
-  private implicit val cash_in_format = CashIn.format
-  private implicit val cash_out_format = CashOut.format
-  private implicit val transaction_format = TransactionWallet.format
-  private implicit val transaction_data_format = TransactionWalletData.format
-  private implicit val transfer_format = WalletTransfer.format
-  private implicit val bank_account_format = BankAccount.format
-  private implicit val bank_account_creation_format = BankAccountCreation.format
-  private implicit val cashin_bank_account_format = CashInBankAccount.format
-  private implicit val cashin_bank_account_creation_format = CashInBankAccountCreation.format
-  private implicit val transaction_wallet_fees_option = TransactionWalletFeesOpt.format
+  private implicit val format: OFormat[Wallet] = Wallet.format
+  private implicit val creation_format: OFormat[WalletCreation] = WalletCreation.format
+  private implicit val cash_in_format: OFormat[CashIn] = CashIn.format
+  private implicit val cash_out_format: OFormat[CashOut] = CashOut.format
+  private implicit val transaction_format: OFormat[TransactionWallet] = TransactionWallet.format
+  private implicit val transaction_data_format: OFormat[TransactionWalletData] = TransactionWalletData.format
+  private implicit val transfer_format: OFormat[WalletTransfer] = WalletTransfer.format
+  private implicit val bank_account_format: OFormat[BankAccount] = BankAccount.format
+  private implicit val bank_account_creation_format: OFormat[BankAccountCreation] = BankAccountCreation.format
+  private implicit val cashin_bank_account_format: OFormat[CashInBankAccount] = CashInBankAccount.format
+  private implicit val cashin_bank_account_creation_format: OFormat[CashInBankAccountCreation] = CashInBankAccountCreation.format
+  private implicit val transaction_wallet_fees_option: OFormat[TransactionWalletFeesOpt] = TransactionWalletFeesOpt.format
 }
 
 class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {

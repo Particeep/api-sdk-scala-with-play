@@ -111,7 +111,7 @@ trait BaseClient {
   //    val client = new NingWSClient(builder.build)
   protected implicit val system: ActorSystem
   protected implicit val materializer: Materializer
-  protected implicit val sslClient = ApiClient.defaultSslClient(materializer)
+  protected implicit val sslClient: StandaloneAhcWSClient = ApiClient.defaultSslClient(materializer)
 
   def cleanup() = {
     sslClient.close()
@@ -276,5 +276,5 @@ class ApiClient(
 
 object ApiClient {
 
-  def defaultSslClient(implicit m: Materializer) = StandaloneAhcWSClient()
+  def defaultSslClient(implicit m: Materializer): StandaloneAhcWSClient = StandaloneAhcWSClient()
 }

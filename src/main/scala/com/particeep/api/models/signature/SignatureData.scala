@@ -5,7 +5,7 @@ import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
-import play.api.libs.json.JsObject
+import play.api.libs.json.{ JsObject, Writes }
 
 case class SignatureData(
     id:             String,
@@ -37,6 +37,6 @@ case class SignatureData(
 )
 
 object SignatureData {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Jsonx.formatCaseClass[SignatureData]
 }

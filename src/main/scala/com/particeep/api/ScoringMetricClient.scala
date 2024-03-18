@@ -4,7 +4,7 @@ import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.scoring_metrics._
 import com.particeep.api.utils.LangUtils
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -18,8 +18,8 @@ trait ScoringMetricsCapability {
 
 object ScoringMetricClient {
   private val endPoint: String = "/scoring-metrics"
-  private implicit val scoring_evaluation_format = ScoringEvaluation.format
-  private implicit val scoring_evaluation_creation_format = ScoringEvaluationCreation.format
+  private implicit val scoring_evaluation_format: OFormat[ScoringEvaluation] = ScoringEvaluation.format
+  private implicit val scoring_evaluation_creation_format: OFormat[ScoringEvaluationCreation] = ScoringEvaluationCreation.format
 }
 
 class ScoringMetricClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {

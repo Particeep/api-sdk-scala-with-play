@@ -12,7 +12,7 @@ case class FolderOrFile(
 )
 
 object FolderOrFile {
-  implicit val document_format = Document.format
+  implicit val document_format: OFormat[Document] = Document.format
 
   implicit val reads: Reads[FolderOrFile] = (
     (__ \ "document").read[Document] and

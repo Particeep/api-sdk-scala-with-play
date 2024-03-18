@@ -3,7 +3,7 @@ package com.particeep.api.models.history_price
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, Writes }
 
 case class HistoryPrice(
     id:          String                 = "",
@@ -14,6 +14,6 @@ case class HistoryPrice(
 )
 
 object HistoryPrice {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[HistoryPrice]
 }

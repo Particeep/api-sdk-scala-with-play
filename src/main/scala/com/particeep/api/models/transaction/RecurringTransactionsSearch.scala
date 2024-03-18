@@ -1,7 +1,7 @@
 package com.particeep.api.models.transaction
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, Writes }
 
 import java.time.OffsetDateTime
 
@@ -21,6 +21,6 @@ case class RecurringTransactionsSearch(
 )
 
 object RecurringTransactionsSearch {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[RecurringTransactionsSearch]
 }

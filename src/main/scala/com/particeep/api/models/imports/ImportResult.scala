@@ -25,9 +25,9 @@ case class ImportResult[T](
 )
 
 object ImportResult {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit val line_error_format = LineError.format
-  implicit def line_success_format[T](implicit fmt: Format[T]) = LineSuccess.format[T]
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val line_error_format: OFormat[LineError] = LineError.format
+  implicit def line_success_format[T](implicit fmt: Format[T]): Format[LineSuccess[T]] = LineSuccess.format[T]
   def format[T](implicit fmt: Format[T]): Format[ImportResult[T]] = new Format[ImportResult[T]] {
     def reads(json: JsValue): JsResult[ImportResult[T]] = JsSuccess(new ImportResult[T](
       (json \ "id").as[String],

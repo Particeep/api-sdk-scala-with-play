@@ -3,11 +3,8 @@ package com.particeep.api.models.role
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, Writes }
 
-/**
- * Created by Noe on 19/01/2017.
- */
 case class Role(
     id:          String                 = "",
     created_at:  Option[OffsetDateTime] = None,
@@ -18,6 +15,6 @@ case class Role(
 )
 
 object Role {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[Role]
 }

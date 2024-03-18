@@ -1,7 +1,7 @@
 package com.particeep.api.models.kyc
 
-import com.particeep.api.models.enums.{ EnumHelper, Enum }
-import play.api.libs.json.Json
+import com.particeep.api.models.enums.{ Enum, EnumHelper }
+import play.api.libs.json.{ Json, OFormat }
 
 case class DocumentValidationResponse(
     lastReport: Option[DocumentReportResponse]
@@ -65,13 +65,13 @@ object CheckStatus extends EnumHelper[CheckStatus] {
 }
 
 object DocumentValidationResponse {
-  implicit val cr_format = Json.format[CheckResponse]
-  implicit val rdi_format = Json.format[ReportDataItem]
-  implicit val rdli_format = Json.format[ReportDataListItem]
-  implicit val rid_format = Json.format[ReportIdentityData]
-  implicit val rfd_format = Json.format[ReportFinanceData]
-  implicit val drp_format = Json.format[DocumentReportPerson]
-  implicit val drir_format = Json.format[DocumentReportInfoResponse]
-  implicit val drr_format = Json.format[DocumentReportResponse]
+  implicit val cr_format: OFormat[CheckResponse] = Json.format[CheckResponse]
+  implicit val rdi_format: OFormat[ReportDataItem] = Json.format[ReportDataItem]
+  implicit val rdli_format: OFormat[ReportDataListItem] = Json.format[ReportDataListItem]
+  implicit val rid_format: OFormat[ReportIdentityData] = Json.format[ReportIdentityData]
+  implicit val rfd_format: OFormat[ReportFinanceData] = Json.format[ReportFinanceData]
+  implicit val drp_format: OFormat[DocumentReportPerson] = Json.format[DocumentReportPerson]
+  implicit val drir_format: OFormat[DocumentReportInfoResponse] = Json.format[DocumentReportInfoResponse]
+  implicit val drr_format: OFormat[DocumentReportResponse] = Json.format[DocumentReportResponse]
   val format = Json.format[DocumentValidationResponse]
 }

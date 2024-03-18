@@ -9,5 +9,5 @@ case class SmsInformation(
 )
 
 object SmsInformation {
-  implicit val format = Json.format[SmsInformation]
+  val format = Json.format[SmsInformation]
 }
