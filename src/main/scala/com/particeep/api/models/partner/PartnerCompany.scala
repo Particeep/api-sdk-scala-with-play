@@ -7,7 +7,7 @@ import com.particeep.api.models.enums.OriasStatus.OriasStatus
 import com.particeep.api.models.enums.RegulatoryStatus.RegulatoryStatus
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
-import play.api.libs.json.JsObject
+import play.api.libs.json.{ JsObject, Writes }
 
 case class PartnerCompany(
     id:                   String,
@@ -25,6 +25,6 @@ case class PartnerCompany(
 )
 
 object PartnerCompany {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Jsonx.formatCaseClass[PartnerCompany]
 }

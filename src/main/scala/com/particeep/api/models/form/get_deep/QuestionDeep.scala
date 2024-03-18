@@ -1,11 +1,10 @@
 package com.particeep.api.models.form.get_deep
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.QuestionType.QuestionType
 import com.particeep.api.models.form.get.Possibility
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat, Writes }
 
 case class QuestionDeep(
     id:                    String                      = "",
@@ -28,7 +27,7 @@ case class QuestionDeep(
 )
 
 object QuestionDeep {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
-  implicit val possibility_format = Possibility.format
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  implicit val possibility_format: OFormat[Possibility] = Possibility.format
   val format = Json.format[QuestionDeep]
 }

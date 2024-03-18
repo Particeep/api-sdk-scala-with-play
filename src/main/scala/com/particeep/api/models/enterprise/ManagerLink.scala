@@ -1,9 +1,8 @@
 package com.particeep.api.models.enterprise
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, Writes }
 
 case class ManagerLink(
     id:         Option[String]         = None,
@@ -14,6 +13,6 @@ case class ManagerLink(
 )
 
 object ManagerLink {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[ManagerLink]
 }

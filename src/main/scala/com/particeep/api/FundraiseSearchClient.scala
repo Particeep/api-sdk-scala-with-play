@@ -7,6 +7,7 @@ import com.particeep.api.utils.LangUtils
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
+import play.api.libs.json.OFormat
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -19,7 +20,7 @@ trait FundraiseSearchCapability {
 
 object FundraiseSearchClient {
   private val endPoint: String = "/fundraises"
-  private implicit val format = FundraiseData.format
+  private implicit val format: OFormat[FundraiseData] = FundraiseData.format
 }
 
 class FundraiseSearchClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {

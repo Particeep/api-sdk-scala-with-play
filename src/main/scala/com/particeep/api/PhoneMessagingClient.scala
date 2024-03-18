@@ -3,7 +3,7 @@ package com.particeep.api
 import com.particeep.api.core._
 import com.particeep.api.models.phonemessaging.{ PhoneMessage, SmsInformation }
 import com.particeep.api.models.ErrorResult
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -17,8 +17,8 @@ trait PhoneMessagingCapability {
 object PhoneMessagingClient {
 
   private val endPoint: String = "/messaging"
-  private implicit val format = PhoneMessage.format
-  private implicit val sms_information_format = SmsInformation.format
+  private implicit val format: OFormat[PhoneMessage] = PhoneMessage.format
+  private implicit val sms_information_format: OFormat[SmsInformation] = SmsInformation.format
 }
 
 class PhoneMessagingClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {

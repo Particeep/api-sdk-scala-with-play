@@ -1,9 +1,8 @@
 package com.particeep.api.models.document
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{ JsObject, Json, Writes }
 
 /**
  * Created by Noe on 04/01/2017.
@@ -28,6 +27,6 @@ case class Document(
 )
 
 object Document {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Json.format[Document]
 }

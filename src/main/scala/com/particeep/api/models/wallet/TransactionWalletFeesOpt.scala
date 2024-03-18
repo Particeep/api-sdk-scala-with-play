@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 case class TransactionWalletFeesOpt(
     transaction_wallet:          TransactionWallet         = TransactionWallet(),
@@ -8,6 +8,6 @@ case class TransactionWalletFeesOpt(
 )
 
 object TransactionWalletFeesOpt {
-  implicit val transaction_wallet_format = TransactionWallet.format
+  implicit val transaction_wallet_format: OFormat[TransactionWallet] = TransactionWallet.format
   val format = Json.format[TransactionWalletFeesOpt]
 }

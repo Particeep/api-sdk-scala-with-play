@@ -8,7 +8,7 @@ import com.particeep.api.models.fundraise.equity._
 import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.models.transaction.{ Investment, RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch }
 import com.particeep.api.utils.LangUtils
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 import com.particeep.api.models.imports.ImportForm
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
@@ -25,16 +25,17 @@ trait FundraiseEquityCapability {
 object FundraiseEquityClient {
   private val endPoint: String = "/equity"
   private val endPoint_import: String = "/import"
-  private implicit val format = FundraiseEquity.format
-  private implicit val creation_format = FundraiseEquityCreation.format
-  private implicit val edition_format = FundraiseEquityEdition.format
-  private implicit val running_edition_format = FundraiseEquityRunningEdition.format
-  private implicit val investment_format = Investment.format
-  private implicit val transaction_format = Transaction.format
-  private implicit val investment_creation_format = InvestmentCreation.format
-  private implicit val investment_option_format = InvestmentOption.format
-  private implicit val importResultReads = ImportResult.format[FundraiseEquity]
-  private implicit val recurring_transaction_format = RecurringTransaction.format
+  private implicit val format: OFormat[FundraiseEquity] = FundraiseEquity.format
+  private implicit val creation_format: OFormat[FundraiseEquityCreation] = FundraiseEquityCreation.format
+  private implicit val edition_format: OFormat[FundraiseEquityEdition] = FundraiseEquityEdition.format
+  private implicit val running_edition_format: OFormat[FundraiseEquityRunningEdition] = FundraiseEquityRunningEdition.format
+  private implicit val investment_format: OFormat[Investment] = Investment.format
+  private implicit val transaction_format: OFormat[Transaction] = Transaction.format
+  private implicit val investment_creation_format: OFormat[InvestmentCreation] = InvestmentCreation.format
+  private implicit val investment_option_format: OFormat[InvestmentOption] = InvestmentOption.format
+  private implicit val importResultReads: Format[ImportResult[FundraiseEquity]] = ImportResult.format[FundraiseEquity]
+  private implicit val recurring_transaction_format: OFormat[RecurringTransaction] = RecurringTransaction.format
+  private implicit val recurring_transaction_creation_format: OFormat[RecurringTransactionCreation] = RecurringTransactionCreation.format
 }
 
 class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {

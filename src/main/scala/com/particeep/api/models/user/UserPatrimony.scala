@@ -11,5 +11,5 @@ case class UserPatrimony(
 )
 
 object UserPatrimony {
-  implicit val format = Jsonx.formatCaseClass[UserPatrimony]
+  val format = Jsonx.formatCaseClass[UserPatrimony]
 }

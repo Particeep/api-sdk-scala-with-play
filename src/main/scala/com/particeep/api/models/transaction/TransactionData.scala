@@ -1,17 +1,13 @@
 package com.particeep.api.models.transaction
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.PaymentMethod
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders._
-import play.api.libs.json.{ JsArray, JsObject }
+import play.api.libs.json.{ JsArray, JsObject, Writes }
 
-/**
- * Created by Noe on 30/06/2017.
- */
 case class TransactionData(
     id:                                    String,
     created_at:                            Option[OffsetDateTime] = None,
@@ -59,6 +55,6 @@ case class TransactionData(
 )
 
 object TransactionData {
-  implicit val date_format = Formatter.OffsetDateTimeWrites
+  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   val format = Jsonx.formatCaseClass[TransactionData]
 }

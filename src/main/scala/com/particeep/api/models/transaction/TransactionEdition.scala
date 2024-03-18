@@ -4,9 +4,6 @@ import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 import play.api.libs.json.{ JsArray, JsObject, Json }
 
-/**
- * Created by Noe on 25/04/2017.
- */
 case class TransactionEdition(
     issuer_id:              Option[String]               = None,
     issuer_type:            Option[String]               = None,

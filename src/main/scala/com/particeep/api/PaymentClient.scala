@@ -4,7 +4,7 @@ import com.particeep.api.core._
 import com.particeep.api.models.ErrorResult
 import com.particeep.api.models.payment.{ PayCancelledSchedulePaymentForParentAndDate, PayResult, PaymentCbCreation }
 import com.particeep.api.models.transaction.Transaction
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -18,10 +18,10 @@ trait PaymentCapability {
 object PaymentClient {
 
   private val endPoint: String = "/payment"
-  private implicit lazy val pay_result_format = PayResult.format
-  private implicit lazy val payment_cb_creation_format = PaymentCbCreation.format
-  private implicit lazy val transaction_format = Transaction.format
-  private implicit lazy val pay_cancelled_scheduled_payments_format = PayCancelledSchedulePaymentForParentAndDate.format
+  private implicit lazy val pay_result_format: OFormat[PayResult] = PayResult.format
+  private implicit lazy val payment_cb_creation_format: OFormat[PaymentCbCreation] = PaymentCbCreation.format
+  private implicit lazy val transaction_format: OFormat[Transaction] = Transaction.format
+  private implicit lazy val pay_cancelled_scheduled_payments_format: OFormat[PayCancelledSchedulePaymentForParentAndDate] = PayCancelledSchedulePaymentForParentAndDate.format
 }
 
 class PaymentClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {

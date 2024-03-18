@@ -1,7 +1,6 @@
 package com.particeep.api
 
 import java.io.File
-
 import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.form.creation._
@@ -11,7 +10,7 @@ import com.particeep.api.models.form.get._
 import com.particeep.api.models.form.get_deep._
 import com.particeep.api.models.imports.ImportResult
 import com.particeep.api.utils.LangUtils
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -26,30 +25,30 @@ trait FormCapability {
 object FormClient {
   private val endPoint: String = "/form"
   private val endPoint_import: String = "/import"
-  private implicit val format = FormDeep.format
+  private implicit val format: OFormat[FormDeep] = FormDeep.format
 
-  private implicit val format_form_get = Form.format
-  private implicit val format_form_creation = FormCreation.format
-  private implicit val format_form_edition_deep = FormEditionDeep.format
-  private implicit val format_edition_edition = FormEdition.format
+  private implicit val format_form_get: OFormat[Form] = Form.format
+  private implicit val format_form_creation: OFormat[FormCreation] = FormCreation.format
+  private implicit val format_form_edition_deep: OFormat[FormEditionDeep] = FormEditionDeep.format
+  private implicit val format_edition_edition: OFormat[FormEdition] = FormEdition.format
 
-  private implicit val format_section_get = Section.format
-  private implicit val format_section_creation = SectionCreation.format
-  private implicit val format_section_edition = SectionEdition.format
+  private implicit val format_section_get: OFormat[Section] = Section.format
+  private implicit val format_section_creation: OFormat[SectionCreation] = SectionCreation.format
+  private implicit val format_section_edition: OFormat[SectionEdition] = SectionEdition.format
 
-  private implicit val format_question_get = Question.format
-  private implicit val format_question_creation = QuestionCreation.format
-  private implicit val format_question_edition = QuestionEdition.format
+  private implicit val format_question_get: OFormat[Question] = Question.format
+  private implicit val format_question_creation: OFormat[QuestionCreation] = QuestionCreation.format
+  private implicit val format_question_edition: OFormat[QuestionEdition] = QuestionEdition.format
 
-  private implicit val format_possibility_get = Possibility.format
-  private implicit val format_possibility_creation = PossibilityCreation.format
-  private implicit val format_possibility_edition = PossibilityEdition.format
+  private implicit val format_possibility_get: OFormat[Possibility] = Possibility.format
+  private implicit val format_possibility_creation: OFormat[PossibilityCreation] = PossibilityCreation.format
+  private implicit val format_possibility_edition: OFormat[PossibilityEdition] = PossibilityEdition.format
 
-  private implicit val format_answer = Answer.format
-  private implicit val format_answer_creation = AnswerCreation.format
-  private implicit val format_tagged_answer_creation = AnswerCreationWithTag.format
+  private implicit val format_answer: OFormat[Answer] = Answer.format
+  private implicit val format_answer_creation: OFormat[AnswerCreation] = AnswerCreation.format
+  private implicit val format_tagged_answer_creation: OFormat[AnswerCreationWithTag] = AnswerCreationWithTag.format
 
-  private implicit val importResultReads = ImportResult.format[Seq[Answer]]
+  private implicit val importResultReads: Format[ImportResult[Seq[Answer]]] = ImportResult.format[Seq[Answer]]
 }
 
 class FormClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
