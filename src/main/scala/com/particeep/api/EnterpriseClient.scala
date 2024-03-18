@@ -28,7 +28,6 @@ object EnterpriseClient {
   private implicit val edition_format = EnterpriseEdition.format
   private implicit val manager_link_format = ManagerLink.format
   private implicit val manager_creation_format = ManagerCreation.format
-  private implicit val nb_enterprises_by_activity_domain_format = NbEnterprisesByActivityDomain.format
   private implicit val importResultReads = ImportResult.format[Enterprise]
 
 }
@@ -75,10 +74,6 @@ class EnterpriseClient(val ws: WSClient, val credentials: Option[ApiCredential] 
 
   def deleteManager(id: String, manager_id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ManagerLink]] = {
     ws.delete[ManagerLink](s"$endPoint/$id/manager/$manager_id", timeout)
-  }
-
-  def nbEnterprisesByActivityDomain(timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Seq[NbEnterprisesByActivityDomain]]] = {
-    ws.get[Seq[NbEnterprisesByActivityDomain]](s"$endPoint/info/activity/domain", timeout)
   }
 
   def importFromCsv(file: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Enterprise]]] = {

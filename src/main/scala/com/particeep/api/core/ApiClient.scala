@@ -116,7 +116,6 @@ trait BaseClient {
   def cleanup() = {
     sslClient.close()
   }
-
 }
 
 /**

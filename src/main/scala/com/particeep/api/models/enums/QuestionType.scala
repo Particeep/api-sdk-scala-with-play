@@ -18,9 +18,5 @@ object QuestionType {
     def values: Set[QuestionType] = Set(TEXT, LONGTEXT, DATE, RADIO, SELECT, CHECKBOX, DOCUMENT, LABEL)
 
     implicit def stringToQuestionType(value: String): QuestionType = get(value).getOrElse(TEXT)
-
-    def isFreeType(question_type: QuestionType): Boolean = {
-      Seq(TEXT, LONGTEXT).contains(question_type)
-    }
   }
 }

@@ -17,12 +17,5 @@ object Locale {
 
   object Locale extends EnumHelper[Locale] {
     def values: Set[Locale] = Set(fr_FR, en_GB, en_US, es_ES, de_DE, pt_PT, pt_BR, nl_NL, nl_BE, ar_AR)
-
-    val defaultLocal = fr_FR
-
-    def getLocaleOrDefault(localeSOpt: Option[String]): Locale = {
-      val localeOpt = get(localeSOpt)
-      localeOpt.getOrElse(defaultLocal)
-    }
   }
 }

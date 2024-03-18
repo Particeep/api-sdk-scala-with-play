@@ -17,8 +17,6 @@ trait EnumHelper[E <: Enum] {
 
   def get(valueOpt: Option[String]): Option[E] = valueOpt.flatMap(get(_))
 
-  def isAvalaible(value: String): Boolean = get(value).isDefined
-
   def toString(value: E) = value.name
 
   implicit def ordering: Ordering[E] = Ordering.by(_.name)

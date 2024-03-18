@@ -56,10 +56,6 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.get[User](s"$endPoint/email/$email", timeout)
   }
 
-  def searchByName(name: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[User]]] = {
-    ws.get[List[User]](s"$endPoint/name/$name", timeout)
-  }
-
   def search(criteria: UserSearch, criteria_additional: UserSearchAdditional, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[UserData]]] = {
     ws.get[PaginatedSequence[UserData]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(criteria_additional) ++ LangUtils.productToQueryString(table_criteria))
   }
@@ -78,10 +74,6 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def authenticate(email: String, password: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, User]] = {
     ws.post[User](s"$endPoint/authenticate", timeout, Json.toJson(Map("email" -> email, "password" -> password)))
-  }
-
-  def getOrCreate(user_creation: UserCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, User]] = {
-    ws.post[User](s"$endPoint/getOrCreate", timeout, Json.toJson(user_creation))
   }
 
   def changePassword(id: String, old_password: Option[String], new_password: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, User]] = {

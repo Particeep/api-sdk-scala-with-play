@@ -27,4 +27,3 @@ class OpenDataClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     ws.post[JsValue](s"$endPoint/graphql", timeout, body)
   }
 }
-

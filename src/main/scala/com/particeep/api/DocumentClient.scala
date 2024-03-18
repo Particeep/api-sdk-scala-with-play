@@ -72,19 +72,6 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     ws.post[Document](s"$endPoint/$id", timeout, Json.toJson(document_edition))
   }
 
-  def listDir(
-    path:        String,
-    target_id:   Option[String],
-    target_type: Option[String],
-    timeout:     Long           = defaultTimeOut
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[FolderOrFile]]] = {
-    val params: List[(String, String)] = List(("path", path)) ++
-      target_id.map(x => List(("target_id", x))).getOrElse(List()) ++
-      target_type.map(x => List(("target_type", x))).getOrElse(List())
-
-    ws.get[List[FolderOrFile]](s"$endPoint/dir", timeout, params)
-  }
-
   def search(criteria: DocumentSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[Document]]] = {
     ws.get[PaginatedSequence[Document]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
