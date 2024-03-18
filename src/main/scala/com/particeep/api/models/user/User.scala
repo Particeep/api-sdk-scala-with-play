@@ -61,8 +61,6 @@ case class User(
     id_doc_expiration_date:        Option[OffsetDateTime]   = None,
     can_access:                    Option[Boolean]          = None,
     relatives:                     Option[Seq[Relative]]    = None,
-    patrimony:                     Option[UserPatrimony]    = None,
-    net_patrimony:                 Option[Long]             = None,
     custom:                        Option[JsObject]         = None,
     is_locked:                     Option[String]           = None
 )
