@@ -1,8 +1,8 @@
 package com.particeep.api.models.kyc_ecsp
 
-import ai.x.play.json.Encoders._
+import ai.x.play.json.Encoders.encoder
 import ai.x.play.json.Jsonx
-import play.api.libs.json.JsObject
+import play.api.libs.json.{ Format, JsObject, OFormat }
 
 sealed trait KycEcspUpdate {
   def tag: Option[String]
@@ -30,7 +30,7 @@ object KycEcspUpdate {
       custom:                 Option[JsObject] = None
   ) extends KycEcspUpdate
 
-  implicit val kyc_ecsp_natural_update_format = Jsonx.formatCaseClassUseDefaults[KycEcspUpdate.Natural]
-  implicit val kyc_ecsp_legal_update_format = Jsonx.formatCaseClassUseDefaults[KycEcspUpdate.Legal]
-  implicit val kyc_ecsp_update_format = Jsonx.formatSealed[KycEcspUpdate]
+  implicit val kyc_ecsp_natural_update_format: OFormat[Natural] = Jsonx.formatCaseClassUseDefaults[KycEcspUpdate.Natural]
+  implicit val kyc_ecsp_legal_update_format: OFormat[Legal] = Jsonx.formatCaseClassUseDefaults[KycEcspUpdate.Legal]
+  implicit val kyc_ecsp_update_format: Format[KycEcspUpdate] = Jsonx.formatSealed[KycEcspUpdate]
 }

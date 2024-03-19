@@ -3,7 +3,7 @@ package com.particeep.api.models.kyc_ecsp
 import java.time.OffsetDateTime
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
-import play.api.libs.json.JsObject
+import play.api.libs.json.{ Format, JsObject, OFormat }
 
 sealed trait KycEcsp {
   def id: String
@@ -55,7 +55,7 @@ object KycEcsp {
       custom:                      Option[JsObject]       = None
   ) extends KycEcsp
 
-  implicit val kyc_ecsp_natural_format = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
-  implicit val kyc_ecsp_legal_format = Jsonx.formatCaseClassUseDefaults[KycEcsp.Legal]
-  implicit val kyc_ecsp_format = Jsonx.formatSealed[KycEcsp]
+  implicit val kyc_ecsp_natural_format: OFormat[Natural] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
+  implicit val kyc_ecsp_legal_format: OFormat[Legal] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Legal]
+  implicit val kyc_ecsp_format: Format[KycEcsp] = Jsonx.formatSealed[KycEcsp]
 }
