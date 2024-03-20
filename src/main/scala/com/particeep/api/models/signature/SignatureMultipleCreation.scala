@@ -4,7 +4,7 @@ import play.api.libs.json.{ JsObject, Json, OFormat }
 
 case class SignatureMultipleCreation(
     language:       Option[String]       = None,
-    doc_id:         String,
+    docs_ids:       String,
     fileName:       String,
     description:    Option[String]       = None,
     signers:        Seq[SignatureSigner],
