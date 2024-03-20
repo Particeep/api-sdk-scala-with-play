@@ -66,14 +66,18 @@ case class UserData(
     rcs_city:                              Option[String]           = None,
     legal_status:                          Option[String]           = None,
     tva_intra:                             Option[String]           = None,
-    patrimony:                             Option[UserPatrimony]    = None,
-    net_patrimony:                         Option[Long]             = None,
-    is_locked:                             Option[String]           = None,
-    addresses:                             Option[Seq[Address]]     = None,
-    birth_cog:                             Option[String]           = None,
-    is_rcs_verified:                       Option[Boolean]          = None,
-    creator_type:                          Option[String]           = None,
-    creator_name:                          Option[String]           = None
+    // TODO : to remove
+    patrimony:     Option[UserPatrimony] = None,
+    net_patrimony: Option[Long]          = None,
+    //--- replace by
+    ecsp_info: Option[UserEcspData] = None,
+    //---
+    is_locked:       Option[String]       = None,
+    addresses:       Option[Seq[Address]] = None,
+    birth_cog:       Option[String]       = None,
+    is_rcs_verified: Option[Boolean]      = None,
+    creator_type:    Option[String]       = None,
+    creator_name:    Option[String]       = None
 )
 
 object UserData {
