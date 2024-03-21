@@ -21,6 +21,8 @@ import scala.util.Random
 import scala.util.control.NonFatal
 import play.api.libs.json._
 
+import scala.concurrent.duration._
+import scala.language.postfixOps
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
     val new_value = (name, value) :: this.http_headers.map(_.toList).getOrElse(List())
@@ -86,6 +88,11 @@ trait WSClient {
     path:        String,
     timeOut:     Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
+
+  def getDocFree(
+    document_id: String,
+    timeOut:     Long
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]]
 
   def postStream(
     path:    String,
@@ -219,7 +226,23 @@ class ApiClient(
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
     url(path, timeOut)
       .withMethod(method = "GET")
-      .stream()
+      .execute()
+      .map(handleResponseForGetDoc(_, document_id))
+      .recover {
+        case NonFatal(e) => handle_error[DocumentDownload](e, method = "GET", path)
+      }
+  }
+
+  def getDocFree(
+    document_id: String,
+    timeOut:     Long
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]] = {
+    val path = s"$baseUrl/document/$document_id"
+    sslClient
+      .url(path)
+      .withRequestTimeout(timeOut millis)
+      .withMethod(method = "GET")
+      .execute()
       .map(handleResponseForGetDoc(_, document_id))
       .recover {
         case NonFatal(e) => handle_error[DocumentDownload](e, method = "GET", path)

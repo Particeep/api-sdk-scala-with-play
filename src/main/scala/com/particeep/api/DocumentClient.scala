@@ -60,6 +60,10 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     ws.getDoc(document_id = id, path = s"$endPoint/download/$id", timeOut = timeout)
   }
 
+  def downloadFree(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]] = {
+    ws.getDocFree(id, timeOut = timeout)
+  }
+
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Document]] = {
     ws.get[Document](s"$endPoint/$id", timeout)
   }
