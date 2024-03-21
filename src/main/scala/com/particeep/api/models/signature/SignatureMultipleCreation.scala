@@ -1,10 +1,12 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.{ JsObject, Json, OFormat }
+import play.api.libs.json.{JsObject, Json, OFormat}
+
+import java.util.UUID
 
 case class SignatureMultipleCreation(
     language:       Option[String]       = None,
-    documents_ids:  Seq[String],
+    documents_ids:  Seq[UUID],
     fileName:       String,
     description:    Option[String]       = None,
     signers:        Seq[SignatureSigner],
