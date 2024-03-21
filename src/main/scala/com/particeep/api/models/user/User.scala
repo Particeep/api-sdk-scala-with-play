@@ -69,6 +69,5 @@ object User {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address] = Address.format
   implicit val relative_format: OFormat[Relative] = Relative.format
-  implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
   val format = Jsonx.formatCaseClass[User]
 }
