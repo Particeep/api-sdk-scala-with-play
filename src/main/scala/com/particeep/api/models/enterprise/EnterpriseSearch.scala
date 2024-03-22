@@ -2,9 +2,6 @@ package com.particeep.api.models.enterprise
 
 import java.time.OffsetDateTime
 
-/**
- * Created by Noe on 10/03/2017.
- */
 case class EnterpriseSearch(
     name:                         Option[String]         = None,
     activity_domains:             Option[String]         = None,

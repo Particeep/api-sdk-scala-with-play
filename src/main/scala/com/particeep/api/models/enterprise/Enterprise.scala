@@ -9,6 +9,7 @@ case class Enterprise(
     id:                           String                 = "",
     created_at:                   Option[OffsetDateTime] = None,
     creation_date:                Option[OffsetDateTime] = None,
+    user_id:                      String                 = "",
     name:                         String                 = "",
     activity_domain:              Option[String]         = None,
     description_short:            Option[String]         = None,
