@@ -2,11 +2,12 @@ package com.particeep.api
 
 import java.io.File
 import com.particeep.api.core._
-import com.particeep.api.models.ErrorResult
+import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.enterprise._
 import com.particeep.api.models.imports.ImportResult
 import play.api.libs.json.{ Format, Json, OFormat }
 import com.particeep.api.models.imports.ImportForm
+import com.particeep.api.utils.LangUtils
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -50,6 +51,10 @@ class EnterpriseClient(val ws: WSClient, val credentials: Option[ApiCredential] 
 
   def update(id: String, enterprise_edition: EnterpriseEdition, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enterprise]] = {
     ws.post[Enterprise](s"$endPoint/$id", timeout, Json.toJson(enterprise_edition))
+  }
+
+  def search(criteria: EnterpriseSearch, table_criteria: TableSearch, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[Enterprise]]] = {
+    ws.get[PaginatedSequence[Enterprise]](s"$endPoint/search", timeout, LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria))
   }
 
   def delete(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enterprise]] = {
