@@ -4,7 +4,7 @@ import play.api.libs.json.{ JsObject, Json }
 
 case class SignatureCreation(
     language:       Option[String]   = None,
-    documents_ids:  Seq[String],
+    document_id:    String,
     fileName:       String,
     firstName:      String,
     lastName:       String,
