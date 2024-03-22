@@ -6,8 +6,6 @@ import com.particeep.api.models.Address
 import com.particeep.api.models.enums.BankAccountStatus.BankAccountStatus
 import play.api.libs.json.{ Format, Json, Writes }
 
-import java.util.UUID
-
 case class BankAccount(
     id:                        String                    = "",
     created_at:                Option[OffsetDateTime]    = None,
@@ -21,7 +19,7 @@ case class BankAccount(
     aba_num:                   Option[String]            = None,
     transit_num:               Option[String]            = None,
     account_type:              Option[String]            = None,
-    justificatory_document_id: Option[UUID]              = None,
+    justificatory_document_id: Option[String]            = None,
     address:                   Option[Address]           = None
 )
 

@@ -6,8 +6,6 @@ import com.particeep.api.models.enums.KycStatus.{ CREATED, KycStatus }
 import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
 import play.api.libs.json.{ Json, Writes }
 
-import java.util.UUID
-
 case class Kyc(
     doc_type:        KycType                = ID_CARD,
     created_at:      Option[OffsetDateTime] = None,
@@ -15,7 +13,7 @@ case class Kyc(
     refusal_reason:  Option[String]         = None,
     refusal_message: Option[String]         = None,
     status:          KycStatus              = CREATED,
-    docs_ids:        Seq[UUID]              = Seq()
+    docs_ids:        Seq[String]            = Seq()
 )
 
 object Kyc {

@@ -3,11 +3,9 @@ package com.particeep.api.models.kyc
 import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
 import play.api.libs.json.{ Json, OFormat }
 
-import java.util.UUID
-
 case class KycEdition(
-    doc_type: KycType   = ID_CARD,
-    docs_ids: Seq[UUID] = Seq()
+    doc_type: KycType     = ID_CARD,
+    docs_ids: Seq[String] = Seq()
 )
 
 object KycEdition {

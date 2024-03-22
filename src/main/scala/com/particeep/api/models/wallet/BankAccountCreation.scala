@@ -2,8 +2,6 @@ package com.particeep.api.models.wallet
 
 import play.api.libs.json.Json
 
-import java.util.UUID
-
 case class BankAccountCreation(
     bank_name:                 String,
     iban:                      String,
@@ -19,7 +17,7 @@ case class BankAccountCreation(
     transit_num:               Option[String] = None,
     owner_ip:                  Option[String] = None,
     account_type:              Option[String] = None,
-    justificatory_document_id: Option[UUID]   = None,
+    justificatory_document_id: Option[String] = None,
     target_id:                 Option[String] = None
 )
 

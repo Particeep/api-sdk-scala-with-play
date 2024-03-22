@@ -2,11 +2,9 @@ package com.particeep.api.models.signature
 
 import play.api.libs.json.{ JsObject, Json }
 
-import java.util.UUID
-
 case class SignatureCreation(
     language:       Option[String]   = None,
-    documents_ids:  Seq[UUID],
+    documents_ids:  Seq[String],
     fileName:       String,
     firstName:      String,
     lastName:       String,
