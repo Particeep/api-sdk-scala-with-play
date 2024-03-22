@@ -6,6 +6,7 @@ import com.particeep.api.models.Address
 import play.api.libs.json.{ Format, JsObject, Json, Writes }
 
 case class EnterpriseEdition(
+    user_id:                      Option[String]         = None,
     name:                         Option[String]         = None,
     creation_date:                Option[OffsetDateTime] = None,
     activity_domain:              Option[String]         = None,
