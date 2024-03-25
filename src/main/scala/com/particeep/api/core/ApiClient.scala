@@ -85,12 +85,6 @@ trait WSClient {
 
   def getDoc(
     document_id: String,
-    path:        String,
-    timeOut:     Long
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
-
-  def getDocFree(
-    document_id: String,
     timeOut:     Long
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]]
 
@@ -220,20 +214,6 @@ class ApiClient(
   }
 
   def getDoc(
-    document_id: String,
-    path:        String,
-    timeOut:     Long
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
-    url(path, timeOut)
-      .withMethod(method = "GET")
-      .execute()
-      .map(handleResponseForGetDoc(_, document_id))
-      .recover {
-        case NonFatal(e) => handle_error[DocumentDownload](e, method = "GET", path)
-      }
-  }
-
-  def getDocFree(
     document_id: String,
     timeOut:     Long
   )(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]] = {
