@@ -26,11 +26,11 @@ class KycEcspClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
 
   import KycEcspClient._
 
-  def findCurrentKyc(user_id: String, kyc_type: KycEcspType, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcsp]] = {
+  def findCurrentKyc(user_id: String, kyc_type: KycEcspType)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcsp]] = {
     println(Console.MAGENTA + "findCurrentKyc " + kyc_type)
     kyc_type match {
-      case KycEcspType.LEGAL => doFindL(user_id, kyc_type, timeout)
-      case KycEcspType.NATURAL => doFindN(user_id, kyc_type, timeout)
+      case KycEcspType.LEGAL   => doFindL(user_id, kyc_type)
+      case KycEcspType.NATURAL => doFindN(user_id, kyc_type)
     }
   }
 
