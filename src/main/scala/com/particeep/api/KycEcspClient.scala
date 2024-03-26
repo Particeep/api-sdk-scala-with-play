@@ -27,7 +27,21 @@ class KycEcspClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
   import KycEcspClient._
 
   def findCurrentKyc(user_id: String, kyc_type: KycEcspType, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcsp]] = {
-    ws.get[KycEcsp](s"$endPoint/$user_id/$kyc_type", timeout)
+    println(Console.MAGENTA + "findCurrentKyc " + kyc_type)
+    kyc_type match {
+      case KycEcspType.LEGAL => doFindL(user_id, kyc_type, timeout)
+      case KycEcspType.NATURAL => doFindN(user_id, kyc_type, timeout)
+    }
+  }
+
+  private[this] def doFindL(user_id: String, kyc_type: KycEcspType, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcsp.Legal]] = {
+    println(Console.MAGENTA + "doFind Legal")
+    ws.get[KycEcsp.Legal](s"$endPoint/$user_id/$kyc_type", timeout)
+  }
+
+  private[this] def doFindN(user_id: String, kyc_type: KycEcspType, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcsp.Natural]] = {
+    println(Console.MAGENTA + "doFind Natural")
+    ws.get[KycEcsp.Natural](s"$endPoint/$user_id/$kyc_type", timeout)
   }
 
   def create(user_id: String, kyc: KycEcspUpdate, kyc_type: KycEcspType, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcsp]] = {
