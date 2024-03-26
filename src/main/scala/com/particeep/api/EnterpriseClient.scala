@@ -5,9 +5,9 @@ import com.particeep.api.core._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.enterprise._
 import com.particeep.api.models.imports.ImportResult
-import com.particeep.api.utils.LangUtils
 import play.api.libs.json.{ Format, Json, OFormat }
 import com.particeep.api.models.imports.ImportForm
+import com.particeep.api.utils.LangUtils
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -25,8 +25,6 @@ object EnterpriseClient {
   private implicit val format: OFormat[Enterprise] = Enterprise.format
   private implicit val creation_format: OFormat[EnterpriseCreation] = EnterpriseCreation.format
   private implicit val edition_format: OFormat[EnterpriseEdition] = EnterpriseEdition.format
-  private implicit val manager_link_format: OFormat[ManagerLink] = ManagerLink.format
-  private implicit val manager_creation_format: OFormat[ManagerCreation] = ManagerCreation.format
   private implicit val import_result_reads: Format[ImportResult[Enterprise]] = ImportResult.format[Enterprise]
 
 }
@@ -61,18 +59,6 @@ class EnterpriseClient(val ws: WSClient, val credentials: Option[ApiCredential] 
 
   def delete(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Enterprise]] = {
     ws.delete[Enterprise](s"$endPoint/$id", timeout)
-  }
-
-  def addManager(id: String, manager_creation: ManagerCreation, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ManagerLink]] = {
-    ws.put[ManagerLink](s"$endPoint/$id/manager", timeout, Json.toJson(manager_creation))
-  }
-
-  def getManagers(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[ManagerLink]]] = {
-    ws.get[List[ManagerLink]](s"$endPoint/$id/manager", timeout)
-  }
-
-  def deleteManager(id: String, manager_id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ManagerLink]] = {
-    ws.delete[ManagerLink](s"$endPoint/$id/manager/$manager_id", timeout)
   }
 
   def importFromCsv(file: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, ImportResult[Enterprise]]] = {

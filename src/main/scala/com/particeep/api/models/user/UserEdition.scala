@@ -7,7 +7,7 @@ import com.particeep.api.models.Address
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.InvestorType.InvestorType
 import com.particeep.api.models.enums.ProQualification
-import play.api.libs.json.{ Format, JsArray, JsObject, OFormat, Writes }
+import play.api.libs.json.{ Format, JsArray, JsObject, Writes }
 
 import java.time.OffsetDateTime
 
@@ -54,13 +54,11 @@ case class UserEdition(
     id_doc_check_date:             Option[OffsetDateTime]   = None,
     id_doc_expiration_date:        Option[OffsetDateTime]   = None,
     can_access:                    Option[Boolean]          = None,
-    custom:                        Option[JsObject]         = None,
-    patrimony:                     Option[UserPatrimony]    = None
+    custom:                        Option[JsObject]         = None
 )
 
 object UserEdition {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address] = Address.format
-  implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
   val format = Jsonx.formatCaseClass[UserEdition]
 }

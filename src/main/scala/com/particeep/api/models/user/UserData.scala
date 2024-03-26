@@ -66,18 +66,12 @@ case class UserData(
     rcs_city:                              Option[String]           = None,
     legal_status:                          Option[String]           = None,
     tva_intra:                             Option[String]           = None,
-    // TODO : to remove
-    patrimony:     Option[UserPatrimony] = None,
-    net_patrimony: Option[Long]          = None,
-    //--- replace by
-    ecsp_info: Option[UserEcspData] = None,
-    //---
-    is_locked:       Option[String]       = None,
-    addresses:       Option[Seq[Address]] = None,
-    birth_cog:       Option[String]       = None,
-    is_rcs_verified: Option[Boolean]      = None,
-    creator_type:    Option[String]       = None,
-    creator_name:    Option[String]       = None
+    is_locked:                             Option[String]           = None,
+    addresses:                             Option[Seq[Address]]     = None,
+    birth_cog:                             Option[String]           = None,
+    is_rcs_verified:                       Option[Boolean]          = None,
+    creator_type:                          Option[String]           = None,
+    creator_name:                          Option[String]           = None
 )
 
 object UserData {
@@ -85,6 +79,5 @@ object UserData {
   implicit val address_format: Format[Address] = Address.format
   implicit val relative_format: OFormat[Relative] = Relative.format
   implicit val bankaccount_format: OFormat[BankAccount] = BankAccount.format
-  implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
   val format = Jsonx.formatCaseClass[UserData]
 }
