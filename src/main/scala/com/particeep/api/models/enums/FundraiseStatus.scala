@@ -11,10 +11,9 @@ object FundraiseStatus {
   case object SUCCEEDED extends FundraiseStatus
   case object REFUND_ONGOING extends FundraiseStatus
   case object REFUNDED extends FundraiseStatus
-  case object DELETED extends FundraiseStatus
 
   object FundraiseStatus extends EnumHelper[FundraiseStatus] {
-    def values: Set[FundraiseStatus] = Set(INIT, UNDER_REVIEW, RUNNING, SUCCEEDED, REFUND_ONGOING, REFUNDED, DELETED)
+    def values: Set[FundraiseStatus] = Set(INIT, UNDER_REVIEW, RUNNING, SUCCEEDED, REFUND_ONGOING, REFUNDED)
 
     implicit def stringToFundraiseStatus(value: String): FundraiseStatus = get(value).getOrElse(INIT)
   }
