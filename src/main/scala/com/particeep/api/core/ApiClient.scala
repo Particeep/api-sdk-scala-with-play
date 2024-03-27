@@ -86,7 +86,7 @@ trait WSClient {
   def getDoc(
     document_id: String,
     timeOut:     Long
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]]
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
 
   def postStream(
     path:    String,
