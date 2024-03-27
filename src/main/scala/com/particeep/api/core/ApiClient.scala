@@ -216,10 +216,11 @@ class ApiClient(
   def getDoc(
     document_id: String,
     timeOut:     Long
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]] = {
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
     val path = s"$baseUrl/document/$document_id"
-    sslClient
-      .url(path)
+
+    secure(sslClient.url(path), credentials, timeOut)
+      .addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
       .withRequestTimeout(timeOut millis)
       .withMethod(method = "GET")
       .execute()
