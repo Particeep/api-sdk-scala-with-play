@@ -2,6 +2,7 @@ package com.particeep.api
 
 import java.io.File
 import com.particeep.api.core._
+import com.particeep.api.models.enums.FundraiseStatus.FundraiseStatus
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.models.fundraise.loan._
 import com.particeep.api.models.imports.ImportResult
@@ -84,24 +85,8 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredentia
     ws.delete[FundraiseLoan](s"$endPoint/fundraise/$id", timeout)
   }
 
-  def submit(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, FundraiseLoan]] = {
-    ws.post[FundraiseLoan](s"$endPoint/fundraise/$id/submit", timeout, Json.toJson(""))
-  }
-
-  def reject(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, FundraiseLoan]] = {
-    ws.post[FundraiseLoan](s"$endPoint/fundraise/$id/reject", timeout, Json.toJson(""))
-  }
-
-  def launch(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, FundraiseLoan]] = {
-    ws.post[FundraiseLoan](s"$endPoint/fundraise/$id/launch", timeout, Json.toJson(""))
-  }
-
-  def success(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, FundraiseLoan]] = {
-    ws.post[FundraiseLoan](s"$endPoint/fundraise/$id/close", timeout, Json.toJson(""))
-  }
-
-  def refund(id: String, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, FundraiseLoan]] = {
-    ws.post[FundraiseLoan](s"$endPoint/fundraise/$id/refund", timeout, Json.toJson(""))
+  def updateStatus(id: String, new_status: FundraiseStatus, timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, FundraiseLoan]] = {
+    ws.post[FundraiseLoan](s"$endPoint/fundraise/$id/status/$new_status", timeout, Json.toJson(""))
   }
 
   def getLenderRepaymentScheduleEstimation(
