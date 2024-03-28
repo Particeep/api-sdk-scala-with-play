@@ -1,7 +1,6 @@
 package com.particeep.api.models.kyc
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.KycStatus.{ CREATED, KycStatus }
 import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
@@ -14,7 +13,7 @@ case class Kyc(
     refusal_reason:  Option[String]         = None,
     refusal_message: Option[String]         = None,
     status:          KycStatus              = CREATED,
-    urls:            Seq[String]            = Seq()
+    docs_ids:        Seq[String]            = Seq()
 )
 
 object Kyc {

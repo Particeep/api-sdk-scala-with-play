@@ -7,20 +7,20 @@ import com.particeep.api.models.enums.BankAccountStatus.BankAccountStatus
 import play.api.libs.json.{ Format, Json, Writes }
 
 case class BankAccount(
-    id:                     String                    = "",
-    created_at:             Option[OffsetDateTime]    = None,
-    wallet_id:              Option[String]            = None,
-    status:                 Option[BankAccountStatus] = None,
-    bank_name:              String                    = "",
-    iban:                   String                    = "",
-    bic:                    Option[String]            = None,
-    holder_name:            Option[String]            = None,
-    acct_num:               Option[String]            = None,
-    aba_num:                Option[String]            = None,
-    transit_num:            Option[String]            = None,
-    account_type:           Option[String]            = None,
-    justificatory_document: Option[String]            = None,
-    address:                Option[Address]           = None
+    id:                        String                    = "",
+    created_at:                Option[OffsetDateTime]    = None,
+    wallet_id:                 Option[String]            = None,
+    status:                    Option[BankAccountStatus] = None,
+    bank_name:                 String                    = "",
+    iban:                      String                    = "",
+    bic:                       Option[String]            = None,
+    holder_name:               Option[String]            = None,
+    acct_num:                  Option[String]            = None,
+    aba_num:                   Option[String]            = None,
+    transit_num:               Option[String]            = None,
+    account_type:              Option[String]            = None,
+    justificatory_document_id: Option[String]            = None,
+    address:                   Option[Address]           = None
 )
 
 object BankAccount {
