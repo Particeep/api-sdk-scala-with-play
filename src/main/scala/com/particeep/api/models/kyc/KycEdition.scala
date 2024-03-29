@@ -5,7 +5,7 @@ import play.api.libs.json.{ Json, OFormat }
 
 case class KycEdition(
     doc_type: KycType     = ID_CARD,
-    urls:     Seq[String] = Seq()
+    docs_ids: Seq[String] = Seq()
 )
 
 object KycEdition {
