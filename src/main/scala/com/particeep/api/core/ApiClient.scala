@@ -23,6 +23,7 @@ import play.api.libs.json._
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
+
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
     val new_value = (name, value) :: this.http_headers.map(_.toList).getOrElse(List())
