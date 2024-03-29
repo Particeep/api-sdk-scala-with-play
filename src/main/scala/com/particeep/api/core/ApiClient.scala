@@ -223,7 +223,7 @@ class ApiClient(
       .addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
       .withRequestTimeout(timeOut millis)
       .withMethod(method = "GET")
-      .execute()
+      .stream()
       .map(handleResponseForGetDoc(_, document_id))
       .recover {
         case NonFatal(e) => handle_error[DocumentDownload](e, method = "GET", path)
