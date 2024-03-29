@@ -18,7 +18,6 @@ case class BankAccount(
     acct_num:                  Option[String]            = None,
     aba_num:                   Option[String]            = None,
     transit_num:               Option[String]            = None,
-    account_type:              Option[String]            = None,
     justificatory_document_id: Option[String]            = None,
     address:                   Option[Address]           = None
 )
