@@ -42,6 +42,8 @@ case class User(
     business_line:                 Option[String]           = None,
     addresses:                     Option[Seq[Address]]     = None,
     tag:                           Option[String]           = None,
+    investor_score:                Option[Long]             = None,
+    risk:                          Option[String]           = None,
     pro_qualification:             Option[ProQualification] = None,
     account_validation_status:     Option[String]           = None,
     company_business_name:         Option[String]           = None,
