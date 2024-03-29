@@ -47,6 +47,7 @@ case class UserData(
     partner_manager_id:                    Option[String]           = None,
     partner_manager_company_business_name: Option[String]           = None,
     investor_score:                        Option[Long]             = None,
+    risk:                                  Option[String]           = None,
     tag:                                   Option[String]           = None,
     pro_qualification:                     Option[String]           = None,
     account_validation_status:             Option[String]           = None,
