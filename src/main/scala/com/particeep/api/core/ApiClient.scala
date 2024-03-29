@@ -21,6 +21,9 @@ import scala.util.Random
 import scala.util.control.NonFatal
 import play.api.libs.json._
 
+import scala.concurrent.duration._
+import scala.language.postfixOps
+
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
     val new_value = (name, value) :: this.http_headers.map(_.toList).getOrElse(List())
@@ -83,7 +86,6 @@ trait WSClient {
 
   def getDoc(
     document_id: String,
-    path:        String,
     timeOut:     Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
 
@@ -214,10 +216,13 @@ class ApiClient(
 
   def getDoc(
     document_id: String,
-    path:        String,
     timeOut:     Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
-    url(path, timeOut)
+    val path = s"$baseUrl/document/$document_id"
+
+    secure(sslClient.url(path), credentials, timeOut)
+      .addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
+      .withRequestTimeout(timeOut millis)
       .withMethod(method = "GET")
       .stream()
       .map(handleResponseForGetDoc(_, document_id))
