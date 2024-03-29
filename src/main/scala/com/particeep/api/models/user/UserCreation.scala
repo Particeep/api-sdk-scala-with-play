@@ -35,6 +35,7 @@ case class UserCreation(
     subject_to_income_tax:         Option[Boolean]          = None,
     single_fixed_tax_base_1:       Option[Boolean]          = None,
     single_fixed_tax_base_2_and_3: Option[Boolean]          = None,
+    risk:                          Option[String]           = None,
     pro_qualification:             Option[ProQualification] = None,
     profession:                    Option[String]           = None,
     business_line:                 Option[String]           = None,
