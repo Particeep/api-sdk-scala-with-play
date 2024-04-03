@@ -36,22 +36,20 @@ class KycEcspClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
   }
 
   def update(user_id: String, kyc: KycEcspUpdate, kyc_type: KycEcspType, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcsp]] = {
-    kyc_type match {
-      case KycEcspType.LEGAL   => ws.post[KycEcsp.Legal](s"$endPoint/$user_id/$kyc_type", timeout, Json.toJson(kyc))
-      case KycEcspType.NATURAL => ws.post[KycEcsp.Natural](s"$endPoint/$user_id/$kyc_type", timeout, Json.toJson(kyc))
-    }
+    ws.post[KycEcsp](s"$endPoint/$user_id/$kyc_type", timeout, Json.toJson(kyc))(ec, creds, KycEcspParser.format(kyc_type))
   }
 
   def validate(user_id: String, kyc_type: KycEcspType, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcsp]] = {
-    kyc_type match {
-      case KycEcspType.LEGAL   => ws.post[KycEcsp.Legal](s"$endPoint/$user_id/$kyc_type/validate", timeout, JsNull)
-      case KycEcspType.NATURAL => ws.post[KycEcsp.Natural](s"$endPoint/$user_id/$kyc_type/validate", timeout, JsNull)
-    }
+    ws.post[KycEcsp](s"$endPoint/$user_id/$kyc_type/validate", timeout, JsNull)(ec, creds, KycEcspParser.format(kyc_type))
   }
 
   // need api modification changed Seq[KycEcsp] to (Seq[KycEcsp.Legal], Seq[KycEcsp.Natural])
-  def delete(user_id: String, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, (Seq[KycEcsp.Legal], Seq[KycEcsp.Natural])]] = {
+  def delete(user_id: String, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, Any]] = {
     ws.delete[(Seq[KycEcsp.Legal], Seq[KycEcsp.Natural])](s"$endPoint/$user_id", timeout)
   }
+
+  //def delete(user_id: String, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, JsValue]] = {
+  //ws.delete[JsValue](s"$endPoint/$user_id", timeout)
+  //}
 
 }
