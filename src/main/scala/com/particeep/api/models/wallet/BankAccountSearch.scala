@@ -30,7 +30,7 @@ object BankAccountSearch {
       "bic" -> optional(text),
       "acct_num" -> optional(text),
       "aba_num" -> optional(text),
-      "transit_num" -> optional(text),
+      "transit_num" -> optional(text)
     )(BankAccountSearch.apply)(BankAccountSearch.unapply)
   )
 }
