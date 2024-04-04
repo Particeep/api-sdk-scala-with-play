@@ -7,6 +7,7 @@ import play.api.libs.json.{ JsNull, Json }
 import com.particeep.api.core._
 import com.particeep.api.models.ErrorResult
 import com.particeep.api.models.enums.KycEcspType
+import com.particeep.api.models.kyc_ecsp.KycEcspParser
 
 trait KycEcspCapability {
   self: WSClient =>
@@ -43,13 +44,7 @@ class KycEcspClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
     ws.post[KycEcsp](s"$endPoint/$user_id/$kyc_type/validate", timeout, JsNull)(ec, creds, KycEcspParser.format(kyc_type))
   }
 
-  // need api modification changed Seq[KycEcsp] to (Seq[KycEcsp.Legal], Seq[KycEcsp.Natural])
-  def delete(user_id: String, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, Any]] = {
-    ws.delete[(Seq[KycEcsp.Legal], Seq[KycEcsp.Natural])](s"$endPoint/$user_id", timeout)
+  def delete(user_id: String, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcspCollection]] = {
+    ws.delete[KycEcspCollection](s"$endPoint/$user_id", timeout)
   }
-
-  //def delete(user_id: String, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, JsValue]] = {
-  //ws.delete[JsValue](s"$endPoint/$user_id", timeout)
-  //}
-
 }
