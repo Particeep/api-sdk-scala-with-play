@@ -52,7 +52,4 @@ object KycEcsp {
       tag:                         Option[String]         = None,
       custom:                      Option[JsObject]       = None
   ) extends KycEcsp
-
-  //implicit val kyc_ecsp_natural_format: OFormat[Natural] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
-  //implicit val kyc_ecsp_legal_format: OFormat[Legal] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Legal]
 }
