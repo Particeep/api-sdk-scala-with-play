@@ -11,7 +11,7 @@ case class BankAccount(
     created_at:                Option[OffsetDateTime]    = None,
     wallet_id:                 Option[String]            = None,
     status:                    Option[BankAccountStatus] = None,
-    bank_name:                 String                    = "",
+    bank_name:                 Option[String]            = None,
     iban:                      String                    = "",
     bic:                       Option[String]            = None,
     holder_name:               Option[String]            = None,
