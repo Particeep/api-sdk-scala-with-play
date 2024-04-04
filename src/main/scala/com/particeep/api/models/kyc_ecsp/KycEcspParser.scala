@@ -3,13 +3,12 @@ package com.particeep.api.models.kyc_ecsp
 import ai.x.play.json.Jsonx
 import ai.x.play.json.Encoders.encoder
 import com.particeep.api.models.enums.KycEcspType
-import com.particeep.api.models.kyc_ecsp.KycEcsp.{ Legal, Natural }
 import play.api.libs.Files.logger
 import play.api.libs.json.{ Format, JsNull, JsResult, JsValue, OFormat, Reads, Writes }
 
 object KycEcspParser {
-  implicit val kyc_ecsp_natural_format: OFormat[Natural] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
-  implicit val kyc_ecsp_legal_format: OFormat[Legal] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Legal]
+  implicit val kyc_ecsp_natural_format: OFormat[KycEcsp.Natural] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
+  implicit val kyc_ecsp_legal_format: OFormat[KycEcsp.Legal] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Legal]
 
   private[this] def doFormat(kyc_type: KycEcspType): Format[KycEcsp] = {
     val writes = new Writes[KycEcsp] {
