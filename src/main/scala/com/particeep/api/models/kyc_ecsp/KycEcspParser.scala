@@ -7,15 +7,18 @@ import play.api.libs.Files.logger
 import play.api.libs.json.{ Format, JsNull, JsResult, JsValue, OFormat, Reads, Writes }
 
 object KycEcspParser {
-  implicit val kyc_ecsp_natural_format: OFormat[KycEcsp.Natural] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
   implicit val kyc_ecsp_legal_format: OFormat[KycEcsp.Legal] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Legal]
+  implicit val kyc_ecsp_natural_format: OFormat[KycEcsp.Natural] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
 
   private[this] def doFormat(kyc_type: KycEcspType): Format[KycEcsp] = {
     val writes = new Writes[KycEcsp] {
       def writes(o: KycEcsp): JsValue = (kyc_type, o) match {
         case (KycEcspType.LEGAL, l: KycEcsp.Legal)     => kyc_ecsp_legal_format.writes(l)
         case (KycEcspType.NATURAL, n: KycEcsp.Natural) => kyc_ecsp_natural_format.writes(n)
-        case _                                         => logger.error("Unexpected error, type of kyc not matching"); JsNull
+        case _ => {
+          logger.error("error.KycEcspParser.doFormat.kyc_types_not_matching")
+          JsNull
+        }
       }
     }
 
