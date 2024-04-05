@@ -11,14 +11,13 @@ case class BankAccount(
     created_at:                Option[OffsetDateTime]    = None,
     wallet_id:                 Option[String]            = None,
     status:                    Option[BankAccountStatus] = None,
-    bank_name:                 String                    = "",
+    bank_name:                 Option[String]            = None,
     iban:                      String                    = "",
     bic:                       Option[String]            = None,
     holder_name:               Option[String]            = None,
     acct_num:                  Option[String]            = None,
     aba_num:                   Option[String]            = None,
     transit_num:               Option[String]            = None,
-    account_type:              Option[String]            = None,
     justificatory_document_id: Option[String]            = None,
     address:                   Option[Address]           = None
 )
