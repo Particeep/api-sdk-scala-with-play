@@ -3,7 +3,7 @@ package com.particeep.api.models.wallet
 import play.api.libs.json.Json
 
 case class BankAccountCreation(
-    bank_name:                 String,
+    bank_name:                 Option[String] = None,
     iban:                      String,
     bic:                       Option[String] = None,
     number:                    Option[String] = None,
@@ -16,7 +16,6 @@ case class BankAccountCreation(
     aba_num:                   Option[String] = None,
     transit_num:               Option[String] = None,
     owner_ip:                  Option[String] = None,
-    account_type:              Option[String] = None,
     justificatory_document_id: Option[String] = None,
     target_id:                 Option[String] = None
 )
