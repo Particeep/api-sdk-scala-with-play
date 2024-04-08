@@ -16,7 +16,7 @@ import play.api.Logging
 import java.io.File
 import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
-import scala.util.Random
+import scala.util.{ Failure, Random, Success, Try }
 import scala.util.control.NonFatal
 
 import com.particeep.api.models.document.{ DocumentDownload, TimeBoundedUrls }
@@ -251,12 +251,6 @@ class ApiClient(
       }
   }
 
-  /**
-   * TODO :
-   *    - comprendre comment je peux gérer le sink (voir les manières de faire)
-   *    - tester pour voir si on n'a plus le warning
-   *    - expliquer dans le canal dev + slite comment utiliser tout ça et eviter response.body
-   */
   private[this] def handleResponseForGetDoc(
     response:    StandaloneWSRequest#Response,
     document_id: String
@@ -270,10 +264,10 @@ class ApiClient(
       val flow = Flow[ByteString]
         .reduce(_ ++ _)
         .map(_.utf8String)
-        .map(Json.parse)
+        .map(convertStringToJson)
         .map(manageError)
 
-      val default_error = Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("empty body"))))
+      val default_error = Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("body response is not a JSON"))))
       val sink = Sink.fold[Left[ErrorResult, DocumentDownload], Left[ErrorResult, DocumentDownload]](default_error) {
         case (_, u) => u
       }
@@ -284,6 +278,14 @@ class ApiClient(
     }
   }
 
+  private[this] def convertStringToJson(data: String): JsValue = {
+    Try {
+      Json.parse(data)
+    } match {
+      case Failure(_)     => JsString(data)
+      case Success(value) => value
+    }
+  }
   private[this] def manageError(json: JsValue): Left[ErrorResult, DocumentDownload] = {
     validateStandardError(json)
       .map(Left[ErrorResult, DocumentDownload])
