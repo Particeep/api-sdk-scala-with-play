@@ -3,13 +3,15 @@ package com.particeep.api.core
 import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import akka.stream.scaladsl.Source
+import akka.stream.scaladsl.{ Flow, Keep, Sink, Source }
 import akka.util.ByteString
 import play.api.libs.json._
 import play.api.libs.ws._
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
-import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilder }
+import com.particeep.api.models.ParsingError
+import com.particeep.api.models.document.TimeBoundedUrls
+import play.api.Logging
 
 import java.io.File
 import scala.concurrent.duration._
@@ -137,7 +139,7 @@ class ApiClient(
   val version:         String,
   val credentials:     Option[ApiCredential] = None
 )(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity
-    with ResponseParser {
+    with ResponseParser with Logging {
 
   val defaultTimeOut: Long       = 10000
   val defaultImportTimeOut: Long = -1
@@ -243,27 +245,49 @@ class ApiClient(
       .withRequestTimeout(timeOut millis)
       .withMethod(method = "GET")
       .stream()
-      .map(handleResponseForGetDoc(_, document_id))
+      .flatMap(handleResponseForGetDoc(_, document_id))
       .recover {
         case NonFatal(e) => handle_error[DocumentDownload](e, method = "GET", path)
       }
   }
 
+  /**
+   * TODO :
+   *    - comprendre comment je peux gérer le sink (voir les manières de faire)
+   *    - tester pour voir si on n'a plus le warning
+   *    - expliquer dans le canal dev + slite comment utiliser tout ça et eviter response.body
+   */
   private[this] def handleResponseForGetDoc(
     response:    StandaloneWSRequest#Response,
     document_id: String
-  ): Either[ErrorResult, DocumentDownload] = {
-    if(response.status < 300) {
-      Right(DocumentDownload(id = document_id, body = response.bodyAsSource, headers = response.headers))
+  ): Future[Either[ErrorResult, DocumentDownload]] = {
+    if (response.status < 300) {
+      Future.successful(
+        Right(DocumentDownload(id = document_id, body = response.bodyAsSource, headers = response.headers))
+      )
     } else {
-      val json = response.body[JsValue]
-      validateStandardError(json)
-        .map(Left[ErrorResult, DocumentDownload])
-        .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(
-          hasError = true,
-          errors   = List(JsString("error.standard_error.unknown_error"), json)
-        )))
+      val source = response.bodyAsSource
+      val flow = Flow[ByteString]
+        .reduce(_ ++ _)
+        .map(_.utf8String)
+        .map(Json.parse)
+        .map(manageError)
+
+      val default_error = Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("empty body"))))
+      val sink = Sink.fold[Left[ErrorResult, DocumentDownload], Left[ErrorResult, DocumentDownload]](default_error) {
+        case (_, u) => u
+      }
+
+      val stream = source.via(flow).toMat(sink)(Keep.right)
+
+      StreamHelper.with_default_supervision(stream).run()
     }
+  }
+
+  private[this] def manageError(json: JsValue): Left[ErrorResult, DocumentDownload] = {
+    validateStandardError(json)
+      .map(Left[ErrorResult, DocumentDownload])
+      .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), json))))
   }
 
   def postStream(
