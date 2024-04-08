@@ -43,7 +43,7 @@ class KycEcspClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
     ws.post[KycEcsp](s"$endPoint/$user_id/$kyc_type/validate", timeout, JsNull)
   }
 
-  def delete(user_id: String, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, KycEcspCollection]] = {
-    ws.delete[KycEcspCollection](s"$endPoint/$user_id", timeout)
+  def delete(user_id: String, timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, Seq[KycEcsp]]] = {
+    ws.delete[Seq[KycEcsp]](s"$endPoint/$user_id", timeout)
   }
 }
