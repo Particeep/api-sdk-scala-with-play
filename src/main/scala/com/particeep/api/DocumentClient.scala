@@ -47,7 +47,8 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
       new StringPart("path", document_creation.path.getOrElse("")),
       new StringPart("tag", document_creation.tag.getOrElse("")),
       new StringPart("locked", document_creation.locked.getOrElse(false).toString),
-      new StringPart("override_existing_file", document_creation.override_existing_file.getOrElse(false).toString)
+      new StringPart("override_existing_file", document_creation.override_existing_file.getOrElse(false).toString),
+      new StringPart("scope", document_creation.scope.getOrElse(Scope.PRIVATE).name)
     )
     ws.postFile[Document](s"$endPoint/$owner_id/upload", timeout, file, content_type, bodyParts)
   }
