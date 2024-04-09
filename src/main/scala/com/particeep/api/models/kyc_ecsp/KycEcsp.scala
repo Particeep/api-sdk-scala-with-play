@@ -1,8 +1,9 @@
 package com.particeep.api.models.kyc_ecsp
 
-import java.time.OffsetDateTime
-import ai.x.play.json.Encoders._
+import ai.x.play.json.Encoders.encoder
 import ai.x.play.json.Jsonx
+
+import java.time.OffsetDateTime
 import play.api.libs.json.{ Format, JsObject, OFormat }
 
 sealed trait KycEcsp {
@@ -25,9 +26,9 @@ object KycEcsp {
       user_id:                     String,
       updated_at:                  Option[OffsetDateTime] = None,
       validated_at:                Option[OffsetDateTime] = None,
-      is_pro:                      Boolean                = false,
-      has_high_income:             Boolean                = false,
-      has_done_many_transactions:  Boolean                = false,
+      is_pro:                      Boolean,
+      has_high_income:             Boolean,
+      has_done_many_transactions:  Boolean,
       annual_income:               Option[Long]           = None,
       amount_of_assets:            Option[Long]           = None,
       amount_of_debt:              Option[Long]           = None,
@@ -44,9 +45,9 @@ object KycEcsp {
       user_id:                     String,
       updated_at:                  Option[OffsetDateTime] = None,
       validated_at:                Option[OffsetDateTime] = None,
-      has_high_capital:            Boolean                = false,
-      has_high_sales_figures:      Boolean                = false,
-      has_high_balance_sheet:      Boolean                = false,
+      has_high_capital:            Boolean,
+      has_high_sales_figures:      Boolean,
+      has_high_balance_sheet:      Boolean,
       operating_income:            Option[Long]           = None,
       is_sophisticated:            Boolean                = false,
       net_worth:                   Long                   = 0L,
@@ -55,7 +56,7 @@ object KycEcsp {
       custom:                      Option[JsObject]       = None
   ) extends KycEcsp
 
-  implicit val kyc_ecsp_natural_format: OFormat[Natural] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
-  implicit val kyc_ecsp_legal_format: OFormat[Legal] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Legal]
+  implicit val kyc_ecsp_legal_format: OFormat[KycEcsp.Legal] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Legal]
+  implicit val kyc_ecsp_natural_format: OFormat[KycEcsp.Natural] = Jsonx.formatCaseClassUseDefaults[KycEcsp.Natural]
   implicit val kyc_ecsp_format: Format[KycEcsp] = Jsonx.formatSealed[KycEcsp]
 }
