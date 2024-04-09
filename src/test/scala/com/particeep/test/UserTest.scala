@@ -1,23 +1,20 @@
 package com.particeep.test
 
 import akka.actor.ActorSystem
-import akka.stream.Materializer
-
-import scala.language.postfixOps
-import com.particeep.api.models.user.User
-import com.particeep.api.core.ApiClient
-import com.particeep.api.models._
-import com.particeep.api.UserCapability
-import com.particeep.api.ParticeepApi
-import javax.inject.{ Inject, Singleton }
+import play.api.libs.json._
 import play.api.libs.ws.StandaloneWSResponse
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.duration._
+
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.Reads
 
-import scala.concurrent.{ Await, Future }
-import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext.Implicits.global
+import com.particeep.api.core.ApiClient
+import com.particeep.api.models._
+import com.particeep.api.models.user.User
+import com.particeep.api.{ ParticeepApi, UserCapability }
 
 class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
@@ -25,11 +22,11 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
   "the api client" should "load user by id with correct date format" in {
 
-    val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = new ApiClient(ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
+    val user_id                                  = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
+    val ws                                       = new ApiClient(ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
     val rez_f: Future[Either[ErrorResult, User]] = ws.user.byId(user_id)
 
-    val rez = Await.result(rez_f, 10 seconds)
+    val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
     val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
@@ -41,11 +38,11 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
   "the api client" should "load user by id with direct credentials" in {
 
-    val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = new ApiClient(ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
+    val user_id                                  = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
+    val ws                                       = new ApiClient(ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
     val rez_f: Future[Either[ErrorResult, User]] = ws.user.byId(user_id)
 
-    val rez = Await.result(rez_f, 10 seconds)
+    val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
     val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
@@ -54,12 +51,12 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
   "the api client" should "load user by id with custom credentials" in {
 
-    val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = new ApiClient(ConfigTest.baseUrl, ConfigTest.version) with UserCapability
-    val credentials = ConfigTest.credential
+    val user_id                                  = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
+    val ws                                       = new ApiClient(ConfigTest.baseUrl, ConfigTest.version) with UserCapability
+    val credentials                              = ConfigTest.credential
     val rez_f: Future[Either[ErrorResult, User]] = ws.user(credentials).byId(user_id)
 
-    val rez = Await.result(rez_f, 10 seconds)
+    val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
     val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
@@ -68,11 +65,11 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
   "the api client" should "load user by id with helper" in {
 
-    val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = ParticeepApi.test(ConfigTest.credential.apiKey, ConfigTest.credential.apiSecret)
+    val user_id                                  = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
+    val ws                                       = ParticeepApi.test(ConfigTest.credential.apiKey, ConfigTest.credential.apiSecret)
     val rez_f: Future[Either[ErrorResult, User]] = ws.user.byId(user_id)
 
-    val rez = Await.result(rez_f, 10 seconds)
+    val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
     val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
@@ -81,13 +78,13 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
   "the api client" should "load user by id with helper and overload credentials" in {
 
-    val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = ParticeepApi.test(ConfigTest.credential.apiKey, ConfigTest.credential.apiSecret)
+    val user_id     = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
+    val ws          = ParticeepApi.test(ConfigTest.credential.apiKey, ConfigTest.credential.apiSecret)
     val credentials = ConfigTest.credential
 
     val rez_f: Future[Either[ErrorResult, User]] = ws.user(credentials).byId(user_id)
 
-    val rez = Await.result(rez_f, 10 seconds)
+    val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
 
     val user = rez.getOrElse(User(id = "1234", email = "toto@gmail.com"))
@@ -97,7 +94,7 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
   "the api client" should "load user by id with helper and overload credentials with custom header" in {
 
     val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws = new ApiClient("https://test-api.particeep.com", "1", Some(ConfigTest.credential)) with UserCapability {
+    val ws      = new ApiClient("https://test-api.particeep.com", "1", Some(ConfigTest.credential)) with UserCapability {
       override def parse[A](response: StandaloneWSResponse)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
         val msg = response
           .headers
@@ -114,10 +111,10 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
     val rez_f: Future[Either[ErrorResult, User]] = ws.user(credentials).byId(user_id)
 
-    val rez = Await.result(rez_f, 10 seconds)
+    val rez = await(rez_f, 10 seconds)
     rez.isLeft shouldBe true
 
-    val error_msg = rez.left.getOrElse(Errors).asInstanceOf[Errors]
+    val error_msg    = rez.swap.map(_.asInstanceOf[Errors]).getOrElse(Errors(hasError = true, List.empty))
     val maybe_header = error_msg.errors
       .flatMap(_.message.split(","))
       .filter(_.contains("Info-End-User"))

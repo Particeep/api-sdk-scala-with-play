@@ -15,6 +15,7 @@ object ControlBlockType {
     }
   }
 
+  @SuppressWarnings(Array("scalafix:DisableSyntax.throw"))
   private[this] def enumWrites: Writes[ControlBlockType] = new Writes[ControlBlockType] {
     def writes(v: ControlBlockType): JsValue = v match {
       case blockType: ControlControlBlockType     => Json.toJson(blockType)

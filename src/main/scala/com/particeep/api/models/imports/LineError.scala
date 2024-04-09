@@ -6,8 +6,8 @@ import play.api.libs.json.Json
  * Created by Noe on 10/04/2017.
  */
 case class LineError(
-    line:   Int,
-    output: String
+  line:   Int,
+  output: String
 )
 
 object LineError {

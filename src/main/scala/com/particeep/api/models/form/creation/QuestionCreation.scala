@@ -1,18 +1,19 @@
 package com.particeep.api.models.form.creation
 
-import com.particeep.api.models.enums.QuestionType.QuestionType
 import play.api.libs.json.Json
 
+import com.particeep.api.models.enums.QuestionType.QuestionType
+
 case class QuestionCreation(
-    section_id:        String,
-    label:             Option[Map[String, String]] = None,
-    description:       Option[Map[String, String]] = None,
-    question_type:     Option[QuestionType]        = None,
-    required:          Option[Boolean]             = None,
-    pattern:           Option[String]              = None,
-    index:             Option[Int]                 = None,
-    document_filename: Option[String]              = None,
-    tag:               Option[String]              = None
+  section_id:        String,
+  label:             Option[Map[String, String]] = None,
+  description:       Option[Map[String, String]] = None,
+  question_type:     Option[QuestionType]        = None,
+  required:          Option[Boolean]             = None,
+  pattern:           Option[String]              = None,
+  index:             Option[Int]                 = None,
+  document_filename: Option[String]              = None,
+  tag:               Option[String]              = None
 )
 
 object QuestionCreation {
