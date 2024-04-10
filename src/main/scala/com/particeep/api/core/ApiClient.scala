@@ -5,19 +5,18 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import akka.stream.scaladsl.{ Flow, Keep, Sink, Source }
 import akka.util.ByteString
+import play.api.Logging
 import play.api.libs.json._
 import play.api.libs.ws._
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
+import play.shaded.ahc.org.asynchttpclient._
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
-import com.particeep.api.models.ParsingError
-import com.particeep.api.models.document.TimeBoundedUrls
-import play.api.Logging
 
 import java.io.File
 import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
-import scala.util.{ Failure, Random, Success, Try }
 import scala.util.control.NonFatal
+import scala.util.{ Failure, Random, Success, Try }
 
 import com.particeep.api.models.document.{ DocumentDownload, TimeBoundedUrls }
 import com.particeep.api.models.{ Error, ErrorResult, Errors, ParsingError }
@@ -255,19 +254,23 @@ class ApiClient(
     response:    StandaloneWSRequest#Response,
     document_id: String
   ): Future[Either[ErrorResult, DocumentDownload]] = {
-    if (response.status < 300) {
+    if(response.status < 300) {
       Future.successful(
         Right(DocumentDownload(id = document_id, body = response.bodyAsSource, headers = response.headers))
       )
     } else {
       val source = response.bodyAsSource
-      val flow = Flow[ByteString]
+      val flow   = Flow[ByteString]
         .reduce(_ ++ _)
         .map(_.utf8String)
         .map(convertStringToJson)
         .map(manageError)
 
-      val default_error = Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("body response is not a JSON"))))
+      val default_error = Left[ErrorResult, DocumentDownload](ParsingError(
+        hasError = true,
+        errors   = List(JsString("body response is not a JSON"))
+      ))
+
       val sink = Sink.fold[Left[ErrorResult, DocumentDownload], Left[ErrorResult, DocumentDownload]](default_error) {
         case (_, u) => u
       }
@@ -286,10 +289,14 @@ class ApiClient(
       case Success(value) => value
     }
   }
+
   private[this] def manageError(json: JsValue): Left[ErrorResult, DocumentDownload] = {
     validateStandardError(json)
       .map(Left[ErrorResult, DocumentDownload])
-      .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), json))))
+      .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(
+        hasError = true,
+        errors   = List(JsString("error.standard_error.unknown_error"), json)
+      )))
   }
 
   def postStream(
