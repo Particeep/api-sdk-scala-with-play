@@ -4,8 +4,8 @@ object TransactionWalletStatus {
 
   sealed abstract class TransactionWalletStatus extends Product with Enum
 
-  case object PENDING extends TransactionWalletStatus
-  case object FAILED extends TransactionWalletStatus
+  case object PENDING   extends TransactionWalletStatus
+  case object FAILED    extends TransactionWalletStatus
   case object VALIDATED extends TransactionWalletStatus
 
   object TransactionWalletStatus extends EnumHelper[TransactionWalletStatus] {

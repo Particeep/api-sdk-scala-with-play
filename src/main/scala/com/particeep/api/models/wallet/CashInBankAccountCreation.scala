@@ -1,13 +1,14 @@
 package com.particeep.api.models.wallet
 
-import com.particeep.api.models.enums.Country.Country
 import play.api.libs.json.Json
 
+import com.particeep.api.models.enums.Country.Country
+
 case class CashInBankAccountCreation(
-    amount:   Int,
-    fees:     Option[Int]     = None,
-    owner_ip: Option[String]  = None,
-    country:  Option[Country] = None
+  amount:   Int,
+  fees:     Option[Int]     = None,
+  owner_ip: Option[String]  = None,
+  country:  Option[Country] = None
 )
 
 object CashInBankAccountCreation {

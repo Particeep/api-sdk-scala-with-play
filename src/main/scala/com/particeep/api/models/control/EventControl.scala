@@ -3,13 +3,13 @@ package com.particeep.api.models.control
 import play.api.libs.json.{ JsValue, Json, OFormat }
 
 final case class EventControl(
-    id:         String,
-    name:       String,
-    created_at: String,
-    created_by: String,
-    entity_id:  String,
-    payload:    JsValue,
-    tags:       Set[String]
+  id:         String,
+  name:       String,
+  created_at: String,
+  created_by: String,
+  entity_id:  String,
+  payload:    JsValue,
+  tags:       Set[String]
 )
 
 object EventControl {

@@ -1,28 +1,24 @@
 package com.particeep.api.core
 
-import java.io.File
 import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.Materializer
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
-import com.particeep.api.models.document.DocumentDownload
-import com.particeep.api.models.{ Error, ErrorResult, Errors }
+import play.api.libs.json._
 import play.api.libs.ws._
-import play.api.libs.json.{ Format, JsValue, Json }
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
-import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilder }
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
-import com.particeep.api.models.ParsingError
-import com.particeep.api.models.document.TimeBoundedUrls
+import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilder }
 
+import java.io.File
+import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
 import scala.util.control.NonFatal
-import play.api.libs.json._
 
-import scala.concurrent.duration._
-import scala.language.postfixOps
+import com.particeep.api.models.document.{ DocumentDownload, TimeBoundedUrls }
+import com.particeep.api.models.{ Error, ErrorResult, Errors, ParsingError }
 
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
@@ -45,61 +41,67 @@ trait WSClient {
    * @return
    */
   def get[T](
-    path:    String,
-    timeOut: Long,
-    params:  List[(String, String)] = List()
+    path:          String,
+    timeOut:       Long,
+    params:        List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
 
   def post[T](
-    path:    String,
-    timeOut: Long,
-    body:    JsValue,
-    params:  List[(String, String)] = List()
+    path:          String,
+    timeOut:       Long,
+    body:          JsValue,
+    params:        List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
 
   def put[T](
-    path:    String,
-    timeOut: Long,
-    body:    JsValue
+    path:          String,
+    timeOut:       Long,
+    body:          JsValue
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
 
   def delete[T](
-    path:    String,
-    timeOut: Long,
-    body:    JsValue                = Json.toJson(""),
-    params:  List[(String, String)] = List()
+    path:          String,
+    timeOut:       Long,
+    body:          JsValue = Json.toJson(""),
+    params:        List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
 
   def postFile[T](
-    path:         String,
-    timeOut:      Long,
-    file:         File,
-    content_type: String,
-    bodyParts:    List[Part]
+    path:          String,
+    timeOut:       Long,
+    file:          File,
+    content_type:  String,
+    bodyParts:     List[Part]
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
 
   def getStream(
-    path:    String,
-    timeOut: Long,
-    params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
+    path:        String,
+    timeOut:     Long,
+    params:      List[(String, String)] = List()
+  )(implicit
+    exec:        ExecutionContext,
+    credentials: ApiCredential
+  ): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 
   def getDoc(
-    document_id: String,
-    timeOut:     Long
+    document_id:   String,
+    timeOut:       Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
 
   def postStream(
-    path:    String,
-    timeOut: Long,
-    body:    JsValue,
-    params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
+    path:        String,
+    timeOut:     Long,
+    body:        JsValue,
+    params:      List[(String, String)] = List()
+  )(implicit
+    exec:        ExecutionContext,
+    credentials: ApiCredential
+  ): Future[Either[ErrorResult, Source[ByteString, NotUsed]]]
 
   def generateTimeBoundedUrls(
-    path:         String,
-    timeOut:      Long,
-    documentsIds: List[String]
+    path:          String,
+    timeOut:       Long,
+    documentsIds:  List[String]
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, TimeBoundedUrls]]
 }
 
@@ -131,12 +133,13 @@ trait BaseClient {
  * val result:Future[Either[JsError, Info]] = ws.user.byId("some_id")
  */
 class ApiClient(
-    val baseUrl:     String,
-    val version:     String,
-    val credentials: Option[ApiCredential] = None
-)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity with ResponseParser {
+  val baseUrl:         String,
+  val version:         String,
+  val credentials:     Option[ApiCredential] = None
+)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity
+    with ResponseParser {
 
-  val defaultTimeOut: Long = 10000
+  val defaultTimeOut: Long       = 10000
   val defaultImportTimeOut: Long = -1
 
   private[this] def url(path: String, timeOut: Long)(implicit credentials: ApiCredential): StandaloneWSRequest = {
@@ -144,58 +147,70 @@ class ApiClient(
     secure(req, credentials, timeOut).addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
   }
 
-  private[this] def urlFileUpload(path: String, client: AsyncHttpClient, timeOut: Long)(implicit credentials: ApiCredential): BoundRequestBuilder = {
+  private[this] def urlFileUpload(path: String, client: AsyncHttpClient, timeOut: Long)(implicit
+    credentials:                        ApiCredential
+  ): BoundRequestBuilder = {
     val postBuilder = client.preparePost(s"$baseUrl/v$version$path")
-    val url = secure(postBuilder, credentials, timeOut)
+    val url         = secure(postBuilder, credentials, timeOut)
     credentials.http_headers.map(_.foldLeft(url) { (acc, elem) =>
       acc.addHeader(elem._1, elem._2)
     }).getOrElse(url)
   }
 
-  def get[T](path: String, timeOut: Long, params: List[(String, String)] = List())(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
+  def get[T](path: String, timeOut: Long, params: List[(String, String)] = List())(implicit
+    exec:          ExecutionContext,
+    credentials:   ApiCredential,
+    f:             Format[T]
+  ): Future[Either[ErrorResult, T]] = {
     url(path, timeOut).withQueryStringParameters(params: _*).get().map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "GET", path)
     }
   }
 
   def post[T](
-    path:    String,
-    timeOut: Long,
-    body:    JsValue,
-    params:  List[(String, String)] = List()
+    path:          String,
+    timeOut:       Long,
+    body:          JsValue,
+    params:        List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
     url(path, timeOut).withQueryStringParameters(params: _*).post(body).map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "POST", path)
     }
   }
 
-  def put[T](path: String, timeOut: Long, body: JsValue)(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
+  def put[T](path: String, timeOut: Long, body: JsValue)(implicit
+    exec:          ExecutionContext,
+    credentials:   ApiCredential,
+    f:             Format[T]
+  ): Future[Either[ErrorResult, T]] = {
     url(path, timeOut).put(body).map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "PUT", path)
     }
   }
 
   def delete[T](
-    path:    String,
-    timeOut: Long,
-    body:    JsValue                = Json.toJson(""),
-    params:  List[(String, String)] = List()
+    path:          String,
+    timeOut:       Long,
+    body:          JsValue = Json.toJson(""),
+    params:        List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    url(path, timeOut).withQueryStringParameters(params: _*).withMethod("DELETE").withBody(body).execute().map(parse[T](_)).recover {
+    url(path, timeOut).withQueryStringParameters(params: _*).withMethod("DELETE").withBody(body).execute().map(parse[T](
+      _
+    )).recover {
       case NonFatal(e) => handle_error(e, "DELETE", path)
     }
   }
 
   def postFile[T](
-    path:        String,
-    timeout:     Long,
-    file:        File,
-    contentType: String,
-    bodyParts:   List[Part]
+    path:          String,
+    timeout:       Long,
+    file:          File,
+    contentType:   String,
+    bodyParts:     List[Part]
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]] = {
-    val client = sslClient.underlying[AsyncHttpClient]
+    val client      = sslClient.underlying[AsyncHttpClient]
     val postBuilder = urlFileUpload(path, client, timeout)
-    val builder = postBuilder.addBodyPart(
+    val builder     = postBuilder.addBodyPart(
       new FilePart("document", file, contentType)
     )
     bodyParts.map(builder.addBodyPart(_))
@@ -205,18 +220,21 @@ class ApiClient(
   }
 
   def getStream(
-    path:    String,
-    timeOut: Long,
-    params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
+    path:        String,
+    timeOut:     Long,
+    params:      List[(String, String)] = List()
+  )(implicit
+    exec:        ExecutionContext,
+    credentials: ApiCredential
+  ): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     parseStream(url(path, timeOut).withQueryStringParameters(params: _*).withMethod("GET")).recover {
       case NonFatal(e) => handle_error[Source[ByteString, NotUsed]](e, "GET", path)
     }
   }
 
   def getDoc(
-    document_id: String,
-    timeOut:     Long
+    document_id:   String,
+    timeOut:       Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
     val path = s"$baseUrl/document/$document_id"
 
@@ -235,31 +253,37 @@ class ApiClient(
     response:    StandaloneWSRequest#Response,
     document_id: String
   ): Either[ErrorResult, DocumentDownload] = {
-    if (response.status < 300) {
+    if(response.status < 300) {
       Right(DocumentDownload(id = document_id, body = response.bodyAsSource, headers = response.headers))
     } else {
       val json = response.body[JsValue]
       validateStandardError(json)
         .map(Left[ErrorResult, DocumentDownload])
-        .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(hasError = true, errors = List(JsString("error.standard_error.unknown_error"), json))))
+        .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(
+          hasError = true,
+          errors   = List(JsString("error.standard_error.unknown_error"), json)
+        )))
     }
   }
 
   def postStream(
-    path:    String,
-    timeOut: Long,
-    body:    JsValue,
-    params:  List[(String, String)] = List()
-  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
+    path:        String,
+    timeOut:     Long,
+    body:        JsValue,
+    params:      List[(String, String)] = List()
+  )(implicit
+    exec:        ExecutionContext,
+    credentials: ApiCredential
+  ): Future[Either[ErrorResult, Source[ByteString, NotUsed]]] = {
     parseStream(url(path, timeOut).withQueryStringParameters(params: _*).withMethod("POST").withBody(body)).recover {
       case NonFatal(e) => handle_error[Source[ByteString, NotUsed]](e, "POST", path)
     }
   }
 
   def generateTimeBoundedUrls(
-    path:         String,
-    timeOut:      Long,
-    documentsIds: List[String]
+    path:          String,
+    timeOut:       Long,
+    documentsIds:  List[String]
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, TimeBoundedUrls]] = {
     url(path, timeOut)
       .withQueryStringParameters(parameters = "ids" -> documentsIds.mkString(","))
@@ -273,8 +297,8 @@ class ApiClient(
 
   private[this] def handle_error[T](e: Throwable, method: String, path: String): Either[ErrorResult, T] = {
     val technical_code = "error.api.no.response"
-    val error_msg = s"ApiClient error for $method method on path $path"
-    val error_id = "#" + Random.alphanumeric.take(8).mkString
+    val error_msg      = s"ApiClient error for $method method on path $path"
+    val error_id       = "#" + Random.alphanumeric.take(8).mkString
     Left(Errors(true, List(Error(technical_code, error_msg, Some(error_id), Some(e.getMessage)))))
   }
 }

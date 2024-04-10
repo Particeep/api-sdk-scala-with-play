@@ -12,9 +12,26 @@ resolvers += Classpaths.sbtPluginReleases
 
 // code plugins
 
-addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0" excludeAll(
-  ExclusionRule(organization = "com.danieltrinh")))
+addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0" excludeAll (
+  ExclusionRule(organization = "com.danieltrinh")
+))
 
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.6.1")
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.0.9")
 
-addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.8.3")
+// scala lint tool : https://github.com/puffnfresh/wartremover
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.1.6")
+
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.11.1")
+
+// run sbt dependencyCheckAnyProject
+// doc generated in /particeep-api/target/scala-2.13/dependency-check-report.html
+addSbtPlugin("net.vonbuchholtz" % "sbt-dependency-check" % "5.1.0")
+
+// This is an issue with lib / sbt plugin who don't have the same version for scala-xml
+// Binary compatility is "nearly" ok between scala-xml version
+// And this impact only sbt coverage test in jenkins
+// cf. https://github.com/sbt/sbt/issues/6997
+ThisBuild / libraryDependencySchemes ++= Seq(
+  "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always
+)

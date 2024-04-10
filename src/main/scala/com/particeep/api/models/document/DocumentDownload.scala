@@ -5,9 +5,9 @@ import akka.util.ByteString
 import play.api.http.HeaderNames
 
 case class DocumentDownload(
-    id:      String,
-    body:    Source[ByteString, _],
-    headers: Map[String, scala.collection.Seq[String]]
+  id:      String,
+  body:    Source[ByteString, _],
+  headers: Map[String, scala.collection.Seq[String]]
 ) {
   lazy val content_type: String =
     headers
@@ -15,11 +15,11 @@ case class DocumentDownload(
       .flatMap(_.headOption)
       .getOrElse("application/octet-stream")
 
-  lazy val content_length: Option[Long] =
+  lazy val content_length: Option[Long]       =
     headers
       .get(HeaderNames.CONTENT_LENGTH) match {
-        case Some(Seq(length)) => length.toLongOption
-        case _                 => None
-      }
+      case Some(Seq(length)) => length.toLongOption
+      case _                 => None
+    }
   def getHeader(name: String): Option[String] = headers.get(name).flatMap(_.headOption)
 }
