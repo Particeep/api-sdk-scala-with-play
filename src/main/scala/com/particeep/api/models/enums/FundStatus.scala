@@ -1,15 +1,13 @@
 package com.particeep.api.models.enums
 
-import scala.language.implicitConversions
-
 object FundStatus {
 
   sealed abstract class FundStatus extends Product with Enum
 
-  case object INIT extends FundStatus
+  case object INIT         extends FundStatus
   case object UNDER_REVIEW extends FundStatus
-  case object RUNNING extends FundStatus
-  case object SUCCEEDED extends FundStatus
+  case object RUNNING      extends FundStatus
+  case object SUCCEEDED    extends FundStatus
 
   object FundStatus extends EnumHelper[FundStatus] {
     def values: Set[FundStatus] = Set(INIT, UNDER_REVIEW, RUNNING, SUCCEEDED)

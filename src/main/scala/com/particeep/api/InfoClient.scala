@@ -1,26 +1,28 @@
 package com.particeep.api
 
-import com.particeep.api.core._
-import com.particeep.api.models._
 import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
+import com.particeep.api.core._
+import com.particeep.api.models._
+
 case class Info(version: String, debugEnable: Boolean, metaEnable: Boolean)
 
 object InfoClient {
-  private val endPoint: String = "/info"
+  private val endPoint: String               = "/info"
   private implicit val format: OFormat[Info] = Json.format[Info]
 }
 
 trait InfoCapability {
   self: WSClient =>
 
-  val info: InfoClient = new InfoClient(this)
+  val info: InfoClient                             = new InfoClient(this)
   def info(credentials: ApiCredential): InfoClient = new InfoClient(this, Some(credentials))
 }
 
-class InfoClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials with EntityClient {
+class InfoClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
+    with EntityClient {
 
   import InfoClient._
 

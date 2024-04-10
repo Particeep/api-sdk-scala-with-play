@@ -25,3 +25,9 @@ project/plugins/project/
 /project/project/
 /project/target/
 /target/
+
+.metals/
+.bloop/
+.ammonite/
+project/metals.sbt
+.bsp
