@@ -5,12 +5,11 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import akka.stream.scaladsl.{ Flow, Keep, Sink, Source }
 import akka.util.ByteString
-import play.api.Logging
 import play.api.libs.json._
 import play.api.libs.ws._
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
-import play.shaded.ahc.org.asynchttpclient._
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
+import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilder }
 
 import java.io.File
 import scala.concurrent.duration._
@@ -138,7 +137,7 @@ class ApiClient(
   val version:         String,
   val credentials:     Option[ApiCredential] = None
 )(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity
-    with ResponseParser with Logging {
+    with ResponseParser {
 
   val defaultTimeOut: Long       = 10000
   val defaultImportTimeOut: Long = -1
