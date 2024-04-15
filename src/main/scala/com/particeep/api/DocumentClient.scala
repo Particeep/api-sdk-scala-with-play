@@ -113,6 +113,6 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
   }
 
   def zipByIds(seq_id: Seq[String], timeout: Long = defaultTimeOut)(implicit ec: ExecutionContext): Future[Either[ErrorResult, DocumentDownload]] = {
-    ws.getDoc2(seq_id, timeout)
+    ws.getZip(seq_id, timeout)
   }
 }

@@ -87,7 +87,7 @@ trait WSClient {
     timeOut:       Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
 
-  def getDoc2(
+  def getZip(
                seq_id:   Seq[String],
                timeOut:       Long
              )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
@@ -253,7 +253,7 @@ class ApiClient(
       }
   }
 
-  def getDoc2(
+  def getZip(
     seq_id: Seq[String],
     timeOut: Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
