@@ -5,7 +5,6 @@ import akka.util.ByteString
 import play.api.http.HeaderNames
 
 case class DocumentDownload(
-  id:      String,
   body:    Source[ByteString, _],
   headers: Map[String, scala.collection.Seq[String]]
 ) {
