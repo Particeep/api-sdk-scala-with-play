@@ -255,7 +255,6 @@ class ApiClient(
     path:          String,
     timeOut:       Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
-
     secure(sslClient.url(path), credentials, timeOut)
       .addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
       .withRequestTimeout(timeOut millis)
