@@ -34,8 +34,6 @@ case class UserCreation(
   allow_mail_notifications:      Option[Boolean]          = None,
   does_pay_taxes:                Option[Boolean]          = None,
   subject_to_income_tax:         Option[Boolean]          = None,
-  single_fixed_tax_base_1:       Option[Boolean]          = None,
-  single_fixed_tax_base_2_and_3: Option[Boolean]          = None,
   risk:                          Option[String]           = None,
   pro_qualification:             Option[ProQualification] = None,
   profession:                    Option[String]           = None,
