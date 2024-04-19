@@ -2,10 +2,9 @@ package com.particeep.api.models.fundraise
 
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
-import play.api.libs.json.{ JsObject, Writes }
+import play.api.libs.json.{JsObject, OFormat, Writes}
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
 
@@ -44,5 +43,5 @@ case class FundraiseData(
 
 object FundraiseData {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format                                       = Jsonx.formatCaseClass[FundraiseData]
+  val format: OFormat[FundraiseData] = Jsonx.formatCaseClass[FundraiseData]
 }

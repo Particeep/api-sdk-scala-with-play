@@ -13,5 +13,5 @@ case class Lend(
 object Lend {
   implicit val transaction_format: OFormat[Transaction] = Transaction.format
   implicit val user_format: OFormat[User]               = User.format
-  val format                                            = Json.format[Lend]
+  val format: OFormat[Lend] = Json.format[Lend]
 }

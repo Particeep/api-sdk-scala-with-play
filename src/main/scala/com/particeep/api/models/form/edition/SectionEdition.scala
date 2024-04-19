@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.edition
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class SectionEdition(
   name:        Option[Map[String, String]],
@@ -9,5 +9,5 @@ case class SectionEdition(
 )
 
 object SectionEdition {
-  val format = Json.format[SectionEdition]
+  val format: OFormat[SectionEdition] = Json.format[SectionEdition]
 }

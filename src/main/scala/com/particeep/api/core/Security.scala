@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter
 import java.time.{ OffsetDateTime, ZoneOffset }
 import scala.concurrent.duration._
 
-trait WithSecurity {
+trait Security {
 
   protected def secure(req: StandaloneWSRequest, apiCredential: ApiCredential, timeOut: Long): StandaloneWSRequest = {
     val today = buildDateHeader()
@@ -19,7 +19,7 @@ trait WithSecurity {
       )
   }
 
-  protected def secure(req: BoundRequestBuilder, apiCredential: ApiCredential, timeOut: Long) = {
+  protected def secure(req: BoundRequestBuilder, apiCredential: ApiCredential, timeOut: Long): BoundRequestBuilder = {
     val today = buildDateHeader()
     req
       .setRequestTimeout(timeOut.toInt)

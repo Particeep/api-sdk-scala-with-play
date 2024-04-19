@@ -1,9 +1,8 @@
 package com.particeep.api.models.user
 
-import play.api.libs.json.{ JsObject, Json, Writes }
+import play.api.libs.json.{JsObject, Json, OFormat, Writes}
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Gender.Gender
 import com.particeep.api.models.enums.RelativeType.RelativeType
@@ -26,5 +25,5 @@ case class RelativeCreation(
 
 object RelativeCreation {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format                                       = Json.format[RelativeCreation]
+  val format: OFormat[RelativeCreation] = Json.format[RelativeCreation]
 }

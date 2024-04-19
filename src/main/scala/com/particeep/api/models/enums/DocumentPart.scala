@@ -8,5 +8,5 @@ object DocumentPart extends EnumHelper[DocumentPart] {
   case object VERSO extends DocumentPart
   case object OTHER extends DocumentPart
 
-  val values = Set(RECTO, VERSO, OTHER)
+  val values: Set[DocumentPart] = Set(RECTO, VERSO, OTHER)
 }

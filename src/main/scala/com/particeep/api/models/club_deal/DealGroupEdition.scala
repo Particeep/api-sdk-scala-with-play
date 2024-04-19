@@ -1,6 +1,6 @@
 package com.particeep.api.models.club_deal
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, OFormat}
 
 /**
  * Created by Noe on 04/07/2017.
@@ -12,5 +12,5 @@ case class DealGroupEdition(
 )
 
 object DealGroupEdition {
-  val format = Json.format[DealGroupEdition]
+  val format: OFormat[DealGroupEdition] = Json.format[DealGroupEdition]
 }

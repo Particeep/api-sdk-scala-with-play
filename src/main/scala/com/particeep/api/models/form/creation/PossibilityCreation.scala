@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.creation
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class PossibilityCreation(
   question_id: String,
@@ -10,5 +10,5 @@ case class PossibilityCreation(
 )
 
 object PossibilityCreation {
-  val format = Json.format[PossibilityCreation]
+  val format: OFormat[PossibilityCreation] = Json.format[PossibilityCreation]
 }

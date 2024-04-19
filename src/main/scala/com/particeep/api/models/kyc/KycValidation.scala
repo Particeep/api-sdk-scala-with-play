@@ -11,5 +11,5 @@ case class KycValidation(
 
 object KycValidation {
   implicit val drr_format: OFormat[DocumentValidationResponse] = DocumentValidationResponse.format
-  val format                                                   = Json.format[KycValidation]
+  val format: OFormat[KycValidation] = Json.format[KycValidation]
 }

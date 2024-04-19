@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class CashIn(
   amount:      Int            = 0,
@@ -14,5 +14,5 @@ case class CashIn(
 )
 
 object CashIn {
-  val format = Json.format[CashIn]
+  val format: OFormat[CashIn] = Json.format[CashIn]
 }

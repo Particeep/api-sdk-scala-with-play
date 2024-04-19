@@ -1,6 +1,6 @@
 package com.particeep.api.models.scoring_metrics
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, OFormat}
 
 case class ScoringEvaluationCreation(
   input_json:  JsObject,
@@ -9,5 +9,5 @@ case class ScoringEvaluationCreation(
 )
 
 object ScoringEvaluationCreation {
-  val format = Json.format[ScoringEvaluationCreation]
+  val format: OFormat[ScoringEvaluationCreation] = Json.format[ScoringEvaluationCreation]
 }

@@ -1,7 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.Json
-
+import play.api.libs.json.{Json, OFormat}
 import com.particeep.api.models.enums.Country.Country
 
 case class CashInBankAccountCreation(
@@ -12,5 +11,5 @@ case class CashInBankAccountCreation(
 )
 
 object CashInBankAccountCreation {
-  val format = Json.format[CashInBankAccountCreation]
+  val format: OFormat[CashInBankAccountCreation] = Json.format[CashInBankAccountCreation]
 }

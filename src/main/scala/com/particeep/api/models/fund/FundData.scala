@@ -44,5 +44,5 @@ case class FundData(
 object FundData {
   implicit val date_format: Writes[OffsetDateTime]        = Formatter.OffsetDateTimeWrites
   implicit lazy val fund_offer_format: OFormat[FundOffer] = FundOffer.format
-  val format                                              = Jsonx.formatCaseClass[FundData]
+  val format: OFormat[FundData] = Jsonx.formatCaseClass[FundData]
 }

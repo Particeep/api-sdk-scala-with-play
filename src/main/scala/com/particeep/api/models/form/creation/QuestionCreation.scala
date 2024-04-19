@@ -1,7 +1,6 @@
 package com.particeep.api.models.form.creation
 
-import play.api.libs.json.Json
-
+import play.api.libs.json.{Json, OFormat}
 import com.particeep.api.models.enums.QuestionType.QuestionType
 
 case class QuestionCreation(
@@ -17,5 +16,5 @@ case class QuestionCreation(
 )
 
 object QuestionCreation {
-  val format = Json.format[QuestionCreation]
+  val format: OFormat[QuestionCreation] = Json.format[QuestionCreation]
 }

@@ -1,6 +1,6 @@
 package com.particeep.api.models.fund
 
-import play.api.libs.json.{ JsArray, JsObject, Json }
+import play.api.libs.json.{JsArray, JsObject, Json, OFormat}
 
 case class InvestmentOption(
   amount:          Option[Int]      = None,
@@ -14,5 +14,5 @@ case class InvestmentOption(
 )
 
 object InvestmentOption {
-  val format = Json.format[InvestmentOption]
+  val format: OFormat[InvestmentOption] = Json.format[InvestmentOption]
 }

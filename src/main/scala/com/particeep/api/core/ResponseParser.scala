@@ -51,14 +51,13 @@ trait ResponseParser {
         .getOrElse(parseResult(json)(json_reads))
       result
     } catch {
-      case NonFatal(ex) => {
+      case NonFatal(ex) =>
         val msg = s"""Error while parsing the response :
                      |status = ${status}
                      |body = ${json}
            """.stripMargin
         log.error(msg, ex)
         Left(ex2error(ex))
-      }
     }
   }
 
@@ -72,21 +71,20 @@ trait ResponseParser {
   private[this] def parseResult[A](json: JsValue)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
     parse(json)(json_reads) match {
       case Right(success) => Right(success)
-      case Left(json_err) => {
+      case Left(json_err) =>
         val err = Error(
           technicalCode = json_err.errors.mkString(System.lineSeparator),
           message       = "unknown json error"
         )
         Left(Errors(true, List(err)))
-      }
     }
   }
 
   private[this] def ex2error(ex: Throwable): Errors = {
     val err = Error(
-      technicalCode = ex.toString(),
+      technicalCode = ex.toString,
       message       = ex.getMessage,
-      stack         = Some(ex.getStackTrace().mkString("", System.lineSeparator, System.lineSeparator))
+      stack         = Some(ex.getStackTrace.mkString("", System.lineSeparator, System.lineSeparator))
     )
     Errors(
       hasError = true,

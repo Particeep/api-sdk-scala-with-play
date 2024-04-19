@@ -1,6 +1,6 @@
 package com.particeep.api.models.enums
 
-import play.api.libs.json.{ JsString, JsValue, Writes }
+import play.api.libs.json.{ JsString, Writes }
 
 object OriasStatus {
   sealed abstract class OriasStatus extends Product with Enum
@@ -16,9 +16,7 @@ object OriasStatus {
       get(value).getOrElse(NEVER_REGISTERED)
     }
 
-    override implicit def enumWrites: Writes[OriasStatus] = new Writes[OriasStatus] {
-      def writes(v: OriasStatus): JsValue = JsString(v.toString)
-    }
+    override implicit def enumWrites: Writes[OriasStatus] = (v: OriasStatus) => JsString(v.toString)
 
     override def get(value: String): Option[OriasStatus] = values.find(t => t.toString == value)
 

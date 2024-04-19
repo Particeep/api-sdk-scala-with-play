@@ -36,7 +36,7 @@ object ParticeepApi {
     self: WSClient =>
   }
 
-  def test(api_key: String, api_secret: String)(implicit s: ActorSystem) = {
+  def test(api_key: String, api_secret: String)(implicit s: ActorSystem): ApiClient with AllCapability = {
     new ApiClient(
       "https://test-api.particeep.com",
       last_version,
@@ -44,7 +44,7 @@ object ParticeepApi {
     ) with AllCapability
   }
 
-  def prod(api_key: String, api_secret: String)(implicit s: ActorSystem, m: Materializer) = {
+  def prod(api_key: String, api_secret: String)(implicit s: ActorSystem, m: Materializer): ApiClient with AllCapability = {
     new ApiClient(
       "https://api.particeep.com",
       last_version,

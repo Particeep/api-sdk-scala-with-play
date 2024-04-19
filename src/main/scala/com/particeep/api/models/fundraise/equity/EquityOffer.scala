@@ -1,6 +1,6 @@
 package com.particeep.api.models.fundraise.equity
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class EquityOffer(
   fees_in:             Option[Double] = None,
@@ -14,5 +14,5 @@ case class EquityOffer(
 )
 
 object EquityOffer {
-  val format = Json.format[EquityOffer]
+  val format: OFormat[EquityOffer] = Json.format[EquityOffer]
 }

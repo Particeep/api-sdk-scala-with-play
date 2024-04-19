@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class CashOut(
   bank_account_id: Option[String] = None,
@@ -11,5 +11,5 @@ case class CashOut(
 )
 
 object CashOut {
-  val format = Json.format[CashOut]
+  val format: OFormat[CashOut] = Json.format[CashOut]
 }

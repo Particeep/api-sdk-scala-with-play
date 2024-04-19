@@ -1,8 +1,7 @@
 package com.particeep.api.models.kyc
 
-import play.api.libs.json.{ JsValue, Json }
-
-import com.particeep.api.models.enums.{ DocumentPart, DocumentType }
+import play.api.libs.json.{JsValue, Json, OFormat}
+import com.particeep.api.models.enums.{DocumentPart, DocumentType}
 
 case class DocumentValidation(
   url:                 String               = "",
@@ -12,5 +11,5 @@ case class DocumentValidation(
 )
 
 object DocumentValidation {
-  val format = Json.format[DocumentValidation]
+  val format: OFormat[DocumentValidation] = Json.format[DocumentValidation]
 }

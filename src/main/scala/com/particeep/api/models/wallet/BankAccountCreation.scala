@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class BankAccountCreation(
   bank_name:                 Option[String] = None,
@@ -21,5 +21,5 @@ case class BankAccountCreation(
 )
 
 object BankAccountCreation {
-  val format = Json.format[BankAccountCreation]
+  val format: OFormat[BankAccountCreation] = Json.format[BankAccountCreation]
 }

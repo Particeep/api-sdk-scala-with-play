@@ -18,7 +18,7 @@ case class BankAccountSearch(
 )
 
 object BankAccountSearch {
-  val bank_account_search_form = Form(
+  val bank_account_search_form: Form[BankAccountSearch] = Form(
     mapping(
       "id"          -> optional(text),
       "target_id"   -> optional(text),

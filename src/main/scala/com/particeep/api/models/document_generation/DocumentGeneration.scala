@@ -1,6 +1,6 @@
 package com.particeep.api.models.document_generation
 
-import play.api.libs.json.{ JsValue, Json }
+import play.api.libs.json.{JsValue, Json, OFormat}
 
 case class DocumentGeneration(
   document_id: String,
@@ -9,5 +9,5 @@ case class DocumentGeneration(
 )
 
 object DocumentGeneration {
-  val format = Json.format[DocumentGeneration]
+  val format: OFormat[DocumentGeneration] = Json.format[DocumentGeneration]
 }
