@@ -1,9 +1,8 @@
 package com.particeep.api.models.fundraise.loan
 
-import play.api.libs.json.{ JsArray, JsObject, Json, Writes }
+import play.api.libs.json.{JsArray, JsObject, Json, OFormat, Writes}
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 
@@ -19,5 +18,5 @@ case class LendCreation(
 
 object LendCreation {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format                                       = Json.format[LendCreation]
+  val format: OFormat[LendCreation] = Json.format[LendCreation]
 }

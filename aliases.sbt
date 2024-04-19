@@ -1,4 +1,4 @@
-import BuildUtil._
+import BuildUtil.*
 
 addCommandAlias("ls", "projects")
 addCommandAlias("cd", "project")

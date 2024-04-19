@@ -116,9 +116,7 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
     val error_msg    = rez.swap.map(_.asInstanceOf[Errors]).getOrElse(Errors(hasError = true, List.empty))
     val maybe_header = error_msg.errors
-      .flatMap(_.message.split(","))
-      .filter(_.contains("Info-End-User"))
-      .headOption
+      .flatMap(_.message.split(",")).find(_.contains("Info-End-User"))
 
     maybe_header shouldBe Some("Info-End-User -> List(1234)")
   }

@@ -1,9 +1,8 @@
 package com.particeep.api.models.news
 
-import play.api.libs.json.{ Json, Writes }
+import play.api.libs.json.{Json, OFormat, Writes}
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 
 case class NewsSearch(
@@ -19,5 +18,5 @@ case class NewsSearch(
 
 object NewsSearch {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format                                       = Json.format[NewsSearch]
+  val format: OFormat[NewsSearch] = Json.format[NewsSearch]
 }

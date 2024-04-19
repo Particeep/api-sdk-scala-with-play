@@ -31,5 +31,5 @@ case class QuestionDeep(
 object QuestionDeep {
   implicit val date_format: Writes[OffsetDateTime]      = Formatter.OffsetDateTimeWrites
   implicit val possibility_format: OFormat[Possibility] = Possibility.format
-  val format                                            = Json.format[QuestionDeep]
+  val format: OFormat[QuestionDeep] = Json.format[QuestionDeep]
 }

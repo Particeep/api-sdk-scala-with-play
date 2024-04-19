@@ -1,6 +1,6 @@
 package com.particeep.api.models.news
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, OFormat}
 
 case class NewsEdition(
   title:       Option[String]   = None,
@@ -12,5 +12,5 @@ case class NewsEdition(
 )
 
 object NewsEdition {
-  val format = Json.format[NewsEdition]
+  val format: OFormat[NewsEdition] = Json.format[NewsEdition]
 }

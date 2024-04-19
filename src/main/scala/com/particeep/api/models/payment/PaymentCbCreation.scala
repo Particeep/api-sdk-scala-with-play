@@ -1,7 +1,6 @@
 package com.particeep.api.models.payment
 
-import play.api.libs.json.Json
-
+import play.api.libs.json.{Json, OFormat}
 import com.particeep.api.models.enums.Locale.Locale
 
 case class PaymentCbCreation(
@@ -13,5 +12,5 @@ case class PaymentCbCreation(
 )
 
 object PaymentCbCreation {
-  val format = Json.format[PaymentCbCreation]
+  val format: OFormat[PaymentCbCreation] = Json.format[PaymentCbCreation]
 }

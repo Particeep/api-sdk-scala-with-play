@@ -1,6 +1,6 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, OFormat}
 
 case class SignatureCreation(
   language:       Option[String]   = None,
@@ -22,5 +22,5 @@ case class SignatureCreation(
 )
 
 object SignatureCreation {
-  val format = Json.format[SignatureCreation]
+  val format: OFormat[SignatureCreation] = Json.format[SignatureCreation]
 }

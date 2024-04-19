@@ -1,8 +1,7 @@
 package com.particeep.api.models.kyc
 
-import play.api.libs.json.Json
-
-import com.particeep.api.models.enums.UserType.{ NATURAL, UserType }
+import play.api.libs.json.{Json, OFormat}
+import com.particeep.api.models.enums.UserType.{NATURAL, UserType}
 
 case class KycCreation(
   owner_id:   String         = "",
@@ -12,5 +11,5 @@ case class KycCreation(
 )
 
 object KycCreation {
-  val format = Json.format[KycCreation]
+  val format: OFormat[KycCreation] = Json.format[KycCreation]
 }

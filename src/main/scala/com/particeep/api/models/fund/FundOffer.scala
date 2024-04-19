@@ -1,9 +1,8 @@
 package com.particeep.api.models.fund
 
-import play.api.libs.json.{ Json, Writes }
+import play.api.libs.json.{Json, OFormat, Writes}
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 
 case class FundOffer(
@@ -25,5 +24,5 @@ case class FundOffer(
 
 object FundOffer {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format                                       = Json.format[FundOffer]
+  val format: OFormat[FundOffer] = Json.format[FundOffer]
 }

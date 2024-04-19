@@ -1,9 +1,8 @@
 package com.particeep.api.models.club_deal
 
-import play.api.libs.json.{ JsObject, Json, Writes }
+import play.api.libs.json.{JsObject, Json, OFormat, Writes}
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 
 /**
@@ -22,5 +21,5 @@ case class DealGroup(
 
 object DealGroup {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format                                       = Json.format[DealGroup]
+  val format: OFormat[DealGroup] = Json.format[DealGroup]
 }

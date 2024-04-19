@@ -22,7 +22,7 @@ case class DocumentSearch(
 )
 
 object DocumentSearch {
-  val document_search_form = Form(
+  val document_search_form: Form[DocumentSearch] = Form(
     mapping(
       "owner_id"     -> optional(text),
       "target_id"    -> optional(text),

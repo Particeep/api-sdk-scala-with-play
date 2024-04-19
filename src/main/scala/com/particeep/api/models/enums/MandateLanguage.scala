@@ -12,6 +12,6 @@ object MandateLanguage {
   object MandateLanguage extends EnumHelper[MandateLanguage] {
     def values: Set[MandateLanguage] = Set(fr, en, de, es)
 
-    val defaultLocal = fr
+    val defaultLocal: fr.type = fr
   }
 }

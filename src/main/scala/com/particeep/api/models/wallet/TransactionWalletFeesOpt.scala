@@ -9,5 +9,5 @@ case class TransactionWalletFeesOpt(
 
 object TransactionWalletFeesOpt {
   implicit val transaction_wallet_format: OFormat[TransactionWallet] = TransactionWallet.format
-  val format                                                         = Json.format[TransactionWalletFeesOpt]
+  val format: OFormat[TransactionWalletFeesOpt] = Json.format[TransactionWalletFeesOpt]
 }

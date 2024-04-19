@@ -12,9 +12,7 @@ resolvers += Classpaths.sbtPluginReleases
 
 // code plugins
 
-addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0" excludeAll (
-  ExclusionRule(organization = "com.danieltrinh")
-))
+addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0" excludeAll ExclusionRule(organization = "com.danieltrinh"))
 
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.0.9")
 

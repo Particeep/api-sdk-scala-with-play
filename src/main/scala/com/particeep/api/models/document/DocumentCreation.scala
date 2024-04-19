@@ -1,6 +1,6 @@
 package com.particeep.api.models.document
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, OFormat}
 
 /**
  * Created by Noe on 04/01/2017.
@@ -19,5 +19,5 @@ case class DocumentCreation(
 )
 
 object DocumentCreation {
-  val format = Json.format[DocumentCreation]
+  val format: OFormat[DocumentCreation] = Json.format[DocumentCreation]
 }

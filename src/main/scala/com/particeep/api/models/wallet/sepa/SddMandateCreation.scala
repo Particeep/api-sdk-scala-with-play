@@ -1,7 +1,6 @@
 package com.particeep.api.models.wallet.sepa
 
-import play.api.libs.json.Json
-
+import play.api.libs.json.{Json, OFormat}
 import com.particeep.api.models.enums.MandateLanguage.MandateLanguage
 
 case class SddMandateCreation(
@@ -19,5 +18,5 @@ case class SddMandateCreation(
 )
 
 object SddMandateCreation {
-  val format = Json.format[SddMandateCreation]
+  val format: OFormat[SddMandateCreation] = Json.format[SddMandateCreation]
 }
