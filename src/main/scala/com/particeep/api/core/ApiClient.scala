@@ -117,7 +117,7 @@ trait BaseClient {
   protected implicit val materializer: Materializer
   protected implicit val sslClient: StandaloneAhcWSClient = ApiClient.defaultSslClient(materializer)
 
-  def cleanup() = {
+  def cleanup(): Unit = {
     sslClient.close()
   }
 }
@@ -136,7 +136,7 @@ class ApiClient(
   val baseUrl:         String,
   val version:         String,
   val credentials:     Option[ApiCredential] = None
-)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with WithSecurity
+)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with Security
     with ResponseParser {
 
   val defaultTimeOut: Long       = 10000
@@ -213,7 +213,7 @@ class ApiClient(
     val builder     = postBuilder.addBodyPart(
       new FilePart("document", file, contentType)
     )
-    bodyParts.map(builder.addBodyPart(_))
+    bodyParts.map(builder.addBodyPart)
     Future { client.executeRequest(builder.build()).get }.map(parse[T](_)).recover {
       case NonFatal(e) => handle_error(e, "DELETE", path)
     }

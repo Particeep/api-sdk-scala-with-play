@@ -1,6 +1,6 @@
 package com.particeep.api.models.imports
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 /**
  * Created by Noe on 10/04/2017.
@@ -11,5 +11,5 @@ case class LineError(
 )
 
 object LineError {
-  val format = Json.format[LineError]
+  val format: OFormat[LineError] = Json.format[LineError]
 }

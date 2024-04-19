@@ -7,7 +7,7 @@ import javax.crypto.spec.SecretKeySpec
 @SuppressWarnings(Array("scalafix:DisableSyntax.var"))
 object Crypto {
 
-  private[this] val HEX_CHARS         = "0123456789ABCDEF".toCharArray()
+  private[this] val HEX_CHARS         = "0123456789ABCDEF".toCharArray
   private[this] final val UTF_8       = "UTF-8"
   private[this] final val HMAC_SHA256 = "HmacSHA256"
 
@@ -30,7 +30,7 @@ object Crypto {
   }
 
   def encodeBase64(s: String): String = {
-    val e       = Base64.getEncoder()
+    val e       = Base64.getEncoder
     val b_array = e.encode(s.getBytes(UTF_8))
     new String(b_array, UTF_8)
   }

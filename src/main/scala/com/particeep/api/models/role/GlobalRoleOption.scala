@@ -1,6 +1,6 @@
 package com.particeep.api.models.role
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class GlobalRoleOption(
   role_name: Option[String] = None,
@@ -8,5 +8,5 @@ case class GlobalRoleOption(
 )
 
 object GlobalRoleOption {
-  val format = Json.format[GlobalRoleOption]
+  val format: OFormat[GlobalRoleOption] = Json.format[GlobalRoleOption]
 }

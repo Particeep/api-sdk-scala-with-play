@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet.sepa
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class SepaSddSignature(
   owner_ip:      String = "",
@@ -10,5 +10,5 @@ case class SepaSddSignature(
 )
 
 object SepaSddSignature {
-  val format = Json.format[SepaSddSignature]
+  val format: OFormat[SepaSddSignature] = Json.format[SepaSddSignature]
 }

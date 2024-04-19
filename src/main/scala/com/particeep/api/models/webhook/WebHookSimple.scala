@@ -1,6 +1,6 @@
 package com.particeep.api.models.webhook
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class WebHookSimple(
   name: String,
@@ -8,5 +8,5 @@ case class WebHookSimple(
 )
 
 object WebHookSimple {
-  val format = Json.format[WebHookSimple]
+  val format: OFormat[WebHookSimple] = Json.format[WebHookSimple]
 }

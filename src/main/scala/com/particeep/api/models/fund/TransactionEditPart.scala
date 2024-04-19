@@ -1,6 +1,6 @@
 package com.particeep.api.models.fund
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class TransactionEditPart(
   transaction_ids: Seq[String],
@@ -8,5 +8,5 @@ case class TransactionEditPart(
 )
 
 object TransactionEditPart {
-  val format = Json.format[TransactionEditPart]
+  val format: OFormat[TransactionEditPart] = Json.format[TransactionEditPart]
 }

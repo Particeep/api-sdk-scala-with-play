@@ -16,7 +16,7 @@ object LineSuccess {
       (json \ "line").as[Int],
       (json \ "output").as[T]
     ))
-    def writes(l: LineSuccess[T])                      = JsObject(Seq(
+    def writes(l: LineSuccess[T]): JsValue = JsObject(Seq(
       "line"   -> JsNumber(l.line),
       "output" -> Json.toJson(l.output)
     ))

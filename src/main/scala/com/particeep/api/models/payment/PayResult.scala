@@ -14,5 +14,5 @@ case class PayResult(
 object PayResult {
   implicit val transaction_format: OFormat[Transaction]        = Transaction.format
   implicit val bank_account_format: OFormat[CashInBankAccount] = CashInBankAccount.format
-  val format                                                   = Json.format[PayResult]
+  val format: OFormat[PayResult] = Json.format[PayResult]
 }

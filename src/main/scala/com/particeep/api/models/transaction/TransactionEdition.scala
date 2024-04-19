@@ -1,7 +1,6 @@
 package com.particeep.api.models.transaction
 
-import play.api.libs.json.{ JsArray, JsObject, Json }
-
+import play.api.libs.json.{JsArray, JsObject, Json, OFormat}
 import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 
@@ -29,5 +28,5 @@ case class TransactionEdition(
 )
 
 object TransactionEdition {
-  val format = Json.format[TransactionEdition]
+  val format: OFormat[TransactionEdition] = Json.format[TransactionEdition]
 }

@@ -1,9 +1,8 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.{ JsObject, Json, Writes }
+import play.api.libs.json.{JsObject, Json, OFormat, Writes}
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.SignatureStatus.SignatureStatus
 
@@ -32,5 +31,5 @@ case class Signature(
 
 object Signature {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format                                       = Json.format[Signature]
+  val format: OFormat[Signature] = Json.format[Signature]
 }

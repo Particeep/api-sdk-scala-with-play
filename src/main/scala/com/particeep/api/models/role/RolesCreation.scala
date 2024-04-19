@@ -1,6 +1,6 @@
 package com.particeep.api.models.role
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class RolesCreation(
   id:          String         = "",
@@ -12,5 +12,5 @@ case class RolesCreation(
 )
 
 object RolesCreation {
-  val format = Json.format[RolesCreation]
+  val format: OFormat[RolesCreation] = Json.format[RolesCreation]
 }

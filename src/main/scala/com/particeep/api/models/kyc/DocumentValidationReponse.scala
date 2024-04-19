@@ -62,7 +62,7 @@ object CheckStatus extends EnumHelper[CheckStatus] {
   case object ERROR    extends CheckStatus
   case object OBSOLETE extends CheckStatus
 
-  val values = Set(NONE, OK, WARN, ERROR, OBSOLETE)
+  val values: Set[CheckStatus] = Set(NONE, OK, WARN, ERROR, OBSOLETE)
 }
 
 object DocumentValidationResponse {
@@ -74,5 +74,5 @@ object DocumentValidationResponse {
   implicit val drp_format: OFormat[DocumentReportPerson]        = Json.format[DocumentReportPerson]
   implicit val drir_format: OFormat[DocumentReportInfoResponse] = Json.format[DocumentReportInfoResponse]
   implicit val drr_format: OFormat[DocumentReportResponse]      = Json.format[DocumentReportResponse]
-  val format                                                    = Json.format[DocumentValidationResponse]
+  val format: OFormat[DocumentValidationResponse] = Json.format[DocumentValidationResponse]
 }

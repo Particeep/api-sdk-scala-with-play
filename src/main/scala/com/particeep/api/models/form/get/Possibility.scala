@@ -1,9 +1,8 @@
 package com.particeep.api.models.form.get
 
-import play.api.libs.json.{ Json, Writes }
+import play.api.libs.json.{Json, OFormat, Writes}
 
 import java.time.OffsetDateTime
-
 import com.particeep.api.core.Formatter
 
 case class Possibility(
@@ -17,5 +16,5 @@ case class Possibility(
 
 object Possibility {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format                                       = Json.format[Possibility]
+  val format: OFormat[Possibility] = Json.format[Possibility]
 }

@@ -2,6 +2,7 @@ package com.particeep.api.models.transaction
 
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
+import play.api.libs.json.OFormat
 
 case class TransactionSearchStatistics(
   amount:              Long,
@@ -13,5 +14,5 @@ case class TransactionSearchStatistics(
 )
 
 object TransactionSearchStatistics {
-  val format = Jsonx.formatCaseClass[TransactionSearchStatistics]
+  val format: OFormat[TransactionSearchStatistics] = Jsonx.formatCaseClass[TransactionSearchStatistics]
 }

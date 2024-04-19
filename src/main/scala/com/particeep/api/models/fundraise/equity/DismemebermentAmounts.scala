@@ -1,6 +1,6 @@
 package com.particeep.api.models.fundraise.equity
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class DismemebermentAmounts(
   bare_owner_amount:   Int,
@@ -8,5 +8,5 @@ case class DismemebermentAmounts(
 )
 
 object DismemebermentAmounts {
-  val format = Json.format[DismemebermentAmounts]
+  val format: OFormat[DismemebermentAmounts] = Json.format[DismemebermentAmounts]
 }

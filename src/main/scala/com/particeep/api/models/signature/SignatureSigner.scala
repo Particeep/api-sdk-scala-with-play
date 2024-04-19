@@ -1,6 +1,6 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class SignatureSigner(
   firstName:  String,
@@ -13,5 +13,5 @@ case class SignatureSigner(
 )
 
 object SignatureSigner {
-  val format = Json.format[SignatureSigner]
+  val format: OFormat[SignatureSigner] = Json.format[SignatureSigner]
 }

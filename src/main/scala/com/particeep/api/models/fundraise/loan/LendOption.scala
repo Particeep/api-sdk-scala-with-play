@@ -1,7 +1,6 @@
 package com.particeep.api.models.fundraise.loan
 
-import play.api.libs.json.{ JsArray, JsObject, Json }
-
+import play.api.libs.json.{JsArray, JsObject, Json, OFormat}
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 
 case class LendOption(
@@ -17,5 +16,5 @@ case class LendOption(
 )
 
 object LendOption {
-  val format = Json.format[LendOption]
+  val format: OFormat[LendOption] = Json.format[LendOption]
 }

@@ -1,7 +1,6 @@
 package com.particeep.api.models.partner
 
-import play.api.libs.json.{ JsObject, Json }
-
+import play.api.libs.json.{JsObject, Json, OFormat}
 import com.particeep.api.models.enums.OriasStatus.OriasStatus
 import com.particeep.api.models.enums.RegulatoryStatus.RegulatoryStatus
 
@@ -18,5 +17,5 @@ case class PartnerCompanyCreation(
 )
 
 object PartnerCompanyCreation {
-  val format = Json.format[PartnerCompanyCreation]
+  val format: OFormat[PartnerCompanyCreation] = Json.format[PartnerCompanyCreation]
 }

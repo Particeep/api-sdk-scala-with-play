@@ -35,7 +35,7 @@ class ParticeepTest extends AnyFlatSpec with Matchers with TestUtils {
 
   "the api client" should "format date in ISO 8601" in {
 
-    implicit val user_format = User.format
+    implicit val user_format: OFormat[User] = User.format
 
     val date = OffsetDateTime.now(ZoneOffset.UTC)
       .withYear(1980)

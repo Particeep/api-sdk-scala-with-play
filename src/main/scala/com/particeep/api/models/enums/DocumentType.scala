@@ -27,7 +27,7 @@ object DocumentType extends EnumHelper[DocumentType] {
   case object COMPANY_REG_CERT extends DocumentType
   case object UNKNOWN          extends DocumentType
 
-  val values = Set(
+  val values: Set[DocumentType] = Set(
     ID,
     IBAN,
     CHEQUE,

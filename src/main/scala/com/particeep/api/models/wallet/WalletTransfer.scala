@@ -1,6 +1,6 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class WalletTransfer(
   debited_wallet_id:  String         = "",
@@ -12,5 +12,5 @@ case class WalletTransfer(
 )
 
 object WalletTransfer {
-  val format = Json.format[WalletTransfer]
+  val format: OFormat[WalletTransfer] = Json.format[WalletTransfer]
 }

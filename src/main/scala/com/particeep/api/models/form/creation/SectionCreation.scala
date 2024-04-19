@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.creation
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{JsObject, Json, OFormat}
 
 case class SectionCreation(
   form_id:     String,
@@ -12,5 +12,5 @@ case class SectionCreation(
 )
 
 object SectionCreation {
-  val format = Json.format[SectionCreation]
+  val format: OFormat[SectionCreation] = Json.format[SectionCreation]
 }

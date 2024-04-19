@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.edition
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class FormEdition(
   name:        Option[String] = None,
@@ -9,5 +9,5 @@ case class FormEdition(
 )
 
 object FormEdition {
-  val format = Json.format[FormEdition]
+  val format: OFormat[FormEdition] = Json.format[FormEdition]
 }

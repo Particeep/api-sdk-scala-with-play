@@ -1,6 +1,6 @@
 package com.particeep.api.models.club_deal
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 /**
  * Created by Noe on 05/07/2017.
@@ -10,5 +10,5 @@ case class EmailList(
 )
 
 object EmailList {
-  val format = Json.format[EmailList]
+  val format: OFormat[EmailList] = Json.format[EmailList]
 }
