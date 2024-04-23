@@ -32,7 +32,8 @@ object ParticeepApi {
       with FundraiseEquityCapability
       with PhoneMessagingCapability
       with ControlCapability
-      with KycEcspCapability {
+      with KycEcspCapability
+      with PasswordPolicyCapability {
     self: WSClient =>
   }
 

@@ -8,7 +8,7 @@ import scala.util.matching.Regex
 
 import com.particeep.api.core.Formatter.regex_format
 
-final case class PasswordPolicyUpsert (
+final case class PasswordPolicyUpsert(
   password_minimum_length:       Option[Int]   = None,
   password_regex:                Option[Regex] = None,
   password_expiration_frequency: Option[Long]  = None,
@@ -18,5 +18,6 @@ final case class PasswordPolicyUpsert (
 )
 
 object PasswordPolicyUpsert {
-  implicit val password_policy_upsert_format: OFormat[PasswordPolicyUpsert] = Jsonx.formatCaseClassUseDefaults[PasswordPolicyUpsert]
+  implicit val password_policy_upsert_format: OFormat[PasswordPolicyUpsert] =
+    Jsonx.formatCaseClassUseDefaults[PasswordPolicyUpsert]
 }
