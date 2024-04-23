@@ -21,8 +21,7 @@ trait PasswordPolicyCapability {
 class PasswordPolicyClient(
   val ws:          WSClient,
   val credentials: Option[ApiCredential] = None
-) extends WithWS with WithCredentials
-    with EntityClient {
+) extends WithWS with WithCredentials with EntityClient {
 
   private[this] val endPoint: String = "/user/password-policy"
 
