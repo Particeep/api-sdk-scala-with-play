@@ -1,7 +1,8 @@
 package com.particeep.api.models.kyc
 
-import play.api.libs.json.{Json, OFormat}
-import com.particeep.api.models.enums.UserType.{NATURAL, UserType}
+import play.api.libs.json.{ Json, OFormat }
+
+import com.particeep.api.models.enums.UserType.{ NATURAL, UserType }
 
 case class KycCreation(
   owner_id:   String         = "",

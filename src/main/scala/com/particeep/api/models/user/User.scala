@@ -75,5 +75,5 @@ object User {
   implicit val address_format: Format[Address]               = Address.format
   implicit val relative_format: OFormat[Relative]            = Relative.format
   implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
-  val format: OFormat[User] = Jsonx.formatCaseClass[User]
+  val format: OFormat[User]                                  = Jsonx.formatCaseClass[User]
 }

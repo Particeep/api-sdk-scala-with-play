@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.creation
 
-import play.api.libs.json.{JsObject, Json, OFormat}
+import play.api.libs.json.{ JsObject, Json, OFormat }
 
 case class SectionCreation(
   form_id:     String,

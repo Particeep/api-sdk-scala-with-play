@@ -1,8 +1,9 @@
 package com.particeep.api.models.partner
 
-import play.api.libs.json.{JsObject, Json, OFormat, Writes}
+import play.api.libs.json.{ JsObject, Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 
 case class PartnerFeesOnTargetEdition(
@@ -19,5 +20,5 @@ case class PartnerFeesOnTargetEdition(
 
 object PartnerFeesOnTargetEdition {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[PartnerFeesOnTargetEdition] = Json.format[PartnerFeesOnTargetEdition]
+  val format: OFormat[PartnerFeesOnTargetEdition]  = Json.format[PartnerFeesOnTargetEdition]
 }

@@ -33,5 +33,5 @@ case class FundraiseLoanCreation(
 object FundraiseLoanCreation {
   implicit val date_format: Writes[OffsetDateTime]                         = Formatter.OffsetDateTimeWrites
   implicit lazy val offer_loan_creation_format: OFormat[LoanOfferCreation] = LoanOfferCreation.format
-  val format: OFormat[FundraiseLoanCreation] = Json.format[FundraiseLoanCreation]
+  val format: OFormat[FundraiseLoanCreation]                               = Json.format[FundraiseLoanCreation]
 }

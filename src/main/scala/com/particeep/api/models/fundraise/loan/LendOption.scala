@@ -1,6 +1,7 @@
 package com.particeep.api.models.fundraise.loan
 
-import play.api.libs.json.{JsArray, JsObject, Json, OFormat}
+import play.api.libs.json.{ JsArray, JsObject, Json, OFormat }
+
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 
 case class LendOption(

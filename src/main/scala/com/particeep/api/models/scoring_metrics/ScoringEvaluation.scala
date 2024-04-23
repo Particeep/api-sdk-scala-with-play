@@ -1,8 +1,9 @@
 package com.particeep.api.models.scoring_metrics
 
-import play.api.libs.json.{JsObject, Json, OFormat, Writes}
+import play.api.libs.json.{ JsObject, Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 
 case class ScoringEvaluation(
@@ -20,5 +21,5 @@ case class ScoringEvaluation(
 
 object ScoringEvaluation {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[ScoringEvaluation] = Json.format[ScoringEvaluation]
+  val format: OFormat[ScoringEvaluation]           = Json.format[ScoringEvaluation]
 }

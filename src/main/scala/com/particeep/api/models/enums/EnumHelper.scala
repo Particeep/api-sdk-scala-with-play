@@ -22,14 +22,15 @@ trait EnumHelper[E <: Enum] {
   implicit def string2enum(value: String): Option[E]            = get(value)
   implicit def optString2enum(value: Option[String]): Option[E] = get(value.getOrElse(""))
 
-  implicit def enumReads: Reads[E] = (json: JsValue) => json match {
-    case JsString(s) => get(s) match {
-      case Some(enum) => JsSuccess(enum)
-      case None =>
-        JsError(s"[error] enum value $s is not in the enum possible value ${values.map(_.name).mkString(", ")}")
+  implicit def enumReads: Reads[E] = (json: JsValue) =>
+    json match {
+      case JsString(s) => get(s) match {
+          case Some(enum) => JsSuccess(enum)
+          case None       =>
+            JsError(s"[error] enum value $s is not in the enum possible value ${values.map(_.name).mkString(", ")}")
+        }
+      case _           => JsError(s"[error] unknown error while parsing value from json $json")
     }
-    case _ => JsError(s"[error] unknown error while parsing value from json $json")
-  }
 
   implicit def enumWrites: Writes[E] = (v: E) => JsString(v)
 

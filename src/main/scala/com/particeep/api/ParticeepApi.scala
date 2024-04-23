@@ -44,7 +44,10 @@ object ParticeepApi {
     ) with AllCapability
   }
 
-  def prod(api_key: String, api_secret: String)(implicit s: ActorSystem, m: Materializer): ApiClient with AllCapability = {
+  def prod(api_key: String, api_secret: String)(implicit
+    s:              ActorSystem,
+    m:              Materializer
+  ): ApiClient with AllCapability = {
     new ApiClient(
       "https://api.particeep.com",
       last_version,

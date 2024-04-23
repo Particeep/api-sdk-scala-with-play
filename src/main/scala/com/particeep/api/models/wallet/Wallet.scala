@@ -1,12 +1,13 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{ Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.WalletStatus.WalletStatus
-import com.particeep.api.models.enums.WalletType.{NATURAL, WalletType}
+import com.particeep.api.models.enums.WalletType.{ NATURAL, WalletType }
 
 case class Wallet(
   id:               String                 = "",
@@ -24,5 +25,5 @@ case class Wallet(
 
 object Wallet {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[Wallet] = Json.format[Wallet]
+  val format: OFormat[Wallet]                      = Json.format[Wallet]
 }

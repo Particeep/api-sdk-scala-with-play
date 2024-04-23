@@ -22,5 +22,5 @@ case class KycsEdition(
 
 object KycsEdition {
   implicit val kyc_format: OFormat[KycEdition] = KycEdition.format
-  val format: OFormat[KycsEdition] = Json.format[KycsEdition]
+  val format: OFormat[KycsEdition]             = Json.format[KycsEdition]
 }

@@ -1,6 +1,6 @@
 package com.particeep.api.models.form.edition
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 
 case class FormEdition(
   name:        Option[String] = None,

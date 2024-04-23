@@ -45,7 +45,7 @@ object ImportResult {
       (json \ "tag").asOpt[String],
       (json \ "custom").asOpt[JsObject]
     ))
-    def writes(ir: ImportResult[T]): JsValue = JsObject(Seq(
+    def writes(ir: ImportResult[T]): JsValue            = JsObject(Seq(
       "id"              -> JsString(ir.id),
       "created_at"      -> Json.toJson(ir.created_at),
       "updated_at"      -> Json.toJson(ir.updated_at),

@@ -21,5 +21,5 @@ case class RepaymentInfoVector(
 object RepaymentInfoVector {
   implicit val date_format: Writes[OffsetDateTime]                            = Formatter.OffsetDateTimeWrites
   implicit val repayment_vector_date_format: OFormat[RepaymentVectorWithDate] = Json.format[RepaymentVectorWithDate]
-  val format: OFormat[RepaymentInfoVector] = Json.format[RepaymentInfoVector]
+  val format: OFormat[RepaymentInfoVector]                                    = Json.format[RepaymentInfoVector]
 }

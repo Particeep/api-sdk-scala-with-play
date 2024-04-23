@@ -2,9 +2,10 @@ package com.particeep.api.models.wallet
 
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
-import play.api.libs.json.{OFormat, Writes}
+import play.api.libs.json.{ OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.TransactionWalletOperation.TransactionWalletOperation
@@ -29,5 +30,5 @@ case class TransactionWalletData(
 
 object TransactionWalletData {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[TransactionWalletData] = Jsonx.formatCaseClass[TransactionWalletData]
+  val format: OFormat[TransactionWalletData]       = Jsonx.formatCaseClass[TransactionWalletData]
 }

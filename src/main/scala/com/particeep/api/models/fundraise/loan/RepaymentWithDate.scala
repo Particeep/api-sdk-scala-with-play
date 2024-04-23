@@ -30,5 +30,5 @@ case class RepaymentWithDate(
 object RepaymentWithDate {
   implicit val date_format: Writes[OffsetDateTime]  = Formatter.OffsetDateTimeWrites
   implicit val repayment_format: OFormat[Repayment] = Json.format[Repayment]
-  val format: OFormat[RepaymentWithDate] = Json.format[RepaymentWithDate]
+  val format: OFormat[RepaymentWithDate]            = Json.format[RepaymentWithDate]
 }

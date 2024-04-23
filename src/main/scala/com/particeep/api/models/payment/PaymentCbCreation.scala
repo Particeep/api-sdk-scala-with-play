@@ -1,6 +1,7 @@
 package com.particeep.api.models.payment
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
+
 import com.particeep.api.models.enums.Locale.Locale
 
 case class PaymentCbCreation(

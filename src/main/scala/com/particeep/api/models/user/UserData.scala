@@ -88,5 +88,5 @@ object UserData {
   implicit val relative_format: OFormat[Relative]            = Relative.format
   implicit val bankaccount_format: OFormat[BankAccount]      = BankAccount.format
   implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
-  val format: OFormat[UserData] = Jsonx.formatCaseClass[UserData]
+  val format: OFormat[UserData]                              = Jsonx.formatCaseClass[UserData]
 }

@@ -2,13 +2,14 @@ package com.particeep.api.models.transaction
 
 import ai.x.play.json.Encoders._
 import ai.x.play.json.Jsonx
-import play.api.libs.json.{JsArray, JsObject, OFormat, Writes}
+import play.api.libs.json.{ JsArray, JsObject, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.{Currency, EUR}
+import com.particeep.api.models.enums.Currency.{ Currency, EUR }
 import com.particeep.api.models.enums.PaymentMethod
-import com.particeep.api.models.enums.TransactionStatus.{PENDING, TransactionStatus}
+import com.particeep.api.models.enums.TransactionStatus.{ PENDING, TransactionStatus }
 
 case class Transaction(
   id:                      String                 = "",
@@ -47,5 +48,5 @@ case class Transaction(
 
 object Transaction {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[Transaction] = Jsonx.formatCaseClass[Transaction]
+  val format: OFormat[Transaction]                 = Jsonx.formatCaseClass[Transaction]
 }

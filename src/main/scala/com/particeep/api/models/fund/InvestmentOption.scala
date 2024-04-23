@@ -1,6 +1,6 @@
 package com.particeep.api.models.fund
 
-import play.api.libs.json.{JsArray, JsObject, Json, OFormat}
+import play.api.libs.json.{ JsArray, JsObject, Json, OFormat }
 
 case class InvestmentOption(
   amount:          Option[Int]      = None,

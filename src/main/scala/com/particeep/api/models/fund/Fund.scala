@@ -46,5 +46,5 @@ object Fund {
   implicit val date_format: Writes[OffsetDateTime]        = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address]            = Address.format
   implicit lazy val fund_offer_format: OFormat[FundOffer] = FundOffer.format
-  val format: OFormat[Fund] = Jsonx.formatCaseClass[Fund]
+  val format: OFormat[Fund]                               = Jsonx.formatCaseClass[Fund]
 }

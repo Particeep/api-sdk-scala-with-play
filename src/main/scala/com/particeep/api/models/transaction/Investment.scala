@@ -12,5 +12,5 @@ case class Investment(
 object Investment {
   implicit val user_format: OFormat[User]               = User.format
   implicit val transaction_format: OFormat[Transaction] = Transaction.format
-  val format: OFormat[Investment] = Json.format[Investment]
+  val format: OFormat[Investment]                       = Json.format[Investment]
 }
