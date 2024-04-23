@@ -13,15 +13,18 @@ trait PasswordPolicyCapability {
 
   val passwordPolicy: PasswordPolicyClient = new PasswordPolicyClient(this)
 
-  def passwordPolicy(credentials: ApiCredential): PasswordPolicyClient = new PasswordPolicyClient(this, Some(credentials))
+  def passwordPolicy(credentials: ApiCredential): PasswordPolicyClient = {
+    new PasswordPolicyClient(this, Some(credentials))
+  }
 }
 
 class PasswordPolicyClient(
-                            val ws: WSClient,
-                            val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
+  val ws:          WSClient,
+  val credentials: Option[ApiCredential] = None
+) extends WithWS with WithCredentials
     with EntityClient {
 
-  private[this] val endPoint: String                                             = "/user/password-policy"
+  private[this] val endPoint: String = "/user/password-policy"
 
   def fetchPasswordPolicy(
     timeout:       Long = defaultTimeOut
