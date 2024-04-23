@@ -12,6 +12,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import com.particeep.api.core._
 import com.particeep.api.models._
 import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import com.particeep.api.models.password_policy.{ PasswordPolicy, PasswordPolicyUpsert }
 import com.particeep.api.models.user._
 import com.particeep.api.utils.LangUtils
 
@@ -175,4 +176,16 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.post[Relative](s"$endPoint/$id/relative", timeout, Json.toJson(relative_edition))
   }
 
+  def fetchPasswordPolicy(
+    timeout:       Long = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PasswordPolicy]] = {
+    ws.get[PasswordPolicy](s"$endPoint/password-policy", timeout, List())
+  }
+
+  def upsertPasswordPolicy(
+    data:          PasswordPolicyUpsert,
+    timeout:       Long = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PasswordPolicy]] = {
+    ws.put[PasswordPolicy](s"$endPoint/password-policy", timeout, Json.toJson(data))
+  }
 }
