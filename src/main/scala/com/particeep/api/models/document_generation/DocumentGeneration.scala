@@ -1,6 +1,6 @@
 package com.particeep.api.models.document_generation
 
-import play.api.libs.json.{JsValue, Json, OFormat}
+import play.api.libs.json.{ JsValue, Json, OFormat }
 
 case class DocumentGeneration(
   document_id: String,

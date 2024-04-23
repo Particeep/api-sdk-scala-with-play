@@ -9,5 +9,5 @@ case class Roles(
 
 object Roles {
   implicit val role_format: OFormat[Role] = Role.format
-  val format: OFormat[Roles] = Json.format[Roles]
+  val format: OFormat[Roles]              = Json.format[Roles]
 }

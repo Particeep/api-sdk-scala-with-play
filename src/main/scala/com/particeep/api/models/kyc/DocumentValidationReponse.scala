@@ -74,5 +74,5 @@ object DocumentValidationResponse {
   implicit val drp_format: OFormat[DocumentReportPerson]        = Json.format[DocumentReportPerson]
   implicit val drir_format: OFormat[DocumentReportInfoResponse] = Json.format[DocumentReportInfoResponse]
   implicit val drr_format: OFormat[DocumentReportResponse]      = Json.format[DocumentReportResponse]
-  val format: OFormat[DocumentValidationResponse] = Json.format[DocumentValidationResponse]
+  val format: OFormat[DocumentValidationResponse]               = Json.format[DocumentValidationResponse]
 }

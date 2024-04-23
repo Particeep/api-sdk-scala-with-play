@@ -1,6 +1,7 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
+
 import com.particeep.api.models.enums.Country.Country
 
 case class CashInBankAccountCreation(

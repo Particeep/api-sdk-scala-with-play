@@ -1,8 +1,9 @@
 package com.particeep.api.models.wallet.sepa
 
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{ Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 
 case class SddCashIn(
@@ -15,5 +16,5 @@ case class SddCashIn(
 
 object SddCashIn {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[SddCashIn] = Json.format[SddCashIn]
+  val format: OFormat[SddCashIn]                   = Json.format[SddCashIn]
 }

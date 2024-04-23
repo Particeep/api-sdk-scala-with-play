@@ -1,11 +1,12 @@
 package com.particeep.api.models.kyc
 
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{ Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.KycStatus.{CREATED, KycStatus}
-import com.particeep.api.models.enums.KycType.{ID_CARD, KycType}
+import com.particeep.api.models.enums.KycStatus.{ CREATED, KycStatus }
+import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
 
 case class Kyc(
   doc_type:        KycType                = ID_CARD,
@@ -19,5 +20,5 @@ case class Kyc(
 
 object Kyc {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[Kyc] = Json.format[Kyc]
+  val format: OFormat[Kyc]                         = Json.format[Kyc]
 }

@@ -14,11 +14,12 @@ object ControlBlockType {
   }
 
   @SuppressWarnings(Array("scalafix:DisableSyntax.throw"))
-  private[this] def enumWrites: Writes[ControlBlockType] = (v: ControlBlockType) => v match {
-    case blockType: ControlControlBlockType => Json.toJson(blockType)
-    case blockType: TransactionControlBlockType => Json.toJson(blockType)
-    case _ => throw new IllegalStateException(s"Can't serialize case class to json, no implementation found for $v")
-  }
+  private[this] def enumWrites: Writes[ControlBlockType] = (v: ControlBlockType) =>
+    v match {
+      case blockType: ControlControlBlockType     => Json.toJson(blockType)
+      case blockType: TransactionControlBlockType => Json.toJson(blockType)
+      case _                                      => throw new IllegalStateException(s"Can't serialize case class to json, no implementation found for $v")
+    }
 
   implicit val controlBlockTypeFormat: Format[ControlBlockType] = Format(enumReads, enumWrites)
 }

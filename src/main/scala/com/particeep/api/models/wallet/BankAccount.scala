@@ -1,8 +1,9 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.{Format, Json, OFormat, Writes}
+import play.api.libs.json.{ Format, Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.BankAccountStatus.BankAccountStatus
@@ -26,5 +27,5 @@ case class BankAccount(
 object BankAccount {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address]     = Address.format
-  val format: OFormat[BankAccount] = Json.format[BankAccount]
+  val format: OFormat[BankAccount]                 = Json.format[BankAccount]
 }

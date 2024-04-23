@@ -1,8 +1,9 @@
 package com.particeep.api.models.role
 
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{ Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 
 case class Role(
@@ -16,5 +17,5 @@ case class Role(
 
 object Role {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[Role] = Json.format[Role]
+  val format: OFormat[Role]                        = Json.format[Role]
 }

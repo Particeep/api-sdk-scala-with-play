@@ -17,5 +17,5 @@ case class SignatureMultipleCreation(
 
 object SignatureMultipleCreation {
   implicit val signatureSignerFormat: OFormat[SignatureSigner] = SignatureSigner.format
-  val format: OFormat[SignatureMultipleCreation] = Json.format[SignatureMultipleCreation]
+  val format: OFormat[SignatureMultipleCreation]               = Json.format[SignatureMultipleCreation]
 }

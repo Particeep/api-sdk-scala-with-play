@@ -1,6 +1,7 @@
 package com.particeep.api.models.partner
 
-import play.api.libs.json.{JsObject, Json, OFormat}
+import play.api.libs.json.{ JsObject, Json, OFormat }
+
 import com.particeep.api.models.enums.OriasStatus.OriasStatus
 import com.particeep.api.models.enums.RegulatoryStatus.RegulatoryStatus
 

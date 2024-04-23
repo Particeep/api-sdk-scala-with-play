@@ -22,5 +22,5 @@ case class SectionDeep(
 object SectionDeep {
   implicit val date_format: Writes[OffsetDateTime]    = Formatter.OffsetDateTimeWrites
   implicit val question_format: OFormat[QuestionDeep] = QuestionDeep.format
-  val format: OFormat[SectionDeep] = Json.format[SectionDeep]
+  val format: OFormat[SectionDeep]                    = Json.format[SectionDeep]
 }

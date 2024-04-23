@@ -11,5 +11,5 @@ case class FormEditionDeep(
 
 object FormEditionDeep {
   implicit val section_edition_format: OFormat[SectionEditionDeep] = SectionEditionDeep.format
-  val format: OFormat[FormEditionDeep] = Json.format[FormEditionDeep]
+  val format: OFormat[FormEditionDeep]                             = Json.format[FormEditionDeep]
 }

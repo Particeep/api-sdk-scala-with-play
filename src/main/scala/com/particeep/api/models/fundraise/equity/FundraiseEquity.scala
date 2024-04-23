@@ -45,5 +45,5 @@ case class FundraiseEquity(
 object FundraiseEquity {
   implicit val date_format: Writes[OffsetDateTime]            = Formatter.OffsetDateTimeWrites
   implicit lazy val equity_offer_format: OFormat[EquityOffer] = EquityOffer.format
-  val format: OFormat[FundraiseEquity] = Jsonx.formatCaseClass[FundraiseEquity]
+  val format: OFormat[FundraiseEquity]                        = Jsonx.formatCaseClass[FundraiseEquity]
 }

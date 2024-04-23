@@ -33,8 +33,6 @@ case class UserData(
   investor_type:                         Option[String]           = None,
   does_pay_taxes:                        Option[Boolean]          = None,
   subject_to_income_tax:                 Option[Boolean]          = None,
-  single_fixed_tax_base_1:               Option[Boolean]          = None,
-  single_fixed_tax_base_2_and_3:         Option[Boolean]          = None,
   has_been_claimed:                      Option[Boolean]          = Some(true),
   profession:                            Option[String]           = None,
   business_line:                         Option[String]           = None,
@@ -88,5 +86,5 @@ object UserData {
   implicit val relative_format: OFormat[Relative]            = Relative.format
   implicit val bankaccount_format: OFormat[BankAccount]      = BankAccount.format
   implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
-  val format: OFormat[UserData] = Jsonx.formatCaseClass[UserData]
+  val format: OFormat[UserData]                              = Jsonx.formatCaseClass[UserData]
 }

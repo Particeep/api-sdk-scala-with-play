@@ -1,6 +1,7 @@
 package com.particeep.api.models.transaction
 
-import play.api.libs.json.{JsArray, JsObject, Json, OFormat}
+import play.api.libs.json.{ JsArray, JsObject, Json, OFormat }
+
 import com.particeep.api.models.enums.Currency.Currency
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 

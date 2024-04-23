@@ -9,5 +9,5 @@ case class AnswerCreationWithTag(
 
 object AnswerCreationWithTag {
   implicit lazy val answer_creation_format: OFormat[AnswerCreation] = AnswerCreation.format
-  val format: OFormat[AnswerCreationWithTag] = Json.format[AnswerCreationWithTag]
+  val format: OFormat[AnswerCreationWithTag]                        = Json.format[AnswerCreationWithTag]
 }

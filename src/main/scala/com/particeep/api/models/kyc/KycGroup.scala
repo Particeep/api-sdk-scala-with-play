@@ -13,5 +13,5 @@ case class KycGroup(
 
 object KycGroup {
   implicit val kyc_format: OFormat[Kyc] = Kyc.format
-  val format: OFormat[KycGroup] = Json.format[KycGroup]
+  val format: OFormat[KycGroup]         = Json.format[KycGroup]
 }

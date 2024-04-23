@@ -1,8 +1,9 @@
 package com.particeep.api.models.fundraise.loan
 
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{ Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 
 case class LoanRepaymentScheduleSearch(

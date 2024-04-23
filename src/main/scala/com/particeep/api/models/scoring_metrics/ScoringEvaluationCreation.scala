@@ -1,6 +1,6 @@
 package com.particeep.api.models.scoring_metrics
 
-import play.api.libs.json.{JsObject, Json, OFormat}
+import play.api.libs.json.{ JsObject, Json, OFormat }
 
 case class ScoringEvaluationCreation(
   input_json:  JsObject,

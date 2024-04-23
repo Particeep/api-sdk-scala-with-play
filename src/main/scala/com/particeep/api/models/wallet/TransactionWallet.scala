@@ -1,8 +1,9 @@
 package com.particeep.api.models.wallet
 
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{ Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 
 case class TransactionWallet(
@@ -20,5 +21,5 @@ case class TransactionWallet(
 
 object TransactionWallet {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[TransactionWallet] = Json.format[TransactionWallet]
+  val format: OFormat[TransactionWallet]           = Json.format[TransactionWallet]
 }
