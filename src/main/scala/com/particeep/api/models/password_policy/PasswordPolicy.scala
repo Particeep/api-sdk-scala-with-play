@@ -1,8 +1,6 @@
 package com.particeep.api.models.password_policy
 
-import ai.x.play.json.Encoders.encoder
-import ai.x.play.json.Jsonx
-import play.api.libs.json.OFormat
+import play.api.libs.json.{ Format, Json, Writes }
 
 import java.time.{ Duration, OffsetDateTime }
 import scala.util.matching.Regex
@@ -23,5 +21,21 @@ final case class PasswordPolicy(
 )
 
 object PasswordPolicy {
-  implicit val password_policy_format: OFormat[PasswordPolicy] = Jsonx.formatCaseClassUseDefaults[PasswordPolicy]
+
+  private[this] val write_pp: Writes[PasswordPolicy] = (pp: PasswordPolicy) => {
+    Json.obj(
+      "id"                            -> pp.id,
+      "created_at"                    -> pp.created_at,
+      "created_by"                    -> pp.created_by,
+      "updated_at"                    -> pp.updated_at,
+      "password_minimum_length"       -> pp.password_minimum_length,
+      "password_regex"                -> pp.password_regex.toString(),
+      "password_expiration_frequency" -> pp.password_expiration_frequency.toDays,
+      "password_reuse_limit"          -> pp.password_reuse_limit,
+      "password_reuse_period"         -> pp.password_reuse_period.toSeconds,
+      "login_retry_limit"             -> pp.login_retry_limit
+    )
+  }
+
+  implicit val pp_format: Format[PasswordPolicy] = Format(Json.reads[PasswordPolicy], write_pp)
 }
