@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json.{ JsNull, Json, OFormat }
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import java.io.File
@@ -99,6 +99,12 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     exec:        ExecutionContext
   ): Future[Either[ErrorResult, Document]] = {
     ws.delete[Document](s"$endPoint/$id", timeout)
+  }
+
+  def undelete(id: String, timeout: Long = defaultTimeOut)(implicit
+    exec:          ExecutionContext
+  ): Future[Either[ErrorResult, Document]] = {
+    ws.post[Document](s"$endPoint/$id/undelete", timeout, JsNull)
   }
 
   def generateTimeBoundedUrls(
