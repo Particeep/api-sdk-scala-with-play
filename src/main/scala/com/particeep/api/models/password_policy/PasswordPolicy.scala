@@ -9,12 +9,12 @@ final case class PasswordPolicy(
   created_at:                    OffsetDateTime,
   created_by:                    String,
   updated_at:                    OffsetDateTime,
-  password_minimum_length:       Int,
+  password_minimum_length:       Long,
   password_regex:                String,
-  password_expiration_frequency: Int,
-  password_reuse_limit:          Int,
-  password_reuse_period:         Int,
-  login_retry_limit:             Int
+  password_expiration_frequency: Long,
+  password_reuse_limit:          Long,
+  password_reuse_period:         Long,
+  login_retry_limit:             Long
 )
 
 object PasswordPolicy {
