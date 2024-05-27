@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.{ Format, Json, OFormat }
+import play.api.libs.json.{ Format, JsNull, Json, OFormat }
 
 import java.io.File
 import scala.concurrent.{ ExecutionContext, Future }
@@ -155,6 +155,12 @@ class FormClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     exec:                   ExecutionContext
   ): Future[Either[ErrorResult, Possibility]] = {
     ws.delete[Possibility](s"$endPoint/possibility/$id", timeout)
+  }
+
+  def duplicate(id: String, timeout: Long = defaultTimeOut)(implicit
+    exec:           ExecutionContext
+  ): Future[Either[ErrorResult, FormDeep]] = {
+    ws.post[FormDeep](s"$endPoint/$id/duplicate", timeout, JsNull)
   }
 
   def answer(user_id: String, answer_creations: Seq[AnswerCreation], timeout: Long = defaultTimeOut)(implicit
