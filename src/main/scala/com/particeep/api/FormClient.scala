@@ -1,18 +1,17 @@
 package com.particeep.api
 
-import play.api.libs.json.{ Format, Json, OFormat }
+import play.api.libs.json.{Format, JsNull, Json, OFormat}
 
 import java.io.File
-import scala.concurrent.{ ExecutionContext, Future }
-
+import scala.concurrent.{ExecutionContext, Future}
 import com.particeep.api.core._
 import com.particeep.api.models.form.creation._
-import com.particeep.api.models.form.edition.{ FormEdition, PossibilityEdition, QuestionEdition, SectionEdition }
+import com.particeep.api.models.form.edition.{FormEdition, PossibilityEdition, QuestionEdition, SectionEdition}
 import com.particeep.api.models.form.edition_deep.FormEditionDeep
 import com.particeep.api.models.form.get._
 import com.particeep.api.models.form.get_deep._
 import com.particeep.api.models.imports.ImportResult
-import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
+import com.particeep.api.models.{ErrorResult, PaginatedSequence, TableSearch}
 import com.particeep.api.utils.LangUtils
 
 trait FormCapability {
@@ -155,6 +154,12 @@ class FormClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     exec:                   ExecutionContext
   ): Future[Either[ErrorResult, Possibility]] = {
     ws.delete[Possibility](s"$endPoint/possibility/$id", timeout)
+  }
+
+  def duplicate(id: String, timeout: Long = defaultTimeOut)(implicit
+                                                                                    exec: ExecutionContext
+  ): Future[Either[ErrorResult, FormDeep]] = {
+    ws.post[FormDeep](s"$endPoint/$id/duplicate", timeout, JsNull)
   }
 
   def answer(user_id: String, answer_creations: Seq[AnswerCreation], timeout: Long = defaultTimeOut)(implicit
