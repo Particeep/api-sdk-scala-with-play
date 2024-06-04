@@ -9,10 +9,10 @@ case class SignatureSigner(
   lastName:    String,
   email:       String,
   phone:       String,
-  signer_type: SignerType,
-  successURL:  Option[String] = None,
-  cancelURL:   Option[String] = None,
-  failURL:     Option[String] = None
+  signer_type: Option[SignerType] = None,
+  successURL:  Option[String]     = None,
+  cancelURL:   Option[String]     = None,
+  failURL:     Option[String]     = None
 )
 
 object SignatureSigner {
