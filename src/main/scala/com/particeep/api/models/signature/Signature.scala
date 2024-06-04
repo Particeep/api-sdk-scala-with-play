@@ -6,6 +6,7 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.SignatureStatus.SignatureStatus
+import com.particeep.api.models.enums.SignerType
 
 case class Signature(
   id:             String                  = "",
@@ -26,6 +27,7 @@ case class Signature(
   target_id:      Option[String]          = None,
   target_type:    Option[String]          = None,
   group_id:       Option[String]          = None,
+  signer_type:    Option[SignerType]      = None,
   tag:            Option[String]          = None,
   custom:         Option[JsObject]        = None
 )
