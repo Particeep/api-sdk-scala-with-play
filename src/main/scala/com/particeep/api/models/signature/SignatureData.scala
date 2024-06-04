@@ -33,6 +33,7 @@ case class SignatureData(
   fundraise_type: Option[String]         = None,
   fundraise_name: Option[String]         = None,
   signature_type: Option[String]         = None,
+  signer_type:    Option[String]         = None,
   tag:            Option[String]         = None,
   custom:         Option[JsObject]       = None
 )
