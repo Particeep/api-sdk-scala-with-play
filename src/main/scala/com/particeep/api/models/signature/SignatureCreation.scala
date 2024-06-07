@@ -10,7 +10,7 @@ case class SignatureCreation(
   fileName:       String,
   firstName:      String,
   lastName:       String,
-  useName:          Option[String]          = None,
+  useName:        Option[String]     = None,
   email:          String,
   phone:          String,
   description:    Option[String]     = None,

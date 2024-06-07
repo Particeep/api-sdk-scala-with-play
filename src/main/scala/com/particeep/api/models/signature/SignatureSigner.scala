@@ -7,7 +7,7 @@ import com.particeep.api.models.enums.SignerType
 case class SignatureSigner(
   firstName:   String,
   lastName:    String,
-  useName:     Option[String]          = None,
+  useName:     Option[String]     = None,
   email:       String,
   phone:       String,
   signer_type: Option[SignerType] = None,
