@@ -34,5 +34,8 @@ case class TransactionSearchAdditional(
   ids:                                   Option[String]         = None,
   tag:                                   Option[String]         = None,
   partner_manager_id:                    Option[String]         = None,
-  partner_manager_company_business_name: Option[String]         = None
+  partner_manager_company_business_name: Option[String]         = None,
+  issuer_first_name:                     Option[String]         = None,
+  issuer_last_name:                      Option[String]         = None,
+  issuer_use_name:                       Option[String]         = None
 )

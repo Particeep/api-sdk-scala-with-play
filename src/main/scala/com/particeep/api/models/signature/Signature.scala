@@ -19,6 +19,7 @@ case class Signature(
   external_id:    Option[String]          = None,
   firstName:      String,
   lastName:       String,
+  useName:          Option[String]          = None,
   email:          String,
   phone:          String,
   description:    Option[String]          = None,
