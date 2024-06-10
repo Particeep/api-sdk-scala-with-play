@@ -12,7 +12,7 @@ case class RecurringTransactionsSearch(
   start_date:         Option[OffsetDateTime] = None,
   end_date:           Option[OffsetDateTime] = None,
   issuer_id:          Option[String]         = None,
-  issuer_name:        Option[String]         = None,
+  issuer_email:       Option[String]         = None,
   recipient_id:       Option[String]         = None,
   recipient_name:     Option[String]         = None,
   recipient_type:     Option[String]         = None,

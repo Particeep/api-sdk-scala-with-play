@@ -12,7 +12,7 @@ case class RecurringTransaction(
   id:             String                 = "",
   created_at:     Option[OffsetDateTime] = None,
   issuer_id:      String                 = "",
-  issuer_name:    String                 = "",
+  issuer_email:   String                 = "",
   amount:         Int                    = 0,
   recipient_id:   String                 = "",
   recipient_name: String                 = "",
