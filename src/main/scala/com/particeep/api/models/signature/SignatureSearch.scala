@@ -24,13 +24,14 @@ case class SignatureSearch(
 )
 
 case class SignatureSearchForEntities(
-  target_id:      Option[String] = None,
-  target_type:    Option[String] = None,
-  group_id:       Option[String] = None,
-  partner_ids:    Option[String] = None,
-  fundraise_id:   Option[String] = None,
-  fundraise_type: Option[String] = None,
-  fundraise_name: Option[String] = None,
-  signature_type: Option[String] = None,
-  signer_type:    Option[String] = None
+  target_id:                Option[String] = None,
+  target_type:              Option[String] = None,
+  group_id:                 Option[String] = None,
+  partner_ids:              Option[String] = None,
+  fundraise_id:             Option[String] = None,
+  fundraise_type:           Option[String] = None,
+  fundraise_name:           Option[String] = None,
+  signature_type:           Option[String] = None,
+  signer_type:              Option[String] = None,
+  document_id_for_position: Option[String] = None
 )
