@@ -88,6 +88,11 @@ trait WSClient {
     timeOut:       Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
 
+  def getZip(
+    seq_id:        Seq[String],
+    timeOut:       Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]]
+
   def postStream(
     path:        String,
     timeOut:     Long,
@@ -236,26 +241,37 @@ class ApiClient(
     document_id:   String,
     timeOut:       Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
-    val path = s"$baseUrl/document/$document_id"
+    getDocFromPath(s"$baseUrl/document/$document_id", timeOut)
+  }
 
+  def getZip(
+    seq_id:        Seq[String],
+    timeOut:       Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
+    getDocFromPath(s"$baseUrl/v$version/document/zip-download?ids=${seq_id.mkString(",")}", timeOut)
+  }
+
+  private[this] def getDocFromPath(
+    path:          String,
+    timeOut:       Long
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
     secure(sslClient.url(path), credentials, timeOut)
       .addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
       .withRequestTimeout(timeOut millis)
       .withMethod(method = "GET")
       .stream()
-      .flatMap(handleResponseForGetDoc(_, document_id))
+      .flatMap(handleResponseForGetDoc)
       .recover {
         case NonFatal(e) => handle_error[DocumentDownload](e, method = "GET", path)
       }
   }
 
   private[this] def handleResponseForGetDoc(
-    response:    StandaloneWSRequest#Response,
-    document_id: String
+    response: StandaloneWSRequest#Response
   ): Future[Either[ErrorResult, DocumentDownload]] = {
     if(response.status < 300) {
       Future.successful(
-        Right(DocumentDownload(id = document_id, body = response.bodyAsSource, headers = response.headers))
+        Right(DocumentDownload(body = response.bodyAsSource, headers = response.headers))
       )
     } else {
       val source = response.bodyAsSource
