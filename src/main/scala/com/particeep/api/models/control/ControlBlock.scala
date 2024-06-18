@@ -10,8 +10,7 @@ final case class ControlBlock(
   path:       String,
   status:     ControlBlockStatus,
   target_id:  Option[String],
-  comment:    Option[String],
-  doc_ids:    Seq[String]
+  comment:    Option[String]
 )
 
 object ControlBlock {
