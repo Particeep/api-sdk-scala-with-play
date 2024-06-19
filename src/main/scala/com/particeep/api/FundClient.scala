@@ -10,6 +10,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
 import com.particeep.api.models.enums.FundStatus.FundStatus
 import com.particeep.api.models.fund._
+import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation }
 import com.particeep.api.models.transaction.{
   Investment,
   RecurringTransaction,
@@ -41,6 +42,8 @@ object FundClient {
   private implicit val recurring_transaction_format: OFormat[RecurringTransaction]                  = RecurringTransaction.format
   private implicit val recurring_transaction_creation_format: OFormat[RecurringTransactionCreation] =
     RecurringTransactionCreation.format
+  private implicit val payment_cb_creation_format: OFormat[PaymentCbCreation]                       = PaymentCbCreation.format
+  private implicit val pay_result_format: OFormat[PayResult]                                        = PayResult.format
 }
 
 class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
@@ -124,6 +127,15 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     timeout:           Long = defaultTimeOut
   )(implicit exec:     ExecutionContext): Future[Either[ErrorResult, Transaction]] = {
     ws.post[Transaction](s"$endPoint/$id/invest/$transaction_id", timeout, Json.toJson(investment_option))
+  }
+
+  def pay(
+    id:                  String,
+    transaction_id:      String,
+    payment_cb_creation: PaymentCbCreation,
+    timeout:             Long = defaultTimeOut
+  )(implicit exec:       ExecutionContext): Future[Either[ErrorResult, PayResult]] = {
+    ws.post[PayResult](s"$endPoint/$id/pay/$transaction_id", timeout, Json.toJson(payment_cb_creation))
   }
 
   def allInvestmentByFund(
