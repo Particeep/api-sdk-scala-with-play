@@ -1,17 +1,24 @@
 package com.particeep.api
 
-import play.api.libs.json.{Format, Json, OFormat}
+import play.api.libs.json.{ Format, Json, OFormat }
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import java.io.File
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
+
 import com.particeep.api.core._
 import com.particeep.api.models.enums.FundraiseStatus.FundraiseStatus
 import com.particeep.api.models.fundraise.equity._
-import com.particeep.api.models.imports.{ImportForm, ImportResult}
-import com.particeep.api.models.payment.{PayResult, PaymentCbCreation}
-import com.particeep.api.models.transaction.{Investment, RecurringTransaction, RecurringTransactionCreation, Transaction, TransactionSearch}
-import com.particeep.api.models.{ErrorResult, PaginatedSequence, TableSearch}
+import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation }
+import com.particeep.api.models.transaction.{
+  Investment,
+  RecurringTransaction,
+  RecurringTransactionCreation,
+  Transaction,
+  TransactionSearch
+}
+import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
 
 trait FundraiseEquityCapability {
@@ -39,8 +46,8 @@ object FundraiseEquityClient {
   private implicit val recurring_transaction_format: OFormat[RecurringTransaction]                  = RecurringTransaction.format
   private implicit val recurring_transaction_creation_format: OFormat[RecurringTransactionCreation] =
     RecurringTransactionCreation.format
-  private implicit val payment_cb_creation_format: OFormat[PaymentCbCreation] = PaymentCbCreation.format
-  private implicit val pay_result_format: OFormat[PayResult] = PayResult.format
+  private implicit val payment_cb_creation_format: OFormat[PaymentCbCreation]                       = PaymentCbCreation.format
+  private implicit val pay_result_format: OFormat[PayResult]                                        = PayResult.format
 }
 
 class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
@@ -146,11 +153,11 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredent
   }
 
   def pay(
-               id: String,
-               transaction_id: String,
-               payment_cb_creation: PaymentCbCreation,
-               timeout: Long = defaultTimeOut
-             )(implicit exec: ExecutionContext): Future[Either[ErrorResult, PayResult]] = {
+    id:                  String,
+    transaction_id:      String,
+    payment_cb_creation: PaymentCbCreation,
+    timeout:             Long = defaultTimeOut
+  )(implicit exec:       ExecutionContext): Future[Either[ErrorResult, PayResult]] = {
     ws.post[PayResult](s"$endPoint/fundraise/$id/pay/$transaction_id", timeout, Json.toJson(payment_cb_creation))
   }
 
