@@ -13,6 +13,7 @@ case class Kyc(
   created_at:      Option[OffsetDateTime] = None,
   update_at:       Option[OffsetDateTime] = None,
   refusal_reason:  Option[String]         = None,
+  refusal_comment: Option[String]         = None, // for lemonWay only
   refusal_message: Option[String]         = None,
   status:          KycStatus              = CREATED,
   docs_ids:        Seq[String]            = Seq()
