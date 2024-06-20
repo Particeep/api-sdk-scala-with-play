@@ -27,6 +27,7 @@ case class Relative(
   birth_department: Option[String]         = None,
   legal_type:       Option[RelativeType]   = None,
   nationality:      Option[String]         = None,
+  birth_cog:        Option[String]         = None,
   tag:              Option[String]         = None,
   custom:           Option[JsObject]       = None
 )
