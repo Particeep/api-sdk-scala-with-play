@@ -6,7 +6,6 @@ import com.particeep.api.models.enums.ControlBlockStatus
 
 final case class ControlBlockUpdate(
   id:      String,
-  doc_ids: Seq[String]                = Seq.empty,
   status:  Option[ControlBlockStatus] = None,
   comment: Option[String]             = None
 )

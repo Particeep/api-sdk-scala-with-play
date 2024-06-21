@@ -17,7 +17,8 @@ final case class Control(
   target_entity: JsObject,
   blocks:        List[ControlBlock],
   status:        ControlStatus,
-  comment:       Option[String]
+  comment:       Option[String],
+  document_ids:  List[String]
 )
 
 object Control {

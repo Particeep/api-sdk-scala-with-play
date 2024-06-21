@@ -7,18 +7,19 @@ import java.time.OffsetDateTime
 import com.particeep.api.models.enums.ControlStatus
 
 final case class ControlView(
-  id:          String,
-  created_at:  OffsetDateTime,
-  updated_at:  OffsetDateTime,
-  deleted_at:  Option[OffsetDateTime],
-  created_by:  String,
-  assigned_to: String,
-  level:       Int,
-  target_id:   String,
-  target_type: String,
-  blocks:      List[ControlBlock],
-  status:      ControlStatus,
-  comment:     Option[String]
+  id:           String,
+  created_at:   OffsetDateTime,
+  updated_at:   OffsetDateTime,
+  deleted_at:   Option[OffsetDateTime],
+  created_by:   String,
+  assigned_to:  String,
+  level:        Int,
+  target_id:    String,
+  target_type:  String,
+  blocks:       List[ControlBlock],
+  status:       ControlStatus,
+  comment:      Option[String],
+  document_ids: List[String] = List()
 )
 
 object ControlView {
