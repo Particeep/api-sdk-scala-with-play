@@ -3,11 +3,11 @@ package com.particeep.api.models.control
 import play.api.libs.json.{ Json, OFormat }
 
 final case class ControlCreation(
-  target_id:       String,
-  target_type:     String,
-  level:           Int,
-  block_targets:   Option[Map[String, List[String]]],
-  document_id_seq: Seq[String] = Seq()
+  target_id:     String,
+  target_type:   String,
+  level:         Int,
+  block_targets: Option[Map[String, List[String]]],
+  document_ids:  List[String] = List()
 )
 
 object ControlCreation {
