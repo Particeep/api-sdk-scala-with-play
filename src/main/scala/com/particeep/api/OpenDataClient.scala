@@ -1,11 +1,13 @@
 package com.particeep.api
 
-import play.api.libs.json.JsValue
+import play.api.libs.json.{ JsNull, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
 import com.particeep.api.core._
 import com.particeep.api.models.ErrorResult
+import com.particeep.api.models.partner.PartnerCompany
+import com.particeep.api.models.user.User
 
 trait OpenDataCapability {
   self: WSClient =>
@@ -18,6 +20,9 @@ trait OpenDataCapability {
 object OpenDataClient {
 
   private val endPoint: String = "/open-data"
+
+  private implicit val user_format: OFormat[User]                      = User.format
+  private implicit val partner_company_format: OFormat[PartnerCompany] = PartnerCompany.format
 }
 
 class OpenDataClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
@@ -25,9 +30,15 @@ class OpenDataClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
 
   import OpenDataClient._
 
-  def graphql(body: JsValue, timeout: Long = defaultTimeOut)(implicit
-    exec:           ExecutionContext
-  ): Future[Either[ErrorResult, JsValue]] = {
-    ws.post[JsValue](s"$endPoint/graphql", timeout, body)
+  def updateRcsReport(user_id: String, timeout: Long = defaultTimeOut)(implicit
+    exec:                      ExecutionContext
+  ): Future[Either[ErrorResult, User]] = {
+    ws.post[User](s"$endPoint/rcs-report/$user_id", timeout, JsNull)
+  }
+
+  def updateOriasStatus(user_id: String, timeout: Long = defaultTimeOut)(implicit
+    exec:                        ExecutionContext
+  ): Future[Either[ErrorResult, PartnerCompany]] = {
+    ws.post[PartnerCompany](s"$endPoint/orias-status/$user_id", timeout, JsNull)
   }
 }
