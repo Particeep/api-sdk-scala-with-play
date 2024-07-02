@@ -104,8 +104,8 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
   def deleteFiles(
     ids:           List[String],
     timeout:       Long = defaultTimeOut
-  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Unit]] = {
-    ws.delete(s"$endPoint/files", timeout, Json.obj("ids" -> ids))
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, List[Document]]] = {
+    ws.delete[List[Document]](s"$endPoint/files", timeout, Json.obj("ids" -> ids))
   }
 
   def generateTimeBoundedUrls(
