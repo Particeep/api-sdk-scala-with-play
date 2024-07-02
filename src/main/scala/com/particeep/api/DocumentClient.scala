@@ -101,6 +101,13 @@ class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = 
     ws.delete[Document](s"$endPoint/$id", timeout)
   }
 
+  def deleteFiles(
+    ids:           List[String],
+    timeout:       Long = defaultTimeOut
+  )(implicit exec: ExecutionContext): Future[Either[ErrorResult, Unit]] = {
+    ws.delete(s"$endPoint/files", timeout, Json.obj("ids" -> ids))
+  }
+
   def generateTimeBoundedUrls(
     documents_ids: List[String],
     timeout:       Long = defaultTimeOut

@@ -3,7 +3,7 @@ package com.particeep.api.core
 import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import akka.stream.scaladsl.{ Flow, Keep, Sink, Source }
+import akka.stream.scaladsl.Source
 import akka.util.ByteString
 import play.api.libs.json._
 import play.api.libs.ws._
@@ -14,11 +14,11 @@ import play.shaded.ahc.org.asynchttpclient.{ AsyncHttpClient, BoundRequestBuilde
 import java.io.File
 import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
+import scala.util.Random
 import scala.util.control.NonFatal
-import scala.util.{ Failure, Random, Success, Try }
 
 import com.particeep.api.models.document.{ DocumentDownload, TimeBoundedUrls }
-import com.particeep.api.models.{ Error, ErrorResult, Errors, ParsingError }
+import com.particeep.api.models.{ Error, ErrorResult, Errors }
 
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {
@@ -65,6 +65,12 @@ trait WSClient {
     body:          JsValue = Json.toJson(""),
     params:        List[(String, String)] = List()
   )(implicit exec: ExecutionContext, credentials: ApiCredential, f: Format[T]): Future[Either[ErrorResult, T]]
+
+  def delete(
+    path:          String,
+    timeOut:       Long,
+    body:          JsValue
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Unit]]
 
   def postFile[T](
     path:          String,
@@ -206,6 +212,21 @@ class ApiClient(
     }
   }
 
+  def delete(
+    path:          String,
+    timeOut:       Long,
+    body:          JsValue
+  )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, Unit]] = {
+    url(path, timeOut)
+      .withMethod("DELETE")
+      .withBody(body)
+      .stream()
+      .flatMap(parseResultWithNoBody)
+      .recover {
+        case NonFatal(e) => handle_error[Unit](e, "DELETE", path)
+      }
+  }
+
   def postFile[T](
     path:          String,
     timeout:       Long,
@@ -274,44 +295,8 @@ class ApiClient(
         Right(DocumentDownload(body = response.bodyAsSource, headers = response.headers))
       )
     } else {
-      val source = response.bodyAsSource
-      val flow   = Flow[ByteString]
-        .reduce(_ ++ _)
-        .map(_.utf8String)
-        .map(convertStringToJson)
-        .map(manageError)
-
-      val default_error = Left[ErrorResult, DocumentDownload](ParsingError(
-        hasError = true,
-        errors   = List(JsString("body response is not a JSON"))
-      ))
-
-      val sink = Sink.fold[Left[ErrorResult, DocumentDownload], Left[ErrorResult, DocumentDownload]](default_error) {
-        case (_, u) => u
-      }
-
-      val stream = source.via(flow).toMat(sink)(Keep.right)
-
-      StreamHelper.with_default_supervision(stream).run()
+      manageErrorWithStream[DocumentDownload](response)
     }
-  }
-
-  private[this] def convertStringToJson(data: String): JsValue = {
-    Try {
-      Json.parse(data)
-    } match {
-      case Failure(_)     => JsString(data)
-      case Success(value) => value
-    }
-  }
-
-  private[this] def manageError(json: JsValue): Left[ErrorResult, DocumentDownload] = {
-    validateStandardError(json)
-      .map(Left[ErrorResult, DocumentDownload])
-      .getOrElse(Left[ErrorResult, DocumentDownload](ParsingError(
-        hasError = true,
-        errors   = List(JsString("error.standard_error.unknown_error"), json)
-      )))
   }
 
   def postStream(

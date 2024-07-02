@@ -1,7 +1,8 @@
 package com.particeep.api.core
 
 import akka.NotUsed
-import akka.stream.scaladsl.Source
+import akka.stream.Materializer
+import akka.stream.scaladsl.{ Flow, Keep, Sink, Source }
 import akka.util.ByteString
 import play.api.libs.json._
 import play.api.libs.ws.JsonBodyReadables._
@@ -10,19 +11,69 @@ import play.shaded.ahc.org.asynchttpclient.Response
 
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.control.NonFatal
+import scala.util.{ Failure, Success, Try }
 
 import org.slf4j.LoggerFactory
 
-import com.particeep.api.models._
+import com.particeep.api.models.Errors._
+import com.particeep.api.models.{ ErrorResult, _ }
 
 trait ResponseParser {
 
-  import com.particeep.api.models.Errors._
+  def materializer: Materializer
 
   private[this] final lazy val log = LoggerFactory.getLogger(this.getClass)
 
   def parse[A](response: StandaloneWSResponse)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
     parse(response.body[JsValue], response.status)(json_reads)
+  }
+
+  def parseResultWithNoBody(response: StandaloneWSResponse): Future[Either[ErrorResult, Unit]] = {
+    response.status match {
+      case 204 => Future.successful(Right(()))
+      case _   => manageErrorWithStream[Unit](response)
+    }
+  }
+
+  def manageErrorWithStream[T](response: StandaloneWSResponse): Future[Either[ErrorResult, T]] = {
+    val source = response.bodyAsSource
+
+    val flow = Flow[ByteString]
+      .reduce(_ ++ _)
+      .map(_.utf8String)
+      .map(convertStringToJson)
+      .map(manageError[T])
+
+    val default_error = Left[ErrorResult, T](ParsingError(
+      hasError = true,
+      errors   = List(JsString("body response is not a JSON"))
+    ))
+
+    val sink = Sink.fold[Left[ErrorResult, T], Left[ErrorResult, T]](default_error) {
+      case (_, u) => u
+    }
+
+    val stream = source.via(flow).toMat(sink)(Keep.right)
+
+    StreamHelper.with_default_supervision(stream).run()(materializer)
+  }
+
+  private[this] def convertStringToJson(data: String): JsValue = {
+    Try {
+      Json.parse(data)
+    } match {
+      case Failure(_)     => JsString(data)
+      case Success(value) => value
+    }
+  }
+
+  private[this] def manageError[T](json: JsValue): Left[ErrorResult, T] = {
+    validateStandardError(json)
+      .map(Left[ErrorResult, T])
+      .getOrElse(Left[ErrorResult, T](ParsingError(
+        hasError = true,
+        errors   = List(JsString("error.standard_error.unknown_error"), json)
+      )))
   }
 
   def parse[A](response: Response)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
