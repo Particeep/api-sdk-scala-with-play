@@ -19,7 +19,7 @@ case class UserSearch(
   does_pay_taxes:    Option[Boolean]        = None,
   city:              Option[String]         = None,
   wallet_type:       Option[String]         = None,
-  status:            Option[String]         = None,
+  wallet_status:     Option[String]         = None,
   tag:               Option[String]         = None,
   roles:             Option[String]         = None,
   targeting_roles:   Option[String]         = None,
