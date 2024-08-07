@@ -47,7 +47,6 @@ case class TransactionData(
   signature_succeeded_at:                Option[OffsetDateTime] = None,
   tag:                                   Option[String]         = None,
   co_issuers:                            Option[JsArray]        = None,
-  price_per_bond:                        Option[Int]            = None,
   price_per_share:                       Option[Int]            = None,
   pre_share_fixing_amount:               Option[Int]            = None,
   pre_share_fixing_fees:                 Option[Int]            = None,
@@ -55,6 +54,7 @@ case class TransactionData(
   dismemberment_rate:                    Option[Double]         = None,
   bare_owner_amount:                     Option[Int]            = None,
   usufructuary_amount:                   Option[Int]            = None,
+  origin_transaction_id:                 Option[String]         = None,
   unicia_id:                             Option[String]         = None,
   custom:                                Option[JsObject]       = None
 )
