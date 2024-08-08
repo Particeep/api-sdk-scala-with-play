@@ -6,9 +6,6 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 
-/**
- * Created by Noe on 16/05/2017.
- */
 case class FundraiseEquityRunningEdition(
   name:                  Option[String]         = None,
   description_short:     Option[String]         = None,
@@ -18,6 +15,7 @@ case class FundraiseEquityRunningEdition(
   disclaimer_risk:       Option[String]         = None,
   disclaimer_fees:       Option[String]         = None,
   disclaimer_payment:    Option[String]         = None,
+  url:                   Option[String]         = None,
   end_at:                Option[OffsetDateTime] = None,
   score:                 Option[String]         = None,
   form_id:               Option[String]         = None,

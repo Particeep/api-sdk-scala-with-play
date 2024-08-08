@@ -10,11 +10,13 @@ import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 case class InvestmentCreation(
   user_id:                String,
   amount:                 Int,
+  price_per_share:        Option[Int]                  = None,
   check_required_pro:     Option[Boolean]              = None,
   co_issuers:             Option[JsArray]              = None,
   created_at:             Option[OffsetDateTime]       = None,
   dismemberment_duration: Option[Int]                  = None,
   dismemberment_rate:     Option[Double]               = None,
+  parent_transaction_id:  Option[String]               = None,
   comment:                Option[String]               = None,
   custom:                 Option[JsObject]             = None,
   offline_payment_method: Option[OfflinePaymentMethod] = None
