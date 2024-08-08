@@ -21,6 +21,7 @@ case class FundraiseEquityCreation(
   disclaimer_risk:       Option[String]              = None,
   disclaimer_fees:       Option[String]              = None,
   disclaimer_payment:    Option[String]              = None,
+  url:                   Option[String]              = None,
   start_at:              Option[OffsetDateTime]      = None,
   end_at:                Option[OffsetDateTime]      = None,
   amount_target:         Long,
