@@ -19,7 +19,8 @@ case class Question(
   pattern:               Option[String]              = None,
   required:              Boolean                     = false,
   document_filename:     Option[String]              = None,
-  index:                 Option[Int]                 = None
+  index:                 Option[Int]                 = None,
+  tag:                   Option[String]              = None
 )
 
 object Question {
