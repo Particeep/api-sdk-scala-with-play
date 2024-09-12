@@ -43,6 +43,7 @@ case class Transaction(
   dismember_rate_usufructuary: Option[Double]         = None,
   bare_owner_amount:           Option[Int]            = None,
   usufructuary_amount:         Option[Int]            = None,
+  num_of_shares:               Option[Int]            = None,
   origin_transaction_id:       Option[String]         = None,
   custom:                      Option[JsObject]       = None
 )
