@@ -1,11 +1,12 @@
 package com.particeep.api
 
-import org.apache.pekko.NotUsed
-import org.apache.pekko.stream.scaladsl.Source
-import org.apache.pekko.util.ByteString
 import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
+
+import org.apache.pekko.NotUsed
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
 
 import com.particeep.api.core._
 import com.particeep.api.models.signature._

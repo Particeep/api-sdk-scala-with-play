@@ -1,8 +1,9 @@
 package com.particeep.api.models.document
 
+import play.api.http.HeaderNames
+
 import org.apache.pekko.stream.scaladsl.Source
 import org.apache.pekko.util.ByteString
-import play.api.http.HeaderNames
 
 case class DocumentDownload(
   body:    Source[ByteString, _],
