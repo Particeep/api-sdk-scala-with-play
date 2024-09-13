@@ -1,10 +1,10 @@
 package com.particeep.api.core
 
-import akka.NotUsed
-import akka.actor.ActorSystem
-import akka.stream.Materializer
-import akka.stream.scaladsl.{ Flow, Keep, Sink, Source }
-import akka.util.ByteString
+import org.apache.pekko.NotUsed
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.Materializer
+import org.apache.pekko.stream.scaladsl.{ Flow, Keep, Sink, Source }
+import org.apache.pekko.util.ByteString
 import play.api.libs.json._
 import play.api.libs.ws._
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
@@ -19,6 +19,7 @@ import scala.util.{ Failure, Random, Success, Try }
 
 import com.particeep.api.models.document.{ DocumentDownload, TimeBoundedUrls }
 import com.particeep.api.models.{ Error, ErrorResult, Errors, ParsingError }
+import play.api.libs.ws.JsonBodyWritables._
 
 case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
   def withHeader(name: String, value: String): ApiCredential = {

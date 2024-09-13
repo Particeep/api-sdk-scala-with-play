@@ -1,6 +1,6 @@
 package com.particeep.test
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import play.api.libs.json._
 import play.api.libs.ws.StandaloneWSResponse
 

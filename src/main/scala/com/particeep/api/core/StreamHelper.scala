@@ -1,7 +1,7 @@
 package com.particeep.api.core
 
-import akka.stream.scaladsl.RunnableGraph
-import akka.stream.{ ActorAttributes, Supervision }
+import org.apache.pekko.stream.scaladsl.RunnableGraph
+import org.apache.pekko.stream.{ ActorAttributes, Supervision }
 
 import scala.util.control.NonFatal
 
