@@ -1,13 +1,14 @@
 package com.particeep.api
 
-import akka.NotUsed
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import play.api.libs.json._
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import java.io.File
 import scala.concurrent.{ ExecutionContext, Future }
+
+import org.apache.pekko.NotUsed
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
 
 import com.particeep.api.core._
 import com.particeep.api.models._
