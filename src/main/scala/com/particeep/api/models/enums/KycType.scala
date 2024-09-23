@@ -1,9 +1,8 @@
 package com.particeep.api.models.enums
 
-object KycType {
+sealed trait KycType extends Product with Enum
 
-  sealed abstract class KycType extends Product with Enum
-
+object KycType extends EnumHelper[KycType] {
   case object ID_CARD                  extends KycType
   case object PASSPORT                 extends KycType
   case object RESIDENCE_PERMIT         extends KycType
@@ -24,27 +23,25 @@ object KycType {
   case object SHAREHOLDER_ID2          extends KycType
   case object SHAREHOLDER_ID3          extends KycType
 
-  object KycType extends EnumHelper[KycType] {
-    def values: Set[KycType] = Set(
-      ID_CARD,
-      PASSPORT,
-      RESIDENCE_PERMIT,
-      DRIVER_LICENSE,
-      ADDRESS_PROOF,
-      COMPANY_STATUS,
-      RIB,
-      KBIS,
-      TAX_STATUS,
-      PRESIDENT_OF_ASSOCIATION,
-      OFFICIAL_JOURNAL,
-      ASSOCIATION_STATUS,
-      SHAREHOLDER_KYCS,
-      GENERAL_MEETING,
-      HEALTH_INSURANCE_CARD,
-      DESCRIPTION_PROJECT,
-      SHAREHOLDER_ID,
-      SHAREHOLDER_ID2,
-      SHAREHOLDER_ID3
-    )
-  }
+  def values: Set[KycType] = Set(
+    ID_CARD,
+    PASSPORT,
+    RESIDENCE_PERMIT,
+    DRIVER_LICENSE,
+    ADDRESS_PROOF,
+    COMPANY_STATUS,
+    RIB,
+    KBIS,
+    TAX_STATUS,
+    PRESIDENT_OF_ASSOCIATION,
+    OFFICIAL_JOURNAL,
+    ASSOCIATION_STATUS,
+    SHAREHOLDER_KYCS,
+    GENERAL_MEETING,
+    HEALTH_INSURANCE_CARD,
+    DESCRIPTION_PROJECT,
+    SHAREHOLDER_ID,
+    SHAREHOLDER_ID2,
+    SHAREHOLDER_ID3
+  )
 }
