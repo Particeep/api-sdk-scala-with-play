@@ -5,8 +5,7 @@ import play.api.libs.json._
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.ImportStateStatus
-import com.particeep.api.models.enums.ImportType.ImportType
+import com.particeep.api.models.enums.{ ImportStateStatus, ImportType }
 
 /**
  * Created by Noe on 10/04/2017.
