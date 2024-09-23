@@ -1,6 +1,5 @@
 package com.particeep.test
 
-import akka.actor.ActorSystem
 import play.api.libs.json._
 import play.api.libs.ws.StandaloneWSResponse
 
@@ -8,6 +7,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
+import org.apache.pekko.actor.ActorSystem
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
