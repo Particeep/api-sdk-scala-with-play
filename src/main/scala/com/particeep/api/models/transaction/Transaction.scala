@@ -8,8 +8,8 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.EUR
-import com.particeep.api.models.enums.TransactionStatus.{ PENDING, TransactionStatus }
-import com.particeep.api.models.enums.{ Currency, PaymentMethod }
+import com.particeep.api.models.enums.TransactionStatus.PENDING
+import com.particeep.api.models.enums.{ Currency, PaymentMethod, TransactionStatus }
 
 case class Transaction(
   id:                          String                 = "",
