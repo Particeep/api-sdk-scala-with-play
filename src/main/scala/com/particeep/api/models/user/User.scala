@@ -8,8 +8,7 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
-import com.particeep.api.models.enums.InvestorType.InvestorType
-import com.particeep.api.models.enums.{ Gender, ProQualification }
+import com.particeep.api.models.enums.{ Gender, InvestorType, ProQualification }
 
 case class User(
   id:                        String                   = "",

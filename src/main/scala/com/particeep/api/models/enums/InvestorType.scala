@@ -1,13 +1,10 @@
 package com.particeep.api.models.enums
 
-object InvestorType {
+sealed trait InvestorType extends Product with Enum
 
-  sealed abstract class InvestorType extends Product with Enum
-
+object InvestorType extends EnumHelper[InvestorType] {
   case object NATURAL extends InvestorType
   case object LEGAL   extends InvestorType
 
-  object InvestorType extends EnumHelper[InvestorType] {
-    def values: Set[InvestorType] = Set(NATURAL, LEGAL)
-  }
+  def values: Set[InvestorType] = Set(NATURAL, LEGAL)
 }
