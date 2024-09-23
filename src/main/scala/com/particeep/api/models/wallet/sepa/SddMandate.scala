@@ -5,7 +5,8 @@ import play.api.libs.json.{ Json, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.SddMandateStatus.{ PENDING, SddMandateStatus }
+import com.particeep.api.models.enums.SddMandateStatus
+import com.particeep.api.models.enums.SddMandateStatus.PENDING
 
 case class SddMandate(
   id:         String                 = "",
