@@ -2,7 +2,7 @@ package com.particeep.api.models.signature
 
 import play.api.libs.json.{ Json, OFormat }
 
-import com.particeep.api.models.enums.SignatureStatus.SignatureStatus
+import com.particeep.api.models.enums.SignatureStatus
 
 case class SignatureMultiple(
   id:             String,
