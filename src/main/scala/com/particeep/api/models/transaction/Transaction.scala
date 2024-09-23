@@ -7,9 +7,9 @@ import play.api.libs.json.{ JsArray, JsObject, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import com.particeep.api.models.enums.PaymentMethod
+import com.particeep.api.models.enums.Currency.EUR
 import com.particeep.api.models.enums.TransactionStatus.{ PENDING, TransactionStatus }
+import com.particeep.api.models.enums.{ Currency, PaymentMethod }
 
 case class Transaction(
   id:                          String                 = "",
