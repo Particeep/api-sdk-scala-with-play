@@ -7,7 +7,7 @@ import play.api.libs.json.{ JsObject, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.OriasStatus.OriasStatus
+import com.particeep.api.models.enums.OriasStatus
 import com.particeep.api.models.enums.RegulatoryStatus.RegulatoryStatus
 
 case class PartnerCompany(
