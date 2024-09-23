@@ -5,7 +5,7 @@ import play.api.libs.json.{ JsObject, Json, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.CalculatorType.CalculatorType
+import com.particeep.api.models.enums.CalculatorType
 
 case class LoanOfferCreation(
   term:                 Int,
