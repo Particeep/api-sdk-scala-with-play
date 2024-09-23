@@ -8,7 +8,7 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.OriasStatus
-import com.particeep.api.models.enums.RegulatoryStatus.RegulatoryStatus
+import com.particeep.api.models.enums.RegulatoryStatus
 
 case class PartnerCompany(
   id:                   String,
