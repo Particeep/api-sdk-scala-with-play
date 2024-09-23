@@ -2,7 +2,7 @@ package com.particeep.api.models.form.creation
 
 import play.api.libs.json.{ Json, OFormat }
 
-import com.particeep.api.models.enums.QuestionType.QuestionType
+import com.particeep.api.models.enums.QuestionType
 
 case class QuestionCreation(
   section_id:        String,
