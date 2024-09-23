@@ -7,9 +7,8 @@ import play.api.libs.json.{ OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency
-import com.particeep.api.models.enums.TransactionWalletOperation.TransactionWalletOperation
 import com.particeep.api.models.enums.TransactionWalletStatus.TransactionWalletStatus
+import com.particeep.api.models.enums.{ Currency, TransactionWalletOperation }
 
 case class TransactionWalletData(
   id:                 String,
