@@ -6,7 +6,8 @@ final case class ControlCreation(
   target_id:     String,
   target_type:   String,
   level:         Int,
-  block_targets: Option[Map[String, List[String]]]
+  block_targets: Option[Map[String, List[String]]],
+  document_ids:  List[String] = List()
 )
 
 object ControlCreation {
