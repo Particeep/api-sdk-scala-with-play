@@ -22,10 +22,12 @@ case class FundraiseEquityRunningEdition(
   tag:                   Option[String]         = None,
   is_featured:           Option[Boolean]        = None,
   required_pro:          Option[Boolean]        = None,
-  custom:                Option[JsObject]       = None
+  custom:                Option[JsObject]       = None,
+  offer:                 Option[EquityOffer]    = None
 )
 
 object FundraiseEquityRunningEdition {
   implicit val date_format: Writes[OffsetDateTime]   = Formatter.OffsetDateTimeWrites
+  implicit val eq_format: OFormat[EquityOffer]       = EquityOffer.format
   val format: OFormat[FundraiseEquityRunningEdition] = Json.format[FundraiseEquityRunningEdition]
 }
