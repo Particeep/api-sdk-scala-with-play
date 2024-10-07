@@ -7,8 +7,7 @@ import play.api.libs.json.{ JsObject, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Gender.Gender
-import com.particeep.api.models.enums.RelativeType.RelativeType
+import com.particeep.api.models.enums.{ Gender, RelativeType }
 
 case class Relative(
   id:               String                 = "",

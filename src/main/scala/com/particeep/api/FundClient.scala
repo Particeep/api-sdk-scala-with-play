@@ -9,7 +9,7 @@ import org.apache.pekko.stream.scaladsl.Source
 import org.apache.pekko.util.ByteString
 
 import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
-import com.particeep.api.models.enums.FundStatus.FundStatus
+import com.particeep.api.models.enums.FundStatus
 import com.particeep.api.models.fund._
 import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation }
 import com.particeep.api.models.transaction.{

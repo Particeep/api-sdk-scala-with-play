@@ -1,16 +1,12 @@
 package com.particeep.api.models.enums
 
-object UserType {
+sealed trait UserType extends Product with Enum
 
-  sealed abstract class UserType extends Product with Enum
-
+object UserType extends EnumHelper[UserType] {
   case object NATURAL       extends UserType
   case object LEGAL         extends UserType
   case object SELF_EMPLOYED extends UserType
   case object ASSOCIATION   extends UserType
 
-  object UserType extends EnumHelper[UserType] {
-    def values: Set[UserType] = Set(NATURAL, LEGAL, ASSOCIATION, SELF_EMPLOYED)
-  }
-
+  def values: Set[UserType] = Set(NATURAL, LEGAL, ASSOCIATION, SELF_EMPLOYED)
 }

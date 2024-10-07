@@ -5,8 +5,9 @@ import play.api.libs.json.{ Json, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.KycStatus.{ CREATED, KycStatus }
-import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
+import com.particeep.api.models.enums.KycStatus.CREATED
+import com.particeep.api.models.enums.KycType.ID_CARD
+import com.particeep.api.models.enums.{ KycStatus, KycType }
 
 case class Kyc(
   doc_type:        KycType                = ID_CARD,

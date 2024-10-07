@@ -6,7 +6,8 @@ import java.time.{ OffsetDateTime, ZoneOffset }
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
-import com.particeep.api.models.enums.WalletType.{ NATURAL, WalletType }
+import com.particeep.api.models.enums.WalletType
+import com.particeep.api.models.enums.WalletType.NATURAL
 
 case class WalletCreation(
   owner_id:            String           = "",

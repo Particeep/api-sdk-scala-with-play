@@ -5,7 +5,7 @@ import play.api.libs.json.{ JsObject, Json, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.Currency
+import com.particeep.api.models.enums.Currency
 
 case class FundraiseLoanCreation(
   name:                  String,

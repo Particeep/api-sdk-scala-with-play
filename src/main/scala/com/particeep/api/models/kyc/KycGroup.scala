@@ -2,7 +2,8 @@ package com.particeep.api.models.kyc
 
 import play.api.libs.json.{ Json, OFormat }
 
-import com.particeep.api.models.enums.KycStatus.{ CREATED, KycStatus }
+import com.particeep.api.models.enums.KycStatus
+import com.particeep.api.models.enums.KycStatus.CREATED
 
 case class KycGroup(
   owner_id:   String    = "",

@@ -1,14 +1,11 @@
 package com.particeep.api.models.enums
 
-object ImportStateStatus {
+sealed trait ImportStateStatus extends Product with Enum
 
-  sealed abstract class ImportStateStatus extends Product with Enum
-
+object ImportStateStatus extends EnumHelper[ImportStateStatus] {
   case object PENDING   extends ImportStateStatus
   case object RUNNING   extends ImportStateStatus
   case object COMPLETED extends ImportStateStatus
 
-  object ImportStateStatus extends EnumHelper[ImportStateStatus] {
-    def values: Set[ImportStateStatus] = Set(PENDING, RUNNING, COMPLETED)
-  }
+  def values: Set[ImportStateStatus] = Set(PENDING, RUNNING, COMPLETED)
 }
