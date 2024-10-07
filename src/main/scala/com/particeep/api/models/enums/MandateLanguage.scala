@@ -1,17 +1,14 @@
 package com.particeep.api.models.enums
 
-object MandateLanguage {
+sealed trait MandateLanguage extends Product with Enum
 
-  sealed abstract class MandateLanguage extends Product with Enum
-
+object MandateLanguage extends EnumHelper[MandateLanguage] {
   case object fr extends MandateLanguage
   case object en extends MandateLanguage
   case object de extends MandateLanguage
   case object es extends MandateLanguage
 
-  object MandateLanguage extends EnumHelper[MandateLanguage] {
-    def values: Set[MandateLanguage] = Set(fr, en, de, es)
+  def values: Set[MandateLanguage] = Set(fr, en, de, es)
 
-    val defaultLocal: fr.type = fr
-  }
+  val defaultLocal: fr.type = fr
 }

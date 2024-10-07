@@ -2,7 +2,8 @@ package com.particeep.api.models.kyc
 
 import play.api.libs.json.{ Json, OFormat }
 
-import com.particeep.api.models.enums.KycType.{ ID_CARD, KycType }
+import com.particeep.api.models.enums.KycType
+import com.particeep.api.models.enums.KycType.ID_CARD
 
 case class KycEdition(
   doc_type: KycType     = ID_CARD,

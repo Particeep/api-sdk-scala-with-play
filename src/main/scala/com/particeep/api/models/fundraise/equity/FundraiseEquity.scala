@@ -7,8 +7,9 @@ import play.api.libs.json.{ JsObject, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import com.particeep.api.models.enums.FundraiseStatus.{ FundraiseStatus, INIT }
+import com.particeep.api.models.enums.Currency.EUR
+import com.particeep.api.models.enums.FundraiseStatus.INIT
+import com.particeep.api.models.enums.{ Currency, FundraiseStatus }
 
 case class FundraiseEquity(
   id:                    String                      = "",

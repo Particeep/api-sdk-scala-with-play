@@ -1,12 +1,11 @@
 package com.particeep.api.models.enums
 
-object RelativeType {
-  sealed abstract class RelativeType extends Product with Enum
-  case object CONJOINT               extends RelativeType
-  case object USUFRUCTUARY           extends RelativeType
-  case object PAYER                  extends RelativeType
+sealed trait RelativeType extends Product with Enum
 
-  object RelativeType extends EnumHelper[RelativeType] {
-    def values: Set[RelativeType] = Set(CONJOINT, USUFRUCTUARY, PAYER)
-  }
+object RelativeType extends EnumHelper[RelativeType] {
+  case object CONJOINT     extends RelativeType
+  case object USUFRUCTUARY extends RelativeType
+  case object PAYER        extends RelativeType
+
+  def values: Set[RelativeType] = Set(CONJOINT, USUFRUCTUARY, PAYER)
 }

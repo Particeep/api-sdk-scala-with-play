@@ -7,7 +7,7 @@ import java.io.File
 import scala.concurrent.{ ExecutionContext, Future }
 
 import com.particeep.api.core._
-import com.particeep.api.models.enums.FundraiseStatus.FundraiseStatus
+import com.particeep.api.models.enums.FundraiseStatus
 import com.particeep.api.models.fundraise.loan._
 import com.particeep.api.models.imports.{ ImportForm, ImportResult }
 import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation }

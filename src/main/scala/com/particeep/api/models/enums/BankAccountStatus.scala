@@ -1,15 +1,12 @@
 package com.particeep.api.models.enums
 
-object BankAccountStatus {
+sealed trait BankAccountStatus extends Product with Enum
 
-  sealed abstract class BankAccountStatus extends Product with Enum
-
+object BankAccountStatus extends EnumHelper[BankAccountStatus] {
   case object PENDING     extends BankAccountStatus
   case object VALIDATED   extends BankAccountStatus
   case object REFUSED     extends BankAccountStatus
   case object DEACTIVATED extends BankAccountStatus
 
-  object BankAccountStatus extends EnumHelper[BankAccountStatus] {
-    def values: Set[BankAccountStatus] = Set(PENDING, VALIDATED, REFUSED, DEACTIVATED)
-  }
+  def values: Set[BankAccountStatus] = Set(PENDING, VALIDATED, REFUSED, DEACTIVATED)
 }

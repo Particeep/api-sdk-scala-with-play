@@ -8,7 +8,7 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
-import com.particeep.api.models.enums.Currency.Currency
+import com.particeep.api.models.enums.Currency
 
 case class FundEdition(
   recipient_id:                 Option[String]         = None,

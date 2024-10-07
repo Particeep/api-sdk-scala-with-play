@@ -1,15 +1,11 @@
 package com.particeep.api.models.enums
 
-object TransactionWalletStatus {
+sealed trait TransactionWalletStatus extends Product with Enum
 
-  sealed abstract class TransactionWalletStatus extends Product with Enum
-
+object TransactionWalletStatus extends EnumHelper[TransactionWalletStatus] {
   case object PENDING   extends TransactionWalletStatus
   case object FAILED    extends TransactionWalletStatus
   case object VALIDATED extends TransactionWalletStatus
 
-  object TransactionWalletStatus extends EnumHelper[TransactionWalletStatus] {
-    def values: Set[TransactionWalletStatus] = Set(PENDING, FAILED, VALIDATED)
-  }
-
+  def values: Set[TransactionWalletStatus] = Set(PENDING, FAILED, VALIDATED)
 }
