@@ -11,6 +11,7 @@ import com.particeep.api.models.Address
 import com.particeep.api.models.enums.{ Gender, InvestorType, ProQualification }
 
 case class UserEdition(
+  email:                     Option[String]           = None,
   first_name:                Option[String]           = None,
   last_name:                 Option[String]           = None,
   use_name:                  Option[String]           = None,
