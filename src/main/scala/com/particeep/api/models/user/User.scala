@@ -43,14 +43,6 @@ case class User(
   risk:                      Option[String]           = None,
   pro_qualification:         Option[ProQualification] = None,
   account_validation_status: Option[String]           = None,
-  company_business_name:     Option[String]           = None,
-  siren:                     Option[String]           = None,
-  siret:                     Option[String]           = None,
-  is_rcs_verified:           Option[Boolean]          = None,
-  rcs_registration_year:     Option[String]           = None,
-  rcs_city:                  Option[String]           = None,
-  legal_status:              Option[String]           = None,
-  tva_intra:                 Option[String]           = None,
   lang:                      Option[String]           = None,
   ips:                       Option[JsArray]          = None,
   creator_type:              Option[String]           = None,
@@ -62,6 +54,7 @@ case class User(
   relatives:                 Option[Seq[Relative]]    = None,
   patrimony:                 Option[UserPatrimony]    = None,
   net_patrimony:             Option[Long]             = None,
+  organization:              Option[Organization]     = None,
   custom:                    Option[JsObject]         = None,
   is_locked:                 Option[String]           = None
 )
@@ -69,6 +62,7 @@ case class User(
 object User {
   implicit val date_format: Writes[OffsetDateTime]           = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address]               = Address.format
+  implicit val organization_format: Format[Organization]     = Organization.format
   implicit val relative_format: OFormat[Relative]            = Relative.format
   implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
   val format: OFormat[User]                                  = Jsonx.formatCaseClass[User]

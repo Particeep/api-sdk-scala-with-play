@@ -25,16 +25,19 @@ trait UserCapability {
 }
 
 object UserClient {
-  private val endPoint: String                                             = "/user"
-  private val endPoint_import: String                                      = "/import"
-  private implicit val format: OFormat[User]                               = User.format
-  private implicit val creation_format: OFormat[UserCreation]              = UserCreation.format
-  private implicit val edition_format: OFormat[UserEdition]                = UserEdition.format
-  private implicit val data_format: OFormat[UserData]                      = UserData.format
-  private implicit val importResultReads: Format[ImportResult[User]]       = ImportResult.format[User]
-  private implicit val relative_creation_format: OFormat[RelativeCreation] = RelativeCreation.format
-  private implicit val relative_format: OFormat[Relative]                  = Relative.format
-  private implicit val relative_option_format: OFormat[RelativeEdition]    = RelativeEdition.format
+  private val endPoint: String                                                                       = "/user"
+  private val endPoint_import: String                                                                = "/import"
+  private implicit val format: OFormat[User]                                                         = User.format
+  private implicit val creation_format: OFormat[UserCreation]                                        = UserCreation.format
+  private implicit val edition_format: OFormat[UserEdition]                                          = UserEdition.format
+  private implicit val data_format: OFormat[UserData]                                                = UserData.format
+  private implicit val importResultReads: Format[ImportResult[User]]                                 = ImportResult.format[User]
+  private implicit val relative_creation_format: OFormat[RelativeCreation]                           = RelativeCreation.format
+  private implicit val relative_format: OFormat[Relative]                                            = Relative.format
+  private implicit val relative_option_format: OFormat[RelativeEdition]                              = RelativeEdition.format
+  private implicit val organization_user_link_format: OFormat[OrganizationUserLink]                  = OrganizationUserLink.format
+  private implicit val organization_user_link_creation_format: OFormat[OrganizationUserLinkCreation] =
+    OrganizationUserLinkCreation.format
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
   private implicit val change_password_format: OFormat[ChangePassword] = Json.format[ChangePassword]
@@ -176,4 +179,18 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.post[Relative](s"$endPoint/$id/relative", timeout, Json.toJson(relative_edition))
   }
 
+  def addUserToOrganization(
+    organization_id: String,
+    user_id:         String,
+    role:            OrganizationUserLinkCreation,
+    timeout:         Long = defaultTimeOut
+  )(implicit ec:     ExecutionContext): Future[Either[ErrorResult, OrganizationUserLink]] = {
+    ws.post[OrganizationUserLink](s"$endPoint/organization/$organization_id/user/$user_id", timeout, Json.toJson(role))
+  }
+
+  def removeUserFromOrganization(organization_id: String, user_id: String, timeout: Long = defaultTimeOut)(implicit
+    ec:                                           ExecutionContext
+  ): Future[Either[ErrorResult, OrganizationUserLink]] = {
+    ws.delete[OrganizationUserLink](s"$endPoint/organization/$organization_id/user/$user_id", timeout)
+  }
 }
