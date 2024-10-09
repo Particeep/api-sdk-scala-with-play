@@ -64,6 +64,7 @@ case class User(
   new_relatives:             Option[Seq[RelativeMetaData]] = None,
   patrimony:                 Option[UserPatrimony]         = None,
   net_patrimony:             Option[Long]                  = None,
+  organization:              Option[Organization]     = None,
   custom:                    Option[JsObject]              = None,
   is_locked:                 Option[String]                = None
 )
@@ -71,6 +72,7 @@ case class User(
 object User {
   implicit val date_format: Writes[OffsetDateTime]                = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address]                    = Address.format
+  implicit val organization_format: Format[Organization]     = Organization.format
   implicit val relative_format: OFormat[Relative]                 = Relative.format
   implicit val relative_metadata_format: Format[RelativeMetaData] = RelativeMetaData.format
   implicit val user_patrimony_format: OFormat[UserPatrimony]      = UserPatrimony.format

@@ -39,6 +39,9 @@ object UserClient {
   private implicit val new_relative_format: Format[NewRelative]                  = NewRelative.format
   private implicit val new_relative_edition_format: Format[NewRelativeEdition]   = NewRelativeEdition.format
   private implicit val new_relative_creation_format: Format[NewRelativeCreation] = NewRelativeCreation.format
+  private implicit val org_user_link_format: OFormat[OrganizationUserLink]                  = OrganizationUserLink.format
+  private implicit val org_user_link_creation_format: OFormat[OrganizationUserLinkCreation] = OrganizationUserLinkCreation.format
+
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
   private implicit val change_password_format: OFormat[ChangePassword] = Json.format[ChangePassword]
@@ -209,5 +212,20 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     exec:                        ExecutionContext
   ): Future[Either[ErrorResult, NewRelative]] = {
     ws.delete[NewRelative](s"$endPoint/$user_id/new-relative/$relative_id", timeout)
+  }
+
+  def addUserToOrganization(
+    organization_id: String,
+    user_id:         String,
+    role:            OrganizationUserLinkCreation,
+    timeout:         Long = defaultTimeOut
+  )(implicit ec:     ExecutionContext): Future[Either[ErrorResult, OrganizationUserLink]] = {
+    ws.post[OrganizationUserLink](s"$endPoint/organization/$organization_id/user/$user_id", timeout, Json.toJson(role))
+  }
+
+  def removeUserFromOrganization(organization_id: String, user_id: String, timeout: Long = defaultTimeOut)(implicit
+    ec:                                           ExecutionContext
+  ): Future[Either[ErrorResult, OrganizationUserLink]] = {
+    ws.delete[OrganizationUserLink](s"$endPoint/organization/$organization_id/user/$user_id", timeout)
   }
 }
