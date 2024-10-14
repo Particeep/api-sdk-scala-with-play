@@ -105,6 +105,12 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.post[User](s"$endPoint/$id", timeout, Json.toJson(user_edition))
   }
 
+  def updateEmail(id: String, user_email: UserUpdateEmail, timeout: Long = defaultTimeOut)(implicit
+    exec:        ExecutionContext
+  ): Future[Either[ErrorResult, User]] = {
+    ws.post[User](s"$endPoint/$id/email", timeout, Json.toJson(user_email))
+  }
+
   def authenticate(email: String, password: String, timeout: Long = defaultTimeOut)(implicit
     exec:                 ExecutionContext
   ): Future[Either[ErrorResult, User]] = {
