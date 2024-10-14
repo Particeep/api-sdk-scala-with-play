@@ -14,6 +14,7 @@ import com.particeep.api.core._
 import com.particeep.api.models._
 import com.particeep.api.models.imports.{ ImportForm, ImportResult }
 import com.particeep.api.models.user._
+import com.particeep.api.models.user.organization.{ OrganizationUserLink, OrganizationUserLinkCreation }
 import com.particeep.api.models.user.relative.{ NewRelative, NewRelativeCreation, NewRelativeEdition }
 import com.particeep.api.utils.LangUtils
 
@@ -26,22 +27,22 @@ trait UserCapability {
 }
 
 object UserClient {
-  private val endPoint: String                                                   = "/user"
-  private val endPoint_import: String                                            = "/import"
-  private implicit val format: OFormat[User]                                     = User.format
-  private implicit val creation_format: OFormat[UserCreation]                    = UserCreation.format
-  private implicit val edition_format: OFormat[UserEdition]                      = UserEdition.format
-  private implicit val data_format: OFormat[UserData]                            = UserData.format
-  private implicit val importResultReads: Format[ImportResult[User]]             = ImportResult.format[User]
-  private implicit val relative_creation_format: OFormat[RelativeCreation]       = RelativeCreation.format
-  private implicit val relative_format: OFormat[Relative]                        = Relative.format
-  private implicit val relative_option_format: OFormat[RelativeEdition]          = RelativeEdition.format
-  private implicit val new_relative_format: Format[NewRelative]                  = NewRelative.format
-  private implicit val new_relative_edition_format: Format[NewRelativeEdition]   = NewRelativeEdition.format
-  private implicit val new_relative_creation_format: Format[NewRelativeCreation] = NewRelativeCreation.format
+  private val endPoint: String                                                              = "/user"
+  private val endPoint_import: String                                                       = "/import"
+  private implicit val format: OFormat[User]                                                = User.format
+  private implicit val creation_format: OFormat[UserCreation]                               = UserCreation.format
+  private implicit val edition_format: OFormat[UserEdition]                                 = UserEdition.format
+  private implicit val data_format: OFormat[UserData]                                       = UserData.format
+  private implicit val importResultReads: Format[ImportResult[User]]                        = ImportResult.format[User]
+  private implicit val relative_creation_format: OFormat[RelativeCreation]                  = RelativeCreation.format
+  private implicit val relative_format: OFormat[Relative]                                   = Relative.format
+  private implicit val relative_option_format: OFormat[RelativeEdition]                     = RelativeEdition.format
+  private implicit val new_relative_format: Format[NewRelative]                             = NewRelative.format
+  private implicit val new_relative_edition_format: Format[NewRelativeEdition]              = NewRelativeEdition.format
+  private implicit val new_relative_creation_format: Format[NewRelativeCreation]            = NewRelativeCreation.format
   private implicit val org_user_link_format: OFormat[OrganizationUserLink]                  = OrganizationUserLink.format
-  private implicit val org_user_link_creation_format: OFormat[OrganizationUserLinkCreation] = OrganizationUserLinkCreation.format
-
+  private implicit val org_user_link_creation_format: OFormat[OrganizationUserLinkCreation] =
+    OrganizationUserLinkCreation.format
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
   private implicit val change_password_format: OFormat[ChangePassword] = Json.format[ChangePassword]
