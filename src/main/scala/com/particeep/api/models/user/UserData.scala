@@ -8,6 +8,7 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
+import com.particeep.api.models.user.organization.Organization
 import com.particeep.api.models.wallet.BankAccount
 
 case class UserData(
@@ -59,13 +60,6 @@ case class UserData(
   id_doc_expiration_date:                Option[OffsetDateTime]   = None,
   can_access:                            Option[Boolean]          = None,
   custom:                                Option[JsObject]         = None,
-  company_business_name:                 Option[String]           = None,
-  siren:                                 Option[String]           = None,
-  siret:                                 Option[String]           = None,
-  rcs_registration_year:                 Option[String]           = None,
-  rcs_city:                              Option[String]           = None,
-  legal_status:                          Option[String]           = None,
-  tva_intra:                             Option[String]           = None,
   // TODO : to remove
   patrimony:                             Option[UserPatrimony]    = None,
   net_patrimony:                         Option[Long]             = None,
@@ -77,7 +71,8 @@ case class UserData(
   birth_cog:                             Option[String]           = None,
   is_rcs_verified:                       Option[Boolean]          = None,
   creator_type:                          Option[String]           = None,
-  creator_name:                          Option[String]           = None
+  creator_name:                          Option[String]           = None,
+  organization:                          Option[Organization]     = None
 )
 
 object UserData {
@@ -86,5 +81,6 @@ object UserData {
   implicit val relative_format: OFormat[Relative]            = Relative.format
   implicit val bankaccount_format: OFormat[BankAccount]      = BankAccount.format
   implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
+  implicit val organization_format: Format[Organization]     = Organization.format
   val format: OFormat[UserData]                              = Jsonx.formatCaseClass[UserData]
 }
