@@ -14,6 +14,7 @@ import com.particeep.api.core._
 import com.particeep.api.models._
 import com.particeep.api.models.imports.{ ImportForm, ImportResult }
 import com.particeep.api.models.user._
+import com.particeep.api.models.user.organization.{ OrganizationUserLink, OrganizationUserLinkCreation }
 import com.particeep.api.utils.LangUtils
 
 trait UserCapability {

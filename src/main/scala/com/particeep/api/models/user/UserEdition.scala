@@ -9,6 +9,7 @@ import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.{ Gender, InvestorType, ProQualification }
+import com.particeep.api.models.user.organization.OrganizationOption
 
 case class UserEdition(
   first_name:                Option[String]             = None,
