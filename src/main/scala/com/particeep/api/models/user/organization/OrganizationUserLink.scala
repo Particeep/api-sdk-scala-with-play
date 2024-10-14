@@ -1,4 +1,4 @@
-package com.particeep.api.models.user
+package com.particeep.api.models.user.organization
 
 import ai.x.play.json.Encoders.encoder
 import ai.x.play.json.Jsonx
