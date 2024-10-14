@@ -7,5 +7,5 @@ case class UserUpdateEmail(
 )
 
 object UserUpdateEmail {
-  implicit val UserUpdateEmailOptionReads: Reads[UserUpdateEmail] = Json.reads[UserUpdateEmail]
+  implicit val UserUpdateEmailReads: OFormat[UserUpdateEmail] = Json.format[UserUpdateEmail]
 }
