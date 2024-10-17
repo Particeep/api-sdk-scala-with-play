@@ -19,6 +19,8 @@ case class FundraiseEquityRunningEdition(
   end_at:                Option[OffsetDateTime] = None,
   score:                 Option[String]         = None,
   form_id:               Option[String]         = None,
+  modification_form_id:  Option[String]         = None,
+  cancellation_form_id:  Option[String]         = None,
   tag:                   Option[String]         = None,
   is_featured:           Option[Boolean]        = None,
   required_pro:          Option[Boolean]        = None,
