@@ -1,6 +1,6 @@
 package com.particeep.api.models.unicia
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 
 import java.time.OffsetDateTime
 
