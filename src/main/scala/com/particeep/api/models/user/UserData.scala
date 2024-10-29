@@ -8,6 +8,7 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
+import com.particeep.api.models.user.relative.NewRelative
 import com.particeep.api.models.wallet.BankAccount
 
 case class UserData(
@@ -52,6 +53,7 @@ case class UserData(
   account_validation_status:             Option[String]           = None,
   lang:                                  Option[String]           = None,
   relatives:                             Option[Seq[Relative]]    = None,
+  new_relatives:                         Option[Seq[NewRelative]] = None,
   bankaccounts:                          Option[Seq[BankAccount]] = None,
   ips:                                   Option[JsArray]          = None,
   is_id_doc_verified:                    Option[Boolean]          = None,
@@ -84,6 +86,7 @@ object UserData {
   implicit val date_format: Writes[OffsetDateTime]           = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address]               = Address.format
   implicit val relative_format: OFormat[Relative]            = Relative.format
+  implicit val new_relative_format: OFormat[NewRelative]     = NewRelative.format
   implicit val bankaccount_format: OFormat[BankAccount]      = BankAccount.format
   implicit val user_patrimony_format: OFormat[UserPatrimony] = UserPatrimony.format
   val format: OFormat[UserData]                              = Jsonx.formatCaseClass[UserData]

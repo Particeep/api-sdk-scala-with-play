@@ -14,6 +14,7 @@ import com.particeep.api.core._
 import com.particeep.api.models._
 import com.particeep.api.models.imports.{ ImportForm, ImportResult }
 import com.particeep.api.models.user._
+import com.particeep.api.models.user.relative.{ NewRelative, NewRelativeCreation, NewRelativeEdition }
 import com.particeep.api.utils.LangUtils
 
 trait UserCapability {
@@ -25,16 +26,19 @@ trait UserCapability {
 }
 
 object UserClient {
-  private val endPoint: String                                             = "/user"
-  private val endPoint_import: String                                      = "/import"
-  private implicit val format: OFormat[User]                               = User.format
-  private implicit val creation_format: OFormat[UserCreation]              = UserCreation.format
-  private implicit val edition_format: OFormat[UserEdition]                = UserEdition.format
-  private implicit val data_format: OFormat[UserData]                      = UserData.format
-  private implicit val importResultReads: Format[ImportResult[User]]       = ImportResult.format[User]
-  private implicit val relative_creation_format: OFormat[RelativeCreation] = RelativeCreation.format
-  private implicit val relative_format: OFormat[Relative]                  = Relative.format
-  private implicit val relative_option_format: OFormat[RelativeEdition]    = RelativeEdition.format
+  private val endPoint: String                                                    = "/user"
+  private val endPoint_import: String                                             = "/import"
+  private implicit val format: OFormat[User]                                      = User.format
+  private implicit val creation_format: OFormat[UserCreation]                     = UserCreation.format
+  private implicit val edition_format: OFormat[UserEdition]                       = UserEdition.format
+  private implicit val data_format: OFormat[UserData]                             = UserData.format
+  private implicit val importResultReads: Format[ImportResult[User]]              = ImportResult.format[User]
+  private implicit val relative_creation_format: OFormat[RelativeCreation]        = RelativeCreation.format
+  private implicit val relative_format: OFormat[Relative]                         = Relative.format
+  private implicit val relative_option_format: OFormat[RelativeEdition]           = RelativeEdition.format
+  private implicit val new_relative_format: OFormat[NewRelative]                  = NewRelative.format
+  private implicit val new_relative_edition_format: OFormat[NewRelativeEdition]   = NewRelativeEdition.format
+  private implicit val new_relative_creation_format: OFormat[NewRelativeCreation] = NewRelativeCreation.format
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
   private implicit val change_password_format: OFormat[ChangePassword] = Json.format[ChangePassword]
@@ -180,5 +184,28 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     exec:             ExecutionContext
   ): Future[Either[ErrorResult, User]] = {
     ws.post[User](s"$endPoint/$id/email", timeout, Json.toJson(new_email))
+  }
+
+  def addNewRelative(user_id: String, relative_option: NewRelativeCreation, timeout: Long = defaultTimeOut)(implicit
+    exec:                     ExecutionContext
+  ): Future[Either[ErrorResult, NewRelative]] = {
+    ws.put[NewRelative](s"$endPoint/$user_id/new-relative", timeout, Json.toJson(relative_option))
+  }
+
+  def updateNewRelative(
+    user_id:          String,
+    relative_id:      String,
+    relative_edition: NewRelativeEdition,
+    timeout:          Long = defaultTimeOut
+  )(implicit
+    exec:             ExecutionContext
+  ): Future[Either[ErrorResult, NewRelative]] = {
+    ws.post[NewRelative](s"$endPoint/$user_id/new-relative/$relative_id", timeout, Json.toJson(relative_edition))
+  }
+
+  def deleteNewRelative(user_id: String, relative_id: String, timeout: Long = defaultTimeOut)(implicit
+    exec:                        ExecutionContext
+  ): Future[Either[ErrorResult, NewRelative]] = {
+    ws.delete[NewRelative](s"$endPoint/$user_id/new-relative/$relative_id", timeout)
   }
 }

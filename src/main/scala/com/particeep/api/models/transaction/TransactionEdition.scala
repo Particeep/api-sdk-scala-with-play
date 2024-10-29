@@ -24,6 +24,7 @@ case class TransactionEdition(
   private_comment:        Option[String]               = None,
   tag:                    Option[String]               = None,
   co_issuers:             Option[JsArray]              = None,
+  new_co_issuers:         Option[JsArray]              = None,
   custom:                 Option[JsObject]             = None,
   offline_payment_method: Option[OfflinePaymentMethod] = None
 )
