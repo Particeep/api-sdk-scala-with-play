@@ -8,13 +8,13 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
-import com.particeep.api.models.enums.{Gender, ProQualification}
+import com.particeep.api.models.enums.{ Gender, ProQualification }
 
 case class NewRelative(
   id:                        String                   = "",
   email:                     String,
-  role: RelativeRole,
-  parent_id: String,
+  role:                      RelativeRole,
+  parent_id:                 String,
   created_at:                Option[OffsetDateTime]   = None,
   created_by:                Option[String]           = None,
   first_name:                Option[String]           = None,
@@ -53,7 +53,7 @@ case class NewRelative(
 )
 
 object NewRelative {
-  implicit val date_format: Writes[OffsetDateTime]           = Formatter.OffsetDateTimeWrites
-  implicit val address_format: Format[Address]               = Address.format
-  val format: OFormat[NewRelative]                                  = Jsonx.formatCaseClass[NewRelative]
+  private[this] implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
+  private[this] implicit val address_format: Format[Address]     = Address.format
+  val format: OFormat[NewRelative]                               = Jsonx.formatCaseClass[NewRelative]
 }
