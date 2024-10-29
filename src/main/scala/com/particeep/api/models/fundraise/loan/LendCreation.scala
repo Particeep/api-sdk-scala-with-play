@@ -11,6 +11,7 @@ case class LendCreation(
   user_id:                String,
   amount:                 Int,
   co_issuers:             Option[JsArray]              = None,
+  new_co_issuers:         Option[JsArray]              = None,
   created_at:             Option[OffsetDateTime],
   comment:                Option[String]               = None,
   custom:                 Option[JsObject]             = None,

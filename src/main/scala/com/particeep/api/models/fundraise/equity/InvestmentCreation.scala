@@ -13,6 +13,7 @@ case class InvestmentCreation(
   price_per_share:        Option[Int]                  = None,
   check_required_pro:     Option[Boolean]              = None,
   co_issuers:             Option[JsArray]              = None,
+  new_co_issuers:         Option[JsArray]              = None,
   created_at:             Option[OffsetDateTime]       = None,
   dismemberment_duration: Option[Int]                  = None,
   dismemberment_rate:     Option[Double]               = None,

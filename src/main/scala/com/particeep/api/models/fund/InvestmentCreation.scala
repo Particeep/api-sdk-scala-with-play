@@ -9,6 +9,7 @@ case class InvestmentCreation(
   amount:                 Int,
   check_required_pro:     Option[Boolean]              = None,
   co_issuers:             Option[JsArray]              = None,
+  new_co_issuers:         Option[JsArray]              = None,
   custom:                 Option[JsObject]             = None,
   partner_fees:           Option[Double]               = None,
   comment:                Option[String]               = None,
