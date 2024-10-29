@@ -1,6 +1,6 @@
 package com.particeep.api
 
-import play.api.libs.json.{ JsNull, Json }
+import play.api.libs.json.Json
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -54,15 +54,15 @@ class ControlClient(val ws: WSClient, val credentials: Option[ApiCredential] = N
   def updateBlocks(
     id:                    String,
     timeout:               Long = defaultTimeOut,
-    control_blocks_update: List[ControlBlockUpdate]
+    control_blocks_update: ControlBlocksUpdate
   )(implicit exec:         ExecutionContext): Future[Either[ErrorResult, Control]] = {
     ws.post[Control](s"$endPoint/$id/block", timeout, Json.toJson(control_blocks_update))
   }
 
-  def publish(id: String, timeout: Long = defaultTimeOut)(implicit
+  def publish(id: String, ask_to_publish: AskToPublish, timeout: Long = defaultTimeOut)(implicit
     exec:         ExecutionContext
   ): Future[Either[ErrorResult, Control]] = {
-    ws.post[Control](s"$endPoint/$id/publish", timeout, JsNull)
+    ws.post[Control](s"$endPoint/$id/publish", timeout, Json.toJson(ask_to_publish))
   }
 
   def search(

@@ -7,7 +7,7 @@ final case class ControlCreation(
   target_type:   String,
   level:         Int,
   block_targets: Option[Map[String, List[String]]],
-  document_ids:  List[String] = List()
+  author_email:  String
 )
 
 object ControlCreation {
