@@ -176,7 +176,7 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.post[Relative](s"$endPoint/$id/relative", timeout, Json.toJson(relative_edition))
   }
 
-  def updateEmail(id: String, new_email: UserUpdateEmailOption, timeout: Long = defaultTimeOut)(implicit
+  def updateEmail(id: String, new_email: UserUpdateEmail, timeout: Long = defaultTimeOut)(implicit
     exec:             ExecutionContext
   ): Future[Either[ErrorResult, User]] = {
     ws.post[User](s"$endPoint/$id/email", timeout, Json.toJson(new_email))
