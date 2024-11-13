@@ -21,6 +21,7 @@ case class FundraiseEquityRunningEdition(
   amount_target_max:     Option[Long]               = None,
   score:                 Option[String]             = None,
   form_id:               Option[String]             = None,
+  unicia_id:             Option[String]             = None,
   tag:                   Option[String]             = None,
   is_featured:           Option[Boolean]            = None,
   required_pro:          Option[Boolean]            = None,
