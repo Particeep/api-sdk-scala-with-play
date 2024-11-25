@@ -3,6 +3,7 @@ package com.particeep.api.models.fundraise.equity
 import play.api.libs.json.{ JsArray, JsObject, Json, OFormat }
 
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
+import com.particeep.api.models.transaction.CoIssuer
 
 case class InvestmentOption(
   amount:                 Option[Int]                  = None,
@@ -12,7 +13,7 @@ case class InvestmentOption(
   private_comment:        Option[String]               = None,
   tag:                    Option[String]               = None,
   co_issuers:             Option[JsArray]              = None,
-  new_co_issuers:         Option[JsArray]              = None,
+  new_co_issuers:         Option[List[CoIssuer]]       = None,
   dismemberment_duration: Option[Int]                  = None,
   dismemberment_rate:     Option[Double]               = None,
   custom:                 Option[JsObject]             = None,
