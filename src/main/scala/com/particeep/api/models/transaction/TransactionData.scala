@@ -19,6 +19,7 @@ case class TransactionData(
   issuer_first_name:                     Option[String]                 = None,
   issuer_last_name:                      Option[String]                 = None,
   issuer_use_name:                       Option[String]                 = None,
+  issuer_company_business_name:          Option[String]                 = None,
   recipient_id:                          Option[String]                 = None,
   recipient_type:                        Option[String]                 = None,
   recipient_name:                        Option[String]                 = None,
