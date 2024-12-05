@@ -6,15 +6,17 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
+import com.particeep.api.models.user.relative.RelativeMetaData
 
 case class LendCreation(
   user_id:                String,
   amount:                 Int,
-  co_issuers:             Option[JsArray]              = None,
+  co_issuers:             Option[JsArray]                = None,
+  new_co_issuers:         Option[List[RelativeMetaData]] = None,
   created_at:             Option[OffsetDateTime],
-  comment:                Option[String]               = None,
-  custom:                 Option[JsObject]             = None,
-  offline_payment_method: Option[OfflinePaymentMethod] = None
+  comment:                Option[String]                 = None,
+  custom:                 Option[JsObject]               = None,
+  offline_payment_method: Option[OfflinePaymentMethod]   = None
 )
 
 object LendCreation {
