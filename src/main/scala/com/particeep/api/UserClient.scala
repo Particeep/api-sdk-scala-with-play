@@ -14,7 +14,13 @@ import com.particeep.api.core._
 import com.particeep.api.models._
 import com.particeep.api.models.imports.{ ImportForm, ImportResult }
 import com.particeep.api.models.user._
-import com.particeep.api.models.user.organization.{ OrganizationUserLink, OrganizationUserLinkCreation }
+import com.particeep.api.models.user.organization.{
+  Organization,
+  OrganizationOption,
+  OrganizationUserLink,
+  OrganizationUserLinkCreation,
+  OrganizationUserLinkOption
+}
 import com.particeep.api.models.user.relative.{ NewRelative, NewRelativeCreation, NewRelativeEdition }
 import com.particeep.api.utils.LangUtils
 
@@ -40,9 +46,13 @@ object UserClient {
   private implicit val new_relative_format: Format[NewRelative]                             = NewRelative.format
   private implicit val new_relative_edition_format: Format[NewRelativeEdition]              = NewRelativeEdition.format
   private implicit val new_relative_creation_format: Format[NewRelativeCreation]            = NewRelativeCreation.format
+  private implicit val org_format: OFormat[Organization]                                    = Organization.format
+  private implicit val org_option_format: OFormat[OrganizationOption]                       = OrganizationOption.format
   private implicit val org_user_link_format: OFormat[OrganizationUserLink]                  = OrganizationUserLink.format
   private implicit val org_user_link_creation_format: OFormat[OrganizationUserLinkCreation] =
     OrganizationUserLinkCreation.format
+  private implicit val org_user_link_option_format: OFormat[OrganizationUserLinkOption]     =
+    OrganizationUserLinkOption.format
 
   private case class ChangePassword(old_password: Option[String], new_password: String)
   private implicit val change_password_format: OFormat[ChangePassword] = Json.format[ChangePassword]
@@ -215,18 +225,49 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     ws.delete[NewRelative](s"$endPoint/$user_id/new-relative/$relative_id", timeout)
   }
 
+  def updateOrganization(
+    organization_id: String,
+    role:            OrganizationOption,
+    timeout:         Long = defaultTimeOut
+  )(implicit ec:     ExecutionContext): Future[Either[ErrorResult, Organization]] = {
+    ws.post[Organization](s"$endPoint/organization/$organization_id", timeout, Json.toJson(role))
+  }
+
   def addUserToOrganization(
     organization_id: String,
     user_id:         String,
-    role:            OrganizationUserLinkCreation,
+    link_creation:   OrganizationUserLinkCreation,
     timeout:         Long = defaultTimeOut
   )(implicit ec:     ExecutionContext): Future[Either[ErrorResult, OrganizationUserLink]] = {
-    ws.post[OrganizationUserLink](s"$endPoint/organization/$organization_id/user/$user_id", timeout, Json.toJson(role))
+    ws.put[OrganizationUserLink](
+      s"$endPoint/organization/$organization_id/user/$user_id",
+      timeout,
+      Json.toJson(link_creation)
+    )
   }
 
-  def removeUserFromOrganization(organization_id: String, user_id: String, timeout: Long = defaultTimeOut)(implicit
+  def updateOrganizationUserRole(
+    organization_id: String,
+    user_id:         String,
+    link_update:     OrganizationUserLinkOption,
+    timeout:         Long = defaultTimeOut
+  )(implicit ec:     ExecutionContext): Future[Either[ErrorResult, OrganizationUserLink]] = {
+    ws.post[OrganizationUserLink](
+      s"$endPoint/organization/$organization_id/user/$user_id",
+      timeout,
+      Json.toJson(link_update)
+    )
+  }
+
+  def deleteUserFromOrganization(organization_id: String, user_id: String, timeout: Long = defaultTimeOut)(implicit
     ec:                                           ExecutionContext
   ): Future[Either[ErrorResult, OrganizationUserLink]] = {
     ws.delete[OrganizationUserLink](s"$endPoint/organization/$organization_id/user/$user_id", timeout)
+  }
+
+  def deleteUsersFromOrganization(organization_id: String, ids: List[String], timeout: Long = defaultTimeOut)(implicit
+    ec:                                            ExecutionContext
+  ): Future[Either[ErrorResult, OrganizationUserLink]] = {
+    ws.delete[OrganizationUserLink](s"$endPoint/organization/$organization_id/user", timeout, Json.obj("ids" -> ids))
   }
 }
