@@ -65,7 +65,6 @@ case class User(
   new_relatives:             Option[Seq[RelativeMetaData]] = None,
   patrimony:                 Option[UserPatrimony]         = None,
   net_patrimony:             Option[Long]                  = None,
-  organization:              Option[Organization]          = None,
   custom:                    Option[JsObject]              = None,
   is_locked:                 Option[String]                = None
 )

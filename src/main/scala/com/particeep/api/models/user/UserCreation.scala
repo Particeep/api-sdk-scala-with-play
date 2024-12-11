@@ -30,6 +30,7 @@ case class UserCreation(
   nationality:               Option[String]             = None,
   sector:                    Option[String]             = None,
   investor_type:             Option[InvestorType]       = None,
+  activated:                 Option[Boolean]            = None,
   allow_mail_notifications:  Option[Boolean]            = None,
   does_pay_taxes:            Option[Boolean]            = None,
   subject_to_income_tax:     Option[Boolean]            = None,

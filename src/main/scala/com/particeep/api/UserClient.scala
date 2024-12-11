@@ -227,10 +227,10 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def updateOrganization(
     organization_id: String,
-    role:            OrganizationOption,
+    org_option:      OrganizationOption,
     timeout:         Long = defaultTimeOut
   )(implicit ec:     ExecutionContext): Future[Either[ErrorResult, Organization]] = {
-    ws.post[Organization](s"$endPoint/organization/$organization_id", timeout, Json.toJson(role))
+    ws.post[Organization](s"$endPoint/organization/$organization_id", timeout, Json.toJson(org_option))
   }
 
   def addUserToOrganization(
@@ -261,13 +261,17 @@ class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def deleteUserFromOrganization(organization_id: String, user_id: String, timeout: Long = defaultTimeOut)(implicit
     ec:                                           ExecutionContext
-  ): Future[Either[ErrorResult, OrganizationUserLink]] = {
-    ws.delete[OrganizationUserLink](s"$endPoint/organization/$organization_id/user/$user_id", timeout)
+  ): Future[Either[ErrorResult, List[OrganizationUserLink]]] = {
+    ws.delete[List[OrganizationUserLink]](s"$endPoint/organization/$organization_id/user/$user_id", timeout)
   }
 
   def deleteUsersFromOrganization(organization_id: String, ids: List[String], timeout: Long = defaultTimeOut)(implicit
     ec:                                            ExecutionContext
-  ): Future[Either[ErrorResult, OrganizationUserLink]] = {
-    ws.delete[OrganizationUserLink](s"$endPoint/organization/$organization_id/user", timeout, Json.obj("ids" -> ids))
+  ): Future[Either[ErrorResult, List[OrganizationUserLink]]] = {
+    ws.delete[List[OrganizationUserLink]](
+      s"$endPoint/organization/$organization_id/user",
+      timeout,
+      Json.obj("ids" -> ids)
+    )
   }
 }
