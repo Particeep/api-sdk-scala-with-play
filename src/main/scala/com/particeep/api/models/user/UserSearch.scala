@@ -39,5 +39,7 @@ case class UserSearchAdditional(
   rcs_registration_year:                 Option[String] = None,
   rcs_city:                              Option[String] = None,
   legal_status:                          Option[String] = None,
-  tva_intra:                             Option[String] = None
+  tva_intra:                             Option[String] = None,
+  organization_id:                       Option[String] = None,
+  organization_role:                     Option[String] = None
 )
