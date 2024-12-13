@@ -7,7 +7,8 @@ import play.api.libs.json.OFormat
 case class UserPatrimony(
   yearly_income:     Option[Long] = None,
   total_liquidity:   Option[Long] = None,
-  yearly_engagement: Option[Long] = None
+  yearly_engagement: Option[Long] = None,
+  exploit_result:    Option[Long] = None
 )
 
 object UserPatrimony {
