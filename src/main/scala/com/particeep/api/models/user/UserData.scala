@@ -8,6 +8,8 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
+import com.particeep.api.models.enums.OrganizationRole
+import com.particeep.api.models.user.organization.Organization
 import com.particeep.api.models.user.relative.RelativeMetaData
 import com.particeep.api.models.wallet.BankAccount
 
@@ -76,6 +78,8 @@ case class UserData(
   // ---
   is_locked:                             Option[String]                = None,
   addresses:                             Option[Seq[Address]]          = None,
+  organization_id:                       Option[String]                = None,
+  organization_role:                     Option[OrganizationRole]      = None,
   birth_cog:                             Option[String]                = None,
   is_rcs_verified:                       Option[Boolean]               = None,
   creator_type:                          Option[String]                = None,
@@ -87,6 +91,7 @@ object UserData {
   implicit val address_format: Format[Address]                    = Address.format
   implicit val relative_format: OFormat[Relative]                 = Relative.format
   implicit val relative_metadata_format: Format[RelativeMetaData] = RelativeMetaData.format
+  implicit val organization_format: Format[Organization]          = Organization.format
   implicit val bankaccount_format: OFormat[BankAccount]           = BankAccount.format
   implicit val user_patrimony_format: OFormat[UserPatrimony]      = UserPatrimony.format
   val format: OFormat[UserData]                                   = Jsonx.formatCaseClass[UserData]

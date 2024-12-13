@@ -9,6 +9,7 @@ import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
 import com.particeep.api.models.enums.{ Gender, InvestorType, ProQualification }
+import com.particeep.api.models.user.organization.Organization
 import com.particeep.api.models.user.relative.RelativeMetaData
 
 case class User(
@@ -71,6 +72,7 @@ case class User(
 object User {
   implicit val date_format: Writes[OffsetDateTime]                = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address]                    = Address.format
+  implicit val organization_format: Format[Organization]          = Organization.format
   implicit val relative_format: OFormat[Relative]                 = Relative.format
   implicit val relative_metadata_format: Format[RelativeMetaData] = RelativeMetaData.format
   implicit val user_patrimony_format: OFormat[UserPatrimony]      = UserPatrimony.format
