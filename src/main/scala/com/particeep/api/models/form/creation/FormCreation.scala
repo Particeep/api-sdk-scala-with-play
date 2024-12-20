@@ -4,9 +4,9 @@ import play.api.libs.json.{ JsObject, Json, OFormat }
 
 case class FormCreation(
   name:        Option[String],
-  description: Option[String]   = None,
-  tag:         Option[String]   = None,
-  custom:      Option[JsObject] = None
+  description: Option[String]       = None,
+  tag:         Option[List[String]] = None,
+  custom:      Option[JsObject]     = None
 )
 
 object FormCreation {
