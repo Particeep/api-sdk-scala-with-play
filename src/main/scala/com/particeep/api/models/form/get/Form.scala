@@ -11,7 +11,7 @@ case class Form(
   created_at:      Option[OffsetDateTime] = None,
   name:            Option[String]         = None,
   description:     Option[String]         = None,
-  tag:             Option[String]         = None,
+  tag:             Option[List[String]]   = None,
   last_updated_at: Option[OffsetDateTime] = None
 )
 
