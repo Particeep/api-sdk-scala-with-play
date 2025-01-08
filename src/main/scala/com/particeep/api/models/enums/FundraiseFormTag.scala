@@ -6,8 +6,6 @@ object FundraiseFormTag extends EnumHelper[FundraiseFormTag] {
 
   case object NATURAL                       extends FundraiseFormTag
   case object LEGAL                         extends FundraiseFormTag
-  case object SOPHISTICATED_NATURAL         extends FundraiseFormTag
-  case object SOPHISTICATED_LEGAL           extends FundraiseFormTag
   case object EXECUTIVE                     extends FundraiseFormTag
   case object BENEFICIARY                   extends FundraiseFormTag
   case object SPOUSE                        extends FundraiseFormTag
@@ -21,8 +19,6 @@ object FundraiseFormTag extends EnumHelper[FundraiseFormTag] {
   def values: Set[FundraiseFormTag] = Set(
     NATURAL,
     LEGAL,
-    SOPHISTICATED_NATURAL,
-    SOPHISTICATED_LEGAL,
     EXECUTIVE,
     BENEFICIARY,
     SPOUSE,
