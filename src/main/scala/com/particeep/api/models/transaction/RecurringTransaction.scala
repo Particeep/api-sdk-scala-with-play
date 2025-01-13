@@ -11,12 +11,8 @@ import com.particeep.api.core.Formatter
 case class RecurringTransaction(
   id:             String                 = "",
   created_at:     Option[OffsetDateTime] = None,
-  issuer_id:      String                 = "",
-  issuer_email:   String                 = "",
+  transaction_id: String                 = "",
   amount:         Int                    = 0,
-  recipient_id:   String                 = "",
-  recipient_name: String                 = "",
-  recipient_type: String                 = "",
   frequency:      Int                    = 0,
   start_at:       Option[OffsetDateTime] = None,
   duration:       Option[Int]            = None
