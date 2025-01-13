@@ -1,6 +1,6 @@
 package com.particeep.api.models.fundraise.loan
 
-import play.api.libs.json.{ JsObject, Json, OFormat, Writes }
+import play.api.libs.json.{ JsObject, JsString, Json, OFormat, Writes }
 
 import java.time.OffsetDateTime
 
@@ -28,6 +28,9 @@ case class FundraiseLoanRunningEdition(
 )
 
 object FundraiseLoanRunningEdition {
-  implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[FundraiseLoanRunningEdition] = Json.format[FundraiseLoanRunningEdition]
+  implicit val date_format: Writes[OffsetDateTime]                 = Formatter.OffsetDateTimeWrites
+  implicit val forms_writes: Writes[Map[FundraiseFormTag, String]] = Writes { value =>
+    JsObject(value.map { case (key, value) => key.toString -> JsString(value) })
+  }
+  val format: OFormat[FundraiseLoanRunningEdition]                 = Json.format[FundraiseLoanRunningEdition]
 }

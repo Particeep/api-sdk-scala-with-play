@@ -11,6 +11,7 @@ case class FormsSearch(
   name:            Option[String]         = None,
   description:     Option[String]         = None,
   tag:             Option[String]         = None,
+  ids:             Option[String]         = None,
   last_updated_at: Option[OffsetDateTime] = None
 )
 
