@@ -1,8 +1,11 @@
 package com.particeep.api.models.fundraise.equity
 
-import play.api.libs.json.{JsObject, JsString, Json, OFormat, Writes}
+import ai.x.play.json.Encoders.encoder
+import ai.x.play.json.Jsonx
+import play.api.libs.json.{ JsObject, JsString, OFormat, Writes }
 
 import java.time.OffsetDateTime
+
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.FundraiseFormTag
 
@@ -38,5 +41,5 @@ object FundraiseEquityRunningEdition {
   implicit val forms_writes: Writes[Map[FundraiseFormTag, String]]      = Writes { value =>
     JsObject(value.map { case (key, value) => key.toString -> JsString(value) })
   }
-  val format: OFormat[FundraiseEquityRunningEdition]                    = Json.format[FundraiseEquityRunningEdition]
+  val format: OFormat[FundraiseEquityRunningEdition]                    = Jsonx.formatCaseClassUseDefaults[FundraiseEquityRunningEdition]
 }
