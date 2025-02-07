@@ -10,7 +10,8 @@ case class RecurringTransactionCreation(
   transaction_id: String,
   amount:         Int,
   start_at:       OffsetDateTime,
-  duration:       Option[Int] = None
+  duration:       Option[Int] = None,
+  frequency:      Int         = 0
 )
 
 object RecurringTransactionCreation {
