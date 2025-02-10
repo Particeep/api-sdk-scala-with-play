@@ -28,7 +28,7 @@ case class FundraiseEquityRunningEdition(
   tag:                             Option[String]                        = None,
   is_featured:                     Option[Boolean]                       = None,
   recurring_investment_activated:  Option[Boolean]                       = None,
-  recurring_investment_frequency:  Option[Int]                           = None,
+  recurring_investment_frequency:  Option[List[Int]]                     = None,
   recurring_investment_min_amount: Option[Int]                           = None,
   required_pro:                    Option[Boolean]                       = None,
   custom:                          Option[JsObject]                      = None,
