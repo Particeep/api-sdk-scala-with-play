@@ -28,6 +28,7 @@ object ParticeepApi {
       with FundraiseSearchCapability
       with NewsCapability
       with TransactionCapability
+      with RecurringTransactionCapability
       with PaymentCapability
       with FundraiseEquityCapability
       with PhoneMessagingCapability
