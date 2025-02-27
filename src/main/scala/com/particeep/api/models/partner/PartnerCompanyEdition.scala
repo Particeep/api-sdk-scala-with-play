@@ -1,6 +1,6 @@
 package com.particeep.api.models.partner
 
-import play.api.libs.json.{ JsObject, Json, OFormat }
+import play.api.libs.json.{ JsObject, JsString, Json, OFormat, Writes }
 
 import com.particeep.api.models.enums.{ OriasStatus, PartnerManagerFormTag, RegulatoryStatus }
 
@@ -25,5 +25,8 @@ case class PartnerCompanyEdition(
 )
 
 object PartnerCompanyEdition {
-  val format: OFormat[PartnerCompanyEdition] = Json.format[PartnerCompanyEdition]
+  implicit val forms_writes: Writes[Map[PartnerManagerFormTag, String]] = Writes { value =>
+    JsObject(value.map { case (key, value) => key.toString -> JsString(value) })
+  }
+  val format: OFormat[PartnerCompanyEdition]                            = Json.format[PartnerCompanyEdition]
 }
