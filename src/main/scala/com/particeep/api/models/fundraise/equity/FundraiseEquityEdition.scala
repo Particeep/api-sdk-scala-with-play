@@ -32,7 +32,7 @@ case class FundraiseEquityEdition(
   required_pro:                    Option[Boolean]                       = None,
   is_featured:                     Option[Boolean]                       = None,
   recurring_investment_activated:  Option[Boolean]                       = None,
-  recurring_investment_frequency:  Option[Int]                           = None,
+  recurring_investment_frequency:  Option[List[Int]]                     = None,
   recurring_investment_min_amount: Option[Int]                           = None,
   forms:                           Option[Map[FundraiseFormTag, String]] = None,
   unicia_id:                       Option[String]                        = None,
