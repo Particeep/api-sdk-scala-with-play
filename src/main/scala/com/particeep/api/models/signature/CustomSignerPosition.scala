@@ -7,20 +7,20 @@ import play.api.libs.json.OFormat
 import com.particeep.api.models.enums.SignerType
 
 final case class CustomSignerPosition(
-                                       signer_type: SignerType,
-                                       configs:     List[CustomPosition]
-                                     )
+  signer_type: SignerType,
+  configs:     List[CustomPosition]
+)
 
 object CustomSignerPosition {
   implicit val CustomSignerPositionFormat: OFormat[CustomSignerPosition] = Jsonx.formatCaseClass[CustomSignerPosition]
 }
 
 final case class CustomPosition(
-                                 page:  Int,
-                                 x:     Int,
-                                 y:     Int,
-                                 width: Int = 180 // Only for yousign for now.
-                               )
-object CustomPosition {
+  page:  Int,
+  x:     Int,
+  y:     Int,
+  width: Int = 180 // Only for yousign for now.
+)
+object CustomPosition       {
   implicit val CustomPositionFormat: OFormat[CustomPosition] = Jsonx.formatCaseClass[CustomPosition]
 }
