@@ -5,10 +5,11 @@ import ai.x.play.json.Jsonx
 import play.api.libs.json.OFormat
 
 case class SignaturePositionOption(
-                                    document_id: String,
-                                    positions:   List[CustomSignerPosition],
-                                  )
+  document_id: String,
+  positions:   List[CustomSignerPosition]
+)
 
 object SignaturePositionOption {
-  implicit val SignaturePositionOptionFormat: OFormat[SignaturePositionOption] = Jsonx.formatCaseClass[SignaturePositionOption]
+  implicit val SignaturePositionOptionFormat: OFormat[SignaturePositionOption] =
+    Jsonx.formatCaseClass[SignaturePositionOption]
 }
