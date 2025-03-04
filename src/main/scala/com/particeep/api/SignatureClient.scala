@@ -124,7 +124,7 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     )(exec, creds.withHeader("Content-Type", "application/csv"))
   }
 
-  def createSiganturePosition(
+  def createSignaturePosition(
     sp:      SignaturePositionOption,
     timeout: Long = defaultTimeOut
   )(implicit
@@ -133,7 +133,7 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     ws.put[SignaturePosition](s"$endPoint/position", timeout, Json.toJson(sp))
   }
 
-  def updateSiganturePosition(
+  def updateSignaturePosition(
     id:      String,
     sp:      SignaturePositionOption,
     timeout: Long = defaultTimeOut
