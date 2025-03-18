@@ -13,6 +13,8 @@ object SignerType extends EnumHelper[SignerType] {
   case object GUARDIAN             extends SignerType
   case object CURATOR              extends SignerType
   case object LEGAL_REPRESENTATIVE extends SignerType
+  case object EXECUTIVE            extends SignerType
+  case object BENEFICIARY          extends SignerType
 
   val values: Set[SignerType] = Set(
     CONJOINT,
@@ -23,6 +25,8 @@ object SignerType extends EnumHelper[SignerType] {
     SPOUSE,
     GUARDIAN,
     CURATOR,
-    LEGAL_REPRESENTATIVE
+    LEGAL_REPRESENTATIVE,
+    EXECUTIVE,
+    BENEFICIARY
   )
 }
