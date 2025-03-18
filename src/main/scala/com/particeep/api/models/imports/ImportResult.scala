@@ -8,8 +8,8 @@ import com.particeep.api.core.Formatter
 
 case class ImportResult[T](
   import_state:  ImportState,
-  success_lines: List[LineError]      = List(),
-  error_lines:   List[LineSuccess[T]] = List()
+  success_lines: List[LineSuccess[T]] = List(),
+  error_lines:   List[LineError]      = List()
 )
 
 object ImportResult {
@@ -20,8 +20,8 @@ object ImportResult {
   def format[T](implicit fmt: Format[T]): Format[ImportResult[T]]                      = new Format[ImportResult[T]] {
     def reads(json: JsValue): JsResult[ImportResult[T]] = JsSuccess(new ImportResult[T](
       (json \ "import_state").as[ImportState],
-      (json \ "success_lines").as[List[LineError]],
-      (json \ "error_lines").as[List[LineSuccess[T]]]
+      (json \ "success_lines").as[List[LineSuccess[T]]],
+      (json \ "error_lines").as[List[LineError]]
     ))
     def writes(ir: ImportResult[T]): JsValue            = JsObject(Seq(
       "import_state"  -> Json.toJson(ir.import_state),
