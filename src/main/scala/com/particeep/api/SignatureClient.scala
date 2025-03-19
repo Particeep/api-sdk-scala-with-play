@@ -125,21 +125,21 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
   }
 
   def createSignaturePosition(
-    sp:      SignaturePositionOption,
-    timeout: Long = defaultTimeOut
+    signature_position_option: SignaturePositionOption,
+    timeout:                   Long = defaultTimeOut
   )(implicit
-    ec:      ExecutionContext
+    ec:                        ExecutionContext
   ): Future[Either[ErrorResult, SignaturePosition]] = {
-    ws.put[SignaturePosition](s"$endPoint/position", timeout, Json.toJson(sp))
+    ws.put[SignaturePosition](s"$endPoint/position", timeout, Json.toJson(signature_position_option))
   }
 
   def updateSignaturePosition(
-    id:      String,
-    sp:      SignaturePositionOption,
-    timeout: Long = defaultTimeOut
+    document_id:               String,
+    signature_position_option: SignaturePositionOption,
+    timeout:                   Long = defaultTimeOut
   )(implicit
-    ec:      ExecutionContext
+    ec:                        ExecutionContext
   ): Future[Either[ErrorResult, SignaturePosition]] = {
-    ws.post[SignaturePosition](s"$endPoint/position/$id", timeout, Json.toJson(sp))
+    ws.post[SignaturePosition](s"$endPoint/position/$document_id", timeout, Json.toJson(signature_position_option))
   }
 }
