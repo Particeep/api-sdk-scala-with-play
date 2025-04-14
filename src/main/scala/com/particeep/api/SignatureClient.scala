@@ -123,4 +123,23 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
       ) ++ LangUtils.productToQueryString(table_criteria)
     )(exec, creds.withHeader("Content-Type", "application/csv"))
   }
+
+  def createSignaturePosition(
+    signature_position_option: SignaturePositionOption,
+    timeout:                   Long = defaultTimeOut
+  )(implicit
+    ec:                        ExecutionContext
+  ): Future[Either[ErrorResult, SignaturePosition]] = {
+    ws.put[SignaturePosition](s"$endPoint/position", timeout, Json.toJson(signature_position_option))
+  }
+
+  def updateSignaturePosition(
+    document_id:               String,
+    signature_position_option: SignaturePositionOption,
+    timeout:                   Long = defaultTimeOut
+  )(implicit
+    ec:                        ExecutionContext
+  ): Future[Either[ErrorResult, SignaturePosition]] = {
+    ws.post[SignaturePosition](s"$endPoint/position/$document_id", timeout, Json.toJson(signature_position_option))
+  }
 }
