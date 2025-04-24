@@ -4,10 +4,10 @@ import ai.x.play.json.Encoders.encoder
 import ai.x.play.json.Jsonx
 import play.api.libs.json.OFormat
 
-import com.particeep.api.models.enums.SignerType
+import com.particeep.api.models.enums.NewSignerType
 
 final case class CustomSignerPosition(
-  signer_type: SignerType,
+  signer_type: NewSignerType,
   configs:     List[CustomPosition]
 )
 
