@@ -7,7 +7,7 @@ import play.api.libs.json.{ JsObject, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.{ SignatureStatus, SignerType }
+import com.particeep.api.models.enums.{ SignatureStatus, NewSignerType }
 
 case class Signature(
   id:                       String                  = "",
@@ -29,7 +29,7 @@ case class Signature(
   target_id:                Option[String]          = None,
   target_type:              Option[String]          = None,
   group_id:                 Option[String]          = None,
-  signer_type:              Option[SignerType]      = None,
+  signer_type:              Option[NewSignerType]   = None,
   document_id_for_position: Option[String],
   tag:                      Option[String]          = None,
   custom:                   Option[JsObject]        = None
