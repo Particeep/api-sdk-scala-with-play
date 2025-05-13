@@ -1,10 +1,12 @@
 package com.particeep.api.models.enums
 
-object SignerType {
-  sealed abstract class SignerType extends Product with Serializable with Enum {
-    override val name = this.productPrefix
-  }
-  // to come USUFRUCTUARY_LEGAL, _NATURAL CO_USU
+import com.particeep.api.models.user.relative.RelativeRole
+
+
+sealed abstract class SignerType extends Product with Serializable with Enum
+// to come USUFRUCTUARY_LEGAL, _NATURAL CO_USU
+
+object SignerType extends EnumHelper[SignerType] {
   case object INVESTOR_LEGAL       extends SignerType
   case object INVESTOR_NATURAL     extends SignerType
   case object CO_INVESTOR          extends SignerType
@@ -17,19 +19,17 @@ object SignerType {
   case object EXECUTIVE            extends SignerType
   case object BENEFICIARY          extends SignerType
 
-  object SignerType extends EnumHelper[SignerType] {
-    def values: Set[SignerType] = Set(
-      INVESTOR_LEGAL,
-      INVESTOR_NATURAL,
-      CO_INVESTOR,
-      PARTNER,
-      USUFRUCTUARY,
-      SPOUSE,
-      GUARDIAN,
-      CURATOR,
-      LEGAL_REPRESENTATIVE,
-      EXECUTIVE,
-      BENEFICIARY
-    )
-  }
+  def values: Set[SignerType] = Set(
+    INVESTOR_NATURAL,
+    INVESTOR_LEGAL,
+    CO_INVESTOR,
+    PARTNER,
+    USUFRUCTUARY,
+    SPOUSE,
+    GUARDIAN,
+    CURATOR,
+    LEGAL_REPRESENTATIVE,
+    EXECUTIVE,
+    BENEFICIARY
+  )
 }
