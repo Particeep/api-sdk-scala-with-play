@@ -1,8 +1,8 @@
 package com.particeep.api.models.enums
 
-sealed trait NewSignerType extends Product with Serializable with Enum
+sealed trait NewSignerType extends Product with Serializable with NewEnum
 
-object NewSignerType extends EnumHelper[NewSignerType] {
+object NewSignerType extends NewEnumHelper[NewSignerType] {
   case object INVESTOR_LEGAL       extends NewSignerType
   case object INVESTOR_NATURAL     extends NewSignerType
   case object CO_INVESTOR          extends NewSignerType
