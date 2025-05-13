@@ -1,11 +1,10 @@
 package com.particeep.api.models.enums
 
-import com.particeep.api.models.user.relative.RelativeRole
-
-sealed abstract class SignerType extends Product with Serializable with NewEnum
-// to come USUFRUCTUARY_LEGAL, _NATURAL CO_USU
-
-object SignerType extends NewEnumSlickHelper[SignerType] {
+object SignerType {
+  sealed abstract class SignerType extends Product with Serializable with Enum {
+    override val name = this.productPrefix
+  }
+  // to come USUFRUCTUARY_LEGAL, _NATURAL CO_USU
   case object INVESTOR_LEGAL       extends SignerType
   case object INVESTOR_NATURAL     extends SignerType
   case object CO_INVESTOR          extends SignerType
@@ -18,38 +17,19 @@ object SignerType extends NewEnumSlickHelper[SignerType] {
   case object EXECUTIVE            extends SignerType
   case object BENEFICIARY          extends SignerType
 
-  def values: Set[SignerType] = Set(
-    INVESTOR_NATURAL,
-    INVESTOR_LEGAL,
-    CO_INVESTOR,
-    PARTNER,
-    USUFRUCTUARY,
-    SPOUSE,
-    GUARDIAN,
-    CURATOR,
-    LEGAL_REPRESENTATIVE,
-    EXECUTIVE,
-    BENEFICIARY
-  )
-
-  def fromInvestorType(investorType: Option[InvestorType]): Option[SignerType] = investorType match {
-    case Some(InvestorType.LEGAL)   => Some(SignerType.INVESTOR_LEGAL)
-    case Some(InvestorType.NATURAL) => Some(SignerType.INVESTOR_NATURAL)
-    case None                       => None
-  }
-
-  def fromRelativeRole(relativeRole: Option[RelativeRole]): Option[SignerType] = relativeRole match {
-    case Some(RelativeRole.SPOUSE)               => Some(SignerType.SPOUSE)
-    case Some(RelativeRole.GUARDIAN)             => Some(SignerType.GUARDIAN)
-    case Some(RelativeRole.CURATOR)              => Some(SignerType.CURATOR)
-    case Some(RelativeRole.LEGAL_REPRESENTATIVE) => Some(SignerType.LEGAL_REPRESENTATIVE)
-    case None                                    => None
-  }
-
-  def fromOrganizationRole(organizationRole: Option[OrganizationRole]): Option[SignerType] = organizationRole match {
-    case Some(OrganizationRole.EXECUTIVE)            => Some(SignerType.EXECUTIVE)
-    case Some(OrganizationRole.BENEFICIARY)          => Some(SignerType.BENEFICIARY)
-    case Some(OrganizationRole.LEGAL_REPRESENTATIVE) => Some(SignerType.LEGAL_REPRESENTATIVE)
-    case None                                        => None
+  object SignerType extends EnumHelper[SignerType] {
+    def values: Set[SignerType] = Set(
+      INVESTOR_LEGAL,
+      INVESTOR_NATURAL,
+      CO_INVESTOR,
+      PARTNER,
+      USUFRUCTUARY,
+      SPOUSE,
+      GUARDIAN,
+      CURATOR,
+      LEGAL_REPRESENTATIVE,
+      EXECUTIVE,
+      BENEFICIARY
+    )
   }
 }
