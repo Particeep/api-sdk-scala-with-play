@@ -2,7 +2,7 @@ package com.particeep.api.models.signature
 
 import play.api.libs.json.{ JsObject, Json, OFormat }
 
-import com.particeep.api.models.enums.NewSignerType
+import com.particeep.api.models.enums.SignerType
 
 case class SignatureCreation(
   language:                 Option[String]        = None,
@@ -19,7 +19,7 @@ case class SignatureCreation(
   target_id:                Option[String]        = None,
   target_type:              Option[String]        = None,
   signature_type:           Option[String]        = None,
-  signer_type:              Option[NewSignerType] = None,
+  signer_type:              Option[SignerType] = None,
   document_id_for_position: Option[String],
   tag:                      Option[String]        = None,
   custom:                   Option[JsObject]      = None
