@@ -1,8 +1,9 @@
 package com.particeep.api.models.enums
 
-sealed trait NewSignerType extends Product with Serializable with NewEnum
+sealed abstract class NewSignerType extends Product with Serializable with NewEnum
+// to come USUFRUCTUARY_LEGAL, _NATURAL CO_USU
 
-object NewSignerType extends NewEnumHelper[NewSignerType] {
+object NewSignerType extends NewEnumSlickHelper[NewSignerType] {
   case object INVESTOR_LEGAL       extends NewSignerType
   case object INVESTOR_NATURAL     extends NewSignerType
   case object CO_INVESTOR          extends NewSignerType
@@ -15,9 +16,9 @@ object NewSignerType extends NewEnumHelper[NewSignerType] {
   case object EXECUTIVE            extends NewSignerType
   case object BENEFICIARY          extends NewSignerType
 
-  val values: Set[NewSignerType] = Set(
-    INVESTOR_LEGAL,
+  def values: Set[NewSignerType] = Set(
     INVESTOR_NATURAL,
+    INVESTOR_LEGAL,
     CO_INVESTOR,
     PARTNER,
     USUFRUCTUARY,
