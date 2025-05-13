@@ -29,7 +29,7 @@ case class Signature(
   target_id:                Option[String]          = None,
   target_type:              Option[String]          = None,
   group_id:                 Option[String]          = None,
-  signer_type:              Option[SignerType]   = None,
+  signer_type:              Option[SignerType]      = None,
   document_id_for_position: Option[String],
   tag:                      Option[String]          = None,
   custom:                   Option[JsObject]        = None

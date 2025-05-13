@@ -11,9 +11,9 @@ case class SignatureSigner(
   phone:                    String,
   signer_type:              Option[SignerType] = None,
   document_id_for_position: Option[String],
-  successURL:               Option[String]        = None,
-  cancelURL:                Option[String]        = None,
-  failURL:                  Option[String]        = None
+  successURL:               Option[String]     = None,
+  cancelURL:                Option[String]     = None,
+  failURL:                  Option[String]     = None
 )
 
 object SignatureSigner {

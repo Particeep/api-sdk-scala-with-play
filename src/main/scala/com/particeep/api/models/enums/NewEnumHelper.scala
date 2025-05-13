@@ -21,9 +21,10 @@ trait NewEnumHelper[E <: NewEnum] {
   implicit def enumReads: Reads[E] = new Reads[E] {
     def reads(json: JsValue): JsResult[E] = json match {
       case JsString(s) => get(s) match {
-        case Some(enum) => JsSuccess(enum)
-        case None       => JsError(s"[error] enum value $s is not in the enum possible value ${values.map(_.name).mkString(", ")}")
-      }
+          case Some(enum) => JsSuccess(enum)
+          case None       =>
+            JsError(s"[error] enum value $s is not in the enum possible value ${values.map(_.name).mkString(", ")}")
+        }
       case _           => JsError(s"[error] unknown error while parsing value from json $json")
     }
   }
