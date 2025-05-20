@@ -3,7 +3,6 @@ package com.particeep.api.models.enums
 import com.particeep.api.models.user.relative.RelativeRole
 
 sealed abstract class SignerType extends Product with Serializable with Enum
-// to come USUFRUCTUARY_LEGAL, _NATURAL CO_USU
 
 object SignerType extends EnumHelper[SignerType] {
   case object INVESTOR_LEGAL       extends SignerType
