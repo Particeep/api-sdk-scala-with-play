@@ -47,14 +47,12 @@ case class UserEdition(
   id_doc_expiration_date:    Option[OffsetDateTime]     = None,
   can_access:                Option[Boolean]            = None,
   organization:              Option[OrganizationOption] = None,
-  custom:                    Option[JsObject]           = None,
-  patrimony:                 Option[UserPatrimony]      = None
+  custom:                    Option[JsObject]           = None
 )
 
 object UserEdition {
   implicit val date_format: Writes[OffsetDateTime]             = Formatter.OffsetDateTimeWrites
   implicit val address_format: Format[Address]                 = Address.format
   implicit val organization_format: Format[OrganizationOption] = OrganizationOption.format
-  implicit val user_patrimony_format: OFormat[UserPatrimony]   = UserPatrimony.format
   val format: OFormat[UserEdition]                             = Jsonx.formatCaseClass[UserEdition]
 }
