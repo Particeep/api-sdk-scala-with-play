@@ -5,7 +5,7 @@ import play.api.libs.json.{ Json, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.QuestionType.QuestionType
+import com.particeep.api.models.enums.QuestionType
 
 case class Question(
   id:                    String                      = "",
@@ -19,7 +19,8 @@ case class Question(
   pattern:               Option[String]              = None,
   required:              Boolean                     = false,
   document_filename:     Option[String]              = None,
-  index:                 Option[Int]                 = None
+  index:                 Option[Int]                 = None,
+  tag:                   Option[String]              = None
 )
 
 object Question {

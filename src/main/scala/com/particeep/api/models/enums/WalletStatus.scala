@@ -1,13 +1,10 @@
 package com.particeep.api.models.enums
 
-object WalletStatus {
+sealed trait WalletStatus extends Product with Enum
 
-  sealed abstract class WalletStatus extends Product with Enum
-
+object WalletStatus extends EnumHelper[WalletStatus] {
   case object LIGHT     extends WalletStatus
   case object CONFIRMED extends WalletStatus
 
-  object WalletStatus extends EnumHelper[WalletStatus] {
-    def values: Set[WalletStatus] = Set(LIGHT, CONFIRMED)
-  }
+  def values: Set[WalletStatus] = Set(LIGHT, CONFIRMED)
 }

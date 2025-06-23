@@ -7,8 +7,7 @@ import play.api.libs.json.{ JsArray, JsObject, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.Currency
-import com.particeep.api.models.enums.PaymentMethod
+import com.particeep.api.models.enums.{ Currency, PaymentMethod }
 
 case class TransactionData(
   id:                                    String,
@@ -19,6 +18,7 @@ case class TransactionData(
   issuer_first_name:                     Option[String]         = None,
   issuer_last_name:                      Option[String]         = None,
   issuer_use_name:                       Option[String]         = None,
+  issuer_company_business_name:          Option[String]         = None,
   recipient_id:                          Option[String]         = None,
   recipient_type:                        Option[String]         = None,
   recipient_name:                        Option[String]         = None,
@@ -47,7 +47,7 @@ case class TransactionData(
   signature_succeeded_at:                Option[OffsetDateTime] = None,
   tag:                                   Option[String]         = None,
   co_issuers:                            Option[JsArray]        = None,
-  price_per_bond:                        Option[Int]            = None,
+  new_co_issuers:                        Option[List[CoIssuer]] = None,
   price_per_share:                       Option[Int]            = None,
   pre_share_fixing_amount:               Option[Int]            = None,
   pre_share_fixing_fees:                 Option[Int]            = None,
@@ -55,6 +55,7 @@ case class TransactionData(
   dismemberment_rate:                    Option[Double]         = None,
   bare_owner_amount:                     Option[Int]            = None,
   usufructuary_amount:                   Option[Int]            = None,
+  origin_transaction_id:                 Option[String]         = None,
   unicia_id:                             Option[String]         = None,
   custom:                                Option[JsObject]       = None
 )

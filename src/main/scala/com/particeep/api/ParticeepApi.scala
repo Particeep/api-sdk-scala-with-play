@@ -1,7 +1,7 @@
 package com.particeep.api
 
-import akka.actor.ActorSystem
-import akka.stream.Materializer
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.Materializer
 
 import com.particeep.api.core.{ ApiClient, ApiCredential, WSClient }
 
@@ -28,6 +28,7 @@ object ParticeepApi {
       with FundraiseSearchCapability
       with NewsCapability
       with TransactionCapability
+      with RecurringTransactionCapability
       with PaymentCapability
       with FundraiseEquityCapability
       with PhoneMessagingCapability

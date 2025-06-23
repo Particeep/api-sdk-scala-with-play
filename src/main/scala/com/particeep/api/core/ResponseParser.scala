@@ -1,8 +1,5 @@
 package com.particeep.api.core
 
-import akka.NotUsed
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import play.api.libs.json._
 import play.api.libs.ws.JsonBodyReadables._
 import play.api.libs.ws.{ StandaloneWSRequest, StandaloneWSResponse }
@@ -11,6 +8,9 @@ import play.shaded.ahc.org.asynchttpclient.Response
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.control.NonFatal
 
+import org.apache.pekko.NotUsed
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
 import org.slf4j.LoggerFactory
 
 import com.particeep.api.models._

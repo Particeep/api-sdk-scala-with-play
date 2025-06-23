@@ -1,13 +1,14 @@
 package com.particeep.api
 
-import akka.NotUsed
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import play.api.libs.json.{ Format, Json, OFormat }
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.StringPart
 
 import java.io.File
 import scala.concurrent.{ ExecutionContext, Future }
+
+import org.apache.pekko.NotUsed
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
 
 import com.particeep.api.core._
 import com.particeep.api.models.imports.{ ImportForm, ImportResult }
@@ -30,7 +31,6 @@ object TransactionClient {
   private implicit val editionFormat: OFormat[TransactionEdition]                   = TransactionEdition.format
   private implicit val transactionDataFormat: OFormat[TransactionData]              = TransactionData.format
   private implicit val importResultReads: Format[ImportResult[Transaction]]         = ImportResult.format[Transaction]
-  private implicit val recurringFormat: OFormat[RecurringTransaction]               = RecurringTransaction.format
   private implicit val transactionStatsFormat: OFormat[TransactionSearchStatistics] = TransactionSearchStatistics.format
 }
 
@@ -135,23 +135,5 @@ class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential]
         criteria_additional
       ) ++ LangUtils.productToQueryString(table_criteria)
     )(exec, creds.withHeader("Content-Type", "application/csv"))
-  }
-
-  def recurringById(id: String, timeout: Long = defaultTimeOut)(implicit
-    exec:               ExecutionContext
-  ): Future[Either[ErrorResult, RecurringTransaction]] = {
-    ws.get[RecurringTransaction](s"$endPoint/recurring/$id", timeout)
-  }
-
-  def recurringSearch(
-    criteria:       RecurringTransactionsSearch,
-    table_criteria: TableSearch,
-    timeout:        Long = defaultTimeOut
-  )(implicit exec:  ExecutionContext): Future[Either[ErrorResult, PaginatedSequence[RecurringTransaction]]] = {
-    ws.get[PaginatedSequence[RecurringTransaction]](
-      s"$endPoint/recurring/search",
-      timeout,
-      LangUtils.productToQueryString(criteria) ++ LangUtils.productToQueryString(table_criteria)
-    )
   }
 }

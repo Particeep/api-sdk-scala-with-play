@@ -6,7 +6,7 @@ import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.Address
-import com.particeep.api.models.enums.BankAccountStatus.BankAccountStatus
+import com.particeep.api.models.enums.BankAccountStatus
 
 case class BankAccount(
   id:                        String                    = "",

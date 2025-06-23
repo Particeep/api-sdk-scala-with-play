@@ -11,11 +11,7 @@ case class RecurringTransactionsSearch(
   created_end_date:   Option[OffsetDateTime] = None,
   start_date:         Option[OffsetDateTime] = None,
   end_date:           Option[OffsetDateTime] = None,
-  issuer_id:          Option[String]         = None,
-  issuer_email:       Option[String]         = None,
-  recipient_id:       Option[String]         = None,
-  recipient_name:     Option[String]         = None,
-  recipient_type:     Option[String]         = None,
+  transaction_id:     Option[String],
   amount:             Option[Int]            = None,
   frequency:          Option[Int]            = None,
   duration:           Option[Int]            = None

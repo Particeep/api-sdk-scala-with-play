@@ -7,9 +7,9 @@ import play.api.libs.json.{ JsArray, JsObject, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.{ Currency, EUR }
-import com.particeep.api.models.enums.PaymentMethod
-import com.particeep.api.models.enums.TransactionStatus.{ PENDING, TransactionStatus }
+import com.particeep.api.models.enums.Currency.EUR
+import com.particeep.api.models.enums.TransactionStatus.PENDING
+import com.particeep.api.models.enums.{ Currency, PaymentMethod, TransactionStatus }
 
 case class Transaction(
   id:                          String                 = "",
@@ -35,7 +35,7 @@ case class Transaction(
   private_comment:             Option[String]         = None,
   tag:                         Option[String]         = None,
   co_issuers:                  Option[JsArray]        = None,
-  price_per_bond:              Option[Int]            = None,
+  new_co_issuers:              Option[List[CoIssuer]] = None,
   price_per_share:             Option[Int]            = None,
   pre_share_fixing_amount:     Option[Int]            = None,
   pre_share_fixing_fees:       Option[Int]            = None,
@@ -44,6 +44,8 @@ case class Transaction(
   dismember_rate_usufructuary: Option[Double]         = None,
   bare_owner_amount:           Option[Int]            = None,
   usufructuary_amount:         Option[Int]            = None,
+  num_of_shares:               Option[Int]            = None,
+  origin_transaction_id:       Option[String]         = None,
   custom:                      Option[JsObject]       = None
 )
 

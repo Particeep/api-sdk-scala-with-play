@@ -2,7 +2,7 @@ package com.particeep.api.models.transaction
 
 import play.api.libs.json.{ JsArray, JsObject, Json, OFormat }
 
-import com.particeep.api.models.enums.Currency.Currency
+import com.particeep.api.models.enums.Currency
 import com.particeep.api.models.enums.PaymentMethod.OfflinePaymentMethod
 
 case class TransactionEdition(
@@ -24,6 +24,7 @@ case class TransactionEdition(
   private_comment:        Option[String]               = None,
   tag:                    Option[String]               = None,
   co_issuers:             Option[JsArray]              = None,
+  new_co_issuers:         Option[List[CoIssuer]]       = None,
   custom:                 Option[JsObject]             = None,
   offline_payment_method: Option[OfflinePaymentMethod] = None
 )

@@ -2,7 +2,7 @@ package com.particeep.api.models.form.edition_deep
 
 import play.api.libs.json.{ Json, OFormat }
 
-import com.particeep.api.models.enums.QuestionType.QuestionType
+import com.particeep.api.models.enums.QuestionType
 
 case class QuestionEditionDeep(
   id:                    Option[String],

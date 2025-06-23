@@ -5,7 +5,7 @@ import play.api.libs.json.{ Json, OFormat }
 case class FormEditionDeep(
   name:        Option[String],
   description: Option[String],
-  tag:         Option[String],
+  tag:         Option[List[String]],
   sections:    Option[Seq[SectionEditionDeep]]
 )
 

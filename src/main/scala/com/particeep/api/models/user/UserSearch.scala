@@ -19,7 +19,7 @@ case class UserSearch(
   does_pay_taxes:    Option[Boolean]        = None,
   city:              Option[String]         = None,
   wallet_type:       Option[String]         = None,
-  status:            Option[String]         = None,
+  wallet_status:     Option[String]         = None,
   tag:               Option[String]         = None,
   roles:             Option[String]         = None,
   targeting_roles:   Option[String]         = None,
@@ -28,15 +28,19 @@ case class UserSearch(
 )
 
 case class UserSearchAdditional(
-  email:                                 Option[String] = None,
-  account_validation_status:             Option[String] = None,
-  partner_manager_id:                    Option[String] = None,
-  partner_manager_company_business_name: Option[String] = None,
-  company_business_name:                 Option[String] = None,
-  siren:                                 Option[String] = None,
-  siret:                                 Option[String] = None,
-  rcs_registration_year:                 Option[String] = None,
-  rcs_city:                              Option[String] = None,
-  legal_status:                          Option[String] = None,
-  tva_intra:                             Option[String] = None
+  email:                                 Option[String]  = None,
+  use_name:                              Option[String]  = None,
+  account_validation_status:             Option[String]  = None,
+  partner_manager_id:                    Option[String]  = None,
+  partner_manager_company_business_name: Option[String]  = None,
+  company_business_name:                 Option[String]  = None,
+  siren:                                 Option[String]  = None,
+  siret:                                 Option[String]  = None,
+  rcs_registration_year:                 Option[String]  = None,
+  rcs_city:                              Option[String]  = None,
+  legal_status:                          Option[String]  = None,
+  tva_intra:                             Option[String]  = None,
+  activated:                             Option[Boolean] = None,
+  organization_id:                       Option[String]  = None,
+  organization_role:                     Option[String]  = None
 )

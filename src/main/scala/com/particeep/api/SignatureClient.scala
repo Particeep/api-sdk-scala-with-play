@@ -1,11 +1,12 @@
 package com.particeep.api
 
-import akka.NotUsed
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
+
+import org.apache.pekko.NotUsed
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
 
 import com.particeep.api.core._
 import com.particeep.api.models.signature._
@@ -96,6 +97,12 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
     ws.delete[Signature](s"$endPoint/$id", timeout)
   }
 
+  def deleteMany(ids: Seq[String], timeout: Long = defaultTimeOut)(implicit
+    exec:             ExecutionContext
+  ): Future[Either[ErrorResult, List[Signature]]] = {
+    ws.delete[List[Signature]](s"$endPoint", timeout, Json.toJson(ids))
+  }
+
   def deleteMultiple(id: String, timeout: Long = defaultTimeOut)(implicit
     exec:                ExecutionContext
   ): Future[Either[ErrorResult, SignatureMultiple]] = {
@@ -115,5 +122,24 @@ class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] =
         entity_criteria
       ) ++ LangUtils.productToQueryString(table_criteria)
     )(exec, creds.withHeader("Content-Type", "application/csv"))
+  }
+
+  def createSignaturePosition(
+    signature_position_option: SignaturePositionOption,
+    timeout:                   Long = defaultTimeOut
+  )(implicit
+    ec:                        ExecutionContext
+  ): Future[Either[ErrorResult, SignaturePosition]] = {
+    ws.put[SignaturePosition](s"$endPoint/position", timeout, Json.toJson(signature_position_option))
+  }
+
+  def updateSignaturePosition(
+    document_id:               String,
+    signature_position_option: SignaturePositionOption,
+    timeout:                   Long = defaultTimeOut
+  )(implicit
+    ec:                        ExecutionContext
+  ): Future[Either[ErrorResult, SignaturePosition]] = {
+    ws.post[SignaturePosition](s"$endPoint/position/$document_id", timeout, Json.toJson(signature_position_option))
   }
 }

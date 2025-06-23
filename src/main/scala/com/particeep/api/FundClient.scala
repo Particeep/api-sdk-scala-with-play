@@ -1,23 +1,18 @@
 package com.particeep.api
 
-import akka.NotUsed
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import play.api.libs.json.{ Json, OFormat }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
+import org.apache.pekko.NotUsed
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
+
 import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
-import com.particeep.api.models.enums.FundStatus.FundStatus
+import com.particeep.api.models.enums.FundStatus
 import com.particeep.api.models.fund._
 import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation }
-import com.particeep.api.models.transaction.{
-  Investment,
-  RecurringTransaction,
-  RecurringTransactionCreation,
-  Transaction,
-  TransactionSearch
-}
+import com.particeep.api.models.transaction.{ Investment, Transaction, TransactionSearch }
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
 
@@ -29,21 +24,18 @@ trait FundCapability {
 }
 
 object FundClient {
-  private val endPoint: String                                                                      = "/fund"
-  private implicit val creation_format: OFormat[FundCreation]                                       = FundCreation.format
-  private implicit val fund_format: OFormat[Fund]                                                   = Fund.format
-  private implicit val fund_edition_format: OFormat[FundEdition]                                    = FundEdition.format
-  private implicit val fund_data_format: OFormat[FundData]                                          = FundData.format
-  private implicit val investment_format: OFormat[Investment]                                       = Investment.format
-  private implicit val investment_creation_format: OFormat[InvestmentCreation]                      = InvestmentCreation.format
-  private implicit val investment_option_format: OFormat[InvestmentOption]                          = InvestmentOption.format
-  private implicit val transaction_edit_part_format: OFormat[TransactionEditPart]                   = TransactionEditPart.format
-  private implicit val transaction_format: OFormat[Transaction]                                     = Transaction.format
-  private implicit val recurring_transaction_format: OFormat[RecurringTransaction]                  = RecurringTransaction.format
-  private implicit val recurring_transaction_creation_format: OFormat[RecurringTransactionCreation] =
-    RecurringTransactionCreation.format
-  private implicit val payment_cb_creation_format: OFormat[PaymentCbCreation]                       = PaymentCbCreation.format
-  private implicit val pay_result_format: OFormat[PayResult]                                        = PayResult.format
+  private val endPoint: String                                                    = "/fund"
+  private implicit val creation_format: OFormat[FundCreation]                     = FundCreation.format
+  private implicit val fund_format: OFormat[Fund]                                 = Fund.format
+  private implicit val fund_edition_format: OFormat[FundEdition]                  = FundEdition.format
+  private implicit val fund_data_format: OFormat[FundData]                        = FundData.format
+  private implicit val investment_format: OFormat[Investment]                     = Investment.format
+  private implicit val investment_creation_format: OFormat[InvestmentCreation]    = InvestmentCreation.format
+  private implicit val investment_option_format: OFormat[InvestmentOption]        = InvestmentOption.format
+  private implicit val transaction_edit_part_format: OFormat[TransactionEditPart] = TransactionEditPart.format
+  private implicit val transaction_format: OFormat[Transaction]                   = Transaction.format
+  private implicit val payment_cb_creation_format: OFormat[PaymentCbCreation]     = PaymentCbCreation.format
+  private implicit val pay_result_format: OFormat[PayResult]                      = PayResult.format
 }
 
 class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
@@ -157,13 +149,5 @@ class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     timeout:               Long = defaultTimeOut
   )(implicit exec:         ExecutionContext): Future[Either[ErrorResult, List[Transaction]]] = {
     ws.post[List[Transaction]](s"$endPoint/$id/edit/transaction/share", timeout, Json.toJson(transaction_edit_part))
-  }
-
-  def recurringLend(
-    id:                           String,
-    recurring_transaction_create: RecurringTransactionCreation,
-    timeout:                      Long = defaultTimeOut
-  )(implicit exec:                ExecutionContext): Future[Either[ErrorResult, RecurringTransaction]] = {
-    ws.post[RecurringTransaction](s"$endPoint/$id/lend/recurring", timeout, Json.toJson(recurring_transaction_create))
   }
 }

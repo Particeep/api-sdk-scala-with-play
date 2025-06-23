@@ -5,7 +5,8 @@ import play.api.libs.json.{ JsArray, JsObject, Json, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.{ Currency, EUR }
+import com.particeep.api.models.enums.Currency
+import com.particeep.api.models.enums.Currency.EUR
 
 case class TransactionCreation(
   created_at:      Option[OffsetDateTime] = None,
@@ -26,6 +27,7 @@ case class TransactionCreation(
   private_comment: Option[String]         = None,
   tag:             Option[String]         = None,
   co_issuers:      Option[JsArray]        = None,
+  new_co_issuers:  Option[List[CoIssuer]] = None,
   custom:          Option[JsObject]       = None
 )
 

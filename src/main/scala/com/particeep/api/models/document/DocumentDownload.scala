@@ -1,8 +1,9 @@
 package com.particeep.api.models.document
 
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import play.api.http.HeaderNames
+
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
 
 case class DocumentDownload(
   body:    Source[ByteString, _],

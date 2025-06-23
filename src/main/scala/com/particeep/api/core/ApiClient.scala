@@ -1,11 +1,7 @@
 package com.particeep.api.core
 
-import akka.NotUsed
-import akka.actor.ActorSystem
-import akka.stream.Materializer
-import akka.stream.scaladsl.{ Flow, Keep, Sink, Source }
-import akka.util.ByteString
 import play.api.libs.json._
+import play.api.libs.ws.JsonBodyWritables._
 import play.api.libs.ws._
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 import play.shaded.ahc.org.asynchttpclient.request.body.multipart.{ FilePart, Part }
@@ -16,6 +12,12 @@ import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.control.NonFatal
 import scala.util.{ Failure, Random, Success, Try }
+
+import org.apache.pekko.NotUsed
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.Materializer
+import org.apache.pekko.stream.scaladsl.{ Flow, Keep, Sink, Source }
+import org.apache.pekko.util.ByteString
 
 import com.particeep.api.models.document.{ DocumentDownload, TimeBoundedUrls }
 import com.particeep.api.models.{ Error, ErrorResult, Errors, ParsingError }

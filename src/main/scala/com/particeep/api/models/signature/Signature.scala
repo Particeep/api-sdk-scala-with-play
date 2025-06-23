@@ -1,12 +1,13 @@
 package com.particeep.api.models.signature
 
-import play.api.libs.json.{ JsObject, Json, OFormat, Writes }
+import ai.x.play.json.Encoders.encoder
+import ai.x.play.json.Jsonx
+import play.api.libs.json.{ JsObject, OFormat, Writes }
 
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.SignatureStatus.SignatureStatus
-import com.particeep.api.models.enums.SignerType
+import com.particeep.api.models.enums.{ SignatureStatus, SignerType }
 
 case class Signature(
   id:                       String                  = "",
@@ -21,6 +22,7 @@ case class Signature(
   lastName:                 String,
   email:                    String,
   phone:                    String,
+  succeeded_at:             Option[OffsetDateTime]  = None,
   description:              Option[String]          = None,
   signed_doc_id:            Option[String]          = None,
   signature_type:           Option[String]          = None,
@@ -35,5 +37,5 @@ case class Signature(
 
 object Signature {
   implicit val date_format: Writes[OffsetDateTime] = Formatter.OffsetDateTimeWrites
-  val format: OFormat[Signature]                   = Json.format[Signature]
+  val format: OFormat[Signature]                   = Jsonx.formatCaseClassUseDefaults[Signature]
 }

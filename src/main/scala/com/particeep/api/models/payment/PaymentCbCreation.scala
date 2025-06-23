@@ -2,7 +2,7 @@ package com.particeep.api.models.payment
 
 import play.api.libs.json.{ Json, OFormat }
 
-import com.particeep.api.models.enums.Locale.Locale
+import com.particeep.api.models.enums.Locale
 
 case class PaymentCbCreation(
   accept_url:  String,

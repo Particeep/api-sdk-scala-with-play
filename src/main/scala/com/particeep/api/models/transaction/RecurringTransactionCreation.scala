@@ -7,11 +7,11 @@ import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 
 case class RecurringTransactionCreation(
-  issuer_id: String,
-  amount:    Int,
-  frequency: Int,
-  start_at:  OffsetDateTime,
-  duration:  Option[Int] = None
+  transaction_id: String,
+  amount:         Int,
+  start_at:       OffsetDateTime,
+  frequency:      Int         = 0,
+  duration:       Option[Int] = None
 )
 
 object RecurringTransactionCreation {

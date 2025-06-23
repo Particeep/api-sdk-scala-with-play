@@ -7,7 +7,7 @@ import play.api.libs.json.{ JsObject, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.Currency.Currency
+import com.particeep.api.models.enums.Currency
 
 case class FundraiseEquityCreation(
   enterprise_id:         Option[String]              = None,
@@ -21,6 +21,7 @@ case class FundraiseEquityCreation(
   disclaimer_risk:       Option[String]              = None,
   disclaimer_fees:       Option[String]              = None,
   disclaimer_payment:    Option[String]              = None,
+  url:                   Option[String]              = None,
   start_at:              Option[OffsetDateTime]      = None,
   end_at:                Option[OffsetDateTime]      = None,
   amount_target:         Long,
