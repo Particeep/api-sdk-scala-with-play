@@ -63,8 +63,6 @@ case class User(
   can_access:                Option[Boolean]               = None,
   relatives:                 Option[Seq[Relative]]         = None,
   new_relatives:             Option[Seq[RelativeMetaData]] = None,
-  patrimony:                 Option[UserPatrimony]         = None,
-  net_patrimony:             Option[Long]                  = None,
   custom:                    Option[JsObject]              = None,
   is_locked:                 Option[String]                = None
 )
@@ -75,6 +73,5 @@ object User {
   implicit val organization_format: Format[Organization]          = Organization.format
   implicit val relative_format: OFormat[Relative]                 = Relative.format
   implicit val relative_metadata_format: Format[RelativeMetaData] = RelativeMetaData.format
-  implicit val user_patrimony_format: OFormat[UserPatrimony]      = UserPatrimony.format
   val format: OFormat[User]                                       = Jsonx.formatCaseClass[User]
 }
