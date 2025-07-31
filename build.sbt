@@ -1,3 +1,6 @@
+import net.nmoncho.sbt.dependencycheck.settings.{ NvdApiSettings, SuppressionFilesSettings, SuppressionSettings }
+import org.owasp.dependencycheck.reporting.ReportGenerator.Format.*
+
 name := """api-sdk-scala"""
 
 version := "3.0.1"
@@ -21,7 +24,7 @@ libraryDependencies ++= Seq(
 )
 
 // Check Dependancy CVSS config
-ThisBuild / dependencyCheckFailBuildOnCVSS         := 4.8f
-ThisBuild / dependencyCheckFormats                 := Seq("XML", "HTML")
-ThisBuild / dependencyCheckAssemblyAnalyzerEnabled := Option(false)
-dependencyCheckOutputDirectory                     := Some(baseDirectory.value / "target/security-reports")
+dependencyCheckNvdApi                      := NvdApiSettings("a4cffbe2-1878-4554-a159-151c577dd949")
+ThisBuild / dependencyCheckFailBuildOnCVSS := 4.8f
+ThisBuild / dependencyCheckFormats         := Seq(XML, HTML)
+dependencyCheckOutputDirectory             := baseDirectory.value / "target/security-reports"

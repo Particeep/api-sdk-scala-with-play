@@ -25,8 +25,7 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.12.1")
 
 // run sbt dependencyCheckAnyProject
-// doc generated in /particeep-api/target/scala-2.13/dependency-check-report.html
-addSbtPlugin("net.vonbuchholtz" % "sbt-dependency-check" % "5.1.0")
+addSbtPlugin("net.nmoncho" % "sbt-dependency-check" % "1.7.1")
 
 // This is an issue with lib / sbt plugin who don't have the same version for scala-xml
 // Binary compatility is "nearly" ok between scala-xml version
