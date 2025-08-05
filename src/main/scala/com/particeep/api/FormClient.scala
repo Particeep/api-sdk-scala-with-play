@@ -88,8 +88,8 @@ class FormClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
 
   def createDeep(form_deep_creation: FormDeepCreation, timeout: Long = defaultTimeOut)(implicit
     exec:                            ExecutionContext
-  ): Future[Either[ErrorResult, Form]] = {
-    ws.put[Form](s"$endPoint/deep", timeout, Json.toJson(form_deep_creation))
+  ): Future[Either[ErrorResult, FormDeep]] = {
+    ws.put[FormDeep](s"$endPoint/deep", timeout, Json.toJson(form_deep_creation))
   }
 
   def createSection(section_creation: SectionCreation, timeout: Long = defaultTimeOut)(implicit
