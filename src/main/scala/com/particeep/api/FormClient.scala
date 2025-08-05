@@ -28,10 +28,11 @@ object FormClient {
   private val endPoint_import: String            = "/import"
   private implicit val format: OFormat[FormDeep] = FormDeep.format
 
-  private implicit val format_form_get: OFormat[Form]                     = Form.format
-  private implicit val format_form_creation: OFormat[FormCreation]        = FormCreation.format
-  private implicit val format_form_edition_deep: OFormat[FormEditionDeep] = FormEditionDeep.format
-  private implicit val format_edition_edition: OFormat[FormEdition]       = FormEdition.format
+  private implicit val format_form_get: OFormat[Form]                       = Form.format
+  private implicit val format_form_creation: OFormat[FormCreation]          = FormCreation.format
+  private implicit val format_form_deep_creation: OFormat[FormDeepCreation] = FormDeepCreation.format
+  private implicit val format_form_edition_deep: OFormat[FormEditionDeep]   = FormEditionDeep.format
+  private implicit val format_edition_edition: OFormat[FormEdition]         = FormEdition.format
 
   private implicit val format_section_get: OFormat[Section]              = Section.format
   private implicit val format_section_creation: OFormat[SectionCreation] = SectionCreation.format
@@ -83,6 +84,12 @@ class FormClient(val ws: WSClient, val credentials: Option[ApiCredential] = None
     exec:                   ExecutionContext
   ): Future[Either[ErrorResult, Form]] = {
     ws.put[Form](s"$endPoint", timeout, Json.toJson(form_creation))
+  }
+
+  def createDeep(form_deep_creation: FormDeepCreation, timeout: Long = defaultTimeOut)(implicit
+    exec:                            ExecutionContext
+  ): Future[Either[ErrorResult, Form]] = {
+    ws.put[Form](s"$endPoint/deep", timeout, Json.toJson(form_deep_creation))
   }
 
   def createSection(section_creation: SectionCreation, timeout: Long = defaultTimeOut)(implicit
