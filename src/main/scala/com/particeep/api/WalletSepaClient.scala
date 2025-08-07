@@ -12,8 +12,7 @@ import com.particeep.api.models.wallet.sepa.{ SddCashIn, SddMandate, SddMandateC
 trait WalletSepaCapability {
   self: WSClient =>
 
-  val wallet_sepa: WalletSepaClient                            = new WalletSepaClient(this)
-  def walletSepa(credentials: ApiCredential): WalletSepaClient = new WalletSepaClient(this, Some(credentials))
+  def walletSepa(credentials: ApiCredential): WalletSepaClient = new WalletSepaClient(this, credentials)
 }
 
 object WalletSepaClient {
@@ -25,10 +24,11 @@ object WalletSepaClient {
   private implicit val transaction_wallet_format: OFormat[TransactionWallet] = TransactionWallet.format
 }
 
-class WalletSepaClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class WalletSepaClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import WalletSepaClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def sddMandates(wallet_id: String, timeout: Long = defaultTimeOut)(implicit
     exec:                    ExecutionContext

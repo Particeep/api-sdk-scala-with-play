@@ -27,9 +27,7 @@ import com.particeep.api.utils.LangUtils
 trait UserCapability {
   self: WSClient =>
 
-  val user: UserClient = new UserClient(this)
-
-  def user(credentials: ApiCredential): UserClient = new UserClient(this, Some(credentials))
+  def user(credentials: ApiCredential): UserClient = new UserClient(this, credentials)
 }
 
 object UserClient {
@@ -58,10 +56,11 @@ object UserClient {
   private implicit val change_password_format: OFormat[ChangePassword] = Json.format[ChangePassword]
 }
 
-class UserClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class UserClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import UserClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit
     exec:      ExecutionContext

@@ -12,9 +12,8 @@ import com.particeep.api.utils.LangUtils
 trait RecurringTransactionCapability {
   self: WSClient =>
 
-  val recurring_transaction: RecurringTransactionClient                             = new RecurringTransactionClient(this)
   def recurring_transaction(credentials: ApiCredential): RecurringTransactionClient =
-    new RecurringTransactionClient(this, Some(credentials))
+    new RecurringTransactionClient(this, credentials)
 }
 
 object RecurringTransactionClient {
@@ -23,10 +22,11 @@ object RecurringTransactionClient {
   private implicit val editionFormat: OFormat[RecurringTransactionEdition] = RecurringTransactionEdition.format
 }
 
-class RecurringTransactionClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class RecurringTransactionClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import RecurringTransactionClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byTransactionId(transaction_id: String, timeout: Long = defaultTimeOut)(implicit
     exec:                             ExecutionContext

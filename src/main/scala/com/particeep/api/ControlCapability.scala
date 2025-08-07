@@ -4,7 +4,7 @@ import play.api.libs.json.Json
 
 import scala.concurrent.{ ExecutionContext, Future }
 
-import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
+import com.particeep.api.core.{ ApiCredential, WSClient, WithWS }
 import com.particeep.api.models.control._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
@@ -12,20 +12,18 @@ import com.particeep.api.utils.LangUtils
 trait ControlCapability {
   self: WSClient =>
 
-  val control = new ControlClient(this)
-
-  def control(credentials: ApiCredential): ControlClient = new ControlClient(this, Some(credentials))
+  def control(credentials: ApiCredential): ControlClient = new ControlClient(this, credentials)
 }
 
 object ControlClient {
   private val endPoint: String = "/control"
 }
 
-class ControlClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials
-    with EntityClient {
+class ControlClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import ControlClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byIds(ids: String, timeout: Long = defaultTimeOut)(implicit
     exec:        ExecutionContext

@@ -12,8 +12,7 @@ import com.particeep.api.utils.LangUtils
 trait NewsCapability {
   self: WSClient =>
 
-  val news: NewsClient                             = new NewsClient(this)
-  def news(credentials: ApiCredential): NewsClient = new NewsClient(this, Some(credentials))
+  def news(credentials: ApiCredential): NewsClient = new NewsClient(this, credentials)
 }
 
 object NewsClient {
@@ -25,10 +24,11 @@ object NewsClient {
   private implicit val edition_format: OFormat[NewsEdition]   = NewsEdition.format
 }
 
-class NewsClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class NewsClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import NewsClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byIds(ids: Seq[String], timeout: Long = defaultTimeOut)(implicit
     exec:        ExecutionContext

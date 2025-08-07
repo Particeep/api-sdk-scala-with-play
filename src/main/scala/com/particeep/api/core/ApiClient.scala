@@ -22,7 +22,12 @@ import org.apache.pekko.util.ByteString
 import com.particeep.api.models.document.{ DocumentDownload, TimeBoundedUrls }
 import com.particeep.api.models.{ Error, ErrorResult, Errors, ParsingError }
 
-case class ApiCredential(apiKey: String, apiSecret: String, http_headers: Option[Seq[(String, String)]] = None) {
+case class ApiCredential(
+  apiKey:       String,
+  apiSecret:    String,
+  baseUrl:      String,
+  http_headers: Option[Seq[(String, String)]] = None
+) {
   def withHeader(name: String, value: String): ApiCredential = {
     val new_value = (name, value) :: this.http_headers.map(_.toList).getOrElse(List())
     this.copy(http_headers = Some(new_value))
@@ -34,7 +39,6 @@ trait WSClient {
   val defaultImportTimeOut: Long
 
   def cleanup(): Unit
-  def credentials: Option[ApiCredential]
 
   /**
    * @param path : relative path for the request
@@ -139,25 +143,22 @@ trait BaseClient {
  *
  * val result:Future[Either[JsError, Info]] = ws.user.byId("some_id")
  */
-class ApiClient(
-  val baseUrl:         String,
-  val version:         String,
-  val credentials:     Option[ApiCredential] = None
-)(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient with Security
+class ApiClient(implicit val system: ActorSystem, val materializer: Materializer) extends WSClient with BaseClient
+    with Security
     with ResponseParser {
 
   val defaultTimeOut: Long       = 10000
   val defaultImportTimeOut: Long = -1
 
   private[this] def url(path: String, timeOut: Long)(implicit credentials: ApiCredential): StandaloneWSRequest = {
-    val req = sslClient.url(s"$baseUrl/v$version$path")
+    val req = sslClient.url(s"${credentials.baseUrl}/v1$path")
     secure(req, credentials, timeOut).addHttpHeaders(credentials.http_headers.getOrElse(List()): _*)
   }
 
   private[this] def urlFileUpload(path: String, client: AsyncHttpClient, timeOut: Long)(implicit
     credentials:                        ApiCredential
   ): BoundRequestBuilder = {
-    val postBuilder = client.preparePost(s"$baseUrl/v$version$path")
+    val postBuilder = client.preparePost(s"${credentials.baseUrl}/v1$path")
     val url         = secure(postBuilder, credentials, timeOut)
     credentials.http_headers.map(_.foldLeft(url) { (acc, elem) =>
       acc.addHeader(elem._1, elem._2)
@@ -243,14 +244,14 @@ class ApiClient(
     document_id:   String,
     timeOut:       Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
-    getDocFromPath(s"$baseUrl/document/$document_id", timeOut)
+    getDocFromPath(s"${credentials.baseUrl}/document/$document_id", timeOut)
   }
 
   def getZip(
     seq_id:        Seq[String],
     timeOut:       Long
   )(implicit exec: ExecutionContext, credentials: ApiCredential): Future[Either[ErrorResult, DocumentDownload]] = {
-    getDocFromPath(s"$baseUrl/v$version/document/zip-download?ids=${seq_id.mkString(",")}", timeOut)
+    getDocFromPath(s"${credentials.baseUrl}/v1/document/zip-download?ids=${seq_id.mkString(",")}", timeOut)
   }
 
   private[this] def getDocFromPath(

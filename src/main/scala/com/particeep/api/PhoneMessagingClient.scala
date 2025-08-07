@@ -11,9 +11,7 @@ import com.particeep.api.models.phonemessaging.{ PhoneMessage, SmsInformation }
 trait PhoneMessagingCapability {
   self: WSClient =>
 
-  val phone_messaging: PhoneMessagingClient                             = new PhoneMessagingClient(this)
-  def phone_messaging(credentials: ApiCredential): PhoneMessagingClient =
-    new PhoneMessagingClient(this, Some(credentials))
+  def phone_messaging(credentials: ApiCredential): PhoneMessagingClient = new PhoneMessagingClient(this, credentials)
 }
 
 object PhoneMessagingClient {
@@ -23,10 +21,11 @@ object PhoneMessagingClient {
   private implicit val sms_information_format: OFormat[SmsInformation] = SmsInformation.format
 }
 
-class PhoneMessagingClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class PhoneMessagingClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import PhoneMessagingClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def sendSms(sms_information: SmsInformation, timeout: Long = 5000)(implicit
     exec:                      ExecutionContext

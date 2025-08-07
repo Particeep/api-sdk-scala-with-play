@@ -15,8 +15,7 @@ import com.particeep.api.utils.LangUtils
 trait RoleCapability {
   self: WSClient =>
 
-  val role: RoleClient                             = new RoleClient(this)
-  def role(credentials: ApiCredential): RoleClient = new RoleClient(this, Some(credentials))
+  def role(credentials: ApiCredential): RoleClient = new RoleClient(this, credentials)
 }
 
 object RoleClient {
@@ -30,10 +29,11 @@ object RoleClient {
   private implicit val importResultReads: Format[ImportResult[Role]]        = ImportResult.format[Role]
 }
 
-class RoleClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class RoleClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import RoleClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def all(timeout: Long = defaultTimeOut)(implicit
     exec:          ExecutionContext

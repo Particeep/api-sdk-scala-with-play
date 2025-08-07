@@ -17,9 +17,7 @@ import com.particeep.api.utils.LangUtils
 trait PartnerCapability {
   self: WSClient =>
 
-  val partner: PartnerClient = new PartnerClient(this)
-
-  def partner(credentials: ApiCredential): PartnerClient = new PartnerClient(this, Some(credentials))
+  def partner(credentials: ApiCredential): PartnerClient = new PartnerClient(this, credentials)
 }
 
 object PartnerClient {
@@ -37,10 +35,11 @@ object PartnerClient {
   private implicit val partner_company_edition_format: OFormat[PartnerCompanyEdition]               = PartnerCompanyEdition.format
 }
 
-class PartnerClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class PartnerClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import PartnerClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def createDefaultPartnerFees(
     user_id:               String,

@@ -18,9 +18,7 @@ import com.particeep.api.utils.LangUtils
 trait FormCapability {
   self: WSClient =>
 
-  val form: FormClient = new FormClient(this)
-
-  def form(credentials: ApiCredential): FormClient = new FormClient(this, Some(credentials))
+  def form(credentials: ApiCredential): FormClient = new FormClient(this, credentials)
 }
 
 object FormClient {
@@ -53,10 +51,11 @@ object FormClient {
   private implicit val importResultReads: Format[ImportResult[Seq[Answer]]] = ImportResult.format[Seq[Answer]]
 }
 
-class FormClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class FormClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import FormClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def all(timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Seq[Form]]] = {
     ws.get[Seq[Form]](s"$endPoint/all", timeout)

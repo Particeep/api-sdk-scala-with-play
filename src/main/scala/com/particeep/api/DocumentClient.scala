@@ -11,15 +11,10 @@ import com.particeep.api.models.document._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
 
-/**
- * Created by Noe on 27/12/2016.
- */
 trait DocumentCapability {
   self: WSClient =>
 
-  val document: DocumentClient = new DocumentClient(this)
-
-  def document(credentials: ApiCredential): DocumentClient = new DocumentClient(this, Some(credentials))
+  def document(credentials: ApiCredential): DocumentClient = new DocumentClient(this, credentials)
 }
 
 object DocumentClient {
@@ -29,10 +24,11 @@ object DocumentClient {
   private implicit val format_edition: OFormat[DocumentEdition]   = DocumentEdition.format
 }
 
-class DocumentClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class DocumentClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import DocumentClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def upload(
     owner_id:          String,

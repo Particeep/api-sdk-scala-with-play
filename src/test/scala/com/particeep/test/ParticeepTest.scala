@@ -22,9 +22,9 @@ class ParticeepTest extends AnyFlatSpec with Matchers with TestUtils {
 
   "the api client" should "load info" in {
 
-    val ws = new ApiClient(ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with InfoCapability
+    val ws = new ApiClient with InfoCapability
 
-    val rez_f: Future[Either[ErrorResult, Info]] = ws.info.info()
+    val rez_f: Future[Either[ErrorResult, Info]] = ws.info(ConfigTest.credential).info()
 
     val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
