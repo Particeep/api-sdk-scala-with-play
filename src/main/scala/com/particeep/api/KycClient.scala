@@ -11,8 +11,7 @@ import com.particeep.api.models.kyc._
 trait KycCapability {
   self: WSClient =>
 
-  val kyc: KycClient                             = new KycClient(this)
-  def kyc(credentials: ApiCredential): KycClient = new KycClient(this, Some(credentials))
+  def kyc(credentials: ApiCredential): KycClient = new KycClient(this, credentials)
 }
 
 object KycClient {
@@ -24,10 +23,11 @@ object KycClient {
   private implicit val kyc_validation_format: OFormat[KycValidation]          = KycValidation.format
 }
 
-class KycClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class KycClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import KycClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def create(kyc_creation: KycCreation, timeout: Long = defaultTimeOut)(implicit
     exec:                  ExecutionContext

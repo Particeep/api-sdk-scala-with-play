@@ -12,8 +12,7 @@ import com.particeep.api.models.transaction.Transaction
 trait PaymentCapability {
   self: WSClient =>
 
-  val payment: PaymentClient                             = new PaymentClient(this)
-  def payment(credentials: ApiCredential): PaymentClient = new PaymentClient(this, Some(credentials))
+  def payment(credentials: ApiCredential): PaymentClient = new PaymentClient(this, credentials)
 }
 
 object PaymentClient {
@@ -26,10 +25,11 @@ object PaymentClient {
     : OFormat[PayCancelledSchedulePaymentForParentAndDate] = PayCancelledSchedulePaymentForParentAndDate.format
 }
 
-class PaymentClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class PaymentClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import PaymentClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def payment(transaction_id: String, payment_cb_creation: PaymentCbCreation, timeout: Long = defaultTimeOut)(implicit
     exec:                     ExecutionContext

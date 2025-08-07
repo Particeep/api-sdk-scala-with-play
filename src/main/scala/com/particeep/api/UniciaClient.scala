@@ -9,15 +9,12 @@ import com.particeep.api.models.unicia.ClientDataUnicia
 trait UniciaCapability {
   self: WSClient =>
 
-  val unicia: UniciaClient = new UniciaClient(this)
-
-  def unicia(credentials: ApiCredential): UniciaClient = new UniciaClient(this, Some(credentials))
+  def unicia(credentials: ApiCredential): UniciaClient = new UniciaClient(this, credentials)
 }
 
-class UniciaClient(val ws: WSClient, val credentials: Option[ApiCredential] = None)
-  extends WithWS
-    with WithCredentials
-    with EntityClient {
+class UniciaClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
+
+  implicit val creds: ApiCredential = credentials
 
   def search(user_id: String, timeout: Long = defaultTimeOut)(implicit
     exec:             ExecutionContext

@@ -16,8 +16,7 @@ import com.particeep.api.utils.LangUtils
 trait SignatureCapability {
   self: WSClient =>
 
-  val signature: SignatureClient                             = new SignatureClient(this)
-  def signature(credentials: ApiCredential): SignatureClient = new SignatureClient(this, Some(credentials))
+  def signature(credentials: ApiCredential): SignatureClient = new SignatureClient(this, credentials)
 }
 
 object SignatureClient {
@@ -32,10 +31,11 @@ object SignatureClient {
 
 }
 
-class SignatureClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class SignatureClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import SignatureClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def sign(signature_creation: SignatureCreation, timeout: Long = defaultTimeOut)(implicit
     exec:                      ExecutionContext

@@ -8,7 +8,7 @@ import org.apache.pekko.NotUsed
 import org.apache.pekko.stream.scaladsl.Source
 import org.apache.pekko.util.ByteString
 
-import com.particeep.api.core.{ ApiCredential, EntityClient, WSClient, WithCredentials, WithWS }
+import com.particeep.api.core.{ ApiCredential, WSClient, WithWS }
 import com.particeep.api.models.enums.FundStatus
 import com.particeep.api.models.fund._
 import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation }
@@ -19,8 +19,7 @@ import com.particeep.api.utils.LangUtils
 trait FundCapability {
   self: WSClient =>
 
-  val fund: FundClient                             = new FundClient(this)
-  def fund(credentials: ApiCredential): FundClient = new FundClient(this, Some(credentials))
+  def fund(credentials: ApiCredential): FundClient = new FundClient(this, credentials)
 }
 
 object FundClient {
@@ -38,9 +37,11 @@ object FundClient {
   private implicit val pay_result_format: OFormat[PayResult]                      = PayResult.format
 }
 
-class FundClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class FundClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
+
   import FundClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def create(fund_creation: FundCreation, timeout: Long = defaultTimeOut)(implicit
     exec:                   ExecutionContext

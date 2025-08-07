@@ -12,21 +12,18 @@ import com.particeep.api.models.kyc_ecsp._
 trait KycEcspCapability {
   self: WSClient =>
 
-  val kyc_ecsp: KycEcspClient = new KycEcspClient(this)
-
-  def kyc_ecsp(credentials: ApiCredential): KycEcspClient = new KycEcspClient(this, Some(credentials))
+  def kyc_ecsp(credentials: ApiCredential): KycEcspClient = new KycEcspClient(this, credentials)
 }
 
 object KycEcspClient {
   private val endPoint: String = "/kyc-ecsp"
 }
 
-class KycEcspClient(val ws: WSClient, val credentials: Option[ApiCredential] = None)
-  extends WithWS
-    with WithCredentials
-    with EntityClient {
+class KycEcspClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import KycEcspClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def findCurrentKyc(user_id: String, kyc_type: KycEcspType, timeout: Long = defaultTimeOut)(implicit
     ec:                       ExecutionContext
