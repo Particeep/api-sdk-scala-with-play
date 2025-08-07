@@ -16,9 +16,8 @@ import com.particeep.api.utils.LangUtils
 trait FundraiseSearchCapability {
   self: WSClient =>
 
-  val fundraise_search: FundraiseSearchClient                             = new FundraiseSearchClient(this)
   def fundraise_search(credentials: ApiCredential): FundraiseSearchClient =
-    new FundraiseSearchClient(this, Some(credentials))
+    new FundraiseSearchClient(this, credentials)
 }
 
 object FundraiseSearchClient {
@@ -26,10 +25,11 @@ object FundraiseSearchClient {
   private implicit val format: OFormat[FundraiseData] = FundraiseData.format
 }
 
-class FundraiseSearchClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class FundraiseSearchClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import FundraiseSearchClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def search(
     criteria:       FundraiseSearch,

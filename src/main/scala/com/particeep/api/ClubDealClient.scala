@@ -11,9 +11,7 @@ import com.particeep.api.models.club_deal._
 trait ClubDealCapability {
   self: WSClient =>
 
-  val club_deal: ClubDealClient = new ClubDealClient(this)
-
-  def club_deal(credentials: ApiCredential): ClubDealClient = new ClubDealClient(this, Some(credentials))
+  def club_deal(credentials: ApiCredential): ClubDealClient = new ClubDealClient(this, credentials)
 }
 
 object ClubDealClient {
@@ -26,10 +24,11 @@ object ClubDealClient {
   private implicit val email_list_format: OFormat[EmailList]                    = EmailList.format
 }
 
-class ClubDealClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class ClubDealClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import ClubDealClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit
     exec:      ExecutionContext

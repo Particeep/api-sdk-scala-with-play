@@ -11,10 +11,10 @@ import org.apache.pekko.actor.ActorSystem
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+import com.particeep.api.UserCapability
 import com.particeep.api.core.ApiClient
 import com.particeep.api.models._
 import com.particeep.api.models.user.User
-import com.particeep.api.{ ParticeepApi, UserCapability }
 
 class UserTest extends AnyFlatSpec with Matchers with TestUtils {
 
@@ -23,8 +23,8 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
   "the api client" should "load user by id with correct date format" in {
 
     val user_id                                  = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws                                       = new ApiClient(ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
-    val rez_f: Future[Either[ErrorResult, User]] = ws.user.byId(user_id)
+    val ws                                       = new ApiClient with UserCapability
+    val rez_f: Future[Either[ErrorResult, User]] = ws.user(ConfigTest.credential).byId(user_id)
 
     val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
@@ -39,8 +39,8 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
   "the api client" should "load user by id with direct credentials" in {
 
     val user_id                                  = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws                                       = new ApiClient(ConfigTest.baseUrl, ConfigTest.version, Some(ConfigTest.credential)) with UserCapability
-    val rez_f: Future[Either[ErrorResult, User]] = ws.user.byId(user_id)
+    val ws                                       = new ApiClient with UserCapability
+    val rez_f: Future[Either[ErrorResult, User]] = ws.user(ConfigTest.credential).byId(user_id)
 
     val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
@@ -52,7 +52,7 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
   "the api client" should "load user by id with custom credentials" in {
 
     val user_id                                  = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws                                       = new ApiClient(ConfigTest.baseUrl, ConfigTest.version) with UserCapability
+    val ws                                       = new ApiClient with UserCapability
     val credentials                              = ConfigTest.credential
     val rez_f: Future[Either[ErrorResult, User]] = ws.user(credentials).byId(user_id)
 
@@ -66,8 +66,8 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
   "the api client" should "load user by id with helper" in {
 
     val user_id                                  = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws                                       = ParticeepApi.test(ConfigTest.credential.apiKey, ConfigTest.credential.apiSecret)
-    val rez_f: Future[Either[ErrorResult, User]] = ws.user.byId(user_id)
+    val ws                                       = new ApiClient with UserCapability
+    val rez_f: Future[Either[ErrorResult, User]] = ws.user(ConfigTest.credential).byId(user_id)
 
     val rez = await(rez_f, 10 seconds)
     rez.isRight shouldBe true
@@ -79,7 +79,7 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
   "the api client" should "load user by id with helper and overload credentials" in {
 
     val user_id     = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws          = ParticeepApi.test(ConfigTest.credential.apiKey, ConfigTest.credential.apiSecret)
+    val ws          = new ApiClient with UserCapability
     val credentials = ConfigTest.credential
 
     val rez_f: Future[Either[ErrorResult, User]] = ws.user(credentials).byId(user_id)
@@ -94,7 +94,7 @@ class UserTest extends AnyFlatSpec with Matchers with TestUtils {
   "the api client" should "load user by id with helper and overload credentials with custom header" in {
 
     val user_id = "bf5788e8-9756-4d18-8b0f-100d7fba17a2"
-    val ws      = new ApiClient("https://test-api.particeep.com", "1", Some(ConfigTest.credential)) with UserCapability {
+    val ws      = new ApiClient with UserCapability {
       override def parse[A](response: StandaloneWSResponse)(implicit json_reads: Reads[A]): Either[ErrorResult, A] = {
         val msg = response
           .headers

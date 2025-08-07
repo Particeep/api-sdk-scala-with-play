@@ -15,8 +15,7 @@ import com.particeep.api.utils.LangUtils
 trait EnterpriseCapability {
   self: WSClient =>
 
-  val enterprise: EnterpriseClient                             = new EnterpriseClient(this)
-  def enterprise(credentials: ApiCredential): EnterpriseClient = new EnterpriseClient(this, Some(credentials))
+  def enterprise(credentials: ApiCredential): EnterpriseClient = new EnterpriseClient(this, credentials)
 }
 
 object EnterpriseClient {
@@ -29,10 +28,11 @@ object EnterpriseClient {
 
 }
 
-class EnterpriseClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class EnterpriseClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import EnterpriseClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit
     exec:      ExecutionContext

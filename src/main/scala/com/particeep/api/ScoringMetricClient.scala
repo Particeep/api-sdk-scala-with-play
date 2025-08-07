@@ -12,9 +12,7 @@ import com.particeep.api.utils.LangUtils
 trait ScoringMetricsCapability {
   self: WSClient =>
 
-  val scoring_metric: ScoringMetricClient = new ScoringMetricClient(this)
-
-  def scoring_metric(credentials: ApiCredential): ScoringMetricClient = new ScoringMetricClient(this, Some(credentials))
+  def scoring_metric(credentials: ApiCredential): ScoringMetricClient = new ScoringMetricClient(this, credentials)
 }
 
 object ScoringMetricClient {
@@ -24,10 +22,11 @@ object ScoringMetricClient {
     ScoringEvaluationCreation.format
 }
 
-class ScoringMetricClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class ScoringMetricClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import ScoringMetricClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def runEvaluation(
     metric_id:     String,

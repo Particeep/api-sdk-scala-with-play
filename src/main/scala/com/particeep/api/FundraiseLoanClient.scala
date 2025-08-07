@@ -19,8 +19,7 @@ import com.particeep.api.utils.LangUtils
 trait FundraiseLoanCapability {
   self: WSClient =>
 
-  val fundraise_loan: FundraiseLoanClient                             = new FundraiseLoanClient(this)
-  def fundraise_loan(credentials: ApiCredential): FundraiseLoanClient = new FundraiseLoanClient(this, Some(credentials))
+  def fundraise_loan(credentials: ApiCredential): FundraiseLoanClient = new FundraiseLoanClient(this, credentials)
 }
 
 object FundraiseLoanClient {
@@ -47,10 +46,11 @@ object FundraiseLoanClient {
   private implicit val pay_result_format: OFormat[PayResult]                                          = PayResult.format
 }
 
-class FundraiseLoanClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class FundraiseLoanClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import FundraiseLoanClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit
     exec:      ExecutionContext

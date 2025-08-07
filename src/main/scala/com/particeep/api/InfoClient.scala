@@ -17,14 +17,14 @@ object InfoClient {
 trait InfoCapability {
   self: WSClient =>
 
-  val info: InfoClient                             = new InfoClient(this)
-  def info(credentials: ApiCredential): InfoClient = new InfoClient(this, Some(credentials))
+  def info(credentials: ApiCredential): InfoClient = new InfoClient(this, credentials)
 }
 
-class InfoClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class InfoClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import InfoClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def info(timeout: Long = defaultTimeOut)(implicit exec: ExecutionContext): Future[Either[ErrorResult, Info]] = {
     ws.get[Info](endPoint, timeout)

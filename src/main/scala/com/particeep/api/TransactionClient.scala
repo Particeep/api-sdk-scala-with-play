@@ -19,8 +19,7 @@ import com.particeep.api.utils.LangUtils
 trait TransactionCapability {
   self: WSClient =>
 
-  val transaction: TransactionClient                             = new TransactionClient(this)
-  def transaction(credentials: ApiCredential): TransactionClient = new TransactionClient(this, Some(credentials))
+  def transaction(credentials: ApiCredential): TransactionClient = new TransactionClient(this, credentials)
 }
 
 object TransactionClient {
@@ -34,10 +33,11 @@ object TransactionClient {
   private implicit val transactionStatsFormat: OFormat[TransactionSearchStatistics] = TransactionSearchStatistics.format
 }
 
-class TransactionClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class TransactionClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import TransactionClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit
     exec:      ExecutionContext

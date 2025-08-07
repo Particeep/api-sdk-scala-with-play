@@ -16,10 +16,8 @@ import com.particeep.api.models.document_generation.{ DocumentGeneration, Docume
 trait DocumentGenerationCapability {
   self: WSClient =>
 
-  val document_generation: DocumentGenerationClient = new DocumentGenerationClient(this)
-
   def document_generation(credentials: ApiCredential): DocumentGenerationClient =
-    new DocumentGenerationClient(this, Some(credentials))
+    new DocumentGenerationClient(this, credentials)
 }
 
 object DocumentGenerationClient {
@@ -30,10 +28,11 @@ object DocumentGenerationClient {
   private implicit val format_document: OFormat[Document]                                 = Document.format
 }
 
-class DocumentGenerationClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class DocumentGenerationClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import DocumentGenerationClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def generationAndUpload(
     document_generation: DocumentGenerationAndUpload,

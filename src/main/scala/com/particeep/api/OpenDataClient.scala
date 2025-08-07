@@ -12,9 +12,7 @@ import com.particeep.api.models.user.User
 trait OpenDataCapability {
   self: WSClient =>
 
-  val open_data: OpenDataClient = new OpenDataClient(this)
-
-  def open_data(credentials: ApiCredential): OpenDataClient = new OpenDataClient(this, Some(credentials))
+  def open_data(credentials: ApiCredential): OpenDataClient = new OpenDataClient(this, credentials)
 }
 
 object OpenDataClient {
@@ -25,10 +23,11 @@ object OpenDataClient {
   private implicit val partner_company_format: OFormat[PartnerCompany] = PartnerCompany.format
 }
 
-class OpenDataClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class OpenDataClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import OpenDataClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def updateRcsReport(user_id: String, timeout: Long = defaultTimeOut)(implicit
     exec:                      ExecutionContext

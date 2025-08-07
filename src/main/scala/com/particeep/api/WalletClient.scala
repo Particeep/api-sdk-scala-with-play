@@ -12,8 +12,7 @@ import com.particeep.api.utils.LangUtils
 trait WalletCapability {
   self: WSClient =>
 
-  val wallet: WalletClient                             = new WalletClient(this)
-  def wallet(credentials: ApiCredential): WalletClient = new WalletClient(this, Some(credentials))
+  def wallet(credentials: ApiCredential): WalletClient = new WalletClient(this, credentials)
 }
 
 object WalletClient {
@@ -34,10 +33,11 @@ object WalletClient {
     TransactionWalletFeesOpt.format
 }
 
-class WalletClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class WalletClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import WalletClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit
     exec:      ExecutionContext

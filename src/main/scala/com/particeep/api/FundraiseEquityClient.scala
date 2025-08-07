@@ -24,10 +24,8 @@ import com.particeep.api.utils.LangUtils
 trait FundraiseEquityCapability {
   self: WSClient =>
 
-  val fundraise_equity: FundraiseEquityClient = new FundraiseEquityClient(this)
-
   def fundraise_equity(credentials: ApiCredential): FundraiseEquityClient =
-    new FundraiseEquityClient(this, Some(credentials))
+    new FundraiseEquityClient(this, credentials)
 }
 
 object FundraiseEquityClient {
@@ -50,10 +48,11 @@ object FundraiseEquityClient {
   private implicit val pay_result_format: OFormat[PayResult]                                        = PayResult.format
 }
 
-class FundraiseEquityClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS
-    with WithCredentials with EntityClient {
+class FundraiseEquityClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import FundraiseEquityClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def byId(id: String, timeout: Long = defaultTimeOut)(implicit
     exec:      ExecutionContext

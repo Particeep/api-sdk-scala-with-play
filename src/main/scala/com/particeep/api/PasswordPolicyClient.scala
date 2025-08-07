@@ -11,18 +11,14 @@ import com.particeep.api.models.password_policy.{ PasswordPolicy, PasswordPolicy
 trait PasswordPolicyCapability {
   self: WSClient =>
 
-  val passwordPolicy: PasswordPolicyClient = new PasswordPolicyClient(this)
-
   def passwordPolicy(credentials: ApiCredential): PasswordPolicyClient = {
-    new PasswordPolicyClient(this, Some(credentials))
+    new PasswordPolicyClient(this, credentials)
   }
 }
 
-class PasswordPolicyClient(
-  val ws:          WSClient,
-  val credentials: Option[ApiCredential] = None
-) extends WithWS with WithCredentials with EntityClient {
+class PasswordPolicyClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
+  implicit val creds: ApiCredential  = credentials
   private[this] val endPoint: String = "/user/password-policy"
 
   def fetchPasswordPolicy(

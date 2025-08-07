@@ -11,8 +11,7 @@ import com.particeep.api.models.webhook.{ WebHook, WebHookSimple }
 trait WebHookCapability {
   self: WSClient =>
 
-  val webhook: WebHookClient                             = new WebHookClient(this)
-  def webhook(credentials: ApiCredential): WebHookClient = new WebHookClient(this, Some(credentials))
+  def webhook(credentials: ApiCredential): WebHookClient = new WebHookClient(this, credentials)
 }
 
 object WebHookClient {
@@ -23,10 +22,11 @@ object WebHookClient {
 
 }
 
-class WebHookClient(val ws: WSClient, val credentials: Option[ApiCredential] = None) extends WithWS with WithCredentials
-    with EntityClient {
+class WebHookClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
 
   import WebHookClient._
+
+  implicit val creds: ApiCredential = credentials
 
   def all(timeout: Long = defaultTimeOut)(implicit
     exec:          ExecutionContext
