@@ -7,7 +7,7 @@ import java.io.File
 import scala.concurrent.{ ExecutionContext, Future }
 
 import com.particeep.api.core._
-import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import com.particeep.api.models.imports.{ ImportForm, ImportState }
 import com.particeep.api.models.role._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
@@ -21,12 +21,11 @@ trait RoleCapability {
 object RoleClient {
   private val endPoint: String                                              = "/role"
   private val endPoint_import: String                                       = "/import"
-  private implicit val role_format: OFormat[Role]                           = Role.format
   private implicit val roles_format: OFormat[Roles]                         = Roles.format
   private implicit val creation_format: OFormat[RoleCreation]               = RoleCreation.format
   private implicit val creations_format: OFormat[RolesCreation]             = RolesCreation.format
   private implicit val global_role_option_format: OFormat[GlobalRoleOption] = GlobalRoleOption.format
-  private implicit val importResultReads: Format[ImportResult[Role]]        = ImportResult.format[Role]
+  private implicit val import_state_format: Format[ImportState]             = ImportState.format
 }
 
 class RoleClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
@@ -112,11 +111,11 @@ class RoleClient(val ws: WSClient, val credentials: ApiCredential) extends WithW
 
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit
     exec:                ExecutionContext
-  ): Future[Either[ErrorResult, ImportResult[Role]]] = {
+  ): Future[Either[ErrorResult, ImportState]] = {
     val bodyParts = List(
       new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
       new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
     )
-    ws.postFile[ImportResult[Role]](s"$endPoint_import/role/csv", timeout, csv, "text/csv", bodyParts)
+    ws.postFile[ImportState](s"$endPoint_import/role/csv", timeout, csv, "text/csv", bodyParts)
   }
 }

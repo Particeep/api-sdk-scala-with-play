@@ -11,7 +11,7 @@ import org.apache.pekko.stream.scaladsl.Source
 import org.apache.pekko.util.ByteString
 
 import com.particeep.api.core._
-import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import com.particeep.api.models.imports.{ ImportForm, ImportState }
 import com.particeep.api.models.transaction._
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
@@ -29,7 +29,7 @@ object TransactionClient {
   private implicit val creationFormat: OFormat[TransactionCreation]                 = TransactionCreation.format
   private implicit val editionFormat: OFormat[TransactionEdition]                   = TransactionEdition.format
   private implicit val transactionDataFormat: OFormat[TransactionData]              = TransactionData.format
-  private implicit val importResultReads: Format[ImportResult[Transaction]]         = ImportResult.format[Transaction]
+  private implicit val import_state_format: Format[ImportState]                     = ImportState.format
   private implicit val transactionStatsFormat: OFormat[TransactionSearchStatistics] = TransactionSearchStatistics.format
 }
 
@@ -113,13 +113,13 @@ class TransactionClient(val ws: WSClient, val credentials: ApiCredential) extend
 
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit
     exec:                ExecutionContext
-  ): Future[Either[ErrorResult, ImportResult[Transaction]]] = {
+  ): Future[Either[ErrorResult, ImportState]] = {
     val bodyParts = List(
       new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
       new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
     )
 
-    ws.postFile[ImportResult[Transaction]](s"$endPoint_import/transaction/csv", timeout, csv, "text/csv", bodyParts)
+    ws.postFile[ImportState](s"$endPoint_import/transaction/csv", timeout, csv, "text/csv", bodyParts)
   }
 
   def exportCsv(

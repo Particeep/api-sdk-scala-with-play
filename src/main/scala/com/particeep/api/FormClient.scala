@@ -11,7 +11,7 @@ import com.particeep.api.models.form.edition.{ FormEdition, PossibilityEdition, 
 import com.particeep.api.models.form.edition_deep.FormEditionDeep
 import com.particeep.api.models.form.get._
 import com.particeep.api.models.form.get_deep._
-import com.particeep.api.models.imports.ImportResult
+import com.particeep.api.models.imports.ImportState
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
 
@@ -48,7 +48,7 @@ object FormClient {
   private implicit val format_answer_creation: OFormat[AnswerCreation]               = AnswerCreation.format
   private implicit val format_tagged_answer_creation: OFormat[AnswerCreationWithTag] = AnswerCreationWithTag.format
 
-  private implicit val importResultReads: Format[ImportResult[Seq[Answer]]] = ImportResult.format[Seq[Answer]]
+  private implicit val import_state_format: Format[ImportState] = ImportState.format
 }
 
 class FormClient(val ws: WSClient, val credentials: ApiCredential) extends WithWS {
@@ -185,8 +185,8 @@ class FormClient(val ws: WSClient, val credentials: ApiCredential) extends WithW
 
   def importAnswersFromCsv(csv: File, timeout: Long = defaultImportTimeOut)(implicit
     exec:                       ExecutionContext
-  ): Future[Either[ErrorResult, ImportResult[Seq[Answer]]]] = {
-    ws.postFile[ImportResult[Seq[Answer]]](s"$endPoint_import/form/answer", timeout, csv, "text/csv", List())
+  ): Future[Either[ErrorResult, ImportState]] = {
+    ws.postFile[ImportState](s"$endPoint_import/form/answer", timeout, csv, "text/csv", List())
   }
 
   def search(

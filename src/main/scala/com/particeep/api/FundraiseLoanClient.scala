@@ -9,7 +9,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import com.particeep.api.core._
 import com.particeep.api.models.enums.FundraiseStatus
 import com.particeep.api.models.fundraise.loan._
-import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import com.particeep.api.models.imports.{ ImportForm, ImportState }
 import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation }
 import com.particeep.api.models.transaction.{ Transaction, TransactionSearch }
 import com.particeep.api.models.user.User
@@ -41,7 +41,7 @@ object FundraiseLoanClient {
   private implicit val lend_creation_format: OFormat[LendCreation]                                    = LendCreation.format
   private implicit val lend_option_format: OFormat[LendOption]                                        = LendOption.format
   private implicit val estimate_borrower_info_format: OFormat[EstimateBorrowerInfo]                   = EstimateBorrowerInfo.format
-  private implicit val importResultReads: Format[ImportResult[FundraiseLoan]]                         = ImportResult.format[FundraiseLoan]
+  private implicit val import_state_format: Format[ImportState]                                       = ImportState.format
   private implicit val payment_cb_creation_format: OFormat[PaymentCbCreation]                         = PaymentCbCreation.format
   private implicit val pay_result_format: OFormat[PayResult]                                          = PayResult.format
 }
@@ -255,13 +255,13 @@ class FundraiseLoanClient(val ws: WSClient, val credentials: ApiCredential) exte
 
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit
     exec:                ExecutionContext
-  ): Future[Either[ErrorResult, ImportResult[FundraiseLoan]]] = {
+  ): Future[Either[ErrorResult, ImportState]] = {
     val bodyParts = List(
       new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
       new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
     )
 
-    ws.postFile[ImportResult[FundraiseLoan]](
+    ws.postFile[ImportState](
       s"$endPoint_import/fundraise-loan/csv",
       timeout,
       csv,
