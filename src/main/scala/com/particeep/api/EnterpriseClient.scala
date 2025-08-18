@@ -8,7 +8,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 
 import com.particeep.api.core._
 import com.particeep.api.models.enterprise._
-import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import com.particeep.api.models.imports.{ ImportForm, ImportState }
 import com.particeep.api.models.{ ErrorResult, PaginatedSequence, TableSearch }
 import com.particeep.api.utils.LangUtils
 
@@ -19,12 +19,12 @@ trait EnterpriseCapability {
 }
 
 object EnterpriseClient {
-  private val endPoint: String                                               = "/enterprise"
-  private val endPoint_import: String                                        = "/import"
-  private implicit val format: OFormat[Enterprise]                           = Enterprise.format
-  private implicit val creation_format: OFormat[EnterpriseCreation]          = EnterpriseCreation.format
-  private implicit val edition_format: OFormat[EnterpriseEdition]            = EnterpriseEdition.format
-  private implicit val import_result_reads: Format[ImportResult[Enterprise]] = ImportResult.format[Enterprise]
+  private val endPoint: String                                      = "/enterprise"
+  private val endPoint_import: String                               = "/import"
+  private implicit val format: OFormat[Enterprise]                  = Enterprise.format
+  private implicit val creation_format: OFormat[EnterpriseCreation] = EnterpriseCreation.format
+  private implicit val edition_format: OFormat[EnterpriseEdition]   = EnterpriseEdition.format
+  private implicit val import_state_format: Format[ImportState]     = ImportState.format
 
 }
 
@@ -82,12 +82,12 @@ class EnterpriseClient(val ws: WSClient, val credentials: ApiCredential) extends
 
   def importFromCsv(file: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit
     exec:                 ExecutionContext
-  ): Future[Either[ErrorResult, ImportResult[Enterprise]]] = {
+  ): Future[Either[ErrorResult, ImportState]] = {
     val bodyParts = List(
       new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
       new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
     )
 
-    ws.postFile[ImportResult[Enterprise]](s"$endPoint_import/enterprise/csv", timeout, file, "text/csv", bodyParts)
+    ws.postFile[ImportState](s"$endPoint_import/enterprise/csv", timeout, file, "text/csv", bodyParts)
   }
 }

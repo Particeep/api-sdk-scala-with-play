@@ -12,7 +12,7 @@ import org.apache.pekko.util.ByteString
 
 import com.particeep.api.core._
 import com.particeep.api.models._
-import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import com.particeep.api.models.imports.{ ImportForm, ImportState }
 import com.particeep.api.models.user._
 import com.particeep.api.models.user.organization.{
   Organization,
@@ -37,7 +37,7 @@ object UserClient {
   private implicit val creation_format: OFormat[UserCreation]                               = UserCreation.format
   private implicit val edition_format: OFormat[UserEdition]                                 = UserEdition.format
   private implicit val data_format: OFormat[UserData]                                       = UserData.format
-  private implicit val importResultReads: Format[ImportResult[User]]                        = ImportResult.format[User]
+  private implicit val import_state_format: Format[ImportState]                             = ImportState.format
   private implicit val relative_creation_format: OFormat[RelativeCreation]                  = RelativeCreation.format
   private implicit val relative_format: OFormat[Relative]                                   = Relative.format
   private implicit val relative_option_format: OFormat[RelativeEdition]                     = RelativeEdition.format
@@ -151,13 +151,13 @@ class UserClient(val ws: WSClient, val credentials: ApiCredential) extends WithW
 
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit
     exec:                ExecutionContext
-  ): Future[Either[ErrorResult, ImportResult[User]]] = {
+  ): Future[Either[ErrorResult, ImportState]] = {
     val bodyParts = List(
       new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
       new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
     )
 
-    ws.postFile[ImportResult[User]](s"$endPoint_import/user/csv", timeout, csv, "text/csv", bodyParts)
+    ws.postFile[ImportState](s"$endPoint_import/user/csv", timeout, csv, "text/csv", bodyParts)
   }
 
   def exportCsv(

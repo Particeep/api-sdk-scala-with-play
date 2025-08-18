@@ -9,7 +9,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import com.particeep.api.core._
 import com.particeep.api.models.enums.FundraiseStatus
 import com.particeep.api.models.fundraise.equity._
-import com.particeep.api.models.imports.{ ImportForm, ImportResult }
+import com.particeep.api.models.imports.{ ImportForm, ImportState }
 import com.particeep.api.models.payment.{ PayResult, PaymentCbCreation }
 import com.particeep.api.models.transaction.{
   Investment,
@@ -40,7 +40,7 @@ object FundraiseEquityClient {
   private implicit val transaction_format: OFormat[Transaction]                                     = Transaction.format
   private implicit val investment_creation_format: OFormat[InvestmentCreation]                      = InvestmentCreation.format
   private implicit val investment_option_format: OFormat[InvestmentOption]                          = InvestmentOption.format
-  private implicit val importResultReads: Format[ImportResult[FundraiseEquity]]                     = ImportResult.format[FundraiseEquity]
+  private implicit val import_state_format: Format[ImportState]                                     = ImportState.format
   private implicit val recurring_transaction_format: OFormat[RecurringTransaction]                  = RecurringTransaction.format
   private implicit val recurring_transaction_creation_format: OFormat[RecurringTransactionCreation] =
     RecurringTransactionCreation.format
@@ -162,13 +162,13 @@ class FundraiseEquityClient(val ws: WSClient, val credentials: ApiCredential) ex
 
   def importFromCsv(csv: File, importForm: Option[ImportForm] = None, timeout: Long = defaultImportTimeOut)(implicit
     exec:                ExecutionContext
-  ): Future[Either[ErrorResult, ImportResult[FundraiseEquity]]] = {
+  ): Future[Either[ErrorResult, ImportState]] = {
     val bodyParts = List(
       new StringPart("tag", importForm.flatMap(_.tag).getOrElse("")),
       new StringPart("custom", importForm.flatMap(_.custom).map(Json.stringify).getOrElse(""))
     )
 
-    ws.postFile[ImportResult[FundraiseEquity]](
+    ws.postFile[ImportState](
       s"$endPoint_import/fundraise-equity/csv",
       timeout,
       csv,
