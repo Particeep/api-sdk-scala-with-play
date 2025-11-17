@@ -142,4 +142,13 @@ class SignatureClient(val ws: WSClient, val credentials: ApiCredential) extends 
   ): Future[Either[ErrorResult, SignaturePosition]] = {
     ws.post[SignaturePosition](s"$endPoint/position/$document_id", timeout, Json.toJson(signature_position_option))
   }
+
+  def byDocumentIds(
+    document_ids: List[String],
+    timeout:      Long = defaultTimeOut
+  )(implicit
+    ec:           ExecutionContext
+  ): Future[Either[ErrorResult, List[SignaturePosition]]] = {
+    ws.get[List[SignaturePosition]](s"$endPoint/position", timeout, List("document_ids" -> document_ids.mkString(",")))
+  }
 }
