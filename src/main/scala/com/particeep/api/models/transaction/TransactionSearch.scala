@@ -34,6 +34,8 @@ case class TransactionSearchAdditional(
   signature_succeeded_before:            Option[OffsetDateTime] = None,
   ids:                                   Option[String]         = None,
   origin_transaction_id:                 Option[String]         = None,
+  secondary_market_transaction_type:     Option[String]         = None,
+  market_type:                           Option[String]         = None,
   tag:                                   Option[String]         = None,
   partner_manager_id:                    Option[String]         = None,
   partner_manager_company_business_name: Option[String]         = None,

@@ -56,6 +56,7 @@ case class TransactionData(
   bare_owner_amount:                     Option[Int]            = None,
   usufructuary_amount:                   Option[Int]            = None,
   origin_transaction_id:                 Option[String]         = None,
+  market_type:                           Option[String]         = None,
   secondary_market_transaction_type:     Option[String]         = None,
   unicia_id:                             Option[String]         = None,
   custom:                                Option[JsObject]       = None
