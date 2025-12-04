@@ -1,8 +1,6 @@
 inThisBuild(
   List(
-    semanticdbEnabled := true,                       // enable SemanticDB
-    semanticdbVersion := scalafixSemanticdb.revision // use Scalafix compatible version
+    semanticdbEnabled := true,    // enable SemanticDB
+    semanticdbVersion := "4.14.2" // use Scalafix compatible version
   )
 )
-
-ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)

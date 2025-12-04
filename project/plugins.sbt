@@ -19,9 +19,9 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0" excludeAll Ex
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.2.0")
 
 // scala lint tool : https://github.com/puffnfresh/wartremover
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.2.1")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.4.1")
 
-addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.6")
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.12.1")
 
 // run sbt dependencyCheckAnyProject
