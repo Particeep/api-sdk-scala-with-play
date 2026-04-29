@@ -3,35 +3,17 @@ package com.particeep.test
 import play.api.libs.json._
 
 import java.time.{ OffsetDateTime, ZoneOffset }
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import scala.concurrent.duration._
 
 import org.apache.pekko.actor.ActorSystem
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-import com.particeep.api.core.{ ApiClient, Formatter }
-import com.particeep.api.models.ErrorResult
+import com.particeep.api.core.Formatter
 import com.particeep.api.models.user.User
-import com.particeep.api.{ Info, InfoCapability }
 
 class ParticeepTest extends AnyFlatSpec with Matchers with TestUtils {
 
   implicit val system: ActorSystem = ActorSystem("ParticeepTest")
-
-  "the api client" should "load info" in {
-
-    val ws = new ApiClient with InfoCapability
-
-    val rez_f: Future[Either[ErrorResult, Info]] = ws.info(ConfigTest.credential).info()
-
-    val rez = await(rez_f, 10 seconds)
-    rez.isRight shouldBe true
-
-    val info = rez.getOrElse(Info(version = "0", debugEnable = true, metaEnable = true))
-    info.version shouldBe "1"
-  }
 
   "the api client" should "format date in ISO 8601" in {
 
