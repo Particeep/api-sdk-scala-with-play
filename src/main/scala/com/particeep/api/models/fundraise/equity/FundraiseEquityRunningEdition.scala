@@ -32,7 +32,7 @@ case class FundraiseEquityRunningEdition(
   recurring_investment_min_amount: Option[Int]                           = None,
   required_pro:                    Option[Boolean]                       = None,
   custom:                          Option[JsObject]                      = None,
-  allowed_transaction_creators:    List[TransactionCreatorType]          = List(),
+  allowed_transaction_creators:    Option[List[TransactionCreatorType]]  = None,
   offer:                           Option[RunningEquityOffer]            = None
 )
 

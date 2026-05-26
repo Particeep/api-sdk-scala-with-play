@@ -37,7 +37,7 @@ case class FundraiseEquityEdition(
   forms:                           Option[Map[FundraiseFormTag, String]] = None,
   unicia_id:                       Option[String]                        = None,
   dismemberment_table:             Option[Map[String, String]]           = None,
-  allowed_transaction_creators:    List[TransactionCreatorType]          = List(),
+  allowed_transaction_creators:    Option[List[TransactionCreatorType]]  = None,
   offer:                           Option[EquityOffer]                   = None
 )
 

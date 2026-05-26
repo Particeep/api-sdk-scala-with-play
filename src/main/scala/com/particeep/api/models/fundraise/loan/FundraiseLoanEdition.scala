@@ -27,7 +27,7 @@ case class FundraiseLoanEdition(
   is_featured:                  Option[Boolean]                       = None,
   forms:                        Option[Map[FundraiseFormTag, String]] = None,
   tag:                          Option[String]                        = None,
-  allowed_transaction_creators: List[TransactionCreatorType]          = List(),
+  allowed_transaction_creators: Option[List[TransactionCreatorType]]  = None,
   offer:                        Option[LoanOfferEdition]              = None,
   custom:                       Option[JsObject]                      = None
 )
