@@ -7,7 +7,7 @@ import play.api.libs.json.{ JsObject, JsString, OFormat, Writes }
 import java.time.OffsetDateTime
 
 import com.particeep.api.core.Formatter
-import com.particeep.api.models.enums.FundraiseFormTag
+import com.particeep.api.models.enums.{ FundraiseFormTag, TransactionCreatorType }
 
 case class FundraiseEquityRunningEdition(
   name:                            Option[String]                        = None,
@@ -32,6 +32,7 @@ case class FundraiseEquityRunningEdition(
   recurring_investment_min_amount: Option[Int]                           = None,
   required_pro:                    Option[Boolean]                       = None,
   custom:                          Option[JsObject]                      = None,
+  allowed_transaction_creators:    List[TransactionCreatorType]          = List(),
   offer:                           Option[RunningEquityOffer]            = None
 )
 
