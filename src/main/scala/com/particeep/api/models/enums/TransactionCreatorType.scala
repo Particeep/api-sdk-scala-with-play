@@ -1,11 +1,11 @@
 package com.particeep.api.models.enums
 
-sealed trait TransactionCreatorType  extends Product with Enum
+sealed trait TransactionCreatorType extends Product with Enum
 
-object TransactionCreatorType  extends EnumHelper[TransactionCreatorType ] {
+object TransactionCreatorType extends EnumHelper[TransactionCreatorType] {
 
-  case object PARTNER   extends TransactionCreatorType
-  case object INVESTOR    extends TransactionCreatorType
+  case object PARTNER  extends TransactionCreatorType
+  case object INVESTOR extends TransactionCreatorType
 
-  def values: Set[TransactionCreatorType ] = Set(PARTNER, INVESTOR)
+  def values: Set[TransactionCreatorType] = Set(PARTNER, INVESTOR)
 }
