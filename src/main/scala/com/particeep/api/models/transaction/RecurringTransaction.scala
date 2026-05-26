@@ -16,7 +16,8 @@ case class RecurringTransaction(
   frequency:       Int                    = 0,
   start_at:        Option[OffsetDateTime] = None,
   duration:        Option[Int]            = None,
-  price_per_share: Option[Int]            = None
+  price_per_share: Option[Int]            = None,
+  num_of_shares:   Option[Double]         = None
 )
 
 object RecurringTransaction {
