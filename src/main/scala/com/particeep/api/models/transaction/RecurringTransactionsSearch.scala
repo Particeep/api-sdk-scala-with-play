@@ -15,7 +15,7 @@ case class RecurringTransactionsSearch(
   amount:             Option[Int]            = None,
   frequency:          Option[Int]            = None,
   duration:           Option[Int]            = None,
-  num_of_shares:      Option[Int]            = None
+  price_per_share:    Option[Int]            = None
 )
 
 object RecurringTransactionsSearch {

@@ -34,7 +34,6 @@ case class FundraiseEquityEdition(
   recurring_investment_activated:  Option[Boolean]                       = None,
   recurring_investment_frequency:  Option[List[Int]]                     = None,
   recurring_investment_min_amount: Option[Int]                           = None,
-  recurring_has_duration:          Option[Boolean]                       = None,
   forms:                           Option[Map[FundraiseFormTag, String]] = None,
   unicia_id:                       Option[String]                        = None,
   dismemberment_table:             Option[Map[String, String]]           = None,
