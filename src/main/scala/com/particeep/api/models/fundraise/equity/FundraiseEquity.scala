@@ -9,7 +9,7 @@ import java.time.OffsetDateTime
 import com.particeep.api.core.Formatter
 import com.particeep.api.models.enums.Currency.EUR
 import com.particeep.api.models.enums.FundraiseStatus.INIT
-import com.particeep.api.models.enums.{ Currency, FundraiseFormTag, FundraiseStatus }
+import com.particeep.api.models.enums.{ Currency, FundraiseFormTag, FundraiseStatus, TransactionCreatorType }
 
 case class FundraiseEquity(
   id:                              String                                = "",
@@ -44,6 +44,7 @@ case class FundraiseEquity(
   forms:                           Option[Map[FundraiseFormTag, String]] = None,
   unicia_id:                       Option[String]                        = None,
   dismemberment_table:             Option[Map[String, String]]           = None,
+  allowed_transaction_creators:    List[TransactionCreatorType]          = List(),
   offer:                           EquityOffer                           = EquityOffer()
 )
 
