@@ -1,30 +1,23 @@
-import net.nmoncho.sbt.dependencycheck.settings.{ NvdApiSettings, SuppressionFilesSettings, SuppressionSettings }
-import org.owasp.dependencycheck.reporting.ReportGenerator.Format.*
-
 name := """api-sdk-scala"""
 
 version := "3.0.1"
 
 scalaVersion := "2.13.18"
 
-resolvers += "Typesafe Releases" at "https://repo.typesafe.com/typesafe/releases/"
+resolvers += "sonatype-public" at "https://oss.sonatype.org/content/groups/public"
 
-// Change this to another test framework if you prefer
+dependencyOverrides ++= Seq(
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.22.3",
+  "com.google.guava"              % "guava"                % "33.7.2-jre"
+)
 
-val playWsStandaloneVersion = "3.0.5"
+val playWsStandaloneVersion = "3.0.12"
 libraryDependencies ++= Seq(
-  "org.slf4j"                  % "slf4j-api"               % "1.7.21" withSources (),
-  "com.fasterxml.jackson.core" % "jackson-core"            % "2.15.0" withSources (),
-  "com.particeep"             %% "play-json-extensions"    % "0.43.0" withSources (),
-  "org.playframework"         %% "play"                    % "3.0.5" withSources (),
+  "com.fasterxml.jackson.core" % "jackson-core"            % "2.22.3" withSources (),
+  "com.particeep"             %% "play-json-extensions"    % "0.43.1" withSources (),
+  "org.playframework"         %% "play"                    % playWsStandaloneVersion withSources (),
   "org.playframework"         %% "play-ahc-ws-standalone"  % playWsStandaloneVersion withSources (),
   "org.playframework"         %% "play-ws-standalone-json" % playWsStandaloneVersion withSources (),
   "org.playframework"         %% "play-ws-standalone-xml"  % playWsStandaloneVersion withSources (),
-  "org.scalatest"             %% "scalatest"               % "3.2.18" % Test withSources ()
+  "org.scalatest"             %% "scalatest"               % "3.2.20" % Test withSources ()
 )
-
-// Check Dependancy CVSS config
-dependencyCheckNvdApi                      := NvdApiSettings("a4cffbe2-1878-4554-a159-151c577dd949")
-ThisBuild / dependencyCheckFailBuildOnCVSS := 4.8f
-ThisBuild / dependencyCheckFormats         := Seq(XML, HTML)
-dependencyCheckOutputDirectory             := baseDirectory.value / "target/security-reports"

@@ -1,12 +1,8 @@
 resolvers += "Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/"
 
-resolvers += "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases/"
-
-resolvers += "scalaz-bintray" at "https://de.bintray.com/scalaz/releases/"
-
 resolvers += "Typesafe repository plugin" at "https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"
 
-resolvers += "scalaz-bintray" at "https://de.bintray.com/scalaz/releases/"
+resolvers += "bitbucket-release" at "https://bitbucket.org/particeep/particeep-repository/raw/master/repository/"
 
 resolvers += Classpaths.sbtPluginReleases
 
@@ -16,16 +12,17 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0" excludeAll Ex
   "com.danieltrinh"
 ))
 
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.2.0")
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.4.4")
 
 // scala lint tool : https://github.com/puffnfresh/wartremover
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.4.1")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.6.2")
 
-addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.6")
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.12.1")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.9")
 
-// run sbt dependencyCheckAnyProject
-addSbtPlugin("net.nmoncho" % "sbt-dependency-check" % "1.7.1")
+// Generate a CycloneDX SBOM with `sbt makeBom` (scanned by Grype in CI)
+// https://github.com/sbt/sbt-sbom
+addSbtPlugin("com.github.sbt" % "sbt-sbom" % "0.4.0")
 
 // This is an issue with lib / sbt plugin who don't have the same version for scala-xml
 // Binary compatility is "nearly" ok between scala-xml version
