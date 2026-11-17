@@ -1,0 +1,120 @@
+{{- /* Grype Go-template producing a readable HTML vulnerability report. */ -}}
+{{- $matches := .Matches -}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grype Vulnerability Report</title>
+  <style>
+    body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 2rem; color: #1b1f23; }
+    h1 { margin-bottom: .25rem; }
+    .meta { color: #6a737d; margin-bottom: 1.5rem; font-size: .9rem; }
+    .summary { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .pill { padding: .35rem .7rem; border-radius: 999px; font-weight: 600; font-size: .85rem; color: #fff; }
+    .pill.total { background: #57606a; }
+    .pill.critical { background: #6f42c1; }
+    .pill.high { background: #d73a49; }
+    .pill.medium { background: #e36209; }
+    .pill.low { background: #dbab09; color: #1b1f23; }
+    .pill.negligible, .pill.unknown { background: #6a737d; }
+    table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+    th, td { text-align: left; padding: .5rem .65rem; border-bottom: 1px solid #e1e4e8; vertical-align: top; }
+    th { background: #f6f8fa; position: sticky; top: 0; }
+    tr.sev-critical td:first-child { border-left: 4px solid #6f42c1; }
+    tr.sev-high td:first-child { border-left: 4px solid #d73a49; }
+    tr.sev-medium td:first-child { border-left: 4px solid #e36209; }
+    tr.sev-low td:first-child { border-left: 4px solid #dbab09; }
+    tr.sev-negligible td:first-child, tr.sev-unknown td:first-child { border-left: 4px solid #6a737d; }
+    .sev-label { font-weight: 600; text-transform: capitalize; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .none { padding: 1rem; background: #e6ffed; border: 1px solid #34d058; border-radius: 6px; }
+    code { background: #f6f8fa; padding: .1rem .3rem; border-radius: 4px; }
+    .dep-path { font-size: 0.82em; color: #6a737d; line-height: 1.6; }
+    .dep-path .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem; }
+    .dep-path .arrow { color: #bbb; }
+    .dep-path .root { font-weight: 600; color: #d73a49; }
+    .dep-path .direct-label { font-style: italic; color: #aaa; }
+  </style>
+</head>
+<body>
+  <h1>Grype Vulnerability Report</h1>
+  <div class="meta">
+    Source: <code>{{ .Source.Target }}</code> &middot;
+    Grype {{ .Descriptor.Version }}
+  </div>
+
+  <div class="summary">
+    <span class="pill total">Total: {{ len $matches }}</span>
+    {{- $critical := 0 }}{{- $high := 0 }}{{- $medium := 0 }}{{- $low := 0 }}{{- $other := 0 }}
+    {{- range $matches }}
+      {{- if eq .Vulnerability.Severity "Critical" }}{{ $critical = add1 $critical }}
+      {{- else if eq .Vulnerability.Severity "High" }}{{ $high = add1 $high }}
+      {{- else if eq .Vulnerability.Severity "Medium" }}{{ $medium = add1 $medium }}
+      {{- else if eq .Vulnerability.Severity "Low" }}{{ $low = add1 $low }}
+      {{- else }}{{ $other = add1 $other }}{{- end }}
+    {{- end }}
+    <span class="pill critical">Critical: {{ $critical }}</span>
+    <span class="pill high">High: {{ $high }}</span>
+    <span class="pill medium">Medium: {{ $medium }}</span>
+    <span class="pill low">Low: {{ $low }}</span>
+    <span class="pill negligible">Other: {{ $other }}</span>
+  </div>
+
+  {{- if $matches }}
+  <table>
+    <thead>
+      <tr>
+        <th>Severity</th>
+        <th>Package</th>
+        <th>Version</th>
+        <th>Type</th>
+        <th>Vulnerability</th>
+        <th>Fixed in</th>
+        <th>Dependency Path</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{- range $matches }}
+      <tr class="sev-{{ .Vulnerability.Severity | lower }}">
+        <td class="sev-label">{{ .Vulnerability.Severity }}</td>
+        <td>{{ .Artifact.Name }}</td>
+        <td>{{ .Artifact.Version }}</td>
+        <td>{{ .Artifact.Type }}</td>
+        <td><a href="{{ .Vulnerability.DataSource }}" target="_blank" rel="noopener">{{ .Vulnerability.ID }}</a></td>
+        <td>{{ if .Vulnerability.Fix.Versions }}{{ join ", " .Vulnerability.Fix.Versions }}{{ else }}&mdash;{{ end }}</td>
+        <td class="dep-path">
+          {{- $artifact := .Artifact -}}
+          {{- $hasPath := false -}}
+          {{- range .MatchDetails -}}
+            {{- if not $hasPath -}}
+              {{- if eq .Type "exact-indirect-match" -}}
+                {{- $hasPath = true -}}
+                <div class="chain">
+                  <span class="root">{{ .SearchedBy.Package.Name }}@{{ .SearchedBy.Package.Version }}</span>
+                  <span class="arrow">→</span>
+                  <strong>{{ $artifact.Name }}@{{ $artifact.Version }}</strong>
+                </div>
+              {{- else if eq .Type "exact-direct-match" -}}
+                {{- $hasPath = true -}}
+                <span class="direct-label">direct</span>
+              {{- else -}}
+                {{- $hasPath = true -}}
+                <span class="direct-label">{{ .Type }}</span>
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          {{- if not $hasPath -}}
+            <span class="direct-label">direct</span>
+          {{- end -}}
+        </td>
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+  {{- else }}
+  <p class="none">✅ No known vulnerabilities found in the SBOM.</p>
+  {{- end }}
+</body>
+</html>

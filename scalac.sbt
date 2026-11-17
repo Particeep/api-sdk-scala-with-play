@@ -30,12 +30,12 @@ lazy val compiler_option = Seq(
   "-Xlint:private-shadow",         // A private field (or class parameter) shadows a superclass field.
   "-Xlint:stars-align",            // Pattern sequence wildcard must align with sequence component.
   "-Xlint:type-parameter-shadow",  // A local type parameter shadows a type already in scope.
-  "-Ywarn-dead-code",              // Warn when dead code is identified.
-  "-Ywarn-extra-implicit",         // Warn when more than one implicit parameter section is defined.
-  "-Ywarn-numeric-widen",          // Warn when numerics are widened.
-  "-Ywarn-macros:after",           // Tell the compiler to check unused after macro expension
 
-  // "-Ywarn-unused:explicits", // Warn if an explicit parameter is unused.
+  "-Ywarn-dead-code",        // Warn when dead code is identified.
+  "-Ywarn-extra-implicit",   // Warn when more than one implicit parameter section is defined.
+  "-Ywarn-numeric-widen",    // Warn when numerics are widened.
+  "-Ywarn-macros:after",     // Tell the compiler to check unused after macro expension
+  "-Ywarn-unused:explicits", // Warn if an explicit parameter is unused.
   "-Ywarn-unused:implicits", // Warn if an implicit parameter is unused.
   "-Ywarn-unused:imports",   // Warn if an import selector is not referenced.
   "-Ywarn-unused:locals",    // Warn if a local definition is unused.
